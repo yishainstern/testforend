@@ -1,0 +1,4 @@
+workingDir=C:\Users\pc-home\Desktop\Github\test4
+git=C:\Users\pc-home\Desktop\Github\kk\ant
+bugs=C:\Users\pc-home\Downloads\antBugs.csv
+vers=(ANT_170,ANT_170_B1,ANT_171)
