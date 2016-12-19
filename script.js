@@ -1,60 +1,80 @@
-function dodo(){
-	var name = $('input[name="name"]').val();
-	var git = $('input[name="git"]').val();
-	var ver = $('input[name="ver"]').val();
-	var data = new FormData();
-	data.append('name',name);
-	data.append('git',git);
-	data.append('ver',ver);
+
+
+function writeToElemnt(elm, data) {
+	$(elm).html(data);
+}
+
+function checkIfNewFolder(data) {
+	switch (data.status) {
+		case 0:
+			writeToElemnt('#tell-if-new-folder',data.message);
+			$('input[name="git"]').removeAttr('disabled');
+			$('input[name="gitClone"]').removeAttr('disabled');
+			break;
+		case 1:
+			writeToElemnt('#tell-if-new-folder',data.message);
+			break;
+		case 2:
+			writeToElemnt('#tell-if-new-folder',data.message);
+	}
+	// body...
+}
+
+
+function ajaxfunc(urlForAjax,func,task){
+	var form = document.forms.namedItem("form");
+	var data = new FormData(form);
+	data.append('task',task);
 	$.ajax({
-        url: "http://local.test/index.php",
+        url: urlForAjax,
         type: "POST",
         data: data,
         processData: false,
         contentType: false,
         complete: function (results) {
-            
-
+            func(JSON.parse(results.responseText));
         }
     });
 }
 
+function checkclone(data){
+	console.log(data);
+}
 
- $(document).ready(function() {
+function checkIfcl(data){
+	switch (data.status){
+		case 0:
+			writeToElemnt('#tell-if-did-clone',data.message);
+			$('input[name="csvFile"]').removeAttr('disabled');
+			$('input[name="get-ready"]').removeAttr('disabled');
+			break;
+		case 1:
+			writeToElemnt('#tell-if-did-clone',data.message);
+			break;
+		case 2:
+			writeToElemnt('#tell-if-new-folder',data.message);		
+	}
+}
 
-    // The event listener for the file upload
-    document.getElementById('txtFileUpload').addEventListener('change', upload, false);
 
-    // Method that checks that the browser supports the HTML5 File API
-    function browserSupportFileUpload() {
-        var isCompatible = false;
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-        isCompatible = true;
-        }
-        return isCompatible;
-    }
+function dodo(){
+	ajaxfunc("http://local.test/index.php",checkIfNewFolder,'open folder');
+}
 
-    // Method that reads and processes the selected file
-    function upload(evt) {
-    if (!browserSupportFileUpload()) {
-        alert('The File APIs are not fully supported in this browser!');
-        } else {
-            var data = null;
-            var file = evt.target.files[0];
-            var reader = new FileReader();
-            reader.readAsText(file);
-            reader.onload = function(event) {
-                var csvData = event.target.result;
-                data = $.csv.toArrays(csvData);
-                if (data && data.length > 0) {
-                  alert('Imported -' + data.length + '- rows successfully!');
-                } else {
-                    alert('No data to import!');
-                }
-            };
-            reader.onerror = function() {
-                alert('Unable to read ' + file.fileName);
-            };
-        }
-    }
-};
+function gogit(){
+	ajaxfunc("http://local.test/index.php",checkIfcl,'clone git');
+}
+
+function checkClone(){
+	ajaxfunc("http://local.test/index.php",checkclone,'check git');	
+}
+
+function csvf() {
+	ajaxfunc("http://local.test/index.php",checkclone,'add version');
+}
+
+function ff() {
+	ajaxfunc("http://local.test/index.php",checkclone,'run Python');
+}
+
+
