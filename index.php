@@ -3,8 +3,10 @@
 	header('Content-Type: application/json');
 	error_reporting(E_ALL);
 	$returnJson = array();
+	require_once("javapart.php");
 	$gitName = $_POST["gitName"];
 	$folderNmae = $_POST["id"]; 
+	$pomPath = $_POST["pomPath"];
 	if ($_POST["task"]=='open folder'){
 		if ((is_dir('users/'.$folderNmae)==TRUE)){
 			$returnJson['status'] = 1;
@@ -70,7 +72,14 @@
 		// Open the file using the HTTP headers set above
 		$file = file_get_contents("http://local.test/users/".$folderNmae."/index.php", false, $context);
 		//echo($file);
+	}elseif ($_POST["task"]=="run Pom") {
+		$str = "C:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\rootGit\\".$gitName."\\".$pomPath;
+		exec("dir /s /b " .$str."\*pom.xml* > users/".$folderNmae."/log.txt");
+		$arr = explode("\n",file_get_contents("users/".$folderNmae."/log.txt"));
+		for ($i=0; $i < 1 ; $i++) { 
+			pastPom($arr[$i]);
+		}
 	}
 	
-	echo json_encode((object)$returnJson);
+	//echo json_encode((object)$returnJson);
 ?>
