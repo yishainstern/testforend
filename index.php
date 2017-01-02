@@ -76,9 +76,16 @@
 		$str = "C:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\rootGit\\".$gitName."\\".$pomPath;
 		exec("dir /s /b " .$str."\*pom.xml* > users/".$folderNmae."/log.txt");
 		$arr = explode("\n",file_get_contents("users/".$folderNmae."/log.txt"));
-		for ($i=0; $i < 1 ; $i++) { 
-			pastPom($arr[$i]);
+		for ($i=0; $i < sizeof($arr) ; $i++) { 
+			pastPom($arr[$i],"C:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\rootLearn\\Debugger\\my-app\\target\\uber-my-app-1.0.1-SNAPSHOT.jar","C:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\path.txt");
 		}
+	}elseif ($_POST["task"]=="clean mvn"){
+		exec("mvn -f ../users/".$folderNmae."/rootLearn/Debugger/my-app clean");
+	}elseif ($_POST["task"]=="mvn install"){
+		exec("mvn -f ../users/".$folderNmae."/rootLearn/Debugger/my-app install");
+	}elseif($_POST["task"]=="pathTxt"){
+		$str = "C:\\Users\\pc-home\\.m2\\repository\r\nC:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\rootGit\\".$gitName;
+		file_put_contents("../users/".$folderNmae."/path.txt",$str);
 	}
 	
 	//echo json_encode((object)$returnJson);

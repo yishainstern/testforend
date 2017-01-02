@@ -81,6 +81,18 @@ function startpom(){
 	ajaxfunc("http://local.test/index.php",checkclone,'run Pom');
 }
 
+function cleanAndInstall(){
+	ajaxfunc("http://local.test/index.php",checkclone,'clean mvn');
+}
+
+function InstallJar(){
+	ajaxfunc("http://local.test/index.php",checkclone,'mvn install');
+}
+
+function pathTxt(){
+	ajaxfunc("http://local.test/index.php",checkclone,'pathTxt');
+}
+
 function autoFill(){
 	$('input[name="id"]').val('sternyi');
 	$('input[name="git"]').val('https://git-wip-us.apache.org/repos/asf/ant.git');
