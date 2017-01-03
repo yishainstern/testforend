@@ -93,6 +93,10 @@ function pathTxt(){
 	ajaxfunc("http://local.test/index.php",checkclone,'pathTxt');
 }
 
+function startjava(){
+	ajaxfunc("http://local.test/index.php",checkclone,'run java');
+}
+
 function autoFill(){
 	$('input[name="id"]').val('sternyi');
 	$('input[name="git"]').val('https://git-wip-us.apache.org/repos/asf/ant.git');

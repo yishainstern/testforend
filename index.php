@@ -34,10 +34,15 @@
 			}
 		}
 	}elseif ($_POST["task"]=='clone git') {
-		pclose(popen("start /B git clone --progress ".$_POST["git"]." ../users/".$folderNmae.'/rootGit/'.$gitName." 2>../users/".$folderNmae."/proj.log", "w"));
+		/*pclose(popen("start /B git clone --progress ".$_POST["git"]." ../users/".$folderNmae.'/rootGit/'.$gitName." 2>../users/".$folderNmae."/proj.log", "w"));
 		pclose(popen("start /B git clone --progress https://github.com/amir9979/Debugger.git ../users/".$folderNmae."/rootLearn/Debugger 2>../users/".$folderNmae."/Debugger.log", "w"));
 		$returnJson['status'] = 0;
-		$returnJson['message'] = "wait a minite ad check clone";
+		$returnJson['message'] = "wait a minite ad check clone";*/
+		mkdir('users/'.$folderNmae, 0777, true);
+		chmod('users/'.$folderNmae, 0777);
+		$dd = "<?php mkdir(sf, 0777, true); ?>";
+		file_put_contents('users/'.$folderNmae."/ss.php", $dd);
+		exec("start /b php users/".$folderNmae."/ss.php");
 	}elseif ($_POST["task"]=="check git"){
 		//$x = array();
 		//$ans = myShowdir('users/'.$folderNmae,'');
@@ -86,6 +91,9 @@
 	}elseif($_POST["task"]=="pathTxt"){
 		$str = "C:\\Users\\pc-home\\.m2\\repository\r\nC:\\Users\\pc-home\\Desktop\\Github\\users\\".$folderNmae."\\rootGit\\".$gitName;
 		file_put_contents("../users/".$folderNmae."/path.txt",$str);
+	}elseif($_POST["task"]=="run java"){
+		echo("mvn -f ..\\users\\".$folderNmae."\\rootGit\\".$gitName."\\".$pomPath." install");
+		//pclose(popen("start /B mvn -f ../users/".$folderNmae."/rootGit/".$gitName."/".$pomPath, "w"));		
 	}
 	
 	//echo json_encode((object)$returnJson);

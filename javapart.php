@@ -2,23 +2,41 @@
 	function pastPom($str,$jar,$path){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
-		
+		//echo($str."\n");
 		//if (file_exists($str)) {
-    		//echo($str);
+    		//
 			if(file_exists($str)){
+                $flag = FALSE;
+                //echo($str."\n");
 				$ff = file_get_contents ($str);
     			$dom = new DOMDocument;
     			$dom->loadXML($ff);
-    			$ff = $dom->getElementsByTagName('artifactId');
-    			foreach ($ff as $key) {
+    			$arrArt = $dom->getElementsByTagName('artifactId');
+                //var_dump($arrArt);
+                //echo(sizeof($arrArt)."\n");
+    			foreach ($arrArt as $key ) {
+                   //var_dump($key);
+                   //echo($key->nodeValue."\n");
     				if ($key->nodeValue=="maven-surefire-plugin"){
-    					echo($str."\n");
     					$rr = $key->parentNode;
-    					$e = $dom->createElement('argLine', "-javaagent:".$jar."=$path");
-    					$rr->appendChild($e);
-    					$dom->save($str);
+    					$confArr = $rr->childNodes;
+                        //var_dump($confArr);
+                        foreach ($confArr as $confElemnt ) {
+                            //var_dump($confElemnt);
+                            if ($confElemnt->nodeName=="configuration"){
+                                echo "change ".$str."\n";
+                                $e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
+                                $confElemnt->appendChild($e);
+                                $flag = TRUE;
+                            }
+                        }
     				}
     			}
+                if($flag==TRUE){
+                    $dom->save($str);
+                    echo "changed ".$str."\n";
+                }
+                
     		}
     		
     		//var_dump($ff);
