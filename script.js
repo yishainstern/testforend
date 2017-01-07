@@ -37,6 +37,7 @@ function ajaxfunc(urlForAjax,func,task){
     });
 }
 
+
 function checkclone(data){
 	console.log(data);
 }
@@ -56,6 +57,10 @@ function checkIfcl(data){
 	}
 }
 
+function isClone(){
+	ajaxfunc("http://local.test/index.php",checkclone,'check git');		
+}
+
 
 function dodo(){
 	ajaxfunc("http://local.test/index.php",checkIfNewFolder,'open folder');
@@ -65,9 +70,9 @@ function gogit(){
 	ajaxfunc("http://local.test/index.php",checkIfcl,'clone git');
 }
 
-function checkClone(){
+/*function checkClone(){
 	ajaxfunc("http://local.test/index.php",checkclone,'check git');	
-}
+}*/
 
 function csvf() {
 	ajaxfunc("http://local.test/index.php",checkclone,'add version');
