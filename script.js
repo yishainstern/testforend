@@ -1,3 +1,4 @@
+var SeverDomain = "http://local.test/index.php";
 
 
 function writeToElemnt(elm, data) {
@@ -58,48 +59,52 @@ function checkIfcl(data){
 }
 
 function isClone(){
-	ajaxfunc("http://local.test/index.php",checkclone,'check git');		
+	ajaxfunc(SeverDomain,checkclone,'check git');		
 }
 
 
 function dodo(){
-	ajaxfunc("http://local.test/index.php",checkIfNewFolder,'open folder');
+	ajaxfunc(SeverDomain,checkIfNewFolder,'open folder');
 }
 
 function gogit(){
-	ajaxfunc("http://local.test/index.php",checkIfcl,'clone git');
+	ajaxfunc(SeverDomain,checkIfcl,'clone git');
 }
 
 /*function checkClone(){
-	ajaxfunc("http://local.test/index.php",checkclone,'check git');	
+	ajaxfunc(SeverDomain,checkclone,'check git');	
 }*/
 
 function csvf() {
-	ajaxfunc("http://local.test/index.php",checkclone,'add version');
+	ajaxfunc(SeverDomain,checkclone,'add version');
 }
 
 function ff() {
-	ajaxfunc("http://local.test/index.php",checkclone,'run Python');
+	ajaxfunc(SeverDomain,checkclone,'run Python');
 }
 
 function startpom(){
-	ajaxfunc("http://local.test/index.php",checkclone,'run Pom');
+	ajaxfunc(SeverDomain,checkclone,'run Pom');
 }
 
 function cleanAndInstall(){
-	ajaxfunc("http://local.test/index.php",checkclone,'clean mvn');
+	ajaxfunc(SeverDomain,checkclone,'clean mvn');
 }
 
 function InstallJar(){
-	ajaxfunc("http://local.test/index.php",checkclone,'mvn install');
+	ajaxfunc(SeverDomain,checkclone,'mvn install');
 }
 
 function pathTxt(){
-	ajaxfunc("http://local.test/index.php",checkclone,'pathTxt');
+	ajaxfunc(SeverDomain,checkclone,'pathTxt');
 }
 
 function startjava(){
-	ajaxfunc("http://local.test/index.php",checkclone,'run java');
+	ajaxfunc(SeverDomain,checkclone,'run java');
+}
+
+function changeVer(){
+	ajaxfunc(SeverDomain,checkclone,'chenge version');
 }
 
 function autoFill(){
@@ -107,5 +112,6 @@ function autoFill(){
 	$('input[name="git"]').val('https://git-wip-us.apache.org/repos/asf/ant.git');
 	$('input[name="gitName"]').val('ant');
 	$('input[name="ver"]').val('ANT_170,ANT_170_B1,ANT_171');
+	$('input[name="test-ver"]').val('ANT_183');
 	$('input[name="pomPath"]').val('src\\etc\\poms');
 }

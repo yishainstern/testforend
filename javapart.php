@@ -17,31 +17,34 @@
     			foreach ($arrArt as $key ) {
                    //var_dump($key);
                    //echo($key->nodeValue."\n");
+                    $flagVersion = FALSE;
     				if ($key->nodeValue=="maven-surefire-plugin"){
     					$rr = $key->parentNode;
     					$confArr = $rr->childNodes;
-                        //var_dump($confArr);
                         foreach ($confArr as $confElemnt ) {
                             //var_dump($confElemnt);
                             if ($confElemnt->nodeName=="configuration"){
-                                echo "change ".$str."\n";
                                 $e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
                                 $confElemnt->appendChild($e);
                                 $flag = TRUE;
                             }
+                            if ($confElemnt->nodeName=="version"){
+                                $confElemnt->nodeValue = "2.19.1";
+                                $flagVersion = TRUE;
+                            }
+                        }
+                        if ($flagVersion == FALSE){
+                            $e = $dom->createElement('version', "2.19.1");
+                            $rr->appendChild($e);
                         }
     				}
     			}
+
                 if($flag==TRUE){
                     $dom->save($str);
-                    echo "changed ".$str."\n";
+                    //echo "changed ".$str."\n";
                 }
                 
     		}
-    		
-    		//var_dump($ff);
-    		//->resource[0]->directory;
- 			//print_r($xml);&lt;argLine&gt;-javaagent:agent.jar=C:\Downloads\airavata-
-		//} 
 	}
 ?>
