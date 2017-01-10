@@ -106,12 +106,15 @@ function startjava(){
 function changeVer(){
 	ajaxfunc(SeverDomain,checkclone,'chenge version');
 }
+function checkVer(){
+	ajaxfunc(SeverDomain,checkclone,'check version');
+}
 
 function autoFill(){
 	$('input[name="id"]').val('sternyi');
 	$('input[name="git"]').val('https://git-wip-us.apache.org/repos/asf/ant.git');
 	$('input[name="gitName"]').val('ant');
 	$('input[name="ver"]').val('ANT_170,ANT_170_B1,ANT_171');
-	$('input[name="test-ver"]').val('ANT_183');
+	$('input[name="testVersion"]').val('ANT_183');
 	$('input[name="pomPath"]').val('src\\etc\\poms');
 }

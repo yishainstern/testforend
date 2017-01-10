@@ -116,10 +116,23 @@
 		$newTarget = $folderRoot.$jarName;
 		copy($oldTarget, $newTarget);
 	}elseif($task=="run java"){
-		echo("mvn -f ..\\users\\".$folderNmae."\\rootGit\\".$gitName."\\".$pomPath." install");
-		//pclose(popen("start /B mvn -f ../users/".$folderNmae."/rootGit/".$gitName."/".$pomPath, "w"));		
+		$old_path = getcwd();
+		chdir($userProjectRoot.$gitName."\\".$pomPath);
+		$command = "start /B mvn clean install --fail-never >getLog.txt";
+		echo($command);
+		pclose(popen($command, "w"));		
 	}elseif ($task=="chenge version"){
-		
+		$old_path = getcwd();
+		chdir($userProjectRoot.$gitName);
+		$command = "start /B git checkout ".$newVersion." 2>newVersion.txt";
+		pclose(popen($command, "w")); 
+	}elseif ($task=="check version") {
+		$old_path = getcwd();
+		chdir($userProjectRoot.$gitName);
+		$command = "git branch 2>branch.txt";
+		$checher = exec($command);
+		echo($checher);
+
 	}
 	
 	//echo json_encode((object)$returnJson);
