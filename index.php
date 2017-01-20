@@ -19,26 +19,11 @@
 	}elseif ($task=="run Python") {
 		$returnJson = run_python_code($domain,$folderNmae);
 	}elseif ($task=="run Pom") {
-
+		$returnJson = update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName);
 	}elseif ($task=="clean mvn"){
-		set_time_limit(100);
-		$relativeToPoomRoot = $relativeToUserRoot."\\rootLearn\\Debugger\\my-app";
-		exec("mvn -f ".$relativeToPoomRoot." clean install");
-		$returnJson['status'] = 0;
-		$returnJson['message'] = "maven-ready";	
-		echo json_encode((object)$returnJson);	
-	}elseif ($task=="mvn install"){
-		//set_time_limit(100);
-		//exec("mvn -f ..\\users\\".$folderNmae."\\rootLearn\\Debugger\\my-app install");
+		$returnJson = ctrate_jar_for_online_task($returnJson,$relativeToUserRoot);
 	}elseif($task=="pathTxt"){
-		$str = $mavenroot."\r\n".$userProjectRoot.$gitName."\r\n";
-		file_put_contents($folderRoot."path.txt",$str);
-		$oldTarget = $DebuugerRoot.'Debugger\\my-app\\target\\'.$jarName;
-		$newTarget = $folderRoot.$jarName;
-		copy($oldTarget, $newTarget);
-		$returnJson['status'] = 0;
-		$returnJson['message'] = "files in place";
-		echo json_encode((object)$returnJson);
+
 	}elseif($task=="run java"){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName."\\".$pomPath);
