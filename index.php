@@ -23,25 +23,13 @@
 	}elseif ($task=="clean mvn"){
 		$returnJson = ctrate_jar_for_online_task($returnJson,$relativeToUserRoot);
 	}elseif($task=="pathTxt"){
-
+		$returnJson = create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot);
 	}elseif($task=="run java"){
-		$old_path = getcwd();
-		chdir($userProjectRoot.$gitName."\\".$pomPath);
-		$command = "start /B mvn clean install --fail-never >getLog.txt";
-		echo($command);
-		pclose(popen($command, "w"));		
+		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$pomPath);		
 	}elseif ($task=="chenge version"){
-		$old_path = getcwd();
-		chdir($userProjectRoot.$gitName);
-		$command = "start /B git checkout ".$newVersion." 2>newVersion.txt";
-		pclose(popen($command, "w")); 
+		$returnJson = point_to_version($userProjectRoot,$gitName,$newVersion);
 	}elseif ($task=="check version") {
-		$old_path = getcwd();
-		chdir($userProjectRoot.$gitName);
-		$command = "git branch 2>branch.txt";
-		$checher = exec($command);
-		echo($checher);
-
+		$returnJson = check_version($userProjectRoot,$gitName);
 	}
 	echo json_encode((object)$returnJson);
 ?>
