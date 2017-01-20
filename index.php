@@ -2,11 +2,12 @@
 <?php
 	require_once 'myConf.php';
 	require_once 'init.php';
-	require_once 'offline-learn.php';	
+	require_once 'offline-learn.php';
+	require_once 'online-learn.php';	
 	header('Content-Type: application/json');
 	error_reporting(E_ALL);
 	$returnJson = array();
-	require_once("javapart.php"); 	
+	 	
 	if ($task=='open folder'){
 		$returnJson = start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers);
 	}elseif ($task=='clone git') {
@@ -15,29 +16,10 @@
 		$returnJson = check_if_clone_is_done($returnJson,$relativeToUserRoot);
 	}elseif ($task=="add version") {
 		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName);
-		
 	}elseif ($task=="run Python") {
-		$opts = array(
-  			'http'=>array(
-    			'method'=>"GET",
-    			'header'=>"Accept-language: en\r\n" .
-              	"Cookie: foo=bar\r\n"
-  			)
-		);
-		$context = stream_context_create($opts);
-		// Open the file using the HTTP headers set above
-		$file = file_get_contents($domain."/users/".$folderNmae."/index.php", false, $context);
-		//echo($file);
+		$returnJson = run_python_code($domain,$folderNmae);
 	}elseif ($task=="run Pom") {
-		$str = $userProjectRoot.$gitName."\\".$pomPath;
-		exec("dir /s /b " .$str."\*pom.xml* > ".$relativeToUserRoot."\\log.txt");
-		$arr = explode("\n",file_get_contents($relativeToUserRoot."\\log.txt"));
-		for ($i=0; $i < sizeof($arr) ; $i++) { 
-			set_time_limit(20);
-			$pathForJar = $folderRoot.$jarName;
-			$pathForPathtx = $folderRoot."path.txt";
-			pastPom($arr[$i],$pathForJar,$pathForPathtx);
-		}
+
 	}elseif ($task=="clean mvn"){
 		set_time_limit(100);
 		$relativeToPoomRoot = $relativeToUserRoot."\\rootLearn\\Debugger\\my-app";

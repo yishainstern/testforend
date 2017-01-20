@@ -1,4 +1,11 @@
 <?php
+
+	function json_return($returnJson,$status,$str){
+		$returnJson['status'] = $status;
+		$returnJson['message'] = $str;
+		return $returnJson;		
+	}
+
 	function start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers){
 		if ((is_dir('users/'.$folderNmae)==TRUE)){
 			$returnJson['status'] = 1;

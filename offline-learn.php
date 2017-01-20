@@ -1,11 +1,5 @@
 <?php 
 
-	function json_return($returnJson,$status,$str){
-		$returnJson['status'] = $status;
-		$returnJson['message'] = $str;
-		return $returnJson;		
-	}
-
 	//clone from github the latest versin of Debugger and the project of user
 	function clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit){
 		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$relativeToUserRoot."\\proj.log", "w"));
@@ -68,6 +62,21 @@
 		}
 		return $returnJson;
 	}
+
+	function run_python_code($domain,$folderNmae){
+		$opts = array(
+  			'http'=>array(
+    			'method'=>"GET",
+    			'header'=>"Accept-language: en\r\n" .
+              	"Cookie: foo=bar\r\n"
+  			)
+		);
+		$context = stream_context_create($opts);
+		// Open the file using the HTTP headers set above
+		$file = file_get_contents($domain."/users/".$folderNmae."/index.php", false, $context);
+		return json_return($returnJson,0,"starting offline task....check agin in 7 hours if done");
+	}
+
 
 
 ?>
