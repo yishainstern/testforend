@@ -42,7 +42,7 @@
 
                 if($flag==TRUE){
                     $dom->save($str);
-                    //echo "changed ".$str."\n";
+                    echo "changed ".$str."\n";
                 }
                 
     		}
