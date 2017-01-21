@@ -7,7 +7,7 @@
 	header('Content-Type: application/json');
 	error_reporting(E_ALL);
 	$returnJson = array();
-	 	
+	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open folder'){
 		$returnJson = start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers);
 	}elseif ($task=='clone git') {
