@@ -1,5 +1,5 @@
 <?php 
-
+	//
 	//clone from github the latest versin of Debugger and the project of user
 	function clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit){
 		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$relativeToUserRoot."\\proj.log", "w"));
@@ -8,7 +8,7 @@
 		file_put_contents($relativeToUserRoot."/goG.sh", "#!/bin/bash\n tail -n 1 proj.log");
 		return json_return($returnJson,0,"wait 5 minites and check clone");
 	}
-
+	//
 	//check if clone task is done.
 	function check_if_clone_is_done($returnJson,$relativeToUserRoot){
 		$old_path = getcwd();
@@ -20,13 +20,13 @@
 		$flag3 = strpos($output1, "done");
 		$flag4 = strpos($output1, "Checking out files: 100%");
 		if ($flag1 && $flag2 && $flag3 && $flag4){
-			$returnJson = ($returnJson,0,"all cloned");		
+			$returnJson = json_return($returnJson,0,"all cloned");		
 		}else {
-			$returnJson = ($returnJson,1,"did not finish");
+			$returnJson = json_return($returnJson,1,"did not finish");
 		}
 		return $returnJson;		
 	}
-
+	//
 	//put the scv file in the right place.
 	function put_bug_file_in_place($fileObj,$relativeToUserRoot){
 		$tmp_name = $fileObj["tmp_name"];
@@ -36,36 +36,35 @@
         chmod($relativeToUserRoot."/rootBugs/".$name, 0777);
         return $name;
 	}
-
+	//
 	//create antConf.txt that contains all the paths that are needed for the Python project.
-	function creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot){
+	function creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot){
         $str = 'workingDir='.$outputPython."\r\n";
         $str = $str.'git='.$userProjectRoot.$gitName."\r\n";
         $str = $str.'bugs='.$folderRoot."\\rootBugs\\".$name."\r\n";
         $str = $str."vers=(". $all_versions.")";
         file_put_contents($DebuugerRoot."Debugger\\learner\\antConf.txt",$str); 
 	}
-
+	//
 	//preparw a file that will run the Python project.
 	function prepare_runing_file_for_offline_task($folderNmae){
         $str = '<?php pclose(popen("start /B python '.'../../users/'.$folderNmae.'/rootLearn/Debugger/learner/wrapper.py ../../users/'.$folderNmae.'/rootLearn/Debugger/learner/antConf.txt learn", "w")); ?>';
         file_put_contents("users/".$folderNmae."/index.php",$str);		
 	}
-
+	//
 	//get a scv file from user than contains a bug list in a spesific format.
-	function add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName){
+	function add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae){
 		if ($fileObj&&$fileObj["error"]==UPLOAD_ERR_OK&& $fileObj["tmp_name"]){
 			$name = put_bug_file_in_place($fileObj,$relativeToUserRoot);
-			creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot);
+			creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot);
 			prepare_runing_file_for_offline_task($folderNmae);
-        	$returnJson = ($returnJson,0,"all ready for offline task");
+        	$returnJson = json_return($returnJson,0,"all ready for offline task");
 		}else {
-			$returnJson = ($returnJson,1,"somthing went rong...try again");
+			$returnJson = json_return($returnJson,1,"somthing went rong...try again");
 		}
 		return $returnJson;
 	}
-
-
+	//
 	//use http get request to run the python project.
 	function run_python_code($domain,$folderNmae){
 		$opts = array(

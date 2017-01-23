@@ -1,4 +1,5 @@
 <?php
+	//
 	//updates the pom file
 	function pastPom($str,$jar,$path){
 		$arr = array("\n","\r\n","\r");
@@ -37,7 +38,7 @@
             }
     	}
 	}
-	
+	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName){
 		$str = $userProjectRoot.$gitName."\\".$pomPath;
@@ -51,7 +52,7 @@
 		}
 		return json_return($returnJson,0,"updated xml files in the maven system");
 	}
-
+	//
 	//create a jar file from Debbuger program with maven
 	function ctrate_jar_for_online_task($returnJson,$relativeToUserRoot){
 		set_time_limit(300);
@@ -59,19 +60,19 @@
 		exec("mvn -f ".$relativeToPoomRoot." clean install");
 		return json_return($returnJson,0,"jar created");
 	}
-
+	//
 	//create a file paths.txt witch contents maven repository path and the program path.
-	function create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot){
+	function create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot,$DebuugerRoot){
 		$str = $mavenroot."\r\n".$userProjectRoot.$gitName."\r\n";
 		file_put_contents($folderRoot."paths.txt",$str);
 		$oldTarget = $DebuugerRoot.'Debugger\\my-app\\target\\'.$jarName;
 		$newTarget = $folderRoot.$jarName;
 		copy($oldTarget, $newTarget);
-		chmod($newTarget, 0777, true);
-		chmod($folderRoot."paths.txt", 0777, true);
+		chmod($newTarget, 0777);
+		chmod($folderRoot."paths.txt", 0777);
 		return json_return($returnJson,0,"files in place");		
 	}
-
+	//
 	//run maven in the pgoject and wait for the folder "traces" to be created.
 	function run_maven($returnJson,$userProjectRoot,$gitName,$pomPath){
 		$old_path = getcwd();
@@ -80,7 +81,7 @@
 		pclose(popen($command, "w"));
 		return json_return($returnJson,0,"maven stated....wait on hour");		
 	}
-
+	//
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
 	function point_to_version($userProjectRoot,$gitName,$newVersion){
 		$old_path = getcwd();
@@ -89,7 +90,7 @@
 		pclose(popen($command, "w"));
 		return json_return($returnJson,0,"checking out to version ".$newVersion);	
 	}
-
+	//
 	//check if the version is the right one.
 	function check_version($userProjectRoot,$gitName){
 		$old_path = getcwd();
@@ -98,5 +99,4 @@
 		$checher = exec($command);
 		return json_return($returnJson,0,$checher);
 	}
-
 ?>

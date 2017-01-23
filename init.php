@@ -22,6 +22,8 @@
 				chmod($localUsers, 0777);
 				mkdir($relativeToUserRoot.'/rootGit', 0777, true);
 				chmod($relativeToUserRoot.'/rootGit', 0777);
+				mkdir($relativeToUserRoot.'/rootGitOnline', 0777, true);
+				chmod($relativeToUserRoot.'/rootGitOnline', 0777);
 				mkdir($relativeToUserRoot.'/rootBugs', 0777, true);
 				chmod($relativeToUserRoot.'/rootBugs', 0777);
 				mkdir($relativeToUserRoot.'/rootLearn', 0777, true);

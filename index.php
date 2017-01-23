@@ -15,7 +15,7 @@
 	}elseif ($task=="check git"){
 		$returnJson = check_if_clone_is_done($returnJson,$relativeToUserRoot);
 	}elseif ($task=="add version") {
-		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName);
+		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae);
 	}elseif ($task=="run Python") {
 		$returnJson = run_python_code($domain,$folderNmae);
 	}elseif ($task=="run Pom") {
@@ -23,7 +23,7 @@
 	}elseif ($task=="clean mvn"){
 		$returnJson = ctrate_jar_for_online_task($returnJson,$relativeToUserRoot);
 	}elseif($task=="pathTxt"){
-		$returnJson = create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot);
+		$returnJson = create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot,$DebuugerRoot);
 	}elseif($task=="run java"){
 		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$pomPath);		
 	}elseif ($task=="chenge version"){
