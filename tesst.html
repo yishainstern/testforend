@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css"/>
+	</head>
+	<body>
+		<script src="jquery-3.1.1.min.js"></script>
+		<script src="script.js"></script>
+		
+		<form name="form">
+			<h2>Stage one: check if you have</h2>
+			<input type="button" name="auto-fill" value="auto-fill" onclick="autoFill()">
+			<input type="text" name="id" placeholder="put you ID number or any unick token that you will remrmber" />
+			<input type="button" value="go" onclick="dodo()" />
+			<div id="tell-if-new-folder"></div>
+			<h2>stage two: give us a public url for your repository</h2>
+			<input type="text" name="git"  />
+			<input type="text" name="gitName" placeholder="git name"  />
+			<input type="button" value="go" onclick="gogit()" name="gitClone" />
+			<div id="tell-if-did-clone"></div>
+			<h1>ceck clone</h1>
+			<input type="button" value="check clone" onclick="isClone()" name="checkClone" />
+			<div id="show clone"></div>
+			<h1>add vesrions and scv files</h1>
+			<input type="file" name="csvFile" />
+			<br/>
+			<input type="text" name="ver"/>
+			<br/>
+			<input type="text" name="testVersion"/>
+			<input type="button" value="add versions and bugs" onclick="csvf()" name="addVersionAndCsv" />
+			<br/>
+			<input type="button" value="get ready to run" name="get-ready"  />
+			<h1>letsdo majic</h1>
+			<input type="button" value="start my Python" onclick="ff()" name="startPython" />
+			<h1>letsdo majic</h1>
+			<input type="text" placeholder="pomPath" name="pomPath">
+			<br/>
+			<input type="button" value="maven-clean" name="get-poms" onclick="cleanAndInstall()" />
+			<br/>
+			<input type="button" value="maven-install" name="maven-install" onclick="InstallJar()" />
+			<br/>
+			<input type="button" value="creat path.txt" name="get-poms" onclick="pathTxt()" />
+			<br/>
+			<input type="button" value="change to version" name="versionChange" onclick="changeVer()" />
+			<br/>
+			<input type="button" value="check version" name="check version" onclick="checkVer()" />
+			<br/>
+			<input type="button" value="go now" name="get-poms" onclick="startpom()" />
+			<br/>
+			<input type="button" value="start java" name="get-poms" onclick="startjava()" />
+			<br/>
+
+		</form>
+	</body>
+
+</html>
