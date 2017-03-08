@@ -25,6 +25,5 @@
 		$fileObj = $_FILES["csvFile"];	
 	}else {
 		$fileObj = FALSE;
-	}
-	
+	}	
 ?>
