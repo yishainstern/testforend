@@ -8,7 +8,7 @@
  */
 angular.module('sbAdminApp').factory('service', ['$rootScope', '$http', '$q', '$state', '$timeout', function ($rootScope, $http, $q, $state, $timeout) {
 	return {
-		ajaxfunc: function(callBack,task){
+		ajaxfunc: function(task){
 			var deferred = $q.defer();
 			var form = document.forms.namedItem("form");
 			var data_to_send = new FormData(form);
