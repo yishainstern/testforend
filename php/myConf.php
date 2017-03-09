@@ -1,0 +1,62 @@
+<?php
+	if (isset($_POST["task"])){
+		$task = $_POST["task"];
+	}else{
+		$task = '';
+	}
+	if (isset($_POST["gitName"])){
+		$gitUrl = $_POST["gitName"];
+		$gitName = $_POST["gitName"];
+	}else{
+		$gitName = '';			
+		$gitUrl = '';
+	}
+	if (isset($_POST["id"])){
+		$folderNmae = $_POST["id"];
+	}else{
+		$folderNmae = '';
+	}
+	if (isset($_POST["userName"])){
+		$userName = $_POST["userName"];
+	}else{
+		$userName = '';
+	}
+	if (isset($_POST["password"])){
+		$password = $_POST["password"];	
+	}else{
+		$password = '';
+	}
+	if (isset($_POST["testVersion"])){
+		$newVersion = $_POST["testVersion"];
+	}else{
+		$newVersion = '';
+	}
+	if (isset($_POST["ver"])){
+		$all_versions = $_POST["ver"];
+	}else{
+		$all_versions = '';
+	}				 
+	if (isset($_POST["pomPath"])){
+		$pomPath = $_POST["pomPath"];
+	}else{
+		$pomPath = '';
+	}				 	
+	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+	$userNameRoot = $root.$userName.'\\';
+	$folderRoot = $root.$folderNmae.'\\';
+	$userProjectRoot = $folderRoot.'rootGit\\';
+	$DebuugerRoot = $folderRoot.'rootLearn\\';
+	$outputPython = $folderRoot.'out';
+	$relativeToUserRoot = '..\\users\\'.$folderNmae;
+	$localUsers = 'users\\'.$folderNmae;
+	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	$amirGit = "https://github.com/amir9979/Debugger.git";
+	$startGit = "start /B git clone --progress";
+	$domain = "http://local.test/";
+	$jarName = "uber-my-app-1.0.1-SNAPSHOT.jar";
+	if ($_FILES && $_FILES["csvFile"]){
+		$fileObj = $_FILES["csvFile"];	
+	}else {
+		$fileObj = FALSE;
+	}
+?>

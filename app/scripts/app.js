@@ -117,7 +117,21 @@ angular
             })
           }
         }
-    }).state('dashboard.chart',{
+    })
+      .state('dashboard.listUser',{
+        templateUrl:'views/pages/listUser.html',
+        url:'/listUser',
+        controller:'listUserController',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/listUserController.js','styles/listUser.css']
+            })
+          }
+        }
+    })      
+      .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
         controller:'ChartCtrl',

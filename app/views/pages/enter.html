@@ -27,7 +27,7 @@
                             <a class="btn btn-lg btn-success btn-block">Login</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has missing input':error_sign}">
+                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form">
                         <h2>New User</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -36,11 +36,11 @@
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
-                                <input type="text" class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="sginup_details.password">
+                                <input type="password" class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="sginup_details.password">
                             </div>
                             <label class="control-label" ng-show="error_sign">{{display_sgin_text}}</label>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a class="btn btn-lg btn-success btn-block" ng-click="sgin_task()">sign up</a>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="sgin_task('sgin_form')">sign up</a>
                         </fieldset>
                     </form>                    
                 </div>
