@@ -6,7 +6,7 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout', '$rootScope','service','config', function ($scope, $timeout, $rootScope, service,config) {
+angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout', '$rootScope','service','config', '$state', function ($scope, $timeout, $rootScope, service,config,$state) {
     $scope.login_details = {};
     $scope.sginup_details = {};
     $scope.rong_password = false;
@@ -29,7 +29,9 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
             if (data && data.status && data.status==111){
                 $rootScope.current_name = $scope.sginup_details.userName; 
                 $rootScope.current_password = $scope.sginup_details.password;
-                $state.transitionTo('listUser');
+                localStorage.setItem('name',$rootScope.current_name);
+                localStorage.setItem('password',$rootScope.current_password);
+                $state.transitionTo('dashboard.listUser');
             }
         },function(data){
             $scope.display_sgin_text = 'some failer..try agin';        

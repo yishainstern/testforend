@@ -12,10 +12,10 @@
 		$returnJson = start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers);
 	}elseif ($task=='sgin_up') {
 		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot);
-	}elseif ($task=='get_user_list') {
-		$returnJson = get_user_list($returnJson,$userNmae,$password,$userNameRoot);
+	}elseif ($task =='get_user_list') {
+		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='log_in') {
-		$returnJson = get_user_list($returnJson,$userNmae,$password,$userNameRoot);
+		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='clone_git') {
 		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit);
 	}elseif ($task=="check_git"){

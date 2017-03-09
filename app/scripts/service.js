@@ -28,12 +28,14 @@ angular.module('sbAdminApp').factory('service', ['$rootScope', '$http', '$q', '$
 		ajaxfunc: function(task,form_name,form_data){
 			var deferred = $q.defer();
 			var form;
+			var data_to_send;
 			if (!form_data){
 				form = document.forms.namedItem(form_name);
+				data_to_send = new FormData(form);
 			}else {
 				form = form_data;
+				data_to_send = form;
 			}
-			var data_to_send = new FormData(form);
 			data_to_send.append('task',task);
 			$.ajax({
         		url: $rootScope.server_domain,
