@@ -23,14 +23,20 @@
 	}
 
 	function log_in($returnJson,$userNmae,$password,$userNameRoot){
+		if (!is_dir($userNameRoot)){
+			$returnJson['status'] = 2;
+			$returnJson['message'] = "user does not exsist";			
+			return $returnJson;
+		}
 		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
-		if (!$str->details->userName==$userNmae || !$str->details->password==$password){
+		if (!($str->details->userName==$userNmae) || !($str->details->password==$password)){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "do not try to brake in theaf!!";
 		}else {
-			$returnJson['status'] = 0;
+			$returnJson['status'] = 111;
 			$returnJson['message'] = "welcome";			
 		}
+		return $returnJson;
 	}
 	
 

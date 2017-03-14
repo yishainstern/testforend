@@ -6,33 +6,29 @@
                     <h3 class="panel-title">Please Enter our System</h3>
                 </div>
                 <div class="panel-body" style="padding-top: 0px;">
-                    <form role="form" name="form">
-                        <h2>old user</h2>
-                        <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="userName" name="email" type="email" ng-model="login_details.userName" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="login_details.password">
-                            </div>
-                            <div class="form-group" ng-show="rong_password">
-                                <label class="control-label" style="color: #a94442">Input with error</label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                </label>
-                            </div>
-                            <!-- Change this to a button or input when using this as a form -->
-                            <a class="btn btn-lg btn-success btn-block">Login</a>
-                        </fieldset>
-                    </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form">
-                        <h2>New User</h2>
+                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_show">
+                        <h2>Log In</h2>
                         <fieldset>
                             <div class="form-group input-group">
                                 <span class="input-group-addon">@</span>
-                                <input type="text" class="form-control" placeholder="userName" name="userName" type="email" ng-model="sginup_details.userName" autofocus>
+                                <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="login_details.userName" autofocus />
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="login_details.password" />
+                            </div>
+                            <label class="control-label" ng-show="error_login">{{display_sgin_text}}</label>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="login_task()">Login</a>
+                            <label class="open_sgin">do not have a user? sgin up below</label>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="log_show = false">sign up</a>
+                        </fieldset>
+                    </form>
+                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="!log_show">
+                        <h2>Sgin Up</h2>
+                        <fieldset>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input type="text" class="form-control" placeholder="userName" name="userName" ng-model="sginup_details.userName" autofocus>
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>

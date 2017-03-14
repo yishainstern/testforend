@@ -17,7 +17,7 @@
 	}elseif ($task =='get_user_list') {
 		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='log_in') {
-		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
+		$returnJson = log_in($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='clone_git') {
 		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit);
 	}elseif ($task=="check_git"){
