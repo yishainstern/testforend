@@ -18,7 +18,7 @@
                         <form role="form" name="new-project">
                             <div class="form-group">
                                 <label for="disabledSelect">User name</label>
-                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" ng-model="project_details.userName" disabled>
+                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" ng-model="project_details.userName" name="userName" disabled>
                             </div>
                             <div class="form-group">
                                 <label>uniq folder name</label>
@@ -36,8 +36,12 @@
                                 <label>project disciption</label>
                                 <textarea class="form-control" rows="4" ng-model="project_details.project_description" name="project_description"></textarea>
                             </div>
+                            <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
+                                <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
+                            </div>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project</button>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="could_check_clone" ng-click="check_clone()">auto fill</button>
                         </form>
                     </div>
                 </div>

@@ -15,6 +15,7 @@
 			$obj->details = new stdClass();
 			$obj->details->userName = $userNmae;
 			$obj->details->password = $password;
+			$obj->list = array();
 			file_put_contents($userNameRoot.'user_details.json',json_encode($obj));
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "user folder created";			

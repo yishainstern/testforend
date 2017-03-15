@@ -11,7 +11,7 @@
 	$returnJson = array();
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
-		$returnJson = start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot);
+		$returnJson = start_and_prepare_folders($folderRoot, $userProjectRoot, $DebuugerRoot, $outputPython, $runingRoot, $userNameRoot,$folderName,$discription);
 	}elseif ($task=='sgin_up') {
 		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task =='get_user_list') {

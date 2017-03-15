@@ -47,8 +47,8 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
-            $rootScope.current_name = $scope.sginup_details.userName; 
-            $rootScope.current_password = $scope.sginup_details.password;
+            $rootScope.current_name = $scope.login_details.userName; 
+            $rootScope.current_password = $scope.login_details.password;
             localStorage.setItem('name',$rootScope.current_name);
             localStorage.setItem('password',$rootScope.current_password);
             $state.transitionTo('dashboard.listUser');

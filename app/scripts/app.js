@@ -143,7 +143,20 @@ angular
             })
           }
         }
-    })          
+    })
+      .state('dashboard.project',{
+        templateUrl:'views/pages/project-page.html',
+        url:'/project',
+        controller:'projectController',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/projectController.js','styles/project.css']
+            })
+          }
+        }
+    })              
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',

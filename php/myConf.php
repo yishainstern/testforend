@@ -15,9 +15,9 @@
 		$gitUrl = '';
 	}
 	if (isset($_POST["id"])){
-		$folderNmae = $_POST["id"];
+		$folderName = $_POST["id"];
 	}else{
-		$folderNmae = '';
+		$folderName = '';
 	}
 	if (isset($_POST["userName"])){
 		$userName = $_POST["userName"];
@@ -51,7 +51,7 @@
 	}
 	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
 	$userNameRoot = $root.$userName.'\\';
-	$folderRoot = $userNameRoot.$folderNmae.'\\';
+	$folderRoot = $userNameRoot.$folderName.'\\';
 	$userProjectRoot = $folderRoot.'rootGit\\';
 	$DebuugerRoot = $folderRoot.'rootLearn\\';
 	$outputPython = $folderRoot.'out\\';

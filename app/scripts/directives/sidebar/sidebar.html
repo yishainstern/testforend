@@ -86,6 +86,16 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+            <li ng-class="{active:collapseVar==5}">
+                <a href="" ng-click="check(5)"><i class="fa fa-files-o fa-fw"></i>Projects List<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=5">
+                    <li ng-repeat="item in ff.dd">
+                        <a href="" ng-click="openproject(item.name)">{{item.name}}</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>            
             <li><a href="http://www.strapui.com/">Premium Angular Themes</a></li>
         </ul>
     </div>

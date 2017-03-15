@@ -15,6 +15,7 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
     $scope.form_data.append('userName',$rootScope.current_name);
     $scope.form_data.append('password',$rootScope.current_password);
     service.ajaxfunc('get_user_list','',$scope.form_data).then(function(data){
+        $rootScope.dd = [{name: "hh"},{name: "wwtttt"}];
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){

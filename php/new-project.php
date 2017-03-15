@@ -1,29 +1,42 @@
-<?php		
-	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot){
+<?php	
+
+	function update_user_details($userNameRoot,$folderName,$discription){
+		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
+		$str->list[$folderName] = new stdClass();
+		$str->list[$folderName]->name = $folderName;
+		$str->list[$folderName]->discription = $discription;
+		file_put_contents($userNameRoot.'user_details.json',json_encode($str));
+	}
+
+	function update_project_details($folderName,$discription,$folderRoot){
+		$obj = new stdClass();
+		$obj->details = new stdClass();
+		$obj->details->name = $folderName;
+		$obj->details->discription = $discription;
+		$obj->details->progress = array();
+		$obj->details->progress['create_folders'] = (object) array('flag'=>TRUE,'name'=>'create_folders');
+		$obj->details->progress['clone'] = (object) array('flag'=>FALSE,'name'=>'clone');
+		$obj->details->progress['start_offline'] = (object) array('flag'=>FALSE,'name'=>'start_offline');
+		$obj->details->progress['end_offline'] = (object) array('flag'=>FALSE,'name'=>'end_offline');
+		$obj->details->progress['start_testing'] = (object) array('flag'=>FALSE,'name'=>'start_testing');
+		$obj->details->progress['end_testing'] = (object) array('flag'=>FALSE,'name'=>'end_testing');
+		$obj->details->progress['get_prediction'] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+	}
+
+	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription){
+		echo($folderRoot);
 		if ((is_dir($folderRoot)==TRUE)){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "you have already a project with this name, pick a new name";
 		}else{
-/*			mkdir($relativeToUserRoot, 0777, true);
-			chmod($relativeToUserRoot, 0777);
-			mkdir($localUsers, 0777, true);
-			chmod($localUsers, 0777);
-			mkdir($relativeToUserRoot.'/rootGit', 0777, true);
-			chmod($relativeToUserRoot.'/rootGit', 0777);
-			mkdir($relativeToUserRoot.'/rootGitOnline', 0777, true);
-			chmod($relativeToUserRoot.'/rootGitOnline', 0777);
-			mkdir($relativeToUserRoot.'/rootBugs', 0777, true);
-			chmod($relativeToUserRoot.'/rootBugs', 0777);
-			mkdir($relativeToUserRoot.'/rootLearn', 0777, true);
-			chmod($relativeToUserRoot.'/rootLearn', 0777);
-			mkdir($relativeToUserRoot.'/out', 0777, true);
-			chmod($relativeToUserRoot.'/out', 0777);
-*/			
 			mkdir($folderRoot, 0777, true);
 			mkdir($userProjectRoot, 0777, true);
 			mkdir($DebuugerRoot, 0777, true);
 			mkdir($outputPython, 0777, true);
 			mkdir($runingRoot, 0777, true);
+			update_user_details($userNameRoot,$folderName,$discription);
+			update_project_details($folderName,$discription,$folderRoot);
 			$returnJson['status'] = 0;
 			$returnJson['message'] = "created folders, lets clone :)";		
 		}
