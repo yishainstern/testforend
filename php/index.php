@@ -13,7 +13,7 @@
 	if ($task=='open_folder'){
 		$returnJson = start_and_prepare_folders($folderRoot, $userProjectRoot, $DebuugerRoot, $outputPython, $runingRoot, $userNameRoot,$folderName,$discription);
 	}elseif ($task=='sgin_up') {
-		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot);
+		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot,$first_name,$last_name);
 	}elseif ($task =='get_user_list') {
 		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='log_in') {

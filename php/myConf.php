@@ -24,6 +24,16 @@
 	}else{
 		$userName = '';
 	}
+	if (isset($_POST["first_name"])){
+		$first_name = $_POST["first_name"];
+	}else{
+		$first_name = '';
+	}
+	if (isset($_POST["last_name"])){
+		$last_name = $_POST["last_name"];
+	}else{
+		$last_name = '';
+	}	
 	if (isset($_POST["password"])){
 		$password = $_POST["password"];	
 	}else{
@@ -56,8 +66,8 @@
 	$DebuugerRoot = $folderRoot.'rootLearn\\';
 	$outputPython = $folderRoot.'out\\';
 	$runingRoot = $folderRoot.'run\\'; 
-	$relativeToUserRoot = '..\\users\\'.$folderNmae;
-	$localUsers = 'users\\'.$folderNmae;
+	$relativeToUserRoot = '..\\users\\'.$folderName;
+	$localUsers = 'users\\'.$folderName;
 	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	$amirGit = "https://github.com/amir9979/Debugger.git";
 	$startGit = "start /B git clone --progress";

@@ -27,9 +27,10 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
 
     $scope.success_new_project = function(data){
         if (data.status==111){
-            service.ajaxfunc('clone_git','new-project',false)
-            .then(function(data){$scope.success_clone(data);}, 
-            function(data){$scope.fail_clone(data);});
+            $state.transitionTo('dashboard.project');
+//            service.ajaxfunc('clone_git','new-project',false)
+//            .then(function(data){$scope.success_clone(data);}, 
+//            function(data){$scope.fail_clone(data);});
         }
     }
 
@@ -44,7 +45,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }
 
     $scope.check_clone = function(){
-        
+
     }
 
     $scope.fail_clone = function(data){

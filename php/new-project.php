@@ -6,6 +6,7 @@
 		$str->list[$folderName]->name = $folderName;
 		$str->list[$folderName]->discription = $discription;
 		file_put_contents($userNameRoot.'user_details.json',json_encode($str));
+		return $str;
 	}
 
 	function update_project_details($folderName,$discription,$folderRoot){
@@ -14,14 +15,15 @@
 		$obj->details->name = $folderName;
 		$obj->details->discription = $discription;
 		$obj->details->progress = array();
-		$obj->details->progress['create_folders'] = (object) array('flag'=>TRUE,'name'=>'create_folders');
-		$obj->details->progress['clone'] = (object) array('flag'=>FALSE,'name'=>'clone');
-		$obj->details->progress['start_offline'] = (object) array('flag'=>FALSE,'name'=>'start_offline');
-		$obj->details->progress['end_offline'] = (object) array('flag'=>FALSE,'name'=>'end_offline');
-		$obj->details->progress['start_testing'] = (object) array('flag'=>FALSE,'name'=>'start_testing');
-		$obj->details->progress['end_testing'] = (object) array('flag'=>FALSE,'name'=>'end_testing');
-		$obj->details->progress['get_prediction'] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		$obj->details->progress[0] = (object) array('flag'=>TRUE,'name'=>'create_folders');
+		$obj->details->progress[1] = (object) array('flag'=>FALSE,'name'=>'clone');
+		$obj->details->progress[2] = (object) array('flag'=>FALSE,'name'=>'start_offline');
+		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'end_offline');
+		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'start_testing');
+		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'end_testing');
+		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+		return $obj;
 	}
 
 	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription){
@@ -35,10 +37,12 @@
 			mkdir($DebuugerRoot, 0777, true);
 			mkdir($outputPython, 0777, true);
 			mkdir($runingRoot, 0777, true);
-			update_user_details($userNameRoot,$folderName,$discription);
-			update_project_details($folderName,$discription,$folderRoot);
+			$user_details = update_user_details($userNameRoot,$folderName,$discription);
+			$project_details = update_project_details($folderName,$discription,$folderRoot);
 			$returnJson['status'] = 0;
 			$returnJson['message'] = "created folders, lets clone :)";		
+			$returnJson['user'] = $user_details;
+			$returnJson['project'] = $project_details;
 		}
 		return $returnJson;
 	}

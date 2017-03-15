@@ -156,7 +156,20 @@ angular
             })
           }
         }
-    })              
+    })
+      .state('dashboard.clone',{
+        templateUrl:'views/pages/clone.html',
+        url:'/clone',
+        controller:'cloneController',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/cloneController.js','styles/clone.css']
+            })
+          }
+        }
+    })                  
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',

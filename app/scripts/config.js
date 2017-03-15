@@ -21,4 +21,12 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		end_testing:'maven task was done and we have some file with discription of failers',
 		get_prediction:'get a prediction of your code'
 	}
+
+	//user obj
+	$rootScope.user = {
+		details: {},
+		list:[]
+	}
+
+	$rootScope.project = [];
 }]);

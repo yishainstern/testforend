@@ -4,7 +4,7 @@
 		$returnJson['message'] = $str;
 		return $returnJson;		
 	}
-	function sign_up_new_user($returnJson,$userNmae,$password,$userNameRoot){
+	function sign_up_new_user($returnJson,$userNmae,$password,$userNameRoot,$first_name,$last_name){
 		if (is_dir($userNameRoot)){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "there is a folder like this alredy, pick a new name";
@@ -15,6 +15,8 @@
 			$obj->details = new stdClass();
 			$obj->details->userName = $userNmae;
 			$obj->details->password = $password;
+			$obj->details->first_name = $first_name;
+			$obj->details->last_name = $last_name;
 			$obj->list = array();
 			file_put_contents($userNameRoot.'user_details.json',json_encode($obj));
 			$returnJson['status'] = 111;
