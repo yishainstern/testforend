@@ -15,24 +15,29 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form">
+                        <form role="form" name="new-project">
                             <div class="form-group">
                                 <label for="disabledSelect">User name</label>
-                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" ng-model="userName" disabled>
+                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" ng-model="project_details.userName" disabled>
                             </div>
                             <div class="form-group">
-                                <label>project name</label>
-                                <input class="form-control" placeholder="Enter text">
+                                <label>uniq folder name</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="project_details.folderName" name="id">
                             </div>
+                            <div class="form-group">
+                                <label>git name</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="project_details.projectName" name="gitName" />
+                            </div>                            
                             <div class="form-group">
                                 <label>git url</label>
-                                <input class="form-control" placeholder="Enter text">
+                                <input class="form-control" placeholder="Enter text" ng-model="project_details.gitUrl" name="gitUrl">
                             </div>
                             <div class="form-group">
                                 <label>project disciption</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="4" ng-model="project_details.project_description" name="project_description"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>
                         </form>
                     </div>
                 </div>

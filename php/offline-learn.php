@@ -1,32 +1,5 @@
 <?php 
 	//
-	//clone from github the latest versin of Debugger and the project of user
-	function clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit){
-		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$relativeToUserRoot."\\proj.log", "w"));
-		pclose(popen($startGit." ".$amirGit." ".$DebuugerRoot."Debugger 2>".$relativeToUserRoot."\\Debugger.log", "w"));
-		file_put_contents($relativeToUserRoot."/goD.sh", "#!/bin/bash\n tail -n 1 Debugger.log");
-		file_put_contents($relativeToUserRoot."/goG.sh", "#!/bin/bash\n tail -n 1 proj.log");
-		return json_return($returnJson,0,"wait 5 minites and check clone");
-	}
-	//
-	//check if clone task is done.
-	function check_if_clone_is_done($returnJson,$relativeToUserRoot){
-		$old_path = getcwd();
-		chdir($relativeToUserRoot);
-		$output = shell_exec('bash goD.sh');
-		$output1 = shell_exec('bash goG.sh');
-		$flag1 = strpos($output, "done");
-		$flag2 =strpos($output, "Checking out files: 100%");
-		$flag3 = strpos($output1, "done");
-		$flag4 = strpos($output1, "Checking out files: 100%");
-		if ($flag1 && $flag2 && $flag3 && $flag4){
-			$returnJson = json_return($returnJson,0,"all cloned");		
-		}else {
-			$returnJson = json_return($returnJson,1,"did not finish");
-		}
-		return $returnJson;		
-	}
-	//
 	//put the scv file in the right place.
 	function put_bug_file_in_place($fileObj,$relativeToUserRoot){
 		$tmp_name = $fileObj["tmp_name"];

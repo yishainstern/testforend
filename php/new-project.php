@@ -1,32 +1,59 @@
 <?php		
-	function start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers){
-		if ((is_dir('users/'.$folderNmae)==TRUE)){
+	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot){
+		if ((is_dir($folderRoot)==TRUE)){
 			$returnJson['status'] = 1;
-			$returnJson['message'] = "there is a folder like this alredy, pick a new name";
+			$returnJson['message'] = "you have already a project with this name, pick a new name";
 		}else{
-			if (is_dir('../users/'.$folderNmae)||is_dir('users/'.$folderNmae))
-			{
-    			$returnJson['status'] = 2;
-				$returnJson['message'] = "Faild to creat the folder for ".$folderNmae;
-			}else {
-				mkdir($relativeToUserRoot, 0777, true);
-				chmod($relativeToUserRoot, 0777);
-				mkdir($localUsers, 0777, true);
-				chmod($localUsers, 0777);
-				mkdir($relativeToUserRoot.'/rootGit', 0777, true);
-				chmod($relativeToUserRoot.'/rootGit', 0777);
-				mkdir($relativeToUserRoot.'/rootGitOnline', 0777, true);
-				chmod($relativeToUserRoot.'/rootGitOnline', 0777);
-				mkdir($relativeToUserRoot.'/rootBugs', 0777, true);
-				chmod($relativeToUserRoot.'/rootBugs', 0777);
-				mkdir($relativeToUserRoot.'/rootLearn', 0777, true);
-				chmod($relativeToUserRoot.'/rootLearn', 0777);
-				mkdir($relativeToUserRoot.'/out', 0777, true);
-				chmod($relativeToUserRoot.'/out', 0777);
-				$returnJson['status'] = 0;
-				$returnJson['message'] = "create folder, ".$folderNmae." lets clone :)";		
-			}
+/*			mkdir($relativeToUserRoot, 0777, true);
+			chmod($relativeToUserRoot, 0777);
+			mkdir($localUsers, 0777, true);
+			chmod($localUsers, 0777);
+			mkdir($relativeToUserRoot.'/rootGit', 0777, true);
+			chmod($relativeToUserRoot.'/rootGit', 0777);
+			mkdir($relativeToUserRoot.'/rootGitOnline', 0777, true);
+			chmod($relativeToUserRoot.'/rootGitOnline', 0777);
+			mkdir($relativeToUserRoot.'/rootBugs', 0777, true);
+			chmod($relativeToUserRoot.'/rootBugs', 0777);
+			mkdir($relativeToUserRoot.'/rootLearn', 0777, true);
+			chmod($relativeToUserRoot.'/rootLearn', 0777);
+			mkdir($relativeToUserRoot.'/out', 0777, true);
+			chmod($relativeToUserRoot.'/out', 0777);
+*/			
+			mkdir($folderRoot, 0777, true);
+			mkdir($userProjectRoot, 0777, true);
+			mkdir($DebuugerRoot, 0777, true);
+			mkdir($outputPython, 0777, true);
+			mkdir($runingRoot, 0777, true);
+			$returnJson['status'] = 0;
+			$returnJson['message'] = "created folders, lets clone :)";		
 		}
 		return $returnJson;
+	}
+	//
+	//clone from github the latest versin of Debugger and the project of user
+	function clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot){
+		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$runingRoot."\\proj.log", "w"));
+		pclose(popen($startGit." ".$amirGit." ".$DebuugerRoot."Debugger 2>".$runingRoot."\\Debugger.log", "w"));
+		file_put_contents($runingRoot."\\goD.sh", "#!/bin/bash\n tail -n 1 Debugger.log");
+		file_put_contents($runingRoot."\\goG.sh", "#!/bin/bash\n tail -n 1 proj.log");
+		return json_return($returnJson,0,"wait 5 minites and check clone");
+	}
+	//
+	//check if clone task is done.
+	function check_if_clone_is_done($returnJson,$relativeToUserRoot){
+		$old_path = getcwd();
+		chdir($relativeToUserRoot);
+		$output = shell_exec('bash goD.sh');
+		$output1 = shell_exec('bash goG.sh');
+		$flag1 = strpos($output, "done");
+		$flag2 =strpos($output, "Checking out files: 100%");
+		$flag3 = strpos($output1, "done");
+		$flag4 = strpos($output1, "Checking out files: 100%");
+		if ($flag1 && $flag2 && $flag3 && $flag4){
+			$returnJson = json_return($returnJson,0,"all cloned");		
+		}else {
+			$returnJson = json_return($returnJson,1,"did not finish");
+		}
+		return $returnJson;		
 	}
 ?>

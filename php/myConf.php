@@ -5,10 +5,13 @@
 		$task = '';
 	}
 	if (isset($_POST["gitName"])){
-		$gitUrl = $_POST["gitName"];
 		$gitName = $_POST["gitName"];
 	}else{
-		$gitName = '';			
+		$gitName = '';					
+	}
+	if (isset($_POST["gitUrl"])){
+		$gitUrl = $_POST["gitUrl"];
+	}else{
 		$gitUrl = '';
 	}
 	if (isset($_POST["id"])){
@@ -40,13 +43,19 @@
 		$pomPath = $_POST["pomPath"];
 	}else{
 		$pomPath = '';
-	}				 	
+	}
+	if (isset($_POST["project_description"])){
+		$discription = $_POST["project_description"];
+	}else{
+		$discription = '';
+	}
 	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
 	$userNameRoot = $root.$userName.'\\';
-	$folderRoot = $root.$folderNmae.'\\';
+	$folderRoot = $userNameRoot.$folderNmae.'\\';
 	$userProjectRoot = $folderRoot.'rootGit\\';
 	$DebuugerRoot = $folderRoot.'rootLearn\\';
-	$outputPython = $folderRoot.'out';
+	$outputPython = $folderRoot.'out\\';
+	$runingRoot = $folderRoot.'run\\'; 
 	$relativeToUserRoot = '..\\users\\'.$folderNmae;
 	$localUsers = 'users\\'.$folderNmae;
 	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";

@@ -11,7 +11,7 @@
 	$returnJson = array();
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
-		$returnJson = start_and_prepare_folders($returnJson,$folderNmae,$relativeToUserRoot,$localUsers);
+		$returnJson = start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot);
 	}elseif ($task=='sgin_up') {
 		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task =='get_user_list') {
@@ -19,7 +19,7 @@
 	}elseif ($task=='log_in') {
 		$returnJson = log_in($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='clone_git') {
-		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit);
+		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot);
 	}elseif ($task=="check_git"){
 		$returnJson = check_if_clone_is_done($returnJson,$relativeToUserRoot);
 	}elseif ($task=="add_version") {
