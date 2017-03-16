@@ -15,33 +15,22 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="new-project">
-                            <div class="form-group">
-                                <label for="disabledSelect">User name</label>
-                                <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" ng-model="project_details.userName" name="userName" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label>uniq folder name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project_details.folderName" name="id">
-                            </div>
-                            <div class="form-group">
-                                <label>project disciption</label>
-                                <textarea class="form-control" rows="4" ng-model="project_details.project_description" name="project_description"></textarea>
-                            </div>
+                        <form role="form" name="clone-project">
+                            <input type="hidden" name="userName" value="{{user.details.userName}}">
+                            <input type="hidden" name="id" value="{{project.details.name}}">
                             <div class="form-group">
                                 <label>git name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project_details.projectName" name="gitName" />
+                                <input class="form-control" placeholder="Enter text" ng-model="clone_details.projectName" name="gitName" />
                             </div>                            
                             <div class="form-group">
                                 <label>git url</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project_details.gitUrl" name="gitUrl">
+                                <input class="form-control" placeholder="Enter text" ng-model="clone_details.gitUrl" name="gitUrl">
                             </div>
-
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
                                 <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="clone_project()">add new project</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>                            
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="could_check_clone" ng-click="check_clone()">auto fill</button>
                         </form>
                     </div>

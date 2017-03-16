@@ -44,6 +44,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
         data = JSON.parse(data);
         if (data && data.status && data.status==111){
             $rootScope.user = data.user;
+            console.log($rootScope.user);
         }
     },function(data){
         console.log(data);

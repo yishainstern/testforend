@@ -49,7 +49,9 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
     				.then(function(data){
         				data = JSON.parse(data);
         				if (data && data.project && data.project.details && data.project.details.progress){
-        					$rootScope.project = data.project; }
+        					$rootScope.project = data.project; 
+        					console.log($rootScope.project);
+        				}
     				},function(data){console.log(data);});    	
 					}else{/*keep going*/}
 			},1500);
