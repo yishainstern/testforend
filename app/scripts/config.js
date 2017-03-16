@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', function ($rootScope, $state, $timeout) {
+angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', 'service', function ($rootScope, $state, $timeout, service) {
 	//yishai computer
 	$rootScope.server_domain = 'http://local.test/index.php';
 	//windows server
@@ -28,5 +28,24 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		list:[]
 	}
 
-	$rootScope.project = [];
+	$rootScope.project = {};
+
+
+    var form_data = new FormData();
+    if (!$rootScope.user.details.name || !$rootScope.user.details.password){
+        $rootScope.user.details.name = localStorage.getItem('name');
+        $rootScope.user.details.password = localStorage.getItem('password');
+    }    
+    form_data.append('userName',$rootScope.user.details.name);
+    form_data.append('password',$rootScope.user.details.password);
+    service.ajaxfunc('get_user_list','',form_data)
+    .then(function(data){
+        data = JSON.parse(data);
+        if (data && data.status && data.status==111){
+            $rootScope.user = data.user;
+        }
+    },function(data){
+        console.log(data);
+    });
+
 }]);

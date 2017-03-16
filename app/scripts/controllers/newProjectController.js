@@ -26,11 +26,17 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }
 
     $scope.success_new_project = function(data){
-        if (data.status==111){
-            $state.transitionTo('dashboard.project');
+        if (data && data.status==111){
+            $rootScope.user = data.user;
+            $rootScope.project = data.project;
+            $state.transitionTo('dashboard.project',{id:$scope.project_details.folderName});
 //            service.ajaxfunc('clone_git','new-project',false)
 //            .then(function(data){$scope.success_clone(data);}, 
 //            function(data){$scope.fail_clone(data);});
+        }else if (data && data.status==1){
+            $scope.display_new_project_text = 'this name already exits...try a diffrent name';    
+            $scope.new_project_error = true;
+            $scope.new_project_success = false;            
         }
     }
 
@@ -39,9 +45,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }
 
     $scope.success_clone = function(data){
-        $scope.display_new_project_text = 'press the check buttin in 5 minites and check if clone is done';    
-        $scope.new_project_error = false;
-        $scope.new_project_success = true;
+
     }
 
     $scope.check_clone = function(){
@@ -54,7 +58,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
 
     $scope.create_new_project = function(){
         service.ajaxfunc('open_folder','new-project',false)
-        .then(function(data){$scope.success_new_project(data);},
+        .then(function(data){$scope.success_new_project(JSON.parse(data));},
             function(data){$scope.fail_new_project(data);});
     }
     $scope.project_details.userName = localStorage.getItem('name');

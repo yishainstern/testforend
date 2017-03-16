@@ -146,13 +146,13 @@ angular
     })
       .state('dashboard.project',{
         templateUrl:'views/pages/project-page.html',
-        url:'/project',
+        url:'/project/:id',
         controller:'projectController',
         resolve: {
           loadMyFile:function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 name:'sbAdminApp',
-                files:['scripts/controllers/projectController.js','styles/project.css']
+                files:['scripts/controllers/projectController.js','styles/project.css','scripts/directives/timeline/timeline.js']
             })
           }
         }

@@ -1,10 +1,17 @@
 <?php	
 
 	function update_user_details($userNameRoot,$folderName,$discription){
+		//echo ($userNameRoot.'user_details.json '."\n");
 		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
-		$str->list[$folderName] = new stdClass();
-		$str->list[$folderName]->name = $folderName;
-		$str->list[$folderName]->discription = $discription;
+		//var_dump($str);
+		//echo (is_array($str->list));
+		$arr = $str->list;
+		$count = sizeof($arr);
+		$obj = new stdClass();
+		$obj->name = $folderName;
+		$obj->discription = $discription;
+		$arr[$count] = $obj; 
+		$str->list = $arr;
 		file_put_contents($userNameRoot.'user_details.json',json_encode($str));
 		return $str;
 	}
@@ -16,18 +23,18 @@
 		$obj->details->discription = $discription;
 		$obj->details->progress = array();
 		$obj->details->progress[0] = (object) array('flag'=>TRUE,'name'=>'create_folders');
-		$obj->details->progress[1] = (object) array('flag'=>FALSE,'name'=>'clone');
-		$obj->details->progress[2] = (object) array('flag'=>FALSE,'name'=>'start_offline');
-		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'end_offline');
-		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'start_testing');
-		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'end_testing');
-		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		$obj->details->progress[1] = (object) array('flag'=>FALSE,'name'=>'start_clone');
+		$obj->details->progress[2] = (object) array('flag'=>FALSE,'name'=>'end_clone');
+		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'start_offline');
+		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'end_offline');
+		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'start_testing');
+		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'end_testing');
+		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $obj;
 	}
 
 	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription){
-		echo($folderRoot);
 		if ((is_dir($folderRoot)==TRUE)){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "you have already a project with this name, pick a new name";
@@ -39,7 +46,7 @@
 			mkdir($runingRoot, 0777, true);
 			$user_details = update_user_details($userNameRoot,$folderName,$discription);
 			$project_details = update_project_details($folderName,$discription,$folderRoot);
-			$returnJson['status'] = 0;
+			$returnJson['status'] = 111;
 			$returnJson['message'] = "created folders, lets clone :)";		
 			$returnJson['user'] = $user_details;
 			$returnJson['project'] = $project_details;
