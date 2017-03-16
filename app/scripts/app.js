@@ -159,7 +159,7 @@ angular
     })
       .state('dashboard.clone',{
         templateUrl:'views/pages/clone.html',
-        url:'/clone',
+        url:'/clone/:id',
         controller:'cloneController',
         resolve: {
           loadMyFile:function($ocLazyLoad) {

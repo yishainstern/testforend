@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp').factory('service', ['$rootScope', '$http', '$q', '$state', '$timeout', function ($rootScope, $http, $q, $state, $timeout) {
+angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$http', '$q', '$state', '$timeout','$stateParams', function ($interval, $rootScope, $http, $q, $state, $timeout, $stateParams) {
 	return {
 		ajaxfunc: function(task,form_name,form_data){
 			var deferred = $q.defer();
@@ -34,7 +34,26 @@ angular.module('sbAdminApp').factory('service', ['$rootScope', '$http', '$q', '$
         		} 
     		});
             return deferred.promise;
-		},		
+		},
+		intervalfunc:function(delegate){
+			stop = $interval(function() {
+				if ($rootScope.user.details.first_name && $rootScope.user.details.password){
+					//stop interval
+					$interval.cancel(stop);
+	        		stop = undefined;
+					var form_data = new FormData();
+    				form_data.append('userName',$rootScope.user.details.userName);
+    				form_data.append('password',$rootScope.user.details.password);
+    				form_data.append('id',$stateParams.id);
+    				delegate.ajaxfunc('get_project_progress','',form_data)
+    				.then(function(data){
+        				data = JSON.parse(data);
+        				if (data && data.project && data.project.details && data.project.details.progress){
+        					$rootScope.project = data.project; }
+    				},function(data){console.log(data);});    	
+					}else{/*keep going*/}
+			},1500);
+		},
 		check: function(){
 			alert('sadsa');
 		}

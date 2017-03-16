@@ -11,4 +11,12 @@
 		}
 		return $returnJson;
 	}
+
+	function get_project_progress($folderRoot){
+		$str = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		$returnJson['project'] = $str; 
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "got the progress";	
+		return $returnJson;	
+	}
 ?>

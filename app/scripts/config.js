@@ -13,13 +13,14 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 
 	//disciption of array 
 	$rootScope.level_discirption = {
-		create_folders:'create folders in server file system for your project',
-		clone:'clone your project from git to our server',
-		start_offline:'use your code as a data base to do a offline learning of the code',
-		end_offline:'code studing is done',
-		start_testing:'run maven in the server to test you code and get failers of the code with maven and surfire',
-		end_testing:'maven task was done and we have some file with discription of failers',
-		get_prediction:'get a prediction of your code'
+		create_folders:{text:'create folders in our server file system were we will store your project',title:'create folders'},
+		start_clone:{text:'clone your project from git to our server file system',title:'start clone'},
+		end_clone:{text:'checking if the clone task is done',title:'end clone'},
+		start_offline:{text:'use your code as a data-base to do a offline learning of the code',title:'start offline'},
+		end_offline:{text:'code studing in offline is done',title:'end offline'},
+		start_testing:{text:'run maven in the server to test you code and get failers of the code with maven and surfire',title:'start testing'},
+		end_testing:{text:'maven task was done and we have some file with discription of failers',title:'end testing'},
+		get_prediction:{text:'get a prediction of your code',title:'get prediction'}
 	}
 
 	//user obj
@@ -32,11 +33,11 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 
 
     var form_data = new FormData();
-    if (!$rootScope.user.details.name || !$rootScope.user.details.password){
-        $rootScope.user.details.name = localStorage.getItem('name');
+    if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
+        $rootScope.user.details.userName = localStorage.getItem('name');
         $rootScope.user.details.password = localStorage.getItem('password');
     }    
-    form_data.append('userName',$rootScope.user.details.name);
+    form_data.append('userName',$rootScope.user.details.userName);
     form_data.append('password',$rootScope.user.details.password);
     service.ajaxfunc('get_user_list','',form_data)
     .then(function(data){

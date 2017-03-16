@@ -16,6 +16,8 @@
 		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot,$first_name,$last_name);
 	}elseif ($task =='get_user_list') {
 		$returnJson = get_user_list($returnJson,$userName,$password,$userNameRoot);
+	}elseif ($task=='get_project_progress') {
+		$returnJson = get_project_progress($folderRoot);
 	}elseif ($task=='log_in') {
 		$returnJson = log_in($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='clone_git') {
