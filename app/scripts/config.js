@@ -21,7 +21,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		start_testing:{text:'run maven in the server to test you code and get failers of the code with maven and surfire',title:'start testing'},
 		end_testing:{text:'maven task was done and we have some file with discription of failers',title:'end testing'},
 		get_prediction:{text:'get a prediction of your code',title:'get prediction'},
-		upload_bug_file:{text:'upload a csv file from bugzila of known bugs',title:'upload bug file'}
+		upload_bug_files:{text:'upload a csv file from bugzila of known bugs and tell us the versions you want us to check',title:'upload bug files'}
 	}
 
 	//user obj

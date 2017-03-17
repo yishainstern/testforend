@@ -13,8 +13,42 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		$state.transitionTo('enter');
  	}
 
+ 	$scope.get_state = function(str){
+ 		switch (str){
+ 			case 'create_folders':
+ 				return null;
+ 			break;
+ 			case 'start_clone':
+ 				return 'dashboard.clone';
+ 			break;
+ 			case 'end_clone':
+ 				return 'dashboard.clone';
+ 			break;
+ 			case 'upload_bug_files':
+ 				return 'dashboard.prepareOffline';
+ 			break;
+ 			case 'get_prediction':
 
+ 			break;
+ 			case 'end_testing':
+
+ 			break;
+ 			case 'start_offline':
+
+ 			break;
+ 			case 'start_testing':
+
+ 			break;
+ 			case 'end_offline':
+
+ 			break;
+
+
+ 		}
+ 	}
+//    
 	$scope.task_page = function(state,params){
+		state = $scope.get_state(state);
 		$state.transitionTo(state,{id:params});
 	}
 

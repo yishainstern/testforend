@@ -157,6 +157,19 @@ angular
           }
         }
     })
+      .state('dashboard.prepareOffline',{
+        templateUrl:'views/pages/prepare-offline.html',
+        url:'/prepareOffline/:id',
+        controller:'prepareOfflineController',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/prepareOfflineController.js','styles/prepareOffline.css']
+            })
+          }
+        }
+    })      
       .state('dashboard.clone',{
         templateUrl:'views/pages/clone.html',
         url:'/clone/:id',

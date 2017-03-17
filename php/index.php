@@ -27,7 +27,7 @@
 	}elseif ($task=="check_clone"){
 		$returnJson = check_if_clone_is_done($returnJson,$runingRoot,$folderRoot);
 	}elseif ($task=="add_version") {
-		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae);
+		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderName,$runingRoot);
 	}elseif ($task=="run_Python") {
 		$returnJson = run_python_code($domain,$folderNmae);
 	}elseif ($task=="run_Pom") {

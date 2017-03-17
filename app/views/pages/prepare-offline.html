@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">prepare offline task</h1>
+        <button type="button" class="btn btn-success" ng-click="project_page()" style="position: absolute; top: 0px; right: 0px;">project page</button>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                offline details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12" style="direction: rtl;">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form role="form" name="files" ng-class="{'has-error':false}">
+                            <input type="hidden" name="userName" value="{{user.details.userName}}">
+                            <input type="hidden" name="id" value="{{project.details.name}}">
+                            <div class="form-group">
+                                <label>witch versions to check ANT_170,ANT_170_B1,ANT_171</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.ver" name="ver" />
+                            </div>                            
+                            <div class="form-group">
+                                <label>csv bug file (from bugzila etc...)</label>
+                                <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="upload_files()">Upload Files</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
