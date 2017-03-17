@@ -55,28 +55,43 @@
 	}
 	//
 	//clone from github the latest versin of Debugger and the project of user
-	function clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot){
+	function clone_from_git_to_server($returnJson, $DebuugerRoot, $gitUrl, $startGit, $userProjectRoot, $gitName, $relativeToUserRoot, $amirGit, $runingRoot, $folderRoot){
 		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$runingRoot."\\proj.log", "w"));
 		pclose(popen($startGit." ".$amirGit." ".$DebuugerRoot."Debugger 2>".$runingRoot."\\Debugger.log", "w"));
 		file_put_contents($runingRoot."\\goD.sh", "#!/bin/bash\n tail -n 1 Debugger.log");
 		file_put_contents($runingRoot."\\goG.sh", "#!/bin/bash\n tail -n 1 proj.log");
-		return json_return($returnJson,0,"wait 5 minites and check clone");
+		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		$obj->details->gitName = $gitName;
+		$obj->details->gitUrl = $gitUrl;
+		$obj->details->progress[1]->flag = TRUE;
+		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "wait 5 minites and check clone";
+		$returnJson['project'] = $obj; 
+		return $returnJson;
 	}
 	//
 	//check if clone task is done.
-	function check_if_clone_is_done($returnJson,$relativeToUserRoot){
+	function check_if_clone_is_done($returnJson,$runingRoot){
 		$old_path = getcwd();
-		chdir($relativeToUserRoot);
+		chdir($runingRoot);
 		$output = shell_exec('bash goD.sh');
 		$output1 = shell_exec('bash goG.sh');
 		$flag1 = strpos($output, "done");
 		$flag2 =strpos($output, "Checking out files: 100%");
 		$flag3 = strpos($output1, "done");
 		$flag4 = strpos($output1, "Checking out files: 100%");
+		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 		if ($flag1 && $flag2 && $flag3 && $flag4){
-			$returnJson = json_return($returnJson,0,"all cloned");		
+			$obj->details->progress[2]->flag = TRUE;
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "all cloned";
+			$returnJson['project'] = $obj; 
 		}else {
-			$returnJson = json_return($returnJson,1,"did not finish");
+			//$obj->details->try_agin = TRUE;
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "did not finish cloning, check agin in 5 minites";
+			$returnJson['project'] = $obj;
 		}
 		return $returnJson;		
 	}

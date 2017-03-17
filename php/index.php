@@ -21,9 +21,9 @@
 	}elseif ($task=='log_in') {
 		$returnJson = log_in($returnJson,$userName,$password,$userNameRoot);
 	}elseif ($task=='clone_git') {
-		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot);
-	}elseif ($task=="check_git"){
-		$returnJson = check_if_clone_is_done($returnJson,$relativeToUserRoot);
+		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot);
+	}elseif ($task=="check_clone"){
+		$returnJson = check_if_clone_is_done($returnJson,$runingRoot);
 	}elseif ($task=="add_version") {
 		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae);
 	}elseif ($task=="run_Python") {

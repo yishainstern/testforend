@@ -15,23 +15,23 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="clone-project">
+                        <form role="form" name="clone-project" ng-class="{'has-error':new_clone_error}">
                             <input type="hidden" name="userName" value="{{user.details.userName}}">
                             <input type="hidden" name="id" value="{{project.details.name}}">
                             <div class="form-group">
                                 <label>git name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="clone_details.projectName" name="gitName" />
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" />
                             </div>                            
                             <div class="form-group">
                                 <label>git url</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="clone_details.gitUrl" name="gitUrl">
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl">
                             </div>
-                            <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
-                                <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
+                            <div class="" ng-class="{'has-error':new_clone_error, 'has-success':new_clone_success}">
+                                <label class="control-label" ng-show="new_clone_error || new_clone_success">{{display_clone_text}}</label>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="clone_project()">add new project</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[1].flag" ng-click="clone_project()">Clone Project</button>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>                            
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="could_check_clone" ng-click="check_clone()">auto fill</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[1].flag" ng-click="check_clone()">ckeck clone</button>
                         </form>
                     </div>
                 </div>
