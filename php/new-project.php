@@ -25,11 +25,12 @@
 		$obj->details->progress[0] = (object) array('flag'=>TRUE,'name'=>'create_folders');
 		$obj->details->progress[1] = (object) array('flag'=>FALSE,'name'=>'start_clone');
 		$obj->details->progress[2] = (object) array('flag'=>FALSE,'name'=>'end_clone');
-		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'start_offline');
-		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'end_offline');
-		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'start_testing');
-		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'end_testing');
-		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'upload_bug_file');
+		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'start_offline');
+		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'end_offline');
+		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'start_testing');
+		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'end_testing');
+		$obj->details->progress[8] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $obj;
 	}
@@ -72,7 +73,7 @@
 	}
 	//
 	//check if clone task is done.
-	function check_if_clone_is_done($returnJson,$runingRoot){
+	function check_if_clone_is_done($returnJson,$runingRoot,$folderRoot){
 		$old_path = getcwd();
 		chdir($runingRoot);
 		$output = shell_exec('bash goD.sh');
@@ -81,18 +82,29 @@
 		$flag2 =strpos($output, "Checking out files: 100%");
 		$flag3 = strpos($output1, "done");
 		$flag4 = strpos($output1, "Checking out files: 100%");
+		$flag5 = strpos($output, "Fatal");
+		$flag6 = strpos($output1, "Fatal");
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 		if ($flag1 && $flag2 && $flag3 && $flag4){
 			$obj->details->progress[2]->flag = TRUE;
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "all cloned";
 			$returnJson['project'] = $obj; 
+		}else if ($flag5 || $flag6){
+			$obj->details->try_agin = TRUE;
+			$returnJson['status'] = 2;
+			$returnJson['message'] = 'some failer in server try agin....';
+			$returnJson['project'] = $obj;
 		}else {
-			//$obj->details->try_agin = TRUE;
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "did not finish cloning, check agin in 5 minites";
 			$returnJson['project'] = $obj;
 		}
+		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $returnJson;		
+	}
+
+	function try_agin($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot){
+		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot);
 	}
 ?>

@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', 'service', function ($rootScope, $state, $timeout, service) {
+angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', 'service', '$stateParams', function ($rootScope, $state, $timeout, service, $stateParams) {
 	//yishai computer
 	$rootScope.server_domain = 'http://local.test/index.php';
 	//windows server
@@ -20,7 +20,8 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		end_offline:{text:'code studing in offline is done',title:'end offline'},
 		start_testing:{text:'run maven in the server to test you code and get failers of the code with maven and surfire',title:'start testing'},
 		end_testing:{text:'maven task was done and we have some file with discription of failers',title:'end testing'},
-		get_prediction:{text:'get a prediction of your code',title:'get prediction'}
+		get_prediction:{text:'get a prediction of your code',title:'get prediction'},
+		upload_bug_file:{text:'upload a csv file from bugzila of known bugs',title:'upload bug file'}
 	}
 
 	//user obj
@@ -31,6 +32,12 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 
 	$rootScope.project = {};
 
+	//project page 
+	$rootScope.project_page = function(){
+		if ($rootScope.project.details.name){
+			$state.transitionTo('dashboard.project',{id:$rootScope.project.details.name});	
+		}
+	}
 
     var form_data = new FormData();
     if (!$rootScope.user.details.userName || !$rootScope.user.details.password){

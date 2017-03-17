@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Cloning task</h1>
+        <button type="button" class="btn btn-success" ng-click="project_page()" style="position: absolute; top: 0px; right: 0px;">project page</button>
     </div>  
     <!-- /.col-lg-12 -->
 </div>
@@ -11,8 +12,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 cloning details
+
             </div>
             <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12" style="direction: rtl;">
+                        
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-8">
                         <form role="form" name="clone-project" ng-class="{'has-error':new_clone_error}">
@@ -32,6 +39,7 @@
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[1].flag" ng-click="clone_project()">Clone Project</button>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>                            
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[1].flag" ng-click="check_clone()">ckeck clone</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.try_agin" ng-click="check_clone()">try agin</button>
                         </form>
                     </div>
                 </div>

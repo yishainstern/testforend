@@ -10,7 +10,6 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
  	service.intervalfunc(service);
  	$scope.new_clone_error=false;
  	$scope.new_clone_success=false;
- 	$scope.try_agin=false;
     $scope.clone_details = {};
     $scope.yishaifill = {
         name: 'ant',
@@ -38,6 +37,11 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
     		$scope.new_clone_success = true;
     		$scope.display_clone_text = obj.message;
     	}else if(obj.status == 1){
+    		$scope.new_clone_error = true;
+    		$scope.display_clone_text = obj.message;
+    		$scope.try_agin = true;
+    		$rootScope.project = obj.project;
+    	}else if(obj.status == 2){
     		$scope.new_clone_error = true;
     		$scope.display_clone_text = obj.message;
     		$scope.try_agin = true;

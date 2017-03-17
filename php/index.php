@@ -12,6 +12,8 @@
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
 		$returnJson = start_and_prepare_folders($folderRoot, $userProjectRoot, $DebuugerRoot, $outputPython, $runingRoot, $userNameRoot,$folderName,$discription);
+	}elseif ($task=='try_agin') {
+		$returnJson = try_agin($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot);
 	}elseif ($task=='sgin_up') {
 		$returnJson = sign_up_new_user($returnJson,$userName,$password,$userNameRoot,$first_name,$last_name);
 	}elseif ($task =='get_user_list') {
@@ -23,7 +25,7 @@
 	}elseif ($task=='clone_git') {
 		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot);
 	}elseif ($task=="check_clone"){
-		$returnJson = check_if_clone_is_done($returnJson,$runingRoot);
+		$returnJson = check_if_clone_is_done($returnJson,$runingRoot,$folderRoot);
 	}elseif ($task=="add_version") {
 		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae);
 	}elseif ($task=="run_Python") {
