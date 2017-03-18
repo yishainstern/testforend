@@ -64,6 +64,7 @@
 	$folderRoot = $userNameRoot.$folderName.'\\';
 	$userProjectRoot = $folderRoot.'rootGit\\';
 	$DebuugerRoot = $folderRoot.'rootLearn\\';
+	$bugRoot = $folderRoot.'rootBugs\\';
 	$outputPython = $folderRoot.'out\\';
 	$runingRoot = $folderRoot.'run\\'; 
 	$relativeToUserRoot = '..\\users\\'.$folderName;

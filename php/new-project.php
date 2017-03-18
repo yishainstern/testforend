@@ -45,6 +45,7 @@
 			mkdir($DebuugerRoot, 0777, true);
 			mkdir($outputPython, 0777, true);
 			mkdir($runingRoot, 0777, true);
+			mkdir($bugRoot, 0777, true);
 			$user_details = update_user_details($userNameRoot,$folderName,$discription);
 			$project_details = update_project_details($folderName,$discription,$folderRoot);
 			$returnJson['status'] = 111;

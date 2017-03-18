@@ -15,22 +15,20 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-12" style="direction: rtl;">
-                        
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="files" ng-class="{'has-error':false}">
+                        <form role="form" name="files" ng-class="{'has-error':upload_error}">
                             <input type="hidden" name="userName" value="{{user.details.userName}}">
                             <input type="hidden" name="id" value="{{project.details.name}}">
                             <div class="form-group">
                                 <label>witch versions to check ANT_170,ANT_170_B1,ANT_171</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.ver" name="ver" />
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.versions" name="ver" />
                             </div>                            
                             <div class="form-group">
                                 <label>csv bug file (from bugzila etc...)</label>
-                                <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile">
+                                <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile" onchange="angular.element(this).scope().uploadFile(this.files)">
+                            </div>
+                            <div class="" ng-class="{'has-error':upload_error, 'has-success':upload_success}">
+                                <label class="control-label" ng-show="upload_error || upload_success">{{display_upload_text}}</label>
                             </div>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="upload_files()">Upload Files</button>
                         </form>
