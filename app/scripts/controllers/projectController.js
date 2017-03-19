@@ -34,7 +34,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
 
  			break;
  			case 'start_offline':
-
+ 				return 'dashboard.runOffline';
  			break;
  			case 'start_testing':
 

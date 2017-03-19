@@ -1,7 +1,7 @@
 <?php
 	//
 	//updates the pom file
-	function pastPom($str,$jar,$path){
+	function pastPom($str,$jar,$path,$returnJson){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
 		if(file_exists($str)){
@@ -34,7 +34,7 @@
     		}
             if($flag==TRUE){
                 $dom->save($str);
-                echo "changed ".$str."\n";
+                $returnJson['data'][sizeof($returnJson['data'])]= $str;
             }
     	}
 	}
@@ -44,20 +44,26 @@
 		$str = $userProjectRoot.$gitName."\\".$pomPath;
 		exec("dir /s /b " .$str."\*pom.xml* > ".$relativeToUserRoot."\\log.txt");
 		$arr = explode("\n",file_get_contents($relativeToUserRoot."\\log.txt"));
+		$returnJson['data'] = array();
 		for ($i=0; $i < sizeof($arr) ; $i++) { 
 			set_time_limit(20);
 			$pathForJar = $folderRoot.$jarName;
 			$pathForPathtx = $folderRoot."path.txt";
-			pastPom($arr[$i],$pathForJar,$pathForPathtx);
+			$returnJson = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson);
 		}
 		return json_return($returnJson,0,"updated xml files in the maven system");
 	}
 	//
 	//create a jar file from Debbuger program with maven
-	function ctrate_jar_for_online_task($returnJson,$relativeToUserRoot){
+	function ctrate_jar_for_online_task($returnJson,$relativeToUserRoot,$userProjectRoot,$gitName,$pomPath){
+		$old_path = getcwd();
 		set_time_limit(300);
-		$relativeToPoomRoot = $relativeToUserRoot."\\rootLearn\\Debugger\\my-app";
-		exec("mvn -f ".$relativeToPoomRoot." clean install");
+		$relativeToPoomRoot = $relativeToUserRoot."\\rootLearn\\Debugger\\traces";
+		chdir($relativeToPoomRoot);
+		exec("mvn clean install");
+		chdir($userProjectRoot.$gitName."\\".$pomPath);
+		$command = "start /B mvn clean install -fn >getLog.txt";
+		pclose(popen($command, "w"));
 		return json_return($returnJson,0,"jar created");
 	}
 	//
@@ -77,13 +83,13 @@
 	function run_maven($returnJson,$userProjectRoot,$gitName,$pomPath){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName."\\".$pomPath);
-		$command = "start /B mvn clean install --fail-never >getLog.txt";
+		$command = "start /B mvn clean install -fn >getLog.txt";
 		pclose(popen($command, "w"));
 		return json_return($returnJson,0,"maven stated....wait on hour");		
 	}
 	//
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
-	function point_to_version($userProjectRoot,$gitName,$newVersion){
+	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
 		$command = "start /B git checkout ".$newVersion." 2>newVersion.txt";
@@ -92,10 +98,11 @@
 	}
 	//
 	//check if the version is the right one.
-	function check_version($userProjectRoot,$gitName){
+	function check_version($returnJson,$userProjectRoot,$gitName){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
 		$command = "git branch 2>branch.txt";
+		set_time_limit(100);
 		$checher = exec($command);
 		return json_return($returnJson,0,$checher);
 	}

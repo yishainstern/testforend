@@ -170,6 +170,19 @@ angular
           }
         }
     })      
+      .state('dashboard.runOffline',{
+        templateUrl:'views/pages/run-offline.html',
+        url:'/runOffline/:id',
+        controller:'runOfflineController',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/runOfflineController.js','styles/runOffline.css']
+            })
+          }
+        }
+    })            
       .state('dashboard.clone',{
         templateUrl:'views/pages/clone.html',
         url:'/clone/:id',

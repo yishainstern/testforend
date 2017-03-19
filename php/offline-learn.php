@@ -8,23 +8,13 @@
         move_uploaded_file($tmp_name, $bugRoot."\\".$name);
         chmod($uploadDir."\\".$name, 0777);
         return $name;
-/*		foreach ($_FILES["csvFile"]["error"] as $key => $error) {
-		    if ($error == UPLOAD_ERR_OK) {
-		        $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
-		        // basename() may prevent filesystem traversal attacks;
-		        // further validation/sanitation of the filename may be appropriate
-		        $name = basename($_FILES["csvFile"]["name"][$key]);
-		        move_uploaded_file($tmp_name, $folderRoot.$name);
-		    }
-		}
-*/
 	}
 	//
 	//create antConf.txt that contains all the paths that are needed for the Python project.
 	function creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot){
         $str = 'workingDir='.$outputPython."\r\n";
         $str = $str.'git='.$userProjectRoot.$gitName."\r\n";
-        $str = $str.'bugs='.$folderRoot."\\rootBugs\\".$name."\r\n";
+        $str = $str.'bugs='.$folderRoot."rootBugs\\".$name."\r\n";
         $str = $str."vers=(". $all_versions.")";
         file_put_contents($DebuugerRoot."Debugger\\learner\\antConf.txt",$str); 
 	}
@@ -63,8 +53,8 @@
 	}
 	//
 	//use http get request to run the python project.
-	function run_python_code($domain,$folderNmae){
-		$opts = array(
+	function run_python_code($folderRoot,$learn){
+/*		$opts = array(
   			'http'=>array(
     			'method'=>"GET",
     			'header'=>"Accept-language: en\r\n" .
@@ -75,6 +65,20 @@
 		// Open the file using the HTTP headers set above
 		$file = file_get_contents($domain."/users/".$folderNmae."/index.php", false, $context);
 		return json_return($returnJson,0,"starting offline task....check agin in 7 hours if done");
+*/
+		$old_path = getcwd();
+		echo($old_path);
+		//chdir($learn);
+		//cho(getcwd());
+		$command = "start /B python ../users/qwer/sternyi/rootLearn/Debugger/learner/wrapper.py ../users/qwer/sternyi/rootLearn/Debugger/learner/antConf.txt learn 2>ff.log";
+		pclose(popen($command, "w"));
+		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		$obj->details->progress[4]->flag = TRUE;
+		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+		/*$returnJson['status'] = 111;
+		$returnJson['message'] = "strted...check later";
+		$returnJson['project'] = $obj;
+		return $returnJson;*/
 	}
 
 
