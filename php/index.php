@@ -29,7 +29,9 @@
 	}elseif ($task=="add_version") {
 		$returnJson =add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderName,$runingRoot,$bugRoot);
 	}elseif ($task=="run_Python") {
-		$returnJson = run_python_code($folderRoot,$learn);
+		$returnJson = run_python_code($folderRoot,$learn,$learnDir);
+	}elseif ($task=="check_Python") {
+		$returnJson = check_if_python_end($outputPython,$folderRoot);
 	}elseif ($task=="run_Pom") {
 		$returnJson = update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName);
 	}elseif ($task=="clean_mvn"){

@@ -15,8 +15,27 @@ angular.module('sbAdminApp').controller('runOfflineController', ['$scope', '$tim
 
  
  	$scope.start = function(){
+        $scope.run_success = false;
         service.ajaxfunc('run_Python','run-offline',false)
-        .then(function(data){console.log(JSON.parse(data));},
-            function(data){$scope.fail_new_project(data);}); 		
+        .then(function(data){
+        	data = JSON.parse(data);
+        	console.log(data);
+        	$scope.run_success = true;
+        	$scope.display_run_text = data.message;
+        },function(data){}); 		
  	}
+
+ 	$scope.check = function(){
+        $scope.run_success = false;
+        service.ajaxfunc('check_Python','run-offline',false)
+        .then(function(data){
+        	data = JSON.parse(data);
+        	console.log(data);
+        	$scope.run_success = true;
+        	$scope.display_run_text = data.message;
+        	$rootScope.project = data.project;
+        },function(data){}); 		
+ 	}
+
+
 ;}]);

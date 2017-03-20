@@ -43,9 +43,12 @@
                             <div class="form-group">
                                 <label for="disabledSelect">bug file name</label>
                                 <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.bugFileName"  disabled />
-                            </div>                            
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="start()" ng-show="!project.progress[4]">start task</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="check()" ng-show="project.progress[4]">check if done</button>
+                            </div>
+                            <div class="" ng-class="{'has-error':new_project_error, 'has-success':run_success}">
+                                <label class="control-label" ng-show="run_success">{{display_run_text}}</label>        
+                            </div>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="start()" ng-show="!project.details.progress[4]">start task</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="check()" ng-show="project.details.progress[4]">check if done</button>
                         </form>
                     </div>
                 </div>

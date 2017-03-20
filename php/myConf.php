@@ -74,6 +74,7 @@
 	$startGit = "start /B git clone --progress";
 	$domain = "http://local.test/";
 	$jarName = "uber-my-app-1.0.1-SNAPSHOT.jar";
+	$learnDir = '../users/'.$userName.'/'.$folderName.'/rootLearn/Debugger/learner/';
 	$learn = $DebuugerRoot.'Debugger\\learner';
 	if ($_FILES && $_FILES["csvFile"]){
 		$fileObj = $_FILES["csvFile"];	

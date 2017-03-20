@@ -28,9 +28,12 @@
 		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'upload_bug_file');
 		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'start_offline');
 		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'end_offline');
-		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'start_testing');
-		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'end_testing');
-		$obj->details->progress[8] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'pick_version');
+		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'prepare_jar');
+		$obj->details->progress[8] = (object) array('flag'=>FALSE,'name'=>'prepare_mvn');
+		$obj->details->progress[9] = (object) array('flag'=>FALSE,'name'=>'start_testing');
+		$obj->details->progress[10] = (object) array('flag'=>FALSE,'name'=>'end_testing');
+		$obj->details->progress[11] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $obj;
 	}

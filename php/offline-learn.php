@@ -53,7 +53,36 @@
 	}
 	//
 	//use http get request to run the python project.
-	function run_python_code($folderRoot,$learn){
+	function run_python_code($folderRoot,$learn,$learnDir){
+		$command = 'start /B python '.$learnDir.'wrapper.py '.$learnDir.'antConf.txt learn 2>ff.log';
+		pclose(popen($command, "w"));
+		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		$obj->details->progress[4]->flag = TRUE;
+		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "strted...check later";
+		$returnJson['project'] = $obj;
+		return $returnJson;
+	}
+
+	//check if offline task is over
+	function check_if_python_end($outputPython,$folderRoot){
+		if (file_exists($outputPython.'markers\\learner_phase_file')){
+			$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+			$obj->details->progress[5]->flag = TRUE;
+			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "offline task done";
+			$returnJson['project'] = $obj;
+			return $returnJson;	
+		}else {
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "not done yet//check agin";
+			return $returnJson;	
+		}
+	}
+
+
 /*		$opts = array(
   			'http'=>array(
     			'method'=>"GET",
@@ -66,21 +95,6 @@
 		$file = file_get_contents($domain."/users/".$folderNmae."/index.php", false, $context);
 		return json_return($returnJson,0,"starting offline task....check agin in 7 hours if done");
 */
-		$old_path = getcwd();
-		echo($old_path);
-		//chdir($learn);
-		//cho(getcwd());
-		$command = "start /B python ../users/qwer/sternyi/rootLearn/Debugger/learner/wrapper.py ../users/qwer/sternyi/rootLearn/Debugger/learner/antConf.txt learn 2>ff.log";
-		pclose(popen($command, "w"));
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->progress[4]->flag = TRUE;
-		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-		/*$returnJson['status'] = 111;
-		$returnJson['message'] = "strted...check later";
-		$returnJson['project'] = $obj;
-		return $returnJson;*/
-	}
-
-
-
 ?>
+
+
