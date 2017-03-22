@@ -16,29 +16,35 @@
 		return $str;
 	}
 
+	function get_progress_array(){
+		$ans = array();
+		array_push($ans, (object) array('flag'=>TRUE,'name'=>'create_folders','text'=>'create folders in our server file system were we will store your project', 'title'=>'create folders'));//1
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'start_clone','text'=>'clone your project from git to our server file system', 'title'=>'start_clone'));//2
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'end_clone','text'=>'checking if the clone task is done', 'title'=>'end clone'));//3				
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'upload_bug_file','text'=>'upload a csv file from bugzila of known bugs and tell us the versions you want us to check', 'title'=>'upload bug file'));//4
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'start_offline','text'=>'use your code as a data-base to do a offline learning of the code', 'title'=>'start offline'));//5
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'end_offline','text'=>'code studing in offline is done', 'title'=>'end offline'));//6
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'pick_version','text'=>'pick a version for runing some testes on your code', 'title'=>'pick version'));//7
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'check_version','text'=>'check if the version that was picked is the version that you wanted to be tested', 'title'=>'check version'));//8
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'prepare_jar','text'=>'notify us to prepare a jar to run some tests on your code', 'title'=>'prepare jar'));//9
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'prepare_mvn','text'=>'notify us to get ready all files to run mavn on your ocmputer', 'title'=>'prepare mvn'));//10
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'start_testing','text'=>'run maven in the server to test you code and get failers of the code with maven and surfire', 'title'=>'start testing'));//11
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'end_testing','text'=>'maven task was done and we have some file with discription of failers', 'title'=>'end testing'));//12
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'get_prediction','text'=>'get a prediction of your code', 'title'=>'get prediction'));//13
+		return $ans;
+	}
+
 	function update_project_details($folderName,$discription,$folderRoot){
 		$obj = new stdClass();
 		$obj->details = new stdClass();
 		$obj->details->name = $folderName;
 		$obj->details->discription = $discription;
-		$obj->details->progress = array();
-		$obj->details->progress[0] = (object) array('flag'=>TRUE,'name'=>'create_folders');
-		$obj->details->progress[1] = (object) array('flag'=>FALSE,'name'=>'start_clone');
-		$obj->details->progress[2] = (object) array('flag'=>FALSE,'name'=>'end_clone');
-		$obj->details->progress[3] = (object) array('flag'=>FALSE,'name'=>'upload_bug_file');
-		$obj->details->progress[4] = (object) array('flag'=>FALSE,'name'=>'start_offline');
-		$obj->details->progress[5] = (object) array('flag'=>FALSE,'name'=>'end_offline');
-		$obj->details->progress[6] = (object) array('flag'=>FALSE,'name'=>'pick_version');
-		$obj->details->progress[7] = (object) array('flag'=>FALSE,'name'=>'prepare_jar');
-		$obj->details->progress[8] = (object) array('flag'=>FALSE,'name'=>'prepare_mvn');
-		$obj->details->progress[9] = (object) array('flag'=>FALSE,'name'=>'start_testing');
-		$obj->details->progress[10] = (object) array('flag'=>FALSE,'name'=>'end_testing');
-		$obj->details->progress[11] = (object) array('flag'=>FALSE,'name'=>'get_prediction');
+		$obj->details->progress = get_progress_array();
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $obj;
 	}
 
-	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription){
+	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription,$bugRoot){
 		if ((is_dir($folderRoot)==TRUE)){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "you have already a project with this name, pick a new name";

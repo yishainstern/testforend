@@ -11,22 +11,6 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 	$rootScope.server_domain = 'http://local.test/index.php';
 	//windows server
 
-	//disciption of array 
-	$rootScope.level_discirption = {
-		create_folders:{text:'create folders in our server file system were we will store your project',title:'create folders'},
-		start_clone:{text:'clone your project from git to our server file system',title:'start clone'},
-		end_clone:{text:'checking if the clone task is done',title:'end clone'},
-		start_offline:{text:'use your code as a data-base to do a offline learning of the code',title:'start offline'},
-		end_offline:{text:'code studing in offline is done',title:'end offline'},
-		pick_version:{text:'pick a version for runing some testes on your code',title:'pick version'},
-		prepare_jar:{text:'notify us to prepare a jar to run some tests on your code',title:'prepare jar'},
-		prepare_mvn:{text:'notify us to get ready all files to run mavn on your ocmputer',title:'prepare mvn'},
-		start_testing:{text:'run maven in the server to test you code and get failers of the code with maven and surfire',title:'start testing'},
-		end_testing:{text:'maven task was done and we have some file with discription of failers',title:'end testing'},
-		get_prediction:{text:'get a prediction of your code',title:'get prediction'},
-		upload_bug_files:{text:'upload a csv file from bugzila of known bugs and tell us the versions you want us to check',title:'upload bug files'}
-	}
-
 	//user obj
 	$rootScope.user = {
 		details: {},
