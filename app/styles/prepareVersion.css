@@ -9,3 +9,7 @@
 .swiper-button-prev{
 	left: 0px;
 }
+
+.swiper-container-horizontal>.swiper-pagination-bullets {
+    bottom: 0px;
+}

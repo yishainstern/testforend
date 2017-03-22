@@ -1,8 +1,8 @@
 <go-to-list title="Cloning task"></go-to-list>
 <!-- /.row -->
 <!-- /.row -->
-<div class="row swiper_wrapper">
-        <div class="col-lg-12">
+<div class="row">
+        <div class="swiper_wrapper col-lg-12">
 <div class="swiper-container" >
     <div class="swiper-wrapper">
     <div class="swiper-slide">
@@ -10,29 +10,24 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    cloning details
+                    change version
                 </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <form role="form" name="clone-project" ng-class="{'has-error':new_clone_error}">
-                            <input type="hidden" name="userName" value="{{user.details.userName}}">
-                            <input type="hidden" name="id" value="{{project.details.name}}">
-                            <div class="form-group">
-                                <label>git name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" />
-                            </div>                            
-                            <div class="form-group">
-                                <label>git url</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl">
-                            </div>
-                            <div class="" ng-class="{'has-error':new_clone_error, 'has-success':new_clone_success}">
-                                <label class="control-label" ng-show="new_clone_error || new_clone_success">{{display_clone_text}}</label>
-                            </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[1].flag" ng-click="clone_project()">Clone Project</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>                            
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[1].flag" ng-click="check_clone()">ckeck clone</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.try_agin" ng-click="check_clone()">try agin</button>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
+                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                <div class="form-group">
+                                    <label>text version ANT_183</label>
+                                    <input class="form-control" placeholder="Enter text" ng-model="project.details.testVersion" name="testVersion" />
+                                </div>                            
+                                <div class="" ng-class="{'has-error':(pick_error||validation_error), 'has-success':pick_success}">
+                                    <label class="control-label" ng-show="pick_error || validation_error || pick_success">{{display_text}}</label>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[6].flag" ng-click="change_version()">change version</button>
+                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[6].flag" ng-click="check_clone()">change version</button>
+                            
                         </form>
                     </div>
                 </div>
@@ -96,7 +91,8 @@
         <!-- Add Arrows -->
         
 </div>
-</div>
 <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
+</div>
+
 </div>

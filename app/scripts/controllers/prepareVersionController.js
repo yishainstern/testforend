@@ -24,4 +24,21 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             //keep it alive
         }
     },300);
+    $scope.validation_error = false;
+
+    $scope.change_version = function(){
+        $scope.validation_error = false;
+        $scope.display_text = '';
+        if(!$rootScope.project.details.testVersion){
+            $scope.validation_error = true;
+            $scope.display_text = 'filed required';
+        }else{
+            service.ajaxfunc('chenge_version','clone-project',false)
+            .then(function(data){
+                $scope.success_check(JSON.parse(data));
+            },function(data){
+                $scope.fail_new_project(data);
+            });
+        }
+    }
 ;}]);
