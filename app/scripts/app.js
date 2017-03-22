@@ -74,175 +74,194 @@ angular
             }
         }
     })
-      .state('dashboard.home',{
-        url:'/home',
-        controller: 'MainCtrl',
-        templateUrl:'views/dashboard/home.html',
-        resolve: {
-          loadMyFiles:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-              name:'sbAdminApp',
-              files:[
+    .state('dashboard.home',{
+      url:'/home',
+      controller: 'MainCtrl',
+      templateUrl:'views/dashboard/home.html',
+      resolve: {
+        loadMyFiles:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            name:'sbAdminApp',
+            files:[
               'scripts/controllers/main.js',
               'scripts/directives/timeline/timeline.js',
               'scripts/directives/notifications/notifications.js',
               'scripts/directives/chat/chat.js',
               'scripts/directives/dashboard/stats/stats.js'
-              ]
-            })
-          }
+            ]
+          })
         }
-      })
-      .state('dashboard.form',{
-        templateUrl:'views/form.html',
-        url:'/form'
+      }
     })
-      .state('dashboard.blank',{
-        templateUrl:'views/pages/blank.html',
-        url:'/blank'
+    .state('dashboard.form',{
+      templateUrl:'views/form.html',
+      url:'/form'
     })
-      .state('login',{
-        templateUrl:'views/pages/login.html',
-        url:'/login'
+    .state('dashboard.blank',{
+      templateUrl:'views/pages/blank.html',
+      url:'/blank'
     })
-      .state('enter',{
-        templateUrl:'views/pages/enter.html',
-        url:'/enter',
-        controller:'enterController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/enterController.js','styles/enter.css']
-            })
-          }
+    .state('login',{
+      templateUrl:'views/pages/login.html',
+      url:'/login'
+    })
+    .state('enter',{
+      templateUrl:'views/pages/enter.html',
+      url:'/enter',
+      controller:'enterController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/enterController.js','styles/enter.css']
+          })
         }
+      }
     })
-      .state('dashboard.listUser',{
-        templateUrl:'views/pages/listUser.html',
-        url:'/listUser',
-        controller:'listUserController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/listUserController.js','styles/listUser.css']
-            })
-          }
+    .state('dashboard.listUser',{
+      templateUrl:'views/pages/listUser.html',
+      url:'/listUser',
+      controller:'listUserController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/listUserController.js','styles/listUser.css']
+          })
         }
+      }
     })
-      .state('dashboard.newProject',{
-        templateUrl:'views/pages/new-project.html',
-        url:'/newProject',
-        controller:'newProjectController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/newProjectController.js','styles/new-project.css']
-            })
-          }
+    .state('dashboard.newProject',{
+      templateUrl:'views/pages/new-project.html',
+      url:'/newProject',
+      controller:'newProjectController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/newProjectController.js','styles/new-project.css']
+          })
         }
+      }
     })
-      .state('dashboard.project',{
-        templateUrl:'views/pages/project-page.html',
-        url:'/project/:id',
-        controller:'projectController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/projectController.js','styles/project.css','scripts/directives/timeline/timeline.js']
-            })
-          }
+    .state('dashboard.project',{
+      templateUrl:'views/pages/project-page.html',
+      url:'/project/:id',
+      controller:'projectController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/projectController.js','styles/project.css','scripts/directives/timeline/timeline.js']
+          })
         }
+      }
     })
-      .state('dashboard.prepareOffline',{
-        templateUrl:'views/pages/prepare-offline.html',
-        url:'/prepareOffline/:id',
-        controller:'prepareOfflineController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/prepareOfflineController.js','styles/prepareOffline.css']
-            })
-          }
+    .state('dashboard.prepareOffline',{
+      templateUrl:'views/pages/prepare-offline.html',
+      url:'/prepareOffline/:id',
+      controller:'prepareOfflineController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/prepareOfflineController.js','styles/prepareOffline.css']
+          })
         }
+      }
     })      
-      .state('dashboard.runOffline',{
-        templateUrl:'views/pages/run-offline.html',
-        url:'/runOffline/:id',
-        controller:'runOfflineController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/runOfflineController.js','styles/runOffline.css']
-            })
-          }
+    .state('dashboard.runOffline',{
+      templateUrl:'views/pages/run-offline.html',
+      url:'/runOffline/:id',
+      controller:'runOfflineController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/runOfflineController.js','styles/runOffline.css']
+          })
         }
+      }
     })            
-      .state('dashboard.clone',{
-        templateUrl:'views/pages/clone.html',
-        url:'/clone/:id',
-        controller:'cloneController',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/cloneController.js','styles/clone.css','scripts/directives/goToList/goToList.js']
-            })
-          }
+    .state('dashboard.clone',{
+      templateUrl:'views/pages/clone.html',
+      url:'/clone/:id',
+      controller:'cloneController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/cloneController.js','styles/clone.css','scripts/directives/goToList/goToList.js']
+          })
         }
-    })                  
-      .state('dashboard.chart',{
-        templateUrl:'views/chart.html',
-        url:'/chart',
-        controller:'ChartCtrl',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-              name:'chart.js',
+      }
+    })
+    .state('dashboard.prepareVersion',{
+      templateUrl:'views/pages/prepareVersion.html',
+      url:'/prepareVersion/:id',
+      controller:'prepareVersionController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
               files:[
-                'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css'
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'bower_components/swiper/dist/css/swiper.min.css',
+                'scripts/controllers/prepareVersionController.js',
+                'styles/prepareVersion.css',
+                'scripts/directives/goToList/goToList.js'
               ]
-            }),
-            $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/chartContoller.js']
-            })
-          }
+          })
         }
+      }
+    })                      
+    .state('dashboard.chart',{
+      templateUrl:'views/chart.html',
+      url:'/chart',
+      controller:'ChartCtrl',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            name:'chart.js',
+            files:[
+              'bower_components/angular-chart.js/dist/angular-chart.min.js',
+              'bower_components/angular-chart.js/dist/angular-chart.css'
+            ]
+          }),
+          $ocLazyLoad.load({
+            name:'sbAdminApp',
+            files:['scripts/controllers/chartContoller.js']
+          })
+        }
+      }
     })
-      .state('dashboard.table',{
-        templateUrl:'views/table.html',
-        url:'/table'
+    .state('dashboard.table',{
+      templateUrl:'views/table.html',
+      url:'/table'
     })
-      .state('dashboard.panels-wells',{
-          templateUrl:'views/ui-elements/panels-wells.html',
-          url:'/panels-wells'
-      })
-      .state('dashboard.buttons',{
-        templateUrl:'views/ui-elements/buttons.html',
-        url:'/buttons'
+    .state('dashboard.panels-wells',{
+        templateUrl:'views/ui-elements/panels-wells.html',
+        url:'/panels-wells'
     })
-      .state('dashboard.notifications',{
-        templateUrl:'views/ui-elements/notifications.html',
-        url:'/notifications'
+    .state('dashboard.buttons',{
+      templateUrl:'views/ui-elements/buttons.html',
+      url:'/buttons'
     })
-      .state('dashboard.typography',{
-       templateUrl:'views/ui-elements/typography.html',
-       url:'/typography'
+    .state('dashboard.notifications',{
+      templateUrl:'views/ui-elements/notifications.html',
+      url:'/notifications'
+    })
+    .state('dashboard.typography',{
+      templateUrl:'views/ui-elements/typography.html',
+      url:'/typography'
    })
-      .state('dashboard.icons',{
-       templateUrl:'views/ui-elements/icons.html',
-       url:'/icons'
+    .state('dashboard.icons',{
+      templateUrl:'views/ui-elements/icons.html',
+      url:'/icons'
    })
-      .state('dashboard.grid',{
-       templateUrl:'views/ui-elements/grid.html',
-       url:'/grid'
+    .state('dashboard.grid',{
+      templateUrl:'views/ui-elements/grid.html',
+      url:'/grid'
    })
   }]);
 

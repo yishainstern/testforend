@@ -1,0 +1,11 @@
+.swiper_wrapper {
+	padding: 0px 35px;
+}
+
+.swiper-button-next{
+	right: 0px;
+}
+
+.swiper-button-prev{
+	left: 0px;
+}

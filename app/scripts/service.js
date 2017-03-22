@@ -37,7 +37,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
 		},
 		intervalfunc:function(delegate){
 			stop = $interval(function() {
-				if ($rootScope.user.details.first_name && $rootScope.user.details.password){
+				if ($rootScope.user.details.first_name && $rootScope.user.details.password && $stateParams.id){
 					//stop interval
 					$interval.cancel(stop);
 	        		stop = undefined;
@@ -54,7 +54,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         				}
     				},function(data){console.log(data);});    	
 					}else{/*keep going*/}
-			},1500);
+			},300);
 		},
 		check: function(){
 			alert('sadsa');

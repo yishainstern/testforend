@@ -30,18 +30,21 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
     if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
         $rootScope.user.details.userName = localStorage.getItem('name');
         $rootScope.user.details.password = localStorage.getItem('password');
-    }    
-    form_data.append('userName',$rootScope.user.details.userName);
-    form_data.append('password',$rootScope.user.details.password);
-    service.ajaxfunc('get_user_list','',form_data)
-    .then(function(data){
-        data = JSON.parse(data);
-        if (data && data.status && data.status==111){
-            $rootScope.user = data.user;
-            console.log($rootScope.user);
-        }
-    },function(data){
-        console.log(data);
-    });
-
+    }
+    if ($rootScope.user.details.userName && $rootScope.user.details.password){
+        form_data.append('userName',$rootScope.user.details.userName);
+        form_data.append('password',$rootScope.user.details.password);
+        service.ajaxfunc('get_user_list','',form_data)
+        .then(function(data){
+            data = JSON.parse(data);
+            if (data && data.status && data.status==111){
+                $rootScope.user = data.user;
+                console.log($rootScope.user);
+            }
+        },function(data){
+            console.log(data);
+        });        
+    }else{
+        $state.transitionTo('enter');
+    }
 }]);

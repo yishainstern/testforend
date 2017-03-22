@@ -1,22 +1,3 @@
-/*'use strict';
-
-/**
- * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
- * @description
- * # adminPosHeader
- 
-angular.module('sbAdminApp').directive('goToList',function(){
-		return {
-        	templateUrl:'scripts/directives/goToList/goToList.html',
-        	restrict: 'E',
-        	replace: true,
-        	link:function(scope, element, attrs, $state) {
-        		
-      		}
-    	}
-	});
-*/
 'use strict';
 
 /**

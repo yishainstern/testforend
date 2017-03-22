@@ -42,7 +42,15 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			case 'end_offline':
  				return 'dashboard.runOffline';
  			break;
-
+ 			case 'pick_version':
+ 				return 'dashboard.prepareVersion';
+ 			break;
+ 			case 'check_version':
+ 				return 'dashboard.prepareVersion';
+ 			break;
+ 			case 'prepare_jar':
+ 				return 'dashboard.prepareVersion';
+ 			break; 			 			
 
  		}
  	}
