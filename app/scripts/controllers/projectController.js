@@ -24,7 +24,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			case 'end_clone':
  				return 'dashboard.clone';
  			break;
- 			case 'upload_bug_files':
+ 			case 'upload_bug_file':
  				return 'dashboard.prepareOffline';
  			break;
  			case 'get_prediction':

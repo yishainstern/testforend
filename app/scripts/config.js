@@ -19,13 +19,13 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 
 	$rootScope.project = {};
 
-	//project page 
+/*	//project page 
 	$rootScope.project_page = function(){
 		if ($rootScope.project.details.name){
 			$state.transitionTo('dashboard.project',{id:$rootScope.project.details.name});	
 		}
 	}
-
+*/
     var form_data = new FormData();
     if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
         $rootScope.user.details.userName = localStorage.getItem('name');

@@ -10,7 +10,7 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
 
 
     $scope.go_to_new_project = function(){
-        $state.transitionTo('dashboard.newProject',{id:name});
+        $state.transitionTo('dashboard.newProject');
     }
 
     $scope.go_to_project = function(name){

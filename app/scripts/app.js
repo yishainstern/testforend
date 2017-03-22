@@ -191,7 +191,7 @@ angular
           loadMyFile:function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 name:'sbAdminApp',
-                files:['scripts/controllers/cloneController.js','styles/clone.css']
+                files:['scripts/controllers/cloneController.js','styles/clone.css','scripts/directives/goToList/goToList.js']
             })
           }
         }
