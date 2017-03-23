@@ -81,4 +81,33 @@
 	}else {
 		$fileObj = FALSE;
 	}
+
+	function get_project_details($folderRoot)
+	{
+		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		return $obj;
+	}
+
+	function update_progress($str, $projet,$flag)
+	{
+		$count = sizeof($projet->details->progress);
+		for ($i=0; $i < $count; $i++) { 
+			if ($projet->details->progress[$i]->name==$str){
+				$projet->details->progress[$i]->flag = $flag;
+				return $projet;
+			}
+		}
+		return $projet;
+	}
+
+	function git_tag_list($runingRoot,$arr){
+		$flag = FALSE;
+		$command = 'git tag>'.$runingRoot.'tagList.txt';
+		exec($command);
+		$str = file_get_contents($runingRoot.'tagList.txt');
+		$arr = explode("\n",$str);
+		var_dump($arr);
+		
+	}
+
 ?>

@@ -40,8 +40,8 @@
 		$returnJson = create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot,$DebuugerRoot);
 	}elseif($task=="run_java"){
 		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$pomPath);		
-	}elseif ($task=="chenge_version"){
-		$returnJson = point_to_version($userProjectRoot,$gitName,$newVersion);
+	}elseif ($task=="change_version"){
+		$returnJson = point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot);
 	}elseif ($task=="check version") {
 		$returnJson = check_version($userProjectRoot,$gitName);
 	}

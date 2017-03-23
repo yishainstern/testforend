@@ -26,6 +26,16 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		}
 	}
 */
+    $rootScope.checkJson = function(str){
+        try{
+            obj = JSON.parse(str);
+            return obj;
+        }catch(err){
+            alert('server crash try agin');
+            return null;
+        }
+    }
+
     var form_data = new FormData();
     if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
         $rootScope.user.details.userName = localStorage.getItem('name');

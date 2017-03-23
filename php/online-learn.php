@@ -89,20 +89,30 @@
 	}
 	//
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
-	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion){
+	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
-		$command = "start /B git checkout ".$newVersion." 2>newVersion.txt";
+		if (!git_tag_list($runingRoot,array($newVersion))){
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "version does not exsist";	
+			return $returnJson;	
+		}
+		return;
+		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
 		pclose(popen($command, "w"));
-		return json_return($returnJson,0,"checking out to version ".$newVersion);	
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
+		$returnJson['project'] = update_progress('pick_version', get_project_details($folderRoot),TRUE);;
+		return $returnJson;	
 	}
 	//
 	//check if the version is the right one.
 	function check_version($returnJson,$userProjectRoot,$gitName){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
-		$command = "git branch 2>branch.txt";
-		set_time_limit(100);
+		return;
+		$command = "git branch 2>../../run/branch.txt";
+		set_time_limit(700);
 		$checher = exec($command);
 		return json_return($returnJson,0,$checher);
 	}

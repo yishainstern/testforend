@@ -26,18 +26,35 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
     },300);
     $scope.validation_error = false;
 
-    $scope.change_version = function(){
+    $scope.success_version = function(data){
+        if (data.status==111){
+            $rootScope.project = data.project;
+            $scope.display_text = data.message;
+            $scope.pick_success = true;
+        }
+    }    
+
+    $scope.initErrors = function(){
         $scope.validation_error = false;
         $scope.display_text = '';
+        $scope.pick_success = false;
+        $scope.pick_error = false;
+    }
+
+    $scope.change_version = function(){
+        $scope.initErrors();    
         if(!$rootScope.project.details.testVersion){
             $scope.validation_error = true;
             $scope.display_text = 'filed required';
         }else{
-            service.ajaxfunc('chenge_version','clone-project',false)
+            service.ajaxfunc('change_version','change-version',false)
             .then(function(data){
-                $scope.success_check(JSON.parse(data));
+                data = $rootScope.checkJson(data);
+                if (data != null){
+                    $scope.success_version(data);    
+                } 
             },function(data){
-                $scope.fail_new_project(data);
+               $scope.error_version(data);
             });
         }
     }

@@ -18,6 +18,7 @@
                             <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
                                 <input type="hidden" name="userName" value="{{user.details.userName}}">
                                 <input type="hidden" name="id" value="{{project.details.name}}">
+                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
                                 <div class="form-group">
                                     <label>text version ANT_183</label>
                                     <input class="form-control" placeholder="Enter text" ng-model="project.details.testVersion" name="testVersion" />
@@ -26,7 +27,7 @@
                                     <label class="control-label" ng-show="pick_error || validation_error || pick_success">{{display_text}}</label>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[6].flag" ng-click="change_version()">change version</button>
-                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[6].flag" ng-click="check_clone()">change version</button>
+                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[6].flag" ng-click="check_version()">change version</button>
                             
                         </form>
                     </div>
