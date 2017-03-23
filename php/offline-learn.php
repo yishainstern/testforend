@@ -18,13 +18,6 @@
         $str = $str."vers=(". $all_versions.")";
         file_put_contents($DebuugerRoot."Debugger\\learner\\antConf.txt",$str); 
 	}
-	//
-	//preparw a file that will run the Python project.
-	function prepare_runing_file_for_offline_task($folderNmae){
-        /*$str = '<?php pclose(popen("start /B python '.'../../users/'.$folderNmae.'/rootLearn/Debugger/learner/wrapper.py ../../users/'.$folderNmae.'/rootLearn/Debugger/learner/antConf.txt learn", "w")); ?>';
-        file_put_contents("users/".$folderNmae."/index.php",$str);*/		
-	}
-
 	function update_details($folderRoot,$fileObj,$all_versions){
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 		$obj->details->progress[3]->flag = TRUE;
@@ -64,7 +57,6 @@
 		$returnJson['project'] = $obj;
 		return $returnJson;
 	}
-
 	//check if offline task is over
 	function check_if_python_end($outputPython,$folderRoot){
 		if (file_exists($outputPython.'markers\\learner_phase_file')){
@@ -81,20 +73,4 @@
 			return $returnJson;	
 		}
 	}
-
-
-/*		$opts = array(
-  			'http'=>array(
-    			'method'=>"GET",
-    			'header'=>"Accept-language: en\r\n" .
-              	"Cookie: foo=bar\r\n"
-  			)
-		);
-		$context = stream_context_create($opts);
-		// Open the file using the HTTP headers set above
-		$file = file_get_contents($domain."/users/".$folderNmae."/index.php", false, $context);
-		return json_return($returnJson,0,"starting offline task....check agin in 7 hours if done");
-*/
 ?>
-
-

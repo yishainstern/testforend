@@ -28,7 +28,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 */
     $rootScope.checkJson = function(str){
         try{
-            obj = JSON.parse(str);
+            var obj = JSON.parse(str);
             return obj;
         }catch(err){
             alert('server crash try agin');

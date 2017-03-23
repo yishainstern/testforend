@@ -85,15 +85,17 @@
 	function get_project_details($folderRoot)
 	{
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		//var_dump($obj);
 		return $obj;
 	}
 
-	function update_progress($str, $projet,$flag)
+	function update_progress($str, $projet,$flag, $folderRoot)
 	{
 		$count = sizeof($projet->details->progress);
 		for ($i=0; $i < $count; $i++) { 
 			if ($projet->details->progress[$i]->name==$str){
 				$projet->details->progress[$i]->flag = $flag;
+				file_put_contents($folderRoot.'project_details.json',json_encode($projet));
 				return $projet;
 			}
 		}
@@ -103,11 +105,24 @@
 	function git_tag_list($runingRoot,$arr){
 		$flag = FALSE;
 		$command = 'git tag>'.$runingRoot.'tagList.txt';
-		exec($command);
+		if (!is_file($runingRoot.'tagList.txt')){
+			exec($command);
+		}
 		$str = file_get_contents($runingRoot.'tagList.txt');
-		$arr = explode("\n",$str);
-		var_dump($arr);
-		
+		$arr1 = explode("\n",$str);
+		$count = 0;
+		for ($i=0; $i < sizeof($arr1); $i++) { 
+			for ($j=0; $j < sizeof($arr); $j++) { 
+				if ($arr[$j]==$arr1[$i]){
+					$count++;
+				}
+			}
+		}	
+		if (sizeof($arr)==$count){
+			return TRUE;
+		}else {
+			return FALSE;
+		}	
 	}
 
 ?>

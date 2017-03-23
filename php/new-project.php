@@ -1,5 +1,4 @@
 <?php	
-
 	function update_user_details($userNameRoot,$folderName,$discription){
 		//echo ($userNameRoot.'user_details.json '."\n");
 		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
@@ -15,7 +14,6 @@
 		file_put_contents($userNameRoot.'user_details.json',json_encode($str));
 		return $str;
 	}
-
 	function get_progress_array(){
 		$ans = array();
 		array_push($ans, (object) array('flag'=>TRUE,'name'=>'create_folders','text'=>'create folders in our server file system were we will store your project', 'title'=>'create folders'));//1
@@ -33,7 +31,6 @@
 		array_push($ans, (object) array('flag'=>FALSE,'name'=>'get_prediction','text'=>'get a prediction of your code', 'title'=>'get prediction'));//13
 		return $ans;
 	}
-
 	function update_project_details($folderName,$discription,$folderRoot){
 		$obj = new stdClass();
 		$obj->details = new stdClass();
@@ -43,7 +40,6 @@
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $obj;
 	}
-
 	function start_and_prepare_folders($folderRoot,$userProjectRoot,$DebuugerRoot,$outputPython,$runingRoot,$userNameRoot,$folderName,$discription,$bugRoot){
 		if ((is_dir($folderRoot)==TRUE)){
 			$returnJson['status'] = 1;
@@ -113,7 +109,6 @@
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		return $returnJson;		
 	}
-
 	function try_agin($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot){
 		$returnJson = clone_from_git_to_server($returnJson,$DebuugerRoot,$gitUrl,$startGit,$userProjectRoot,$gitName,$relativeToUserRoot,$amirGit,$runingRoot,$folderRoot);
 	}

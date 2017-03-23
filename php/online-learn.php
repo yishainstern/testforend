@@ -92,17 +92,19 @@
 	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
-		if (!git_tag_list($runingRoot,array($newVersion))){
+		$flag = git_tag_list($runingRoot,array($newVersion));
+		if (!$flag){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "version does not exsist";	
 			return $returnJson;	
 		}
-		return;
 		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
-		pclose(popen($command, "w"));
+		//pclose(popen($command, "w"));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
-		$returnJson['project'] = update_progress('pick_version', get_project_details($folderRoot),TRUE);;
+		$obj = update_progress('pick_version', get_project_details($folderRoot),TRUE,$folderRoot);
+		$obj->details->testVersion = $newVersion;
+		$returnJson['project'] = $obj;
 		return $returnJson;	
 	}
 	//
@@ -113,7 +115,7 @@
 		return;
 		$command = "git branch 2>../../run/branch.txt";
 		set_time_limit(700);
-		$checher = exec($command);
+		exec($command);
 		return json_return($returnJson,0,$checher);
 	}
 ?>

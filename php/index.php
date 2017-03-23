@@ -1,4 +1,3 @@
-
 <?php
 	require_once 'myConf.php';
 	require_once 'init.php';
@@ -6,7 +5,7 @@
 	require_once 'online-learn.php';
 	require_once 'list.php';	
 	require_once 'new-project.php';
-	header('Content-Type: false');//
+	header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
 	//gets the input from http post request that was givven by the user and deside to witch task to run.

@@ -31,6 +31,9 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             $rootScope.project = data.project;
             $scope.display_text = data.message;
             $scope.pick_success = true;
+        }else if (data.status==1){
+            $scope.display_text = data.message;
+            $scope.validation_error = true;    
         }
     }    
 
