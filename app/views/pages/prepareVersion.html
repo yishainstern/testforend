@@ -19,7 +19,7 @@
                                 <input type="hidden" name="userName" value="{{user.details.userName}}">
                                 <input type="hidden" name="id" value="{{project.details.name}}">
                                 <input type="hidden" name="gitName" value="{{project.details.gitName}}">
-                                <div class="form-group">
+                                <div class="form-group" ng-show="!project.details.progress[6].flag">
                                     <label>text version ANT_183</label>
                                     <input class="form-control" placeholder="Enter text" ng-model="project.details.testVersion" name="testVersion" />
                                 </div>                            
@@ -27,6 +27,7 @@
                                     <label class="control-label" ng-show="pick_error || validation_error || pick_success">{{display_text}}</label>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[6].flag" ng-click="change_version()">change version</button>
+                                <label class="control-label" ng-show="project.details.progress[6].flag">check if the version is{{display_text}}</label>
                                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[6].flag" ng-click="check_version()">check version</button>
                             
                         </form>

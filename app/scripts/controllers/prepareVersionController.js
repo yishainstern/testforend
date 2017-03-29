@@ -61,4 +61,8 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             });
         }
     }
+
+    $scope.$on('project_object_exsites', function(event, args) {
+        alert('sds');
+    });
 ;}]);
