@@ -109,13 +109,24 @@
 	}
 	//
 	//check if the version is the right one.
-	function check_version($returnJson,$userProjectRoot,$gitName){
+	function check_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot){
 		$old_path = getcwd();
 		chdir($userProjectRoot.$gitName);
-		return;
-		$command = "git branch 2>../../run/branch.txt";
+		$command = "git branch >../../run/branch.txt";
 		set_time_limit(700);
 		exec($command);
-		return json_return($returnJson,0,$checher);
+		$str = file_get_contents("../../run/branch.txt");
+		$pos = strpos($str, $newVersion);
+		if ($pos==FALSE){
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "rong version....change it agin";	
+			return $returnJson;			
+		}else{
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "the current version is ".$newVersion.".";
+			$obj = update_progress('check_version', get_project_details($folderRoot),TRUE,$folderRoot);
+			$returnJson['project'] = $obj;
+			return $returnJson;
+		}
 	}
 ?>

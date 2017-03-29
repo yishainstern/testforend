@@ -41,8 +41,8 @@
 		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$pomPath);		
 	}elseif ($task=="change_version"){
 		$returnJson = point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot);
-	}elseif ($task=="check version") {
-		$returnJson = check_version($userProjectRoot,$gitName);
+	}elseif ($task=="check_version") {
+		$returnJson = check_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot);
 	}
 	echo json_encode((object)$returnJson);
 ?>

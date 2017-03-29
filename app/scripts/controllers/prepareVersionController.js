@@ -63,6 +63,19 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
     }
 
     $scope.$on('project_object_exsites', function(event, args) {
-        alert('sds');
+        
     });
-;}]);
+    $scope.check_version = function(){
+        $scope.initErrors();
+        service.ajaxfunc('check_version','change-version',false)
+        .then(function(data){
+            data = $rootScope.checkJson(data);
+                if (data != null){
+                    $scope.success_version(data);    
+                } 
+            },function(data){
+               $scope.error_version(data);
+            });
+    }
+
+}]);
