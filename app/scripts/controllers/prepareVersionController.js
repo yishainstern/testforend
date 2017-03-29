@@ -25,7 +25,6 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
         }
     },300);
     $scope.validation_error = false;
-
     $scope.success_version = function(data){
         if (data.status==111){
             $rootScope.project = data.project;
@@ -36,14 +35,12 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             $scope.validation_error = true;    
         }
     }    
-
     $scope.initErrors = function(){
         $scope.validation_error = false;
         $scope.display_text = '';
         $scope.pick_success = false;
         $scope.pick_error = false;
     }
-
     $scope.change_version = function(){
         $scope.initErrors();    
         if(!$rootScope.project.details.testVersion){
@@ -61,7 +58,6 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             });
         }
     }
-
     $scope.$on('project_object_exsites', function(event, args) {
         
     });
@@ -77,5 +73,16 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
                $scope.error_version(data);
             });
     }
-
+    $scope.prepare_jar = function(){
+        $scope.initErrors();
+        service.ajaxfunc('create_jar','change-version',false)
+        .then(function(data){
+            data = $rootScope.checkJson(data);
+                if (data != null){
+                    $scope.success_version(data);    
+                } 
+            },function(data){
+               $scope.error_version(data);
+            });        
+    }
 }]);

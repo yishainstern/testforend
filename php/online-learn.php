@@ -40,7 +40,7 @@
 	}
 	//
 	//updates the pom.xml files for using the online learning
-	function update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName){
+	function update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName,$runingRoot){
 		$str = $userProjectRoot.$gitName."\\".$pomPath;
 		exec("dir /s /b " .$str."\*pom.xml* > ".$relativeToUserRoot."\\log.txt");
 		$arr = explode("\n",file_get_contents($relativeToUserRoot."\\log.txt"));
@@ -55,16 +55,17 @@
 	}
 	//
 	//create a jar file from Debbuger program with maven
-	function ctrate_jar_for_online_task($returnJson,$relativeToUserRoot,$userProjectRoot,$gitName,$pomPath){
+	function ctrate_jar_for_online_task($returnJson,$jar_creater,$folderRoot,$runingRoot){
 		$old_path = getcwd();
+		chdir($jar_creater);
 		set_time_limit(300);
-		$relativeToPoomRoot = $relativeToUserRoot."\\rootLearn\\Debugger\\traces";
-		chdir($relativeToPoomRoot);
-		exec("mvn clean install");
-		chdir($userProjectRoot.$gitName."\\".$pomPath);
-		$command = "start /B mvn clean install -fn >getLog.txt";
+		$command = "start /B mvn clean install -fn >".$runingRoot."\\create_jar_log.txt";
 		pclose(popen($command, "w"));
-		return json_return($returnJson,0,"jar created");
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "thank you we are creating the jar";
+		$obj = update_progress('prepare_jar', get_project_details($folderRoot),TRUE,$folderRoot);
+		$returnJson['project'] = $obj;
+		return $returnJson;
 	}
 	//
 	//create a file paths.txt witch contents maven repository path and the program path.

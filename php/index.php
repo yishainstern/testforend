@@ -32,9 +32,9 @@
 	}elseif ($task=="check_Python") {
 		$returnJson = check_if_python_end($outputPython,$folderRoot);
 	}elseif ($task=="run_Pom") {
-		$returnJson = update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName);
-	}elseif ($task=="clean_mvn"){
-		$returnJson = ctrate_jar_for_online_task($returnJson,$relativeToUserRoot);
+		$returnJson = update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName,$runingRoot);
+	}elseif ($task=="create_jar"){
+		$returnJson = ctrate_jar_for_online_task($returnJson,$jar_creater,$folderRoot,$runingRoot);
 	}elseif($task=="pathTxt"){
 		$returnJson = create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot,$DebuugerRoot);
 	}elseif($task=="run_java"){

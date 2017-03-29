@@ -169,7 +169,20 @@ angular
           })
         }
       }
-    })      
+    })     
+    .state('dashboard.pomUpdate',{
+      templateUrl:'views/pages/update-pom.html',
+      url:'/prepareOffline/:id',
+      controller:'pomController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/pomController.js','styles/pom.css']
+          })
+        }
+      }
+    })          
     .state('dashboard.runOffline',{
       templateUrl:'views/pages/run-offline.html',
       url:'/runOffline/:id',

@@ -63,6 +63,34 @@
                         </div>
                     </div>
                 </div>                
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    check version
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <input type="hidden" name="testVersion" value="{{project.details.testVersion}}">
+                                                <div class="" ng-class="{'has-error':(pick_error||validation_error), 'has-success':pick_success}">
+                                                    <label class="control-label" ng-show="pick_error || validation_error || pick_success">{{display_text}}</label>
+                                                </div>
+                                                <label class="control-label" style="text-align: center; display: block; margin-bottom: 15px;">Now that the version was picked we need to prepare a jar file, please click the buttin below so we could start</label>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="prepare_jar()">create jar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                
             </div>
             <div class="swiper-pagination"></div>
         </div>
