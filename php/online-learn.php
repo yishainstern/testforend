@@ -1,7 +1,7 @@
 <?php
 	//
 	//updates the pom file
-	function pastPom($str,$jar,$path,$returnJson){
+	function pastPom($str,$jar,$path,$returnJson,$files,$userProjectRoot){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
 		if(file_exists($str)){
@@ -19,39 +19,54 @@
                         if ($confElemnt->nodeName=="configuration"){
                             $e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
                             $confElemnt->appendChild($e);
+                            $tmp = $str;
+                            $vowels = array($userProjectRoot);
+                            $tmp = str_replace($vowels, "", $tmp);
+                            $files[sizeof($files)] = $tmp;
                             $flag = TRUE;
                         }
-                        if ($confElemnt->nodeName=="version"){
+                        /*if ($confElemnt->nodeName=="version"){
                             $confElemnt->nodeValue = "2.19.1";
                             $flagVersion = TRUE;
-                        }
+                        }*/
                     }
-                    if ($flagVersion == FALSE){
+                    /*if ($flagVersion == FALSE){
                         $e = $dom->createElement('version', "2.19.1");
                         $rr->appendChild($e);
-                    }
+                    }*/
     			}
     		}
             if($flag==TRUE){
                 $dom->save($str);
-                $returnJson['data'][sizeof($returnJson['data'])]= $str;
             }
     	}
+    	return $files;
 	}
 	//
 	//updates the pom.xml files for using the online learning
-	function update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName,$runingRoot){
+	function update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot){
 		$str = $userProjectRoot.$gitName."\\".$pomPath;
-		exec("dir /s /b " .$str."\*pom.xml* > ".$relativeToUserRoot."\\log.txt");
-		$arr = explode("\n",file_get_contents($relativeToUserRoot."\\log.txt"));
-		$returnJson['data'] = array();
+		exec("dir /s /b " .$str."\*pom.xml* > ".$runingRoot."\\poms.txt");
+		$arr = explode("\n",file_get_contents($runingRoot."\\poms.txt"));
+		$files = array();
 		for ($i=0; $i < sizeof($arr) ; $i++) { 
 			set_time_limit(20);
-			$pathForJar = $folderRoot.$jarName;
-			$pathForPathtx = $folderRoot."path.txt";
-			$returnJson = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson);
+			$pathForJar = $runingRoot.$jarName;
+			$pathForPathtx = $runingRoot."path.txt";
+			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson,$files,$userProjectRoot);
 		}
-		return json_return($returnJson,0,"updated xml files in the maven system");
+		if (sizeof($files)>0){
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "we updated your files";	
+			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);
+			$returnJson['project'] = $obj;
+			$returnJson['data'] = $files;
+			return $returnJson;
+		}else{
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "no files with surfire plugin";
+			return $returnJson;
+		}
 	}
 	//
 	//create a jar file from Debbuger program with maven

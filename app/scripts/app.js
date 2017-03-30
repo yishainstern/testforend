@@ -172,7 +172,7 @@ angular
     })     
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
-      url:'/prepareOffline/:id',
+      url:'/pomUpdate/:id',
       controller:'pomController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {

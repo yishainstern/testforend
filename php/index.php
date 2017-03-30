@@ -31,8 +31,8 @@
 		$returnJson = run_python_code($folderRoot,$learn,$learnDir);
 	}elseif ($task=="check_Python") {
 		$returnJson = check_if_python_end($outputPython,$folderRoot);
-	}elseif ($task=="run_Pom") {
-		$returnJson = update_pom_files($returnJson,$userProjectRoot,$gitName,$pomPath,$relativeToUserRoot,$folderRoot,$jarName,$runingRoot);
+	}elseif ($task=="update_pom") {
+		$returnJson = update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot);
 	}elseif ($task=="create_jar"){
 		$returnJson = ctrate_jar_for_online_task($returnJson,$jar_creater,$folderRoot,$runingRoot);
 	}elseif($task=="pathTxt"){

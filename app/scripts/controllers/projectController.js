@@ -50,7 +50,10 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			break;
  			case 'prepare_jar':
  				return 'dashboard.prepareVersion';
- 			break; 			 			
+ 			break; 	
+ 			case 'update_pom':
+ 				return 'dashboard.pomUpdate';
+ 			break;		 			
 
  		}
  	}
