@@ -170,6 +170,24 @@ angular
         }
       }
     })     
+    .state('dashboard.prepareOnline',{
+      templateUrl:'views/pages/prepare-online.html',
+      url:'/prepareOnline/:id',
+      controller:'prepareOnlineController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/prepareOnlineController.js',
+                'styles/prepareOnline.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'bower_components/swiper/dist/css/swiper.min.css'
+              ]
+          })
+        }
+      }
+    })
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id',
@@ -182,7 +200,7 @@ angular
           })
         }
       }
-    })          
+    })              
     .state('dashboard.runOffline',{
       templateUrl:'views/pages/run-offline.html',
       url:'/runOffline/:id',

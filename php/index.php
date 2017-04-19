@@ -43,6 +43,10 @@
 		$returnJson = point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot);
 	}elseif ($task=="check_version") {
 		$returnJson = check_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot);
+	}elseif ($task=="last_preperations") {
+		$returnJson = last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot);
+	}elseif ($task=="run_maven") {
+		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$folderRoot);
 	}
 	echo json_encode((object)$returnJson);
 ?>

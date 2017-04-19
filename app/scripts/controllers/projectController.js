@@ -54,7 +54,9 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			case 'update_pom':
  				return 'dashboard.pomUpdate';
  			break;		 			
-
+ 			case 'prepare_mvn':
+ 				return 'dashboard.prepareOnline';
+ 			break;
  		}
  	}
 //    

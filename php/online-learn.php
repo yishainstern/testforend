@@ -145,4 +145,12 @@
 			return $returnJson;
 		}
 	}
+
+	function last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot){
+		echo "I AM HERE";
+	}
+
+	function run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot){
+		
+	}	
 ?>
