@@ -6,7 +6,7 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp').controller('prepareOnlineController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
+angular.module('sbAdminApp').controller('predictionController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
  	service.intervalfunc(service);
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
@@ -32,7 +32,7 @@ angular.module('sbAdminApp').controller('prepareOnlineController', ['$scope', '$
         console.log('done');
     }
     $scope.last_preperations = function(){
-        service.ajaxfunc('last_preperations','change-version',false)
+        service.ajaxfunc('','change-version',false)
         .then(function(data){
             data = $rootScope.checkJson(data);
             if (data != null){
@@ -43,7 +43,7 @@ angular.module('sbAdminApp').controller('prepareOnlineController', ['$scope', '$
         });
     }
     $scope.run_maven = function(){
-        service.ajaxfunc('run_maven','change-version',false)
+        service.ajaxfunc('','change-version',false)
         .then(function(data){
             data = $rootScope.checkJson(data);
             if (data != null){
@@ -53,22 +53,5 @@ angular.module('sbAdminApp').controller('prepareOnlineController', ['$scope', '$
            $scope.error_preperations(data);
         });
     }
-    $scope.success_check_maven = function(){
-        console.log('done');
-    }
-    $scope.error_check_maven = function(){
-        console.log('done');
-    }
-    $scope.check_maven = function(){
-        service.ajaxfunc('maven_done','change-version',false)
-        .then(function(data){
-            data = $rootScope.checkJson(data);
-            if (data != null){
-                $scope.success_check_maven(data);    
-            } 
-        },function(data){
-           $scope.error_check_maven(data);
-        });
-    }    
    
 }]);

@@ -3,6 +3,7 @@
 	require_once 'init.php';
 	require_once 'offline-learn.php';
 	require_once 'online-learn.php';
+	require_once 'prediction.php';
 	require_once 'list.php';	
 	require_once 'new-project.php';
 	header('Content-Type: false');
@@ -44,9 +45,11 @@
 	}elseif ($task=="check_version") {
 		$returnJson = check_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot);
 	}elseif ($task=="last_preperations") {
-		$returnJson = last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot);
+		$returnJson = last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName);
 	}elseif ($task=="run_maven") {
-		$returnJson = run_maven($returnJson,$userProjectRoot,$gitName,$folderRoot);
+		$returnJson = run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot,$runingRoot);
+	}elseif ($task=="maven_done") {
+		$returnJson = maven_done($folderRoot);
 	}
 	echo json_encode((object)$returnJson);
 ?>

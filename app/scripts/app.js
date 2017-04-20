@@ -188,6 +188,24 @@ angular
         }
       }
     })
+    .state('dashboard.prediction',{
+      templateUrl:'views/pages/prediction.html',
+      url:'/prepareOnline/:id',
+      controller:'prepareOnlineController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/predictionController.js',
+                'styles/prediction.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'bower_components/swiper/dist/css/swiper.min.css'
+              ]
+          })
+        }
+      }
+    })    
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id',

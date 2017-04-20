@@ -36,7 +36,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
             return deferred.promise;
 		},
 		intervalfunc:function(delegate){
-			stop = $interval(function() {
+			var stop = $interval(function() {
 				if ($rootScope.user.details.first_name && $rootScope.user.details.password && $stateParams.id){
 					//stop interval
 					$interval.cancel(stop);

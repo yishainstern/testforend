@@ -29,6 +29,8 @@
 		array_push($ans, (object) array('flag'=>FALSE,'name'=>'prepare_mvn','text'=>'notify us to get ready all files to run mavn on your ocmputer', 'title'=>'prepare mvn'));//10
 		array_push($ans, (object) array('flag'=>FALSE,'name'=>'start_testing','text'=>'run maven in the server to test you code and get failers of the code with maven and surfire', 'title'=>'start testing'));//11
 		array_push($ans, (object) array('flag'=>FALSE,'name'=>'end_testing','text'=>'maven task was done and we have some file with discription of failers', 'title'=>'end testing'));//12
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'prepare_prediction','text'=>'use all outputs from previous tasks to get pridction', 'title'=>'prepare prediction'));//13
+		array_push($ans, (object) array('flag'=>FALSE,'name'=>'run_prediction','text'=>'run prediction task', 'title'=>'run prediction'));//13
 		array_push($ans, (object) array('flag'=>FALSE,'name'=>'get_prediction','text'=>'get a prediction of your code', 'title'=>'get prediction'));//13
 		return $ans;
 	}

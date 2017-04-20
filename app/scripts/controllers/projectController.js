@@ -30,14 +30,14 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			case 'get_prediction':
 
  			break;
- 			case 'end_testing':
-
- 			break;
  			case 'start_offline':
  				return 'dashboard.runOffline';
  			break;
  			case 'start_testing':
-
+ 				return 'dashboard.prepareOnline';
+ 			break;
+ 			case 'end_testing':
+ 				return 'dashboard.prepareOnline';
  			break;
  			case 'end_offline':
  				return 'dashboard.runOffline';
@@ -57,6 +57,15 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			case 'prepare_mvn':
  				return 'dashboard.prepareOnline';
  			break;
+ 			case 'get_prediction':
+ 				return 'dashboard.prediction';
+ 			break;
+ 			case 'run_prediction':
+ 				return 'dashboard.prediction';
+ 			break;
+ 			case 'prepare_prediction':
+ 				return 'dashboard.prediction';
+ 			break; 			 			
  		}
  	}
 //    

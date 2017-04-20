@@ -59,6 +59,8 @@
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
 			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);
+			$obj->pomPath = $str;
+			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 			$returnJson['project'] = $obj;
 			$returnJson['data'] = $files;
 			return $returnJson;
@@ -84,24 +86,17 @@
 	}
 	//
 	//create a file paths.txt witch contents maven repository path and the program path.
-	function create_path_txt($returnJson,$mavenroot,$userProjectRoot,$gitName,$jarName,$folderRoot,$DebuugerRoot){
+	function create_path_txt($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName){
 		$str = $mavenroot."\r\n".$userProjectRoot.$gitName."\r\n";
-		file_put_contents($folderRoot."paths.txt",$str);
-		$oldTarget = $DebuugerRoot.'Debugger\\my-app\\target\\'.$jarName;
-		$newTarget = $folderRoot.$jarName;
+		file_put_contents($runingRoot."path.txt",$str);
+		$oldTarget = $jar_test;
+		$newTarget = $runingRoot.$jarName;
+		echo($oldTarget);
+		echo($newTarget);
 		copy($oldTarget, $newTarget);
 		chmod($newTarget, 0777);
-		chmod($folderRoot."paths.txt", 0777);
+		chmod($runingRoot."path.txt", 0777);
 		return json_return($returnJson,0,"files in place");		
-	}
-	//
-	//run maven in the pgoject and wait for the folder "traces" to be created.
-	function run_maven($returnJson,$userProjectRoot,$gitName,$pomPath){
-		$old_path = getcwd();
-		chdir($userProjectRoot.$gitName."\\".$pomPath);
-		$command = "start /B mvn clean install -fn >getLog.txt";
-		pclose(popen($command, "w"));
-		return json_return($returnJson,0,"maven stated....wait on hour");		
 	}
 	//
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
@@ -146,11 +141,34 @@
 		}
 	}
 
-	function last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot){
-		echo "I AM HERE";
+	function last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName){
+		create_path_txt($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName);
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "all done....lets go";
+		$obj = update_progress('prepare_mvn', get_project_details($folderRoot),TRUE,$folderRoot);
+		$returnJson['project'] = $obj;
+		return $returnJson;
 	}
-
-	function run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot){
-		
+	//
+	function run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot,$runingRoot){
+		$obj = get_project_details($folderRoot);
+		$path = $obj->details->pomPath;
+		$old_path = getcwd();
+		chdir($path);
+		$command = "start /B mvn clean install -fn >".$runingRoot."mavenLog.txt";
+		pclose(popen($command, "w"));
+		$obj = update_progress('start_testing', get_project_details($folderRoot),TRUE,$folderRoot);
+		$returnJson['project'] = $obj;
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
+		return $returnJson;
+	}
+	//
+	function maven_done($folderRoot){
+		$obj = update_progress('end_testing', get_project_details($folderRoot),TRUE,$folderRoot);
+		$returnJson['project'] = $obj;
+		$returnJson['status'] = 111;
+		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
+		return $returnJson;
 	}	
 ?>
