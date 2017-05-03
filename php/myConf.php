@@ -59,7 +59,15 @@
 	}else{
 		$discription = '';
 	}
-	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+
+	//windows server in BG|U
+	$root = 'C:\\Users\\sternyi\\Desktop\\Users\\';
+	$mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
+	//
+	//yishai local computer
+	//$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+	//$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//
 	$userNameRoot = $root.$userName.'\\';
 	$folderRoot = $userNameRoot.$folderName.'\\';
 	$userProjectRoot = $folderRoot.'rootGit\\';
@@ -69,12 +77,11 @@
 	$runingRoot = $folderRoot.'run\\'; 
 	$relativeToUserRoot = '..\\users\\'.$folderName;
 	$localUsers = 'users\\'.$folderName;
-	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	$amirGit = "https://github.com/amir9979/Debugger.git";
 	$startGit = "start /B git clone --progress";
 	$domain = "http://local.test/";
 	$jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-	$learnDir = '../users/'.$userName.'/'.$folderName.'/rootLearn/Debugger/learner/';
+	$learnDir = $root.'/'.$userName.'/'.$folderName.'/rootLearn/Debugger/learner/';
 	$learn = $DebuugerRoot.'Debugger\\learner';
 	$jar_creater = $DebuugerRoot.'Debugger\\tracer';
 	$jar_test = $jar_creater.'\\target\\'.$jarName;

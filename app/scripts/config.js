@@ -10,7 +10,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 	//yishai computer
 	$rootScope.server_domain = 'http://local.test/index.php';
 	//windows server
-
+    $rootScope.server_domain = 'http://local.test/php/index.php';
 	//user obj
 	$rootScope.user = {
 		details: {},

@@ -20,11 +20,11 @@
                             <input type="hidden" name="id" value="{{project.details.name}}">
                             <div class="form-group">
                                 <label>git name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" />
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" ng-disabled="project.details.progress[1].flag" />
                             </div>                            
                             <div class="form-group">
                                 <label>git url</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl">
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl" ng-disabled="project.details.progress[1].flag">
                             </div>
                             <div class="" ng-class="{'has-error':new_clone_error, 'has-success':new_clone_success}">
                                 <label class="control-label" ng-show="new_clone_error || new_clone_success">{{display_clone_text}}</label>

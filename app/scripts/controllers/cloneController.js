@@ -10,6 +10,7 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
  	service.intervalfunc(service);
  	$scope.new_clone_error=false;
  	$scope.new_clone_success=false;
+    $scope.to_disable = false;
     $scope.clone_details = {};
     $scope.yishaifill = {
         name: 'ant',
@@ -50,7 +51,7 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
     }
 
     $scope.clone_project = function(){
-    	if(!$rootScope.project.details.gitName||!project.details.gitUrl){
+    	if(!$rootScope.project.details.gitName||!$rootScope.project.details.gitUrl){
     		$scope.new_clone_success = false;
     		$scope.new_clone_error = true;
     		$scope.display_clone_text = 'all fileds are reqiured';

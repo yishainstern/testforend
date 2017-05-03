@@ -85,16 +85,20 @@
 	function check_if_clone_is_done($returnJson,$runingRoot,$folderRoot){
 		$old_path = getcwd();
 		chdir($runingRoot);
-		$output = shell_exec('bash goD.sh');
-		$output1 = shell_exec('bash goG.sh');
+		$data = file('proj.log');
+		$output = $data[count($data)-1];
+		$data = file('Debugger.log');
+		$output1 = $data[count($data)-1];
 		$flag1 = strpos($output, "done");
-		$flag2 =strpos($output, "Checking out files: 100%");
+		$flag21 =strpos($output, "Checking out files: 100%");
+		$flag22 =strpos($output, "Resolving deltas: 100%");
 		$flag3 = strpos($output1, "done");
-		$flag4 = strpos($output1, "Checking out files: 100%");
+		$flag41 =strpos($output, "Checking out files: 100%");
+		$flag42 =strpos($output, "Resolving deltas: 100%");
 		$flag5 = strpos($output, "Fatal");
 		$flag6 = strpos($output1, "Fatal");
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		if ($flag1 && $flag2 && $flag3 && $flag4){
+		if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
 			$obj->details->progress[2]->flag = TRUE;
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "all cloned";

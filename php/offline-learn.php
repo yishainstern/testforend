@@ -34,8 +34,8 @@
 		if ($fileObj&&$fileObj["error"]==UPLOAD_ERR_OK&& $fileObj["tmp_name"]){
 			$name = put_bug_file_in_place($fileObj,$folderRoot,$bugRoot);
 			creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot);
-			prepare_runing_file_for_offline_task($folderNmae);
-			 $project_details = update_details($folderRoot,$fileObj,$all_versions);
+			//prepare_runing_file_for_offline_task($folderNmae);
+			$project_details = update_details($folderRoot,$fileObj,$all_versions);
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "all ready for offline task:)";
 			$returnJson['project'] = $project_details;

@@ -165,7 +165,11 @@ angular
         loadMyFile:function($ocLazyLoad) {
           return $ocLazyLoad.load({
               name:'sbAdminApp',
-              files:['scripts/controllers/prepareOfflineController.js','styles/prepareOffline.css']
+              files:[
+                'scripts/controllers/prepareOfflineController.js',
+                'styles/prepareOffline.css',
+                'scripts/directives/goToList/goToList.js'
+              ]
           })
         }
       }
@@ -240,7 +244,11 @@ angular
         loadMyFile:function($ocLazyLoad) {
           return $ocLazyLoad.load({
               name:'sbAdminApp',
-              files:['scripts/controllers/cloneController.js','styles/clone.css','scripts/directives/goToList/goToList.js']
+              files:[
+                'scripts/controllers/cloneController.js',
+                'styles/clone.css',
+                'scripts/directives/goToList/goToList.js'
+              ]
           })
         }
       }
