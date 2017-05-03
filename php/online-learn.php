@@ -55,7 +55,7 @@
 			$pathForPathtx = $runingRoot."path.txt";
 			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson,$files,$userProjectRoot);
 		}
-		if (sizeof($files)>0){
+		if (sizeof($files)==0){
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
 			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);

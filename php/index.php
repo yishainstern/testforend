@@ -50,6 +50,8 @@
 		$returnJson = run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot,$runingRoot);
 	}elseif ($task=="maven_done") {
 		$returnJson = maven_done($folderRoot);
+	}elseif ($task=="prepare_pridction") {
+		$returnJson = prepare_pridction($folderRoot,$userProjectRoot,$runingRoot);
 	}
 	echo json_encode((object)$returnJson);
 ?>

@@ -14,7 +14,7 @@
                             <input type="hidden" name="gitName" value="{{project.details.gitName}}">
                             <div class="form-group">
                                 <label style="display: block;">path src/etc/poms</label>
-                                <span class="pomPath">{{project.details.gitName}}/</span><input class="form-control" placeholder="some_folder/folder" ng-model="project.details.pomPath" name="testVersion" />
+                                <span class="pomPath">{{project.details.gitName}}/</span><input class="form-control" placeholder="some_folder/folder" ng-model="project.details.pomPath" name="pomPath" />
                             </div>
                             <label class="control-label" ng-show="(update_success||update_error)">
                                 {{display_text}}

@@ -194,8 +194,8 @@ angular
     })
     .state('dashboard.prediction',{
       templateUrl:'views/pages/prediction.html',
-      url:'/prepareOnline/:id',
-      controller:'prepareOnlineController',
+      url:'/prediction/:id',
+      controller:'predictionController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           return $ocLazyLoad.load({
