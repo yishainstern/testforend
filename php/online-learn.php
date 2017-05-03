@@ -59,7 +59,7 @@
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
 			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);
-			$obj->pomPath = $str;
+			$obj->details->pomPath = $str;
 			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 			$returnJson['project'] = $obj;
 			$returnJson['data'] = $files;
@@ -91,8 +91,6 @@
 		file_put_contents($runingRoot."path.txt",$str);
 		$oldTarget = $jar_test;
 		$newTarget = $runingRoot.$jarName;
-		echo($oldTarget);
-		echo($newTarget);
 		copy($oldTarget, $newTarget);
 		chmod($newTarget, 0777);
 		chmod($runingRoot."path.txt", 0777);

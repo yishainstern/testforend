@@ -8,7 +8,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="updare-pom" ng-class="{'has-error':update_error,'has-success':}">
+                        <form role="form" name="updare-pom" ng-class="{'has-error':update_error,'has-success':update_success}">
                             <input type="hidden" name="userName" value="{{user.details.userName}}">
                             <input type="hidden" name="id" value="{{project.details.name}}">
                             <input type="hidden" name="gitName" value="{{project.details.gitName}}">
@@ -16,7 +16,9 @@
                                 <label style="display: block;">path src/etc/poms</label>
                                 <span class="pomPath">{{project.details.gitName}}/</span><input class="form-control" placeholder="some_folder/folder" ng-model="project.details.pomPath" name="testVersion" />
                             </div>
-                            <label class="control-label" ng-show="update_succsess || update_error">{{display_text}}</label>
+                            <label class="control-label" ng-show="(update_success||update_error)">
+                                {{display_text}}
+                            </label>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="updare_pom()">change version</button>
                             <div class="table-responsive">
                     			<table class="table table-striped table-bordered table-hover" ng-show="table">
