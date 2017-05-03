@@ -7,18 +7,20 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
-    $scope.initErrors = function(){
-        $scope.error_obj.validation_error = false;
-        $scope.error_obj.display_text = '';
-        $scope.error_obj.pick_success = false;
-        $scope.error_obj.pick_error = false;
-    }
- 	service.intervalfunc(service);
+    service.intervalfunc(service);
     $scope.error_obj = {}
     $scope.error_obj.validation_error = false;
     $scope.error_obj.display_text = '';
     $scope.error_obj.pick_success = false;
-    $scope.error_obj.pick_error = false;
+    $scope.error_obj.pick_error = false;    
+    $scope.initErrors = function(){
+        $timeout(function() {
+            $scope.error_obj.validation_error = false;
+            $scope.error_obj.display_text = '';
+            $scope.error_obj.pick_success = false;
+            $scope.error_obj.pick_error = false;
+        }, 0);
+    }
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
@@ -43,8 +45,9 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             $scope.error_obj.display_text = data.message;
             $scope.error_obj.pick_success = true;
         }else if (data.status==1){
-            $scope.display_text = data.message;
-            $scope.validation_error = true;    
+            $scope.error_obj.display_text = data.message;
+            $scope.error_obj.validation_error = true;    
+            $scope.error_obj.pick_error = true;
         }
     }
     $scope.change_version = function(){
