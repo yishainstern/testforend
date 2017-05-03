@@ -231,7 +231,11 @@ angular
         loadMyFile:function($ocLazyLoad) {
           return $ocLazyLoad.load({
               name:'sbAdminApp',
-              files:['scripts/controllers/runOfflineController.js','styles/runOffline.css']
+              files:[
+                'scripts/controllers/runOfflineController.js',
+                'styles/runOffline.css',
+                'scripts/directives/goToList/goToList.js'
+              ]
           })
         }
       }

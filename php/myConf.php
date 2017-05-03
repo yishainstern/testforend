@@ -73,7 +73,7 @@
 	$userProjectRoot = $folderRoot.'rootGit\\';
 	$DebuugerRoot = $folderRoot.'rootLearn\\';
 	$bugRoot = $folderRoot.'rootBugs\\';
-	$outputPython = $folderRoot.'out\\';
+	$outputPython = $folderRoot.'out';
 	$runingRoot = $folderRoot.'run\\'; 
 	$relativeToUserRoot = '..\\users\\'.$folderName;
 	$localUsers = 'users\\'.$folderName;
@@ -81,7 +81,7 @@
 	$startGit = "start /B git clone --progress";
 	$domain = "http://local.test/";
 	$jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-	$learnDir = $root.'/'.$userName.'/'.$folderName.'/rootLearn/Debugger/learner/';
+	$learnDir = $root.$userName.'\\'.$folderName.'\\rootLearn\\Debugger\\learner';
 	$learn = $DebuugerRoot.'Debugger\\learner';
 	$jar_creater = $DebuugerRoot.'Debugger\\tracer';
 	$jar_test = $jar_creater.'\\target\\'.$jarName;

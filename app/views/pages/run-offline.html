@@ -1,9 +1,4 @@
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">run offline task</h1>
-    </div>  
-    <!-- /.col-lg-12 -->
-</div>
+<go-to-list title="run offline task"></go-to-list>
 <!-- /.row -->
 <!-- /.row -->
 <div class="row">
@@ -47,8 +42,8 @@
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':run_success}">
                                 <label class="control-label" ng-show="run_success">{{display_run_text}}</label>        
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="start()" ng-show="!project.details.progress[4]">start task</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="check()" ng-show="project.details.progress[4]">check if done</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="start()" ng-show="project.details.progress[4].flag">start task</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="check()" ng-show="project.details.progress[4].flag">check if done</button>
                         </form>
                     </div>
                 </div>

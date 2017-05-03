@@ -47,7 +47,8 @@
 	//
 	//use http get request to run the python project.
 	function run_python_code($folderRoot,$learn,$learnDir){
-		$command = 'start /B python '.$learnDir.'wrapper.py '.$learnDir.'antConf.txt learn 2>ff.log';
+		chdir($learnDir);
+		$command = 'start /B python wrapper.py antConf.txt learn 2>ff.log';
 		pclose(popen($command, "w"));
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 		$obj->details->progress[4]->flag = TRUE;
@@ -59,7 +60,7 @@
 	}
 	//check if offline task is over
 	function check_if_python_end($outputPython,$folderRoot){
-		if (file_exists($outputPython.'markers\\learner_phase_file')){
+		if (file_exists($outputPython.'\\markers\\learner_phase_file')){
 			$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 			$obj->details->progress[5]->flag = TRUE;
 			file_put_contents($folderRoot.'project_details.json',json_encode($obj));

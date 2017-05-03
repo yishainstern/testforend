@@ -23,8 +23,8 @@
                                                     <label>text version ANT_183</label>
                                                     <input class="form-control" placeholder="Enter text" ng-model="project.details.testVersion" name="testVersion" />
                                                 </div>
-                                                <div class="" ng-class="{'has-error':new_clone_error, 'has-success':new_clone_success}">
-                                                    <label class="control-label" ng-show="new_clone_error || new_clone_success">{{display_clone_text}}</label>
+                                                <div class="" ng-class="{'has-error':error_obj.pick_error, 'has-success':error_obj.pick_success}">
+                                                    <label class="control-label" ng-show="error_obj.pick_error || error_obj.pick_success">{{error_obj.display_text}}</label>
                                                 </div>
                                                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="change_version()">change version</button>
                                             </form>
@@ -50,8 +50,8 @@
                                                 <input type="hidden" name="id" value="{{project.details.name}}">
                                                 <input type="hidden" name="gitName" value="{{project.details.gitName}}">
                                                 <input type="hidden" name="testVersion" value="{{project.details.testVersion}}">
-                                                <div class="" ng-class="{'has-error':(pick_error||validation_error), 'has-success':pick_success}">
-                                                    <label class="control-label" ng-show="pick_error || validation_error || pick_success">{{display_text}}</label>
+                                                <div class="" ng-class="{'has-error':(error_obj.pick_error||error_obj.validation_error), 'has-success':error_obj.pick_success}">
+                                                    <label class="control-label" ng-show="(error_obj.pick_error || error_obj.validation_error || error_obj.pick_success)">{{error_obj.display_text}}</label>
                                                 </div>
                                                 <label class="control-label" ng-show="project.details.progress[6].flag" style="text-align: center; display: block;">check if the version is {{project.details.testVersion}}</label>
                                                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[6].flag" ng-click="check_version()">check version</button>

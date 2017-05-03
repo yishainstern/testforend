@@ -7,7 +7,18 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
+    $scope.initErrors = function(){
+        $scope.error_obj.validation_error = false;
+        $scope.error_obj.display_text = '';
+        $scope.error_obj.pick_success = false;
+        $scope.error_obj.pick_error = false;
+    }
  	service.intervalfunc(service);
+    $scope.error_obj = {}
+    $scope.error_obj.validation_error = false;
+    $scope.error_obj.display_text = '';
+    $scope.error_obj.pick_success = false;
+    $scope.error_obj.pick_error = false;
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
@@ -18,34 +29,29 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
                 paginationClickable: true,
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev',
-                spaceBetween: 30
-            });            
+                spaceBetween: 30,
+                onSlideChangeStart: $scope.initErrors
+            }); 
+            //swiper.onSlideChangeStart(swiper)           
         }else {
             //keep it alive
         }
     },300);
-    $scope.validation_error = false;
     $scope.success_version = function(data){
         if (data.status==111){
             $rootScope.project = data.project;
-            $scope.display_text = data.message;
-            $scope.pick_success = true;
+            $scope.error_obj.display_text = data.message;
+            $scope.error_obj.pick_success = true;
         }else if (data.status==1){
             $scope.display_text = data.message;
             $scope.validation_error = true;    
         }
-    }    
-    $scope.initErrors = function(){
-        $scope.validation_error = false;
-        $scope.display_text = '';
-        $scope.pick_success = false;
-        $scope.pick_error = false;
     }
     $scope.change_version = function(){
         $scope.initErrors();    
         if(!$rootScope.project.details.testVersion){
-            $scope.validation_error = true;
-            $scope.display_text = 'filed required';
+            $scope.error_obj.validation_error = true;
+            $scope.error_obj.display_text = 'filed required';
         }else{
             service.ajaxfunc('change_version','change-version',false)
             .then(function(data){

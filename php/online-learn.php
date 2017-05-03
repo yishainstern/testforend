@@ -110,7 +110,7 @@
 			return $returnJson;	
 		}
 		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
-		//pclose(popen($command, "w"));
+		pclose(popen($command, "w"));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
 		$obj = update_progress('pick_version', get_project_details($folderRoot),TRUE,$folderRoot);

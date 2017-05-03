@@ -13,6 +13,7 @@
                         <form role="form" name="files" ng-class="{'has-error':upload_error}">
                             <input type="hidden" name="userName" value="{{user.details.userName}}">
                             <input type="hidden" name="id" value="{{project.details.name}}">
+                            <input type="hidden" name="gitName" value="{{project.details.gitName}}">
                             <div class="form-group">
                                 <label>witch versions to check ANT_170,ANT_170_B1,ANT_171</label>
                                 <input class="form-control" placeholder="Enter text" ng-model="project.details.versions" name="ver" />
