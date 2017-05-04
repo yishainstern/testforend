@@ -50,6 +50,14 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
     	}
     }
 
+    $scope.success_try = function(obj){
+        if (obj.status==111){
+            $rootScope.project = obj.project;
+            $scope.new_clone_success = true;
+            $scope.display_clone_text = obj.message;
+        }
+    }
+
     $scope.clone_project = function(){
     	if(!$rootScope.project.details.gitName||!$rootScope.project.details.gitUrl){
     		$scope.new_clone_success = false;
@@ -71,4 +79,12 @@ angular.module('sbAdminApp').controller('cloneController', ['$scope', '$timeout'
             function(data){$scope.fail_new_project(data);});    	
     }
 
-;}]);
+    $scope.try_agin = function(){
+        $scope.new_clone_error = false;
+        $scope.new_clone_success = false;
+        service.ajaxfunc('try_agin','clone-project',false)
+        .then(function(data){$scope.success_try(JSON.parse(data));},
+            function(data){$scope.fail_new_project(data);});          
+    }
+
+}]);

@@ -33,6 +33,12 @@ angular.module('sbAdminApp').controller('pomController', ['$scope', '$timeout', 
  			$scope.update_error = true;
  			return;
  		}
+ 		var tt = $rootScope.project.details.pomPath;
+ 		if (tt.includes("/")){
+ 			$scope.display_text="change all of your q marks to \\ ";
+ 			$scope.update_error = true;
+ 			return;
+ 		}
         service.ajaxfunc('update_pom','updare-pom',false)
         .then(function(data){
             data = $rootScope.checkJson(data);

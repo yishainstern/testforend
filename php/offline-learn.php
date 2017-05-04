@@ -20,7 +20,7 @@
 	}
 	function update_details($folderRoot,$fileObj,$all_versions){
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->progress[3]->flag = TRUE;
+		$obj->details->progress->mille_stones->upload_bug_file->flag = TRUE;
 		if ($fileObj["name"]){
 			$obj->details->bugFileName = $fileObj["name"];
 		}
@@ -51,7 +51,7 @@
 		$command = 'start /B python wrapper.py antConf.txt learn 2>ff.log';
 		pclose(popen($command, "w"));
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->progress[4]->flag = TRUE;
+		$obj->details->progress->mille_stones->start_offline->flag = true;
 		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "strted...check later";
@@ -62,7 +62,7 @@
 	function check_if_python_end($outputPython,$folderRoot){
 		if (file_exists($outputPython.'\\markers\\learner_phase_file')){
 			$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-			$obj->details->progress[5]->flag = TRUE;
+			$obj->details->progress->mille_stones->end_offline->flag = true;
 			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "offline task done";

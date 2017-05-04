@@ -13,7 +13,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <ul class="timeline">
-                        <li ng-repeat="item in project.details.progress" ng-class="{'timeline-inverted':$odd}">
+                        <li ng-repeat="item in project_arr" ng-class="{'timeline-inverted':$odd}">
                             <div class="timeline-badge" ng-class="{'primary':$index%4==0, 'success':$index%4==1, 'warning':$index%4==2, 'info':$index%4==3}">{{$index+1}}</div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">

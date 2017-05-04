@@ -17,8 +17,13 @@
     				$confArr = $rr->childNodes;
                     foreach ($confArr as $confElemnt ) {
                         if ($confElemnt->nodeName=="configuration"){
-                            $e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
-                            $confElemnt->appendChild($e);
+                        	$was_change = $confElemnt->getElementsByTagName('argLine');
+                        	if (sizeof($was_change)>0){
+                        		//echo "did it";
+                        	}else{
+                        		$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
+                            	$confElemnt->appendChild($e);
+                        	}
                             $tmp = $str;
                             $vowels = array($userProjectRoot);
                             $tmp = str_replace($vowels, "", $tmp);
@@ -55,7 +60,7 @@
 			$pathForPathtx = $runingRoot."path.txt";
 			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson,$files,$userProjectRoot);
 		}
-		if (sizeof($files)==0){
+		if (sizeof($files)>0){
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
 			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);
@@ -100,6 +105,7 @@
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
 	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot){
 		$old_path = getcwd();
+		$tmp_project = get_project_details($folderRoot);
 		chdir($userProjectRoot.$gitName);
 		$flag = git_tag_list($runingRoot,array($newVersion));
 		if (!$flag){
@@ -107,11 +113,12 @@
 			$returnJson['message'] = "version does not exsist";	
 			return $returnJson;	
 		}
+		//if ()
 		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
 		pclose(popen($command, "w"));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
-		$obj = update_progress('pick_version', get_project_details($folderRoot),TRUE,$folderRoot);
+		$obj = update_progress('pick_version', $tmp_project,true,$folderRoot);
 		$obj->details->testVersion = $newVersion;
 		$returnJson['project'] = $obj;
 		return $returnJson;	

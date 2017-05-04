@@ -50,6 +50,12 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         				data = JSON.parse(data);
         				if (data && data.project && data.project.details && data.project.details.progress){
         					$rootScope.project = data.project; 
+        					$rootScope.project_arr = [];
+        					var flag = $rootScope.project.details.progress.start;
+        					while(flag){
+        						$rootScope.project_arr.push($rootScope.project.details.progress.mille_stones[flag]);
+        						flag = $rootScope.project.details.progress.mille_stones[flag].next;
+        					}
         					$rootScope.$broadcast('project_object_exsites');
         					console.log($rootScope.project);
         				}

@@ -65,8 +65,8 @@
 	$mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	//
 	//yishai local computer
-	//$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
-	//$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	//
 	$userNameRoot = $root.$userName.'\\';
 	$folderRoot = $userNameRoot.$folderName.'\\';
@@ -100,13 +100,8 @@
 
 	function update_progress($str, $projet,$flag, $folderRoot)
 	{
-		$count = sizeof($projet->details->progress);
-		for ($i=0; $i < $count; $i++) { 
-			if ($projet->details->progress[$i]->name==$str){
-				$projet->details->progress[$i]->flag = $flag;
-				file_put_contents($folderRoot.'project_details.json',json_encode($projet));
-				return $projet;
-			}
+		if (isset($projet->progress->mille_stones[$str])){
+			$projet->progress->mille_stones[$str]->flag = $flag;
 		}
 		return $projet;
 	}

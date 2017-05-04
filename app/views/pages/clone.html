@@ -20,19 +20,18 @@
                             <input type="hidden" name="id" value="{{project.details.name}}">
                             <div class="form-group">
                                 <label>git name</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" ng-disabled="project.details.progress[1].flag" />
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitName" name="gitName" ng-disabled="project.details.progress[1].flag && !project.details.try_agin" />
                             </div>                            
                             <div class="form-group">
                                 <label>git url</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl" ng-disabled="project.details.progress[1].flag">
+                                <input class="form-control" placeholder="Enter text" ng-model="project.details.gitUrl" name="gitUrl" ng-disabled="project.details.progress[1].flag && !project.details.try_agin">
                             </div>
                             <div class="" ng-class="{'has-error':new_clone_error, 'has-success':new_clone_success}">
                                 <label class="control-label" ng-show="new_clone_error || new_clone_success">{{display_clone_text}}</label>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress[1].flag" ng-click="clone_project()">Clone Project</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>                            
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress[1].flag" ng-click="check_clone()">ckeck clone</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.try_agin" ng-click="check_clone()">try agin</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="!project.details.progress.mille_stones.start_clone.flag" ng-click="clone_project()">Clone Project</button>                     
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress.mille_stones.start_clone.flag" ng-click="check_clone()">ckeck clone</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.try_agin" ng-click="try_agin()">try agin</button>
                         </form>
                     </div>
                 </div>
