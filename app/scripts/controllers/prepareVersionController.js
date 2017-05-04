@@ -12,14 +12,20 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
     $scope.error_obj.validation_error = false;
     $scope.error_obj.display_text = '';
     $scope.error_obj.pick_success = false;
-    $scope.error_obj.pick_error = false;    
-    $scope.initErrors = function(){
+    $scope.error_obj.pick_error = false;   
+    $scope.initErrorsSwiper = function(){
         $timeout(function() {
             $scope.error_obj.validation_error = false;
             $scope.error_obj.display_text = '';
             $scope.error_obj.pick_success = false;
             $scope.error_obj.pick_error = false;
         }, 0);
+    } 
+    $scope.initErrors = function(){
+            $scope.error_obj.validation_error = false;
+            $scope.error_obj.display_text = '';
+            $scope.error_obj.pick_success = false;
+            $scope.error_obj.pick_error = false;
     }
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
@@ -32,9 +38,23 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev',
                 spaceBetween: 30,
-                onSlideChangeStart: $scope.initErrors
+                onSlideChangeStart: $scope.initErrorsSwiper
             }); 
-            //swiper.onSlideChangeStart(swiper)           
+            $scope.how_much_to_slide = 0;
+            switch ($stateParams.task){
+                case 'pick_version':
+                    $scope.how_much_to_slide = 0;
+                break;
+                case 'check_version':
+                    $scope.how_much_to_slide = 1;
+                break;
+                case 'prepare_jar':
+                    $scope.how_much_to_slide = 2;
+                break;
+            }
+            if ($scope.how_much_to_slide>0){
+                swiper.slideTo($scope.how_much_to_slide);
+            }           
         }else {
             //keep it alive
         }
@@ -55,6 +75,7 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
         if(!$rootScope.project.details.testVersion){
             $scope.error_obj.validation_error = true;
             $scope.error_obj.display_text = 'filed required';
+            return;
         }else{
             service.ajaxfunc('change_version','change-version',false)
             .then(function(data){
@@ -67,9 +88,6 @@ angular.module('sbAdminApp').controller('prepareVersionController', ['$scope', '
             });
         }
     }
-    $scope.$on('project_object_exsites', function(event, args) {
-        
-    });
     $scope.check_version = function(){
         $scope.initErrors();
         service.ajaxfunc('check_version','change-version',false)

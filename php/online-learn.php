@@ -50,6 +50,11 @@
 	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot){
+		if (!$tmp_project->details->progress->mille_stones->check_version->flag){
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "can not edit before picking a test version";	
+			return $returnJson;	
+		}
 		$str = $userProjectRoot.$gitName."\\".$pomPath;
 		exec("dir /s /b " .$str."\*pom.xml* > ".$runingRoot."\\poms.txt");
 		$arr = explode("\n",file_get_contents($runingRoot."\\poms.txt"));
@@ -63,7 +68,7 @@
 		if (sizeof($files)>0){
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
-			$obj = update_progress('update_pom', get_project_details($folderRoot),TRUE,$folderRoot);
+			$obj = update_progress('update_pom', get_project_details($folderRoot),true,$folderRoot);
 			$obj->details->pomPath = $str;
 			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 			$returnJson['project'] = $obj;
@@ -113,13 +118,19 @@
 			$returnJson['message'] = "version does not exsist";	
 			return $returnJson;	
 		}
+		if ($tmp_project->details->progress->mille_stones->update_pom->flag){
+			$returnJson['status'] = 1;
+			$returnJson['message'] = "you can not chane any more after editing pom files";	
+			return $returnJson;	
+		}
 		//if ()
 		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
-		pclose(popen($command, "w"));
+		//pclose(popen($command, "w"));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
 		$obj = update_progress('pick_version', $tmp_project,true,$folderRoot);
 		$obj->details->testVersion = $newVersion;
+		file_put_contents($folderRoot.'project_details.json', json_encode($obj));
 		$returnJson['project'] = $obj;
 		return $returnJson;	
 	}

@@ -19,7 +19,22 @@ angular.module('sbAdminApp').controller('prepareOnlineController', ['$scope', '$
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev',
                 spaceBetween: 30
-            });            
+            });    
+            $scope.how_much_to_slide = 0;
+            switch ($stateParams.task){
+                case 'prepare_mvn':
+                    $scope.how_much_to_slide = 0;
+                break;
+                case 'start_testing':
+                    $scope.how_much_to_slide = 1;
+                break;
+                case 'end_testing':
+                    $scope.how_much_to_slide = 2;
+                break;
+            }        
+            if ($scope.how_much_to_slide>0){
+                swiper.slideTo($scope.how_much_to_slide);
+            }   
         }else {
             //keep it alive
         }

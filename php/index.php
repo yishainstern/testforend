@@ -51,7 +51,12 @@
 	}elseif ($task=="maven_done") {
 		$returnJson = maven_done($folderRoot);
 	}elseif ($task=="prepare_pridction") {
-		$returnJson = prepare_pridction($folderRoot,$userProjectRoot,$runingRoot);
+		$returnJson = prepare_pridction($folderRoot,$userProjectRoot,$runingRoot,$outputPython);
+	}elseif ($task=="run_pridction") {
+		$returnJson = run_pridction($folderRoot,$learnDir);
+	}elseif ($task=="get_pridction") {
+		$returnJson = get_pridction($folderRoot,$learnDir);
 	}
+
 	echo json_encode((object)$returnJson);
 ?>

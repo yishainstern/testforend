@@ -10,6 +10,6 @@
 	left: 0px;
 }
 
-.swiper-container-horizontal>.swiper-pagination-bullets {
+#page-wrapper .swiper-container-horizontal>.swiper-pagination-bullets {
     bottom: 0px;
 }

@@ -100,9 +100,10 @@
 
 	function update_progress($str, $projet,$flag, $folderRoot)
 	{
-		if (isset($projet->progress->mille_stones[$str])){
-			$projet->progress->mille_stones[$str]->flag = $flag;
+		if (isset($projet->details->progress->mille_stones->$str)){
+			$projet->details->progress->mille_stones->$str->flag = $flag;
 		}
+		file_put_contents($folderRoot.'project_details.json', json_encode($projet));
 		return $projet;
 	}
 

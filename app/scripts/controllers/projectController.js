@@ -70,8 +70,9 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	}
 //    
 	$scope.task_page = function(state,params){
+		$scope.task = state
 		state = $scope.get_state(state);
-		$state.transitionTo(state,{id:params});
+		$state.transitionTo(state,{id:params,task:$scope.task});
 	}
 
 ;}]);

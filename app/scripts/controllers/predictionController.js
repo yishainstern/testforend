@@ -25,33 +25,42 @@ angular.module('sbAdminApp').controller('predictionController', ['$scope', '$tim
         }
     },300);
 
-    $scope.success_preperations = function(){
+    $scope.success_prediction_prepare = function(){
         console.log('done');
     }
     $scope.error_preperations = function(){
         console.log('done');
     }
     $scope.last_preperations = function(){
-        service.ajaxfunc('','change-version',false)
+        service.ajaxfunc('prepare_pridction','change-version',false)
         .then(function(data){
             data = $rootScope.checkJson(data);
             if (data != null){
-                $scope.success_preperations(data);    
+                $scope.success_prediction_prepare(data);    
             } 
         },function(data){
            $scope.error_preperations(data);
         });
     }
-    $scope.run_maven = function(){
-        service.ajaxfunc('','change-version',false)
+    $scope.run_pridction = function(){
+        service.ajaxfunc('run_pridction','change-version',false)
         .then(function(data){
             data = $rootScope.checkJson(data);
             if (data != null){
-                $scope.success_preperations(data);    
+                $scope.success_run_pridction(data);    
             } 
         },function(data){
-           $scope.error_preperations(data);
+           $scope.error_run_pridction(data);
         });
     }
+
+    $scope.get_pridction = function(){
+        service.filefunc('get_pridction','change-version',false)
+        .then(function(data){
+             
+        },function(data){
+           
+        });
+    }    
    
 }]);

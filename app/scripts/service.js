@@ -35,6 +35,39 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
     		});
             return deferred.promise;
 		},
+        filefunc: function(task,form_name,form_data){
+            var deferred = $q.defer();
+            var form;
+            var data_to_send;
+            if (!form_data){//did you send a formData or not
+                form = document.forms.namedItem(form_name);
+                data_to_send = new FormData(form);
+            }else {
+                form = form_data;
+                data_to_send = form;
+            }
+            data_to_send.append('task',task);
+            $.ajax({
+                url: $rootScope.server_domain,
+                type: "POST",
+                data: data_to_send,
+                processData: false,
+                contentType: false,
+                error: function(data){
+                    deferred.reject(data);
+                },
+                success:  function(data, status, headers, config){
+                    var anchor = angular.element('<a/>');
+                    anchor.attr({
+                        href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+                        target: '_blank',
+                        download: 'filename.csv'
+                    })[0].click();
+                    deferred.resolve(data);
+                } 
+            });
+            return deferred.promise;
+        },        
 		intervalfunc:function(delegate){
 			var stop = $interval(function() {
 				if ($rootScope.user.details.first_name && $rootScope.user.details.password && $stateParams.id){

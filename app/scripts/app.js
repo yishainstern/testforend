@@ -159,7 +159,7 @@ angular
     })
     .state('dashboard.prepareOffline',{
       templateUrl:'views/pages/prepare-offline.html',
-      url:'/prepareOffline/:id',
+      url:'/prepareOffline/:id/:task',
       controller:'prepareOfflineController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -176,7 +176,7 @@ angular
     })     
     .state('dashboard.prepareOnline',{
       templateUrl:'views/pages/prepare-online.html',
-      url:'/prepareOnline/:id',
+      url:'/prepareOnline/:id/:task',
       controller:'prepareOnlineController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -194,7 +194,7 @@ angular
     })
     .state('dashboard.prediction',{
       templateUrl:'views/pages/prediction.html',
-      url:'/prediction/:id',
+      url:'/prediction/:id/:task',
       controller:'predictionController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -212,7 +212,7 @@ angular
     })    
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
-      url:'/pomUpdate/:id',
+      url:'/pomUpdate/:id/:task',
       controller:'pomController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -225,7 +225,7 @@ angular
     })              
     .state('dashboard.runOffline',{
       templateUrl:'views/pages/run-offline.html',
-      url:'/runOffline/:id',
+      url:'/runOffline/:id/:task',
       controller:'runOfflineController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -242,7 +242,7 @@ angular
     })            
     .state('dashboard.clone',{
       templateUrl:'views/pages/clone.html',
-      url:'/clone/:id',
+      url:'/clone/:id/:task',
       controller:'cloneController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -259,7 +259,7 @@ angular
     })
     .state('dashboard.prepareVersion',{
       templateUrl:'views/pages/prepareVersion.html',
-      url:'/prepareVersion/:id',
+      url:'/prepareVersion/:id/:task',
       controller:'prepareVersionController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
