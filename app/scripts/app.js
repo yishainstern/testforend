@@ -192,6 +192,25 @@ angular
         }
       }
     })
+    .state('dashboard.all_details',{
+      templateUrl:'views/pages/all_details.html',
+      url:'/all_details/:id/:task',
+      controller:'all_details',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/all_details.js',
+                'styles/all_details.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'bower_components/swiper/dist/css/swiper.min.css',
+                'scripts/directives/goToList/goToList.js'
+              ]
+          })
+        }
+      }
+    })
     .state('dashboard.prediction',{
       templateUrl:'views/pages/prediction.html',
       url:'/prediction/:id/:task',

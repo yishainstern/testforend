@@ -9,6 +9,7 @@
 	header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
+	file_put_contents('filename.txt', 'data');
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
 		$returnJson = start_and_prepare_folders($folderRoot, $userProjectRoot, $DebuugerRoot, $outputPython, $runingRoot, $userNameRoot,$folderName,$discription,$bugRoot);

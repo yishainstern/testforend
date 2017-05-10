@@ -6,7 +6,7 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, $state, $stateParams) {
+angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
  	
  	service.intervalfunc(service);
  	if (!$stateParams.id){
@@ -19,26 +19,30 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		{
  			task:'clone',
  			title:'clone your project',
- 			state:,
- 			description: 'this part will upload your git project to our server, follow the instroction'
+ 			state:'',
+ 			description: 'this part will upload your git project to our server, follow the instroction',
+ 			flag:false
  		},
  		{
  			task:'offline',
- 			title:'learn about your code offline'
- 			state:,
- 			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction'
+ 			title:'learn about your code offline',
+ 			state:'',
+ 			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction',
+ 			flag:false
  		},
  		{
  			task:'online',
- 			title:'learn about your code with maven'
- 			state:,
- 			description:'In this part we will run som tests and get results for your project' 			
+ 			title:'learn about your code with maven',
+ 			state:'',
+ 			description:'In this part we will run som tests and get results for your project',
+ 			flag:false
  		},
 		{
  			task:'prediction',
- 			title:'get prediction'
- 			state:,
- 			description:'In this part we will get a prediction for your part in the code' 			
+ 			title:'get prediction',
+ 			state:'',
+ 			description:'In this part we will get a prediction for your part in the code' ,
+ 			flag:false
  		} 		
  	];
 
