@@ -65,8 +65,8 @@
 	$mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	//
 	//yishai local computer
-	//$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
-	//$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	//
 	$userNameRoot = $root.$userName.'\\';
 	$folderRoot = $userNameRoot.$folderName.'\\';

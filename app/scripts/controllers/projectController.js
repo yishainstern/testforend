@@ -12,6 +12,35 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
  	}
+ 	$scope.get_status = function(){
+
+ 	}
+ 	$scope.userArray = [
+ 		{
+ 			task:'clone',
+ 			title:'clone your project',
+ 			state:,
+ 			description: 'this part will upload your git project to our server, follow the instroction'
+ 		},
+ 		{
+ 			task:'offline',
+ 			title:'learn about your code offline'
+ 			state:,
+ 			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction'
+ 		},
+ 		{
+ 			task:'online',
+ 			title:'learn about your code with maven'
+ 			state:,
+ 			description:'In this part we will run som tests and get results for your project' 			
+ 		},
+		{
+ 			task:'prediction',
+ 			title:'get prediction'
+ 			state:,
+ 			description:'In this part we will get a prediction for your part in the code' 			
+ 		} 		
+ 	];
 
  	$scope.get_state = function(str){
  		switch (str){
