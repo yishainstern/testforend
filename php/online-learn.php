@@ -18,7 +18,7 @@
                     foreach ($confArr as $confElemnt ) {
                         if ($confElemnt->nodeName=="configuration"){
                         	$was_change = $confElemnt->getElementsByTagName('argLine');
-                        	if (sizeof($was_change)>0){
+                        	if ($was_change->length>0){
                         		//echo "did it";
                         	}else{
                         		$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
@@ -50,6 +50,7 @@
 	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot){
+		$tmp_project = get_project_details($folderRoot);
 		if (!$tmp_project->details->progress->mille_stones->check_version->flag){
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "can not edit before picking a test version";	
@@ -68,7 +69,7 @@
 		if (sizeof($files)>0){
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "we updated your files";	
-			$obj = update_progress('update_pom', get_project_details($folderRoot),true,$folderRoot);
+			$obj = update_progress('update_pom',$tmp_project,true,$folderRoot);
 			$obj->details->pomPath = $str;
 			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
 			$returnJson['project'] = $obj;
@@ -123,9 +124,8 @@
 			$returnJson['message'] = "you can not chane any more after editing pom files";	
 			return $returnJson;	
 		}
-		//if ()
 		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
-		//pclose(popen($command, "w"));
+		pclose(popen($command, "w"));
 		$returnJson['status'] = 111;
 		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
 		$obj = update_progress('pick_version', $tmp_project,true,$folderRoot);

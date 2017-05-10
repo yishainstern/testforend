@@ -72,7 +72,7 @@
 		if ($obj->details->try_git_agin){
 			if (file_exists($userProjectRoot.$gitName)){
 				rename ($userProjectRoot.$gitName,$userProjectRoot.'by');
-				pclose(popen('start /B RD /S /Q'.' '.$userProjectRoot.'by>'.$runingRoot."\\show","w"));
+				pclose(popen('start /B rmdir /s /q'.' '.$userProjectRoot.'by>'.$runingRoot."\\show","w"));
 			}
 			pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$runingRoot."\\proj.log", "w"));
 			$obj->details->gitName = $gitName;

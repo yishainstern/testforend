@@ -25,7 +25,7 @@
 		$returnJson['message'] = "ready to run prediction";
 		return $returnJson;
 	}	
-	function run_pridction($folderRoot){
+	function run_pridction($folderRoot,$learnDir){
 		chdir($learnDir);
 		$command = 'start /B python wrapper.py antConf.txt experiments 2>ee.log';
 		pclose(popen($command, "w"));
