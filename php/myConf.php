@@ -1,5 +1,86 @@
 <?php
+
+
+
+
+
+
+
+
+
+
 	$details_obj = new stdClass();
+	if (isset( $_GET["name"])){
+		$pieces = explode(",", $_GET["name"]);
+		file_put_contents('gg', 'data');
+		return;
+	}else {
+		if (isset($_POST["task"])){
+			$details_obj->task = $_POST["task"];
+		}else{
+			$details_obj->task = '';
+		}
+		if (isset($_POST["gitName"])){
+			$details_obj->gitName = $_POST["gitName"];
+		}else{
+			$details_obj->gitName = '';					
+		}
+		if (isset($_POST["gitUrl"])){
+			$details_obj->gitUrl = $_POST["gitUrl"];
+		}else{
+			$details_obj->gitUrl = '';
+		}
+		if (isset($_POST["id"])){
+			$details_obj->folderName = $_POST["id"];
+		}else{
+			$details_obj->folderName = '';
+		}
+		if (isset($_POST["userName"])){
+			$details_obj->userName = $_POST["userName"];
+		}else{
+			$details_obj->userName = '';
+		}
+		if (isset($_POST["first_name"])){
+			$details_obj->first_name = $_POST["first_name"];
+		}else{
+			$details_obj->first_name = '';
+		}
+		if (isset($_POST["last_name"])){
+			$details_obj->last_name = $_POST["last_name"];
+		}else{
+			$details_obj->last_name = '';
+		}	
+		if (isset($_POST["user_email"])){
+			$details_obj->user_email = $_POST["user_email"];
+		}else{
+			$details_obj->user_email = '';
+		}		
+		if (isset($_POST["password"])){
+			$details_obj->password = $_POST["password"];	
+		}else{
+			$details_obj->password = '';
+		}
+		if (isset($_POST["testVersion"])){
+			$details_obj->newVersion = $_POST["testVersion"];
+		}else{
+			$details_obj->newVersion = '';
+		}
+		if (isset($_POST["ver"])){
+			$details_obj->all_versions = $_POST["ver"];
+		}else{
+			$details_obj->all_versions = '';
+		}				 
+		if (isset($_POST["pomPath"])){
+			$details_obj->pomPath = $_POST["pomPath"];
+		}else{
+			$details_obj->pomPath = '';
+		}
+		if (isset($_POST["project_description"])){
+			$details_obj->discription = $_POST["project_description"];
+		}else{
+			$details_obj->discription = '';
+		}
+	}
 	if (isset($_POST["task"])){
 		$details_obj->task = $_POST["task"];
 	}else{
