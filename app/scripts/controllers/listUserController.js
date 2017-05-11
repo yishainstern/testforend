@@ -6,11 +6,11 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeout', '$rootScope','service','config','$state', function ($scope, $timeout, $rootScope, service,config,$state) {
-
+angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeout', '$rootScope','service','config','$state','$stateParams', function ($scope, $timeout, $rootScope, service,config,$state,$stateParams) {
+	$rootScope.call_user();
 
     $scope.go_to_new_project = function(){
-        $state.transitionTo('dashboard.newProject');
+        $state.transitionTo('dashboard.newProject',{user:$rootScope.user.details.userName});
     }
 
     $scope.go_to_project = function(name){

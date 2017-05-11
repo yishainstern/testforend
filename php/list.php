@@ -1,15 +1,16 @@
 <?php
-	function get_user_list($returnJson,$userNmae,$password,$userNameRoot){
-		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
-		if (!$str->details->userName==$userNmae || !$str->details->password==$password){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "do not try to brake in theaf!!";
+	function get_user_list($details_obj){
+		$ans = array();
+		$str = json_decode(file_get_contents($details_obj->userNameRoot.'user_details.json'));
+		if (!$str->details->userName == $details_obj->userName || !$str->details->password == $details_obj->password){
+			$ans['status'] = 1;
+			$ans['message'] = "do not try to brake in theaf!!";
 		}else {
-			$returnJson['user'] = $str; 
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "user folder created";
+			$ans['user'] = $str; 
+			$ans['status'] = 111;
+			$ans['message'] = "user folder created";
 		}
-		return $returnJson;
+		return $ans;
 	}
 
 	function get_project_progress($folderRoot){

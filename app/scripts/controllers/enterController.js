@@ -18,6 +18,11 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.display_sgin_text = 'משתמש כבר קיים';
     $scope.display_login_text = 'משתמש כבר קיים';
     $scope.log_show = true;
+    $scope.valid_email = function(email){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    
     $scope.show_error = function(str,flag){
         $scope.display_sgin_text = str;
         $scope.display_login_text = str; 
@@ -28,11 +33,10 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
-            $rootScope.user.details.name = $scope.sginup_details.userName; 
-            $rootScope.user.details.password = $scope.sginup_details.password;
-            localStorage.setItem('name',$rootScope.user.details.name);
+            $rootScope.user = data.user; 
+            localStorage.setItem('name',$rootScope.user.details.userName);
             localStorage.setItem('password',$rootScope.user.details.password);
-            $state.transitionTo('dashboard.listUser');
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
         }else if (data && data.status && data.status==1){
             $scope.show_error('user alredy exsists','error_sign');
         }
@@ -47,11 +51,10 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
-            $rootScope.current_name = $scope.login_details.userName; 
-            $rootScope.current_password = $scope.login_details.password;
-            localStorage.setItem('name',$rootScope.current_name);
-            localStorage.setItem('password',$rootScope.current_password);
-            $state.transitionTo('dashboard.listUser');
+            $rootScope.user = data.user; 
+            localStorage.setItem('name',$rootScope.user.details.userName);
+            localStorage.setItem('password',$rootScope.user.details.password);
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
         }else if (data && data.status && data.status==1){
             $scope.show_error('rong user name or password','error_login');
         }else if (data && data.status && data.status==2){
@@ -64,10 +67,15 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
 
     $scope.sgin_task = function(form_naame){
-        if (!$scope.sginup_details.userName || !$scope.sginup_details.password){
-            $scope.show_error('both fileds are required','error_sign');        
+        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email ){
+            $scope.show_error('all fileds are required','error_sign');        
             return;
         }
+        if (!$scope.valid_email($scope.sginup_details.user_email)){
+            $scope.show_error('email not valid','error_sign');        
+            return;
+        }
+       
         $scope.display_sgin_text = '';        
         $scope.error_sign = false;
         service.ajaxfunc('sgin_up',form_naame,false)

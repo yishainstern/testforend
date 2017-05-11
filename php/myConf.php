@@ -1,99 +1,106 @@
 <?php
+	$details_obj = new stdClass();
 	if (isset($_POST["task"])){
-		$task = $_POST["task"];
+		$details_obj->task = $_POST["task"];
 	}else{
-		$task = '';
+		$details_obj->task = '';
 	}
 	if (isset($_POST["gitName"])){
-		$gitName = $_POST["gitName"];
+		$details_obj->gitName = $_POST["gitName"];
 	}else{
-		$gitName = '';					
+		$details_obj->gitName = '';					
 	}
 	if (isset($_POST["gitUrl"])){
-		$gitUrl = $_POST["gitUrl"];
+		$details_obj->gitUrl = $_POST["gitUrl"];
 	}else{
-		$gitUrl = '';
+		$details_obj->gitUrl = '';
 	}
 	if (isset($_POST["id"])){
-		$folderName = $_POST["id"];
+		$details_obj->folderName = $_POST["id"];
 	}else{
-		$folderName = '';
+		$details_obj->folderName = '';
 	}
 	if (isset($_POST["userName"])){
-		$userName = $_POST["userName"];
+		$details_obj->userName = $_POST["userName"];
 	}else{
-		$userName = '';
+		$details_obj->userName = '';
 	}
 	if (isset($_POST["first_name"])){
-		$first_name = $_POST["first_name"];
+		$details_obj->first_name = $_POST["first_name"];
 	}else{
-		$first_name = '';
+		$details_obj->first_name = '';
 	}
 	if (isset($_POST["last_name"])){
-		$last_name = $_POST["last_name"];
+		$details_obj->last_name = $_POST["last_name"];
 	}else{
-		$last_name = '';
+		$details_obj->last_name = '';
 	}	
-	if (isset($_POST["password"])){
-		$password = $_POST["password"];	
+	if (isset($_POST["user_email"])){
+		$details_obj->user_email = $_POST["user_email"];
 	}else{
-		$password = '';
+		$details_obj->user_email = '';
+	}		
+	if (isset($_POST["password"])){
+		$details_obj->password = $_POST["password"];	
+	}else{
+		$details_obj->password = '';
 	}
 	if (isset($_POST["testVersion"])){
-		$newVersion = $_POST["testVersion"];
+		$details_obj->newVersion = $_POST["testVersion"];
 	}else{
-		$newVersion = '';
+		$details_obj->newVersion = '';
 	}
 	if (isset($_POST["ver"])){
-		$all_versions = $_POST["ver"];
+		$details_obj->all_versions = $_POST["ver"];
 	}else{
-		$all_versions = '';
+		$details_obj->all_versions = '';
 	}				 
 	if (isset($_POST["pomPath"])){
-		$pomPath = $_POST["pomPath"];
+		$details_obj->pomPath = $_POST["pomPath"];
 	}else{
-		$pomPath = '';
+		$details_obj->pomPath = '';
 	}
 	if (isset($_POST["project_description"])){
-		$discription = $_POST["project_description"];
+		$details_obj->discription = $_POST["project_description"];
 	}else{
-		$discription = '';
+		$details_obj->discription = '';
 	}
 
 	//windows server in BG|U
-	$root = 'C:\\Users\\sternyi\\Desktop\\Users\\';
-	$mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
+	$details_obj->root = 'C:\\Users\\sternyi\\Desktop\\Users\\';
+	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	//
 	//yishai local computer
-	$root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
-	$mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	$details_obj->root = 'C:\\Users\\pc-home\\Desktop\\Github\\users\\';
+	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	//
-	$userNameRoot = $root.$userName.'\\';
-	$folderRoot = $userNameRoot.$folderName.'\\';
-	$userProjectRoot = $folderRoot.'rootGit\\';
-	$DebuugerRoot = $folderRoot.'rootLearn\\';
-	$bugRoot = $folderRoot.'rootBugs\\';
-	$outputPython = $folderRoot.'out';
-	$runingRoot = $folderRoot.'run\\'; 
-	$relativeToUserRoot = '..\\users\\'.$folderName;
-	$localUsers = 'users\\'.$folderName;
-	$amirGit = "https://github.com/amir9979/Debugger.git";
-	$startGit = "start /B git clone --progress";
-	$domain = "http://local.test/";
-	$jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-	$learnDir = $root.$userName.'\\'.$folderName.'\\rootLearn\\Debugger\\learner';
-	$learn = $DebuugerRoot.'Debugger\\learner';
-	$jar_creater = $DebuugerRoot.'Debugger\\tracer';
-	$jar_test = $jar_creater.'\\target\\'.$jarName;
+	$details_obj->userNameRoot = $details_obj->root.$details_obj->userName;
+	$details_obj->folderRoot = $details_obj->userNameRoot.'\\'.$details_obj->folderName;
+	$details_obj->userProjectRoot = $details_obj->folderRoot.'\\rootGit';
+	$details_obj->DebuugerRoot = $details_obj->folderRoot.'\\rootLearn';
+	$details_obj->bugRoot = $details_obj->folderRoot.'\\rootBugs';
+	$details_obj->outputPython = $details_obj->folderRoot.'\\out';
+	$details_obj->runingRoot = $details_obj->folderRoot.'\\run'; 
+	$details_obj->relativeToUserRoot = '..\\users\\'.$details_obj->folderName;
+	$details_obj->localUsers = 'users\\'.$details_obj->folderName;
+	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
+	$details_obj->startGit = "start /B git clone --progress";
+	$details_obj->startGit = "git clone --progress";
+	$details_obj->domain = "http://local.test/";
+	$details_obj->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
+	$details_obj->learnDir = $details_obj->root.$details_obj->userName.'\\'.$details_obj->folderName.'\\rootLearn\\Debugger\\learner';
+	$details_obj->learn = $details_obj->DebuugerRoot.'\\Debugger\\learner';
+	$details_obj->jar_creater = $details_obj->DebuugerRoot.'\\Debugger\\tracer';
+	$details_obj->jar_test = $details_obj->jar_creater.'\\target\\'.$details_obj->jarName;
 	if ($_FILES && $_FILES["csvFile"]){
-		$fileObj = $_FILES["csvFile"];	
+		$details_obj->fileObj = $_FILES["csvFile"];	
 	}else {
-		$fileObj = FALSE;
+		$details_obj->fileObj = FALSE;
 	}
 
 	function get_project_details($folderRoot)
 	{
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+		$obj = json_decode(file_get_contents($folderRoot.'\\project_details.json'));
 		//var_dump($obj);
 		return $obj;
 	}
@@ -109,11 +116,11 @@
 
 	function git_tag_list($runingRoot,$arr){
 		$flag = FALSE;
-		$command = 'git tag>'.$runingRoot.'tagList.txt';
-		if (!is_file($runingRoot.'tagList.txt')){
+		$command = 'git tag>'.$runingRoot.'\\tagList.txt';
+		if (!is_file($runingRoot.'\\tagList.txt')){
 			exec($command);
 		}
-		$str = file_get_contents($runingRoot.'tagList.txt');
+		$str = file_get_contents($runingRoot.'\\tagList.txt');
 		$arr1 = explode("\n",$str);
 		$count = 0;
 		for ($i=0; $i < sizeof($arr1); $i++) { 

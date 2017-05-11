@@ -4,42 +4,47 @@
 		$returnJson['message'] = $str;
 		return $returnJson;		
 	}
-	function sign_up_new_user($returnJson,$userNmae,$password,$userNameRoot,$first_name,$last_name){
-		if (is_dir($userNameRoot)){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "there is a folder like this alredy, pick a new name";
+	function sign_up_new_user($details_obj){
+		$ans = array();
+		if (is_dir($details_obj->userNameRoot)){
+			$ans['status'] = 1;
+			$ans['message'] = "there is a folder like this alredy, pick a new name";
 		}else {
-			mkdir($userNameRoot, 0777, true);
-			chmod($userNameRoot, 0777);
+			mkdir($details_obj->userNameRoot, 0777, true);
+			chmod($details_obj->userNameRoot, 0777);
 			$obj = new stdClass();
 			$obj->details = new stdClass();
-			$obj->details->userName = $userNmae;
-			$obj->details->password = $password;
-			$obj->details->first_name = $first_name;
-			$obj->details->last_name = $last_name;
+			$obj->details->userName = $details_obj->userName;
+			$obj->details->password = $details_obj->password;
+			$obj->details->first_name = $details_obj->first_name;
+			$obj->details->last_name = $details_obj->last_name;
+			$obj->details->user_email = $details_obj->user_email;
 			$obj->list = array();
-			file_put_contents($userNameRoot.'user_details.json',json_encode($obj));
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "user folder created";			
+			file_put_contents($details_obj->userNameRoot.'user_details.json',json_encode($obj));
+			$ans['status'] = 111;
+			$ans['message'] = "user folder created";
+			$ans['user'] = $obj;		
 		}
-		return $returnJson;
+		return $ans;
 	}
 
-	function log_in($returnJson,$userNmae,$password,$userNameRoot){
-		if (!is_dir($userNameRoot)){
-			$returnJson['status'] = 2;
-			$returnJson['message'] = "user does not exsist";			
-			return $returnJson;
+	function log_in($details_obj){
+		$ans = array();
+		if (!is_dir($details_obj->userNameRoot)){
+			$ans['status'] = 2;
+			$ans['message'] = "user does not exsist";			
+			return $ans;
 		}
-		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
-		if (!($str->details->userName==$userNmae) || !($str->details->password==$password)){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "do not try to brake in theaf!!";
+		$str = json_decode(file_get_contents($details_obj->userNameRoot.'user_details.json'));
+		if (!($str->details->userName==$details_obj->userName) || !($str->details->password==$details_obj->password)){
+			$ans['status'] = 1;
+			$ans['message'] = "do not try to brake in theaf!!";
 		}else {
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "welcome";			
+			$ans['status'] = 111;
+			$ans['message'] = "welcome";
+			$ans['user'] = 	$str;		
 		}
-		return $returnJson;
+		return $ans;
 	}
 	
 

@@ -120,7 +120,7 @@ angular
     })
     .state('dashboard.listUser',{
       templateUrl:'views/pages/listUser.html',
-      url:'/listUser',
+      url:'/listUser/:user',
       controller:'listUserController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -133,7 +133,7 @@ angular
     })
     .state('dashboard.newProject',{
       templateUrl:'views/pages/new-project.html',
-      url:'/newProject',
+      url:'/newProject/:user',
       controller:'newProjectController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {

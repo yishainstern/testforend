@@ -36,26 +36,30 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
         }
     }
 
-    var form_data = new FormData();
-    if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
-        $rootScope.user.details.userName = localStorage.getItem('name');
-        $rootScope.user.details.password = localStorage.getItem('password');
+    $rootScope.call_user = function(){
+        var form_data = new FormData();
+        if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
+            $rootScope.user.details.userName = localStorage.getItem('name');
+            $rootScope.user.details.password = localStorage.getItem('password');
+        }
+        if ($rootScope.user.details.userName && $rootScope.user.details.password){
+            form_data.append('userName',$rootScope.user.details.userName);
+            form_data.append('password',$rootScope.user.details.password);
+            service.ajaxfunc('get_user_list','',form_data)
+            .then(function(data){
+                data = JSON.parse(data);
+                if (data && data.status && data.status==111){
+                    $rootScope.user = data.user;
+                    console.log($rootScope.user);
+                }
+            },function(data){
+                console.log(data);
+            });        
+        }else{
+            $state.transitionTo('enter');
+        }
     }
-    if ($rootScope.user.details.userName && $rootScope.user.details.password){
-        form_data.append('userName',$rootScope.user.details.userName);
-        form_data.append('password',$rootScope.user.details.password);
-        service.ajaxfunc('get_user_list','',form_data)
-        .then(function(data){
-            data = JSON.parse(data);
-            if (data && data.status && data.status==111){
-                $rootScope.user = data.user;
-                $rootScope.$broadcast('user_enterd');
-                console.log($rootScope.user);
-            }
-        },function(data){
-            console.log(data);
-        });        
-    }else{
-        $state.transitionTo('enter');
+    if($state.current.name!='enter'){
+        $rootScope.call_user();
     }
 }]);
