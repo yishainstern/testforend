@@ -10,6 +10,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     $scope.project_details = {};
     $scope.new_project_error = false;
     $scope.new_project_success = false;
+    $scope.page_error = false;
     $scope.display_new_project_text = '';
     $scope.yishaifill = {
         root: 'sternyi',
@@ -57,6 +58,12 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }        
 
     $scope.create_new_project = function(){
+         $scope.page_error = false;
+        if (!$rootScope.project.details.gitUrl || !$rootScope.project.details.gitName || !$scope.project_details.project_description || !$scope.project_details.folderName){
+             $scope.page_error = true;
+             $scope.page_text = 'all fileds are requried';
+             return;
+        }
         service.ajaxfunc('open_folder','new-project',false)
         .then(function(data){$scope.success_new_project(JSON.parse(data));},
             function(data){$scope.fail_new_project(data);});

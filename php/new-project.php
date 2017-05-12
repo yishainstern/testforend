@@ -1,6 +1,6 @@
 <?php	
 	function update_user_details($details_obj){
-		$str = json_decode(file_get_contents($details_obj->userNameRoot.'user_details.json'));
+		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
 		$arr = $str->list;
 		$count = sizeof($arr);
 		$obj = new stdClass();
@@ -8,7 +8,7 @@
 		$obj->discription = $details_obj->discription;
 		$arr[$count] = $obj; 
 		$str->list = $arr;
-		file_put_contents($details_obj->userNameRoot.'user_details.json',json_encode($str));
+		file_put_contents($details_obj->userNameRoot.'\\user_details.json',json_encode($str));
 		return $str;
 	}
 	function get_progress_array(){
@@ -22,7 +22,7 @@
 		$obj->details->folderName = $details_obj->folderName;
 		$obj->details->discription = $details_obj->discription;
 		$obj->details->progress = get_progress_array();
-		file_put_contents($details_obj->folderRoot.'project_details.json',json_encode($obj));
+		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 		return $obj;
 	}
 	function get_git_folfer_name(){
@@ -43,18 +43,17 @@
 			$filr_tmp = '';
 			$filr_tmp = $filr_tmp."git clone --progress ".$details_obj->gitUrl." ".$details_obj->userProjectRoot."\\".$details_obj->gitName." 2>".$details_obj->runingRoot."\\proj.log\n";
 			$filr_tmp = $filr_tmp."git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
-			$filr_tmp = $filr_tmp."cd ".$details_obj->userProjectRoot.$details_obj->gitName."\n";
+			$filr_tmp = $filr_tmp."cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
 			$filr_tmp = $filr_tmp."git tag>".$details_obj->runingRoot."\\tagList.txt\n";
-			$filr_tmp = $filr_tmp."curl http://local.test/testforend/php/index.php?own=".$details_obj->userName.",".$details_obj->gitName.",check_clone".;
+			$filr_tmp = $filr_tmp."curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->gitName.",check_clone";
 			file_put_contents($details_obj->runingRoot.'\\dd.cmd', $filr_tmp);
+			$user_details = update_user_details($details_obj);
+			$project_details = update_project_details($details_obj);
 			chdir($details_obj->runingRoot);
 			$command = "start /B dd.cmd";
 			pclose(popen($command, "w"));
-			$command = 'git tag>'.$runingRoot.'tagList.txt';
-			$user_details = update_user_details($details_obj);
-			$project_details = update_project_details($details_obj);
 			$ans['status'] = 111;
-			$ans['message'] = "created folders, lets clone :)";		
+			$ans['message'] = "created folders, and stated to clone";		
 			$ans['user'] = $user_details;
 			$ans['project'] = $project_details;
 		}

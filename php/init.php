@@ -35,7 +35,7 @@
 			$ans['message'] = "user does not exsist";			
 			return $ans;
 		}
-		$str = json_decode(file_get_contents($details_obj->userNameRoot.'user_details.json'));
+		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
 		if (!($str->details->userName==$details_obj->userName) || !($str->details->password==$details_obj->password)){
 			$ans['status'] = 1;
 			$ans['message'] = "do not try to brake in theaf!!";

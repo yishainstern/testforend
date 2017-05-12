@@ -17,7 +17,9 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		list:[]
 	}
 
-	$rootScope.project = {};
+	$rootScope.project = {
+        details: {}
+    };
 
 /*	//project page 
 	$rootScope.project_page = function(){
