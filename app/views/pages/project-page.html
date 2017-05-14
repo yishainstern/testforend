@@ -21,8 +21,8 @@
                                 </div>
                                 <div class="timeline-body">
                                     <div>{{item.title}}</div>
-                                    <div class="alert alert-info" ng-class="{'alert-info': item.flag, 'alert-danger':!item.flag}" style="padding: 8px 5px; margin-top: 8px; margin-bottom: 0px;">
-                                        task status: <span ng-show="item.flag">done!  </span><span ng-show="!item.flag">not done!  </span><a href="" class="alert-link" ng-click="task_page(item.name,project.details.name)">task page</a>
+                                    <div class="alert" ng-class="{'alert-info': item.flag, 'alert-danger':!item.flag}" style="padding: 8px 5px; margin-top: 8px; margin-bottom: 0px;">
+                                        task status: {{item.status}} </span><a href="" class="alert-link" ng-click="task_page(item.name,project.details.name)" ng-show="is_page">task page</a>
                                     </div>
                                 </div>
                             </div>

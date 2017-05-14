@@ -17,34 +17,43 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	}
  	$scope.userArray = [
  		{
- 			task:'clone',
+ 			task:'sign & clone ',
  			title:'clone your project',
  			state:'',
  			description: 'this part will upload your git project to our server, follow the instroction',
- 			flag:false
+ 			flag:false,
+ 			status:"",
+ 			is_page:false
  		},
  		{
- 			task:'offline',
- 			title:'learn about your code offline',
+ 			task:'details',
+ 			title:'give us all details for your project',
  			state:'',
  			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction',
- 			flag:false
- 		},
- 		{
- 			task:'online',
- 			title:'learn about your code with maven',
- 			state:'',
- 			description:'In this part we will run som tests and get results for your project',
- 			flag:false
+ 			flag:false,
+ 			status:"",
+ 			page:true
  		},
 		{
  			task:'prediction',
  			title:'get prediction',
  			state:'',
  			description:'In this part we will get a prediction for your part in the code' ,
- 			flag:false
+ 			flag:false,
+ 			status:"",
+ 			page:true
  		} 		
  	];
+ 	$scope.$on('project_object_exsites',function(){
+ 		$scope.tmp = $rootScope.project.details.progress.mille_stones;
+ 		if (!$scope.tmp.end_clone.flag){
+ 			$scope.userArray[0].status= 'still cloning';
+ 			$scope.userArray[0].flag= false;
+ 		}else {
+ 			$scope.userArray[0].status= 'finsied cloning go to next task';
+ 			$scope.userArray[0].flag= true;
+ 		}
+ 	});
 
  	$scope.get_state = function(str){
  		switch (str){
