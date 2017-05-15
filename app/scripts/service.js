@@ -29,7 +29,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         		error: function(data){
         			deferred.reject(data);
         		},
-        		success:  function(data){
+        		success: function(data){
         			deferred.resolve(data);
         		} 
     		});

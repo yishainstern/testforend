@@ -58,6 +58,8 @@
 		$returnJson = run_pridction($details_obj);
 	}elseif ($task=="get_pridction") {
 		$returnJson = get_pridction($details_obj);
+	}elseif ($task=="get_tags"){
+		$returnJson = get_tags($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);

@@ -22,7 +22,7 @@
                                 <div class="timeline-body">
                                     <div>{{item.title}}</div>
                                     <div class="alert" ng-class="{'alert-info': item.flag, 'alert-danger':!item.flag}" style="padding: 8px 5px; margin-top: 8px; margin-bottom: 0px;">
-                                        task status: {{item.status}} </span><a href="" class="alert-link" ng-click="task_page(item.name,project.details.name)" ng-show="is_page">task page</a>
+                                        task status: {{item.status}} </span><a href="" class="alert-link" ng-click="go_page(item)" ng-show="item.has_page">task page</a>
                                     </div>
                                 </div>
                             </div>

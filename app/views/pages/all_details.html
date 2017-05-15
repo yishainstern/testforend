@@ -1,4 +1,4 @@
-<go-to-list title="prepare offline task"></go-to-list>
+<go-to-list title="insert details for AI learning"></go-to-list>
 <!-- /.row -->
 <!-- /.row -->
 
@@ -10,46 +10,50 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="run-offline">
+                        <form role="form" name="get_tags">
                             <input type="hidden" name="userName" value="{{user.details.userName}}">
-                            <input type="hidden" name="id" value="{{project.details.name}}">
+                            <input type="hidden" name="id" value="{{project.details.folderName}}">
                             <div class="form-group" ng-mouseover="userNameInput = true" ng-mouseleave="userNameInput = false">
-                                <label for="disabledSelect">User name dd</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.details.userName" name="user" ng-disabled="true"  />
-                               <p class="help-block" ng-show="userNameInput">This is your user name</p>
+                                <label for="disabledSelect">User name </label>
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.details.userName" name="" ng-disabled="true"  />
                             </div>
                             <div class="form-group">
                                 <label for="disabledSelect">project folder name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.name"  ng-disabled="true" />
-                                <p class="help-block">this is the name you picked for this project</p>
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.folderName" name="" ng-disabled="true" />
                             </div>
                             <div class="form-group">
                                 <label for="disabledSelect">discription of the project</label>
                                 <textarea class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.discription" ng-disabled="true"></textarea>
-                                <p class="help-block">this is the discription that you inseted in the proget registration</p>
                             </div>
                             <div class="form-group">
                                 <label for="disabledSelect">project name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitName" >
-                                <p class="help-block">enter here the name of the project in git</p>
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitName" ng-disabled="true"/>
                             </div>
                             <div class="form-group">
                                 <label for="disabledSelect">project url</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitUrl" >
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitUrl" ng-disabled="true">
                                 <p class="help-block">enter here the <b>full</b> url of git</p>
                             </div>                            
                             
                             <div class="form-group">
                                 <label>csv bug file (from bugzila etc...)</label>
-                                <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile" onchange="angular.element(this).scope().uploadFile(this.files)">
+                                <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile" onchange="angular.element(this).scope().uploadFile(this.files)" ng-mouseover="csv_file = true" ng-mouseleave="csv_file = false"/>
+                                 <p class="help-block" ng-class="{open_help:csv_file}">upload a scv file of known bugs from bugzila</p>
                             </div>
                             <div class="form-group">                            
                                 <label for="disabledSelect">versions to check</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"  />
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions" ng-mouseover="versions = true" ng-mouseleave="versions = false" />
+                                <p class="help-block" ng-class="{open_help:versions}">insert 4 versions for checking</p>
                             </div>
                             <div class="form-group">
-                                <label>text version</label>
-                                <input class="form-control" placeholder="Enter text ng-model= project.details.testVersion" name="testVersion" />
+                                <label>test version</label>
+                                <input class="form-control" placeholder="Enter text ng-model= project.details.testVersion" name="testVersion"  ng-mouseover="version = true" ng-mouseleave="version = false" />
+                                <p class="help-block" ng-class="{open_help:version}">insert 1 version for maven testing</p>
+                            </div>
+                            <div class="form-group">
+                                <label>root of poom.xml files</label>
+                                <input class="form-control" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" />
+                                <p class="help-block" ng-class="{open_help:pomPath}">insert the root of pom in your project</p>
                             </div>
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':run_success}">
                                 <label class="control-label" ng-show="run_success">{{display_run_text}}</label>        

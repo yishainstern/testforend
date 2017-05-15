@@ -17,8 +17,8 @@ angular.module('sbAdminApp')
             },
             controller:function ($state, $rootScope,$scope){
                 $scope.project_page = function(){
-                    if ($rootScope.project.details.name){
-                        $state.transitionTo('dashboard.project',{id:$rootScope.project.details.name});  
+                    if ($rootScope.project.details.folderName){
+                        $state.transitionTo('dashboard.project',{id:$rootScope.project.details.folderName});  
                     }
                 }
             }

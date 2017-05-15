@@ -19,20 +19,20 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		{
  			task:'sign & clone ',
  			title:'clone your project',
- 			state:'',
  			description: 'this part will upload your git project to our server, follow the instroction',
  			flag:false,
  			status:"",
- 			is_page:false
+ 			has_page:false
  		},
  		{
  			task:'details',
  			title:'give us all details for your project',
- 			state:'',
+ 			state: 'dashboard.all_details',
+ 			send:{id:$rootScope.project.details.folderName, task:'all_details'},
  			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction',
  			flag:false,
  			status:"",
- 			page:true
+ 			has_page:true
  		},
 		{
  			task:'prediction',
@@ -41,7 +41,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			description:'In this part we will get a prediction for your part in the code' ,
  			flag:false,
  			status:"",
- 			page:true
+ 			has_page:true
  		} 		
  	];
  	$scope.$on('project_object_exsites',function(){
@@ -53,8 +53,17 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.userArray[0].status= 'finsied cloning go to next task';
  			$scope.userArray[0].flag= true;
  		}
+ 		if (!$scope.tmp.upload_bug_file.flag){
+ 			$scope.userArray[1].status= 'did not do it yet';
+ 			$scope.userArray[1].flag= false;
+ 		}else {
+ 			$scope.userArray[1].status= 'strrted learning';
+ 			$scope.userArray[1].flag= false;
+ 		}
  	});
-
+ 	$scope.go_page = function(item){
+ 		$state.transitionTo(item.state,item.send);
+ 	}
  	$scope.get_state = function(str){
  		switch (str){
  			case 'create_folders':

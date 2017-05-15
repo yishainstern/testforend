@@ -187,4 +187,25 @@
 		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
 		return $returnJson;
 	}	
+
+
+	function get_tags($details_obj){
+		echo("arg1");
+		$str = $details_obj->runingRoot."\\tagList.txt";
+		$str1 = $details_obj->folderRoot."\\project_details.json";
+		if (is_file($str)){
+			$obj = file_get_contents($str);
+			$arr1 = explode("\n",$obj);
+			$tmp = json_decode(file_get_contents($str1));
+			$tmp->details->tags = $arr1;
+			file_put_contents($str1, json_encode($tmp));
+			$ans = array();
+			$ans['project'] = $tmp;
+			$ans['status'] = 111;
+			$ans['message'] = "gut tag list";
+			return $ans;
+
+		}
+		
+	}
 ?>
