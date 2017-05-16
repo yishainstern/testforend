@@ -190,7 +190,6 @@
 
 
 	function get_tags($details_obj){
-		echo("arg1");
 		$str = $details_obj->runingRoot."\\tagList.txt";
 		$str1 = $details_obj->folderRoot."\\project_details.json";
 		if (is_file($str)){
@@ -203,7 +202,7 @@
 			$ans['project'] = $tmp;
 			$ans['status'] = 111;
 			$ans['message'] = "gut tag list";
-			return $ans;
+			return $ans;		
 
 		}
 		

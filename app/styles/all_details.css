@@ -1,0 +1,7 @@
+.autocomplete-list {
+	height: 200px;
+	overflow-y: auto;
+}
+.form-group {
+	position: relative;
+}

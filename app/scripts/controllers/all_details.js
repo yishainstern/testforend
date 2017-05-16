@@ -11,13 +11,37 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.file = false;
     $scope.upload_error = false;
     $scope.upload_success = false;
+    $scope.optionsList = [];
+    $scope.optionsList2 = [];
+    $scope.list = [];
+    $scope.only_one = false;
+    $scope.sss='';
     $scope.display_upload_text = '';
+    $scope.ff = function(){
+        $scope.sss='sss';
+        console.log($scope.optionsList);
+    }
+    $scope.afterSelectItem = function(arr, item){
+     arr.push(item);   
+    }
+    $scope.afterSelectItem2 = function(arr, item){
+        if (arr.length>0){
+            $scope.only_one = true;
+
+        }else {
+             $scope.false = true;
+            arr.push(item);  
+        }
+    }
+
     $scope.uploadFile = function(files) {
         $scope.file = files[0];
     }
+    $scope.arr = ['a','b'];
     $scope.success_tag = function(obj){
         if (obj.status == 111){
             $rootScope.project = obj.project;
+            $scope.list = $rootScope.project.details.tags;
         }
     }
     $scope.$on('project_object_exsites',function(){
@@ -29,17 +53,26 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
                 function(data){$scope.success_tag(JSON.parse(data));},
                 function(data){$scope.fail_tag(data);}
             );      
+       }else {
+              $scope.list = $rootScope.project.details.tags;
        }
     });
-    $scope.upload_files = function(){
+    $scope.upload_details = function(){
         $scope.upload_error = false;
-        $scope.upload_success = false;
-        if (!$scope.file|| $rootScope.project.details.ver){
+        if (!$rootScope.project.details.pomPath||!$scope.file||$scope.optionsList.length<1||$scope.optionsList2.length<1){
+            $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
-             $scope.display_upload_text = 'all fileds are required';
-        }else {
-
+            return;
         }
+
+        var tt = $rootScope.project.details.pomPath;
+        if (tt.includes("/")){
+            $scope.display_text="change all of your / marks to \\ ";
+            $scope.upload_error = true;
+            return;
+        }
+        alert('ready');
+        return;
         service.ajaxfunc('add_version','files',false)
         .then(function(data){
             data = JSON.parse(data);
