@@ -116,6 +116,10 @@
 	$details_obj->learn = $details_obj->DebuugerRoot.'\\Debugger\\learner';
 	$details_obj->jar_creater = $details_obj->DebuugerRoot.'\\Debugger\\tracer';
 	$details_obj->jar_test = $details_obj->jar_creater.'\\target\\'.$details_obj->jarName;
+	if (isset( $_GET["own"])){
+		$pieces = explode(",", $_GET["own"]);
+		file_put_contents($details_obj->runingRoot."\\".$pieces[2]."data", "data");
+	}
 	if ($_FILES && $_FILES["csvFile"]){
 		$details_obj->fileObj = $_FILES["csvFile"];	
 	}else {

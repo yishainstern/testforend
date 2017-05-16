@@ -50,15 +50,17 @@
 		return $returnJson;
 	}
 	//check if offline task is over
-	function check_if_python_end($outputPython,$folderRoot){
-		if (file_exists($outputPython.'\\markers\\learner_phase_file')){
-			$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
+	function check_if_python_end($details_obj){
+		$ans = array();
+		//if (file_exists($details_obj->outputPython.'\\markers\\learner_phase_file')){
+		if(1==1){
+			$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 			$obj->details->progress->mille_stones->end_offline->flag = true;
-			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "offline task done";
-			$returnJson['project'] = $obj;
-			return $returnJson;	
+			file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
+			$ans['status'] = 111;
+			$ans['message'] = "offline task done";
+			$ans['project'] = $obj;
+			change_proj($details_obj);
 		}else {
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "not done yet//check agin";
@@ -82,7 +84,7 @@
 		$obj->details->testVersion = $details_obj->testVersion;
 		$obj->details->pomPath = $details_obj->pomPath;
 		$obj->details->bugFileName = $details_obj->fileObj["name"];
-		file_put_contents($details_obj->folderRoot.'project_details.json', json_encode($obj));
+		file_put_contents($details_obj->folderRoot.'\\project_details.json', json_encode($obj));
 		return $obj;		
 	}
 	function creat_conf_for_offline($details_obj,$obj){
@@ -94,9 +96,12 @@
 	}
 	function go_run_python($details_obj){
 		$str = "cd ".$details_obj->learnDir."\n";
-		$str .= "python wrapper.py antConf.txt learn 2>ff.log\n";
-		$str .= "curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python";
+		//$str .= "python wrapper.py antConf.txt learn 2>ff.log\n";
+		//$str .= "curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python";
+		file_put_contents($details_obj->runingRoot.'\\check_Python',"curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python");
 		file_put_contents($details_obj->runingRoot.'\\dd.cmd', $str);
+		chdir($details_obj->runingRoot);
+		exec("dd.cmd");
 	}
 	function all_details($details_obj){
 		$ans = array();

@@ -59,7 +59,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     });
     $scope.upload_details = function(){
         $scope.upload_error = false;
-        if (!$rootScope.project.details.pomPath||!$scope.file||$scope.optionsList.length<1||$scope.optionsList2.length<1){
+        if (!$rootScope.project.details.pomPath||!$scope.file||$scope.optionsList.length<1){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
             return;

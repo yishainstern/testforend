@@ -1,7 +1,7 @@
 <?php
 	//
 	//updates the pom file
-	function pastPom($str,$jar,$path,$returnJson,$files,$userProjectRoot){
+	function pastPom($str,$jar,$path,$files,$userProjectRoot){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
 		if(file_exists($str)){
@@ -49,32 +49,27 @@
 	}
 	//
 	//updates the pom.xml files for using the online learning
-	function update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot){
-		$tmp_project = get_project_details($folderRoot);
-		if (!$tmp_project->details->progress->mille_stones->check_version->flag){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "can not edit before picking a test version";	
-			return $returnJson;	
-		}
-		$str = $userProjectRoot.$gitName."\\".$pomPath;
-		exec("dir /s /b " .$str."\*pom.xml* > ".$runingRoot."\\poms.txt");
-		$arr = explode("\n",file_get_contents($runingRoot."\\poms.txt"));
+	function update_pom_files($details_obj){
+		$tmp_project = get_project_details($details_obj->folderRoot);
+		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
+		exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
+		$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
 		$files = array();
 		for ($i=0; $i < sizeof($arr) ; $i++) { 
 			set_time_limit(20);
-			$pathForJar = $runingRoot.$jarName;
-			$pathForPathtx = $runingRoot."path.txt";
-			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson,$files,$userProjectRoot);
+			$pathForJar = $details_obj->runingRoot."\\".$details_obj->jarName;
+			$pathForPathtx = $details_obj->runingRoot."\\path.txt";
+			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
 		}
 		if (sizeof($files)>0){
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "we updated your files";	
-			$obj = update_progress('update_pom',$tmp_project,true,$folderRoot);
+			$obj = json_decode(file_get_contents($folderRoot.'\\project_details.json'));
 			$obj->details->pomPath = $str;
-			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-			$returnJson['project'] = $obj;
-			$returnJson['data'] = $files;
-			return $returnJson;
+			$obj->details->files = $files;
+			file_put_contents($folderRoot.'\\project_details.json',json_encode($obj));
+			$str = "";
+			$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath."\n";
+			$str .="mvn clean install -fn >".$details_obj->runingRoot."mavenLog.txt\\n";
+			$str .="curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",get_prediction";
 		}else{
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "no files with surfire plugin";
@@ -97,15 +92,30 @@
 	}
 	//
 	//create a file paths.txt witch contents maven repository path and the program path.
-	function create_path_txt($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName){
-		$str = $mavenroot."\r\n".$userProjectRoot.$gitName."\r\n";
-		file_put_contents($runingRoot."path.txt",$str);
-		$oldTarget = $jar_test;
-		$newTarget = $runingRoot.$jarName;
-		copy($oldTarget, $newTarget);
+	function change_proj($details_obj){
+		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot.$details_obj->gitName."\r\n";
+		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
+		$str ="";
+		$str .="cd ".$details_obj->jar_creater."\r\n";
+		$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\create_jar_log.txt\r\n";
+		$str .="cd target\r\n";
+		$str .="copy ".$details_obj->jarName." ".$details_obj->runingRoot."\\".$details_obj->jarName."\r\n";	
+		$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
+		$str .="git checkout ".$details_obj->testVersion." 2>../../run/newVersion.txt\r\n";
+		file_put_contents($details_obj->runingRoot.'\\update_pom',"curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",update_pom");
+		file_put_contents($details_obj->runingRoot."\\dd.cmd", $str);
+		chdir($details_obj->runingRoot);
+		$command = "start /B dd.cmd";
+		pclose(popen($command, "w"));
+		//$str .="curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",update_pom";
+	}
+	function create_path_txt($details_obj){
+		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot.$details_obj->gitName."\r\n";
+		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
+		$oldTarget = $details_obj->jar_test;
+		$newTarget = $details_obj->runingRoot."\\".$details_obj->jarName;
 		chmod($newTarget, 0777);
-		chmod($runingRoot."path.txt", 0777);
-		return json_return($returnJson,0,"files in place");		
+		chmod($runingRoot."\\path.txt", 0777);	
 	}
 	//
 	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
@@ -206,5 +216,8 @@
 			return $ans;
 		}
 		
+	}
+	function get_ready($details_obj){
+		create_path_txt($details_obj);
 	}
 ?>
