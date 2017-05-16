@@ -71,9 +71,19 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             $scope.upload_error = true;
             return;
         }
-        alert('ready');
-        return;
-        service.ajaxfunc('add_version','files',false)
+        var form = document.forms.namedItem('get_tags');
+        var data_to_send = new FormData(form);
+        data_to_send.append('testVersion',$scope.optionsList[$scope.optionsList.length-1]);
+        var tmp_str = "";
+        for (var i=0 ; i<$scope.optionsList.length;i++){
+            if (i<($scope.optionsList.length-1)){
+                tmp_str = tmp_str + $scope.optionsList[i] +",";        
+            }else {
+                tmp_str = tmp_str + $scope.optionsList[i];
+            }
+        }
+        data_to_send.append('all_versions',tmp_str);
+        service.ajaxfunc('all_details','files',data_to_send)
         .then(function(data){
             data = JSON.parse(data);
             if (data.status==111){

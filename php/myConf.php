@@ -90,7 +90,7 @@
 		}else{
 			$details_obj->pomPath = '';
 		}
-		if (isset($_POST["project_description"])){
+		if (isset($_POST["description"])){
 			$details_obj->discription = $_POST["project_description"];
 		}else{
 			$details_obj->discription = '';

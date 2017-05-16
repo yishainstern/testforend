@@ -195,6 +195,7 @@
 		if (is_file($str)){
 			$obj = file_get_contents($str);
 			$arr1 = explode("\n",$obj);
+			$arr1 = array_reverse ($arr1);
 			$tmp = json_decode(file_get_contents($str1));
 			$tmp->details->tags = $arr1;
 			file_put_contents($str1, json_encode($tmp));
@@ -202,8 +203,7 @@
 			$ans['project'] = $tmp;
 			$ans['status'] = 111;
 			$ans['message'] = "gut tag list";
-			return $ans;		
-
+			return $ans;
 		}
 		
 	}

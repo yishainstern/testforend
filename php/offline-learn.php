@@ -1,17 +1,8 @@
 <?php 
 	//
-	//put the scv file in the right place.
-	function put_bug_file_in_place($fileObj,$folderRoot,$bugRoot){
-		$tmp_name = $fileObj["tmp_name"];
-        $name = basename($fileObj["name"]);
-        $uploadDir = $folderRoot."rootBugs";
-        move_uploaded_file($tmp_name, $bugRoot."\\".$name);
-        chmod($uploadDir."\\".$name, 0777);
-        return $name;
-	}
 	//
 	//create antConf.txt that contains all the paths that are needed for the Python project.
-	function creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot){
+	function creat_conf_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot){
         $str = 'workingDir='.$outputPython."\r\n";
         $str = $str.'git='.$userProjectRoot.$gitName."\r\n";
         $str = $str.'bugs='.$folderRoot."rootBugs\\".$name."\r\n";
@@ -73,5 +64,52 @@
 			$returnJson['message'] = "not done yet//check agin";
 			return $returnJson;	
 		}
+	}
+	function any_prob_offline($details_obj){
+		return false;
+	}
+	//put the scv file in the right place.
+	function put_bug_file_in_place($details_obj,$obj){
+		$tmp_name = $details_obj->fileObj["tmp_name"];
+        $name = basename($details_obj->fileObj["name"]);
+        $uploadDir = $details_obj->folderRoot."\\rootBugs";
+        move_uploaded_file($tmp_name, $details_obj->bugRoot."\\".$name);
+        chmod($uploadDir."\\".$name, 0777);
+	}
+	function updates($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'project_details.json'));
+		$obj->details->all_versions = $details_obj->all_versions;
+		$obj->details->testVersion = $details_obj->testVersion;
+		$obj->details->pomPath = $details_obj->pomPath;
+		$obj->details->bugFileName = $details_obj->fileObj["name"];
+		file_put_contents($details_obj->folderRoot.'project_details.json', json_encode($obj));
+		return $obj;		
+	}
+	function creat_conf_for_offline($details_obj,$obj){
+        $str = 'workingDir='.$details_obj->outputPython."\r\n";
+        $str = $str.'git='.$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
+        $str = $str.'bugs='.$details_obj->folderRoot."\\rootBugs\\".$obj->details->bugFileName."\r\n";
+        $str = $str."vers=(". $details_obj->all_versions.")";
+        file_put_contents($details_obj->DebuugerRoot."\\Debugger\\learner\\antConf.txt",$str); 
+	}
+	function go_run_python($details_obj){
+		$str = "cd ".$details_obj->learnDir."\n";
+		$str .= "python wrapper.py antConf.txt learn 2>ff.log\n";
+		$str .= "curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python";
+		file_put_contents($details_obj->runingRoot.'\\dd.cmd', $str);
+	}
+	function all_details($details_obj){
+		$ans = array();
+		if (any_prob_offline($details_obj)){
+			return;
+		}
+		$obj = updates($details_obj);
+		put_bug_file_in_place($details_obj,$obj);
+		creat_conf_for_offline($details_obj,$obj);
+		go_run_python($details_obj);
+		$ans['status'] = 111;
+		$ans['message'] = "offline task started";
+		$ans['project'] = $obj;
+		return $ans;
 	}
 ?>
