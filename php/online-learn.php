@@ -70,7 +70,7 @@
 			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 			$str = "";
 			$str .="cd ".$details_obj->full_pom_path."\n";
-			$str .="mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
+			$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
 			run_cmd_file($details_obj,$str,"runOnline","pred");
 		}else{
 			$returnJson['status'] = 1;
