@@ -3,22 +3,21 @@
 	//windows server in BG|U
 	$details_obj->root = "C:\\Users\\sternyi\\Desktop\\Users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "http://local.test/testforend/php/index.php";
+	$details_obj->phpRoot = "http://local.test/testforend/php";
 	//
 	//yishai local computer
-	$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
-	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
+	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	//
 	
-	if (isset( $_GET["own"])){
-		$pieces = explode(",", $_GET["own"]);
-		$userT = json_decode(file_get_contents($details_obj->root."\\".$pieces[0]."\\user_details.json"));
-		$details_obj->userName = $pieces[0];
-		$PROJt = json_decode(file_get_contents($details_obj->root."\\".$pieces[0]."\\".$pieces[1]."\\project_details.json"));
+	if (isset($argv[1]) && $argv[1]=="trigger" && sizeof($argv)==5){
+		$userT = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\user_details.json"));
+		$details_obj->userName = $argv[2];
+		$PROJt = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\".$argv[3]."\\project_details.json"));
 		if (isset($PROJt->details->gitName)){$details_obj->gitName = $PROJt->details->gitName;}
 		if (isset($PROJt->details->gitUrl)){$details_obj->gitUrl = $PROJt->details->gitUrl;}
 		if (isset($PROJt->details->folderName)){$details_obj->folderName = $PROJt->details->folderName;}
-		if (isset( $userT->details->userName)){$details_obj->userName = $userT->details->userName;}
+		if (isset($userT->details->userName)){$details_obj->userName = $userT->details->userName;}
 		if (isset($userT->details->first_name)){$details_obj->first_name = $userT->details->first_name;}
 		if (isset($userT->details->last_name)){$details_obj->last_name = $userT->details->last_name;}
 		if (isset($userT->details->user_email)){$details_obj->user_email = $userT->details->user_email;}
@@ -27,8 +26,8 @@
 		if (isset($PROJt->details->all_versions)){$details_obj->all_versions = $PROJt->details->all_versions;}
 		if (isset($PROJt->details->pomPath)){$details_obj->pomPath = $PROJt->details->pomPath;}
 		if (isset($PROJt->details->discription)){$details_obj->discription = $PROJt->details->discription;}
-		$details_obj->task = $pieces[2];
-		file_put_contents('ff',  $_GET["own"]);
+		$details_obj->task = $argv[4];
+		file_put_contents($argv[2]."_".$argv[3]."_".$argv[4],'sss');
 	}else {
 		if (isset($_POST["task"])){
 			$details_obj->task = $_POST["task"];

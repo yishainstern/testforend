@@ -43,11 +43,12 @@
 			mkdir($details_obj->runingRoot, 0777, true);
 			mkdir($details_obj->bugRoot, 0777, true);
 			$filr_tmp = '';
-			$filr_tmp = $filr_tmp."git clone --progress ".$details_obj->gitUrl." ".$details_obj->userProjectRoot."\\".$details_obj->gitName." 2>".$details_obj->runingRoot."\\proj.log\n";
-			$filr_tmp = $filr_tmp."git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
-			$filr_tmp = $filr_tmp."cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
-			$filr_tmp = $filr_tmp."git tag>".$details_obj->runingRoot."\\tagList.txt\n";
-			$filr_tmp = $filr_tmp."curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_clone";
+			$filr_tmp .= "git clone --progress ".$details_obj->gitUrl." ".$details_obj->userProjectRoot."\\".$details_obj->gitName." 2>".$details_obj->runingRoot."\\proj.log\n";
+			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
+			$filr_tmp .= "cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
+			$filr_tmp .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
+			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
+			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone";
 			file_put_contents($details_obj->runingRoot.'\\dd.cmd', $filr_tmp);
 			$user_details = update_user_details($details_obj);
 			$project_details = update_project_details($details_obj);
