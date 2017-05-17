@@ -20,7 +20,7 @@
 			$obj->details->last_name = $details_obj->last_name;
 			$obj->details->user_email = $details_obj->user_email;
 			$obj->list = array();
-			file_put_contents($details_obj->userNameRoot.'user_details.json',json_encode($obj));
+			file_put_contents($details_obj->userNameRoot.'\\user_details.json',json_encode($obj));
 			$ans['status'] = 111;
 			$ans['message'] = "user folder created";
 			$ans['user'] = $obj;		

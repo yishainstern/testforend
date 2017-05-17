@@ -79,7 +79,7 @@
         chmod($uploadDir."\\".$name, 0777);
 	}
 	function updates($details_obj){
-		$obj = json_decode(file_get_contents($details_obj->folderRoot.'project_details.json'));
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 		$obj->details->all_versions = $details_obj->all_versions;
 		$obj->details->testVersion = $details_obj->testVersion;
 		$obj->details->pomPath = $details_obj->pomPath;
@@ -96,12 +96,13 @@
 	}
 	function go_run_python($details_obj){
 		$str = "cd ".$details_obj->learnDir."\n";
-		//$str .= "python wrapper.py antConf.txt learn 2>ff.log\n";
-		//$str .= "curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python";
-		file_put_contents($details_obj->runingRoot.'\\check_Python',"curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",check_Python");
-		file_put_contents($details_obj->runingRoot.'\\dd.cmd', $str);
+		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
+		$str .= "cd ".$details_obj->phpRoot."\n";
+		$str .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." bbb";
+		file_put_contents($details_obj->runingRoot.'\\offline.cmd', $str);
 		chdir($details_obj->runingRoot);
-		exec("dd.cmd");
+		$command = "start /B offline.cmd";
+		pclose(popen($command, "w"));
 	}
 	function all_details($details_obj){
 		$ans = array();

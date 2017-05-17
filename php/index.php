@@ -11,6 +11,10 @@
 	$returnJson = array();
 	
 	$task = $details_obj->task;
+	if ($task=='bbb'){
+		file_put_contents('filename', "data");
+		return;
+	} 
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
 		$returnJson = start_and_prepare_folders($details_obj);

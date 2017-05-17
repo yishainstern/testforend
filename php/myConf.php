@@ -3,7 +3,7 @@
 	//windows server in BG|U
 	$details_obj->root = "C:\\Users\\sternyi\\Desktop\\Users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "http://local.test/testforend/php";
+	$details_obj->phpRoot = "C:\\xampp\\htdocs\\testforend\\php";
 	//
 	//yishai local computer
 	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
@@ -90,7 +90,7 @@
 			$details_obj->pomPath = '';
 		}
 		if (isset($_POST["description"])){
-			$details_obj->discription = $_POST["project_description"];
+			$details_obj->discription = $_POST["description"];
 		}else{
 			$details_obj->discription = '';
 		}

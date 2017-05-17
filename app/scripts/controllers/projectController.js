@@ -7,7 +7,6 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
- 	
  	service.intervalfunc(service);
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
@@ -53,7 +52,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.userArray[0].status= 'finsied cloning go to next task';
  			$scope.userArray[0].flag= true;
  		}
- 		if (!$scope.tmp.upload_bug_file.flag){
+ 		if (!$scope.tmp.start_offline.flag){
  			$scope.userArray[1].status= 'did not do it yet';
  			$scope.userArray[1].flag= false;
  		}else {
