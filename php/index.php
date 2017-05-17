@@ -36,7 +36,7 @@
 		$returnJson =add_bug_file_and_prepare_to_run($details_obj);
 	}elseif ($task=="run_Python") {
 		$returnJson = run_python_code($details_obj);
-	}elseif ($task=="check_Python") {
+	}elseif ($task=="check_python") {
 		$returnJson = check_if_python_end($details_obj);
 	}elseif ($task=="update_pom") {
 		$returnJson = update_pom_files($details_obj);

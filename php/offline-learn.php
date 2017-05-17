@@ -52,15 +52,12 @@
 	//check if offline task is over
 	function check_if_python_end($details_obj){
 		$ans = array();
-		//if (file_exists($details_obj->outputPython.'\\markers\\learner_phase_file')){
-		if(1==1){
+		if (file_exists($details_obj->outputPython.'\\markers\\learner_phase_file')){
+		//if(1==1){
 			$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 			$obj->details->progress->mille_stones->end_offline->flag = true;
 			file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
-			$ans['status'] = 111;
-			$ans['message'] = "offline task done";
-			$ans['project'] = $obj;
-			change_proj($details_obj);
+			move_to_online_task($details_obj);
 		}else {
 			$returnJson['status'] = 111;
 			$returnJson['message'] = "not done yet//check agin";
@@ -97,12 +94,7 @@
 	function go_run_python($details_obj){
 		$str = "cd ".$details_obj->learnDir."\n";
 		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
-		$str .= "cd ".$details_obj->phpRoot."\n";
-		$str .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." bbb";
-		file_put_contents($details_obj->runingRoot.'\\offline.cmd', $str);
-		chdir($details_obj->runingRoot);
-		$command = "start /B offline.cmd";
-		pclose(popen($command, "w"));
+		run_cmd_file($details_obj,$str,"offline","check_python");
 	}
 	function all_details($details_obj){
 		$ans = array();

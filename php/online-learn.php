@@ -93,15 +93,7 @@
 	//
 	//create a file paths.txt witch contents maven repository path and the program path.
 	function change_proj($details_obj){
-		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot.$details_obj->gitName."\r\n";
-		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
-		$str ="";
-		$str .="cd ".$details_obj->jar_creater."\r\n";
-		$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\create_jar_log.txt\r\n";
-		$str .="cd target\r\n";
-		$str .="copy ".$details_obj->jarName." ".$details_obj->runingRoot."\\".$details_obj->jarName."\r\n";	
-		$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
-		$str .="git checkout ".$details_obj->testVersion." 2>../../run/newVersion.txt\r\n";
+
 		file_put_contents($details_obj->runingRoot.'\\update_pom',"curl ".$details_obj->phpRoot."?own=".$details_obj->userName.",".$details_obj->folderName.",update_pom");
 		file_put_contents($details_obj->runingRoot."\\dd.cmd", $str);
 		chdir($details_obj->runingRoot);
@@ -217,7 +209,26 @@
 		}
 		
 	}
-	function get_ready($details_obj){
-		create_path_txt($details_obj);
+
+	function chane_tracer_mvn_and_checkout_version($details_obj){
+		$str ="";
+		$str .="cd ".$details_obj->jar_creater."\r\n";
+		$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\create_jar_log.txt\r\n";
+		$str .="cd target\r\n";
+		$str .="copy ".$details_obj->jarName." ".$details_obj->runingRoot."\\".$details_obj->jarName."\r\n";	
+		$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
+		$str .="git checkout ".$details_obj->testVersion." 2>../../run/newVersion.txt\r\n";
+		run_cmd_file($details_obj,$str,"pomrun","update_pom");
+	}
+
+	function put_path_txt($details_obj){
+		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
+		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
+		chmod($details_obj->runingRoot."\\path.txt", 0777);
+	}
+
+	function move_to_online_task($details_obj){
+		put_path_txt($details_obj);
+		chane_tracer_mvn_and_checkout_version($details_obj);
 	}
 ?>

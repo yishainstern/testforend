@@ -106,6 +106,7 @@
 	$details_obj->runingRoot = $details_obj->folderRoot.'\\run'; 
 	$details_obj->relativeToUserRoot = '..\\users\\'.$details_obj->folderName;
 	$details_obj->localUsers = 'users\\'.$details_obj->folderName;
+	$details_obj->full_pom_path = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
 	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
 	$details_obj->startGit = "start /B git clone --progress";
 	$details_obj->startGit = "git clone --progress";
@@ -141,27 +142,14 @@
 		return $projet;
 	}
 
-	function git_tag_list($runingRoot,$arr){
-		$flag = FALSE;
-		$command = 'git tag>'.$runingRoot.'\\tagList.txt';
-		if (!is_file($runingRoot.'\\tagList.txt')){
-			exec($command);
-		}
-		$str = file_get_contents($runingRoot.'\\tagList.txt');
-		$arr1 = explode("\n",$str);
-		$count = 0;
-		for ($i=0; $i < sizeof($arr1); $i++) { 
-			for ($j=0; $j < sizeof($arr); $j++) { 
-				if ($arr[$j]==$arr1[$i]){
-					$count++;
-				}
-			}
-		}	
-		if (sizeof($arr)==$count){
-			return TRUE;
-		}else {
-			return FALSE;
-		}	
+	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
+		$full_name = $file_name.".cmd";
+		$current_string .= "cd ".$details_obj->phpRoot."\n";
+		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task;
+		file_put_contents($details_obj->runingRoot."\\".$file_name, $current_string);
+		chdir($details_obj->runingRoot);
+		$command = "start /B ".$full_name;
+		pclose(popen($command, "w"));		
 	}
 
 ?>
