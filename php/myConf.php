@@ -14,6 +14,7 @@
 		$userT = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\user_details.json"));
 		$details_obj->userName = $argv[2];
 		$PROJt = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\".$argv[3]."\\project_details.json"));
+		
 		if (isset($PROJt->details->gitName)){$details_obj->gitName = $PROJt->details->gitName;}
 		if (isset($PROJt->details->gitUrl)){$details_obj->gitUrl = $PROJt->details->gitUrl;}
 		if (isset($PROJt->details->folderName)){$details_obj->folderName = $PROJt->details->folderName;}
@@ -143,10 +144,11 @@
 	}
 
 	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
+		echo($details_obj->runingRoot);
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
 		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task;
-		file_put_contents($details_obj->runingRoot."\\".$file_name, $current_string);
+		file_put_contents($details_obj->runingRoot."\\".$full_name, $current_string);
 		chdir($details_obj->runingRoot);
 		$command = "start /B ".$full_name;
 		pclose(popen($command, "w"));		
