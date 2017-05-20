@@ -1,39 +1,27 @@
 <?php
-	
 
-
-
-
-
-
-	function prepare_pridction($folderRoot,$userProjectRoot,$runingRoot,$outputPython){
-		chdir($userProjectRoot);
-		exec("dir DebuggerTests /s /b > ".$runingRoot."DebuggerTests.txt");
-		if (!file_exists($outputPython.'\\DebuggerTests')){
-			mkdir($outputPython.'\\DebuggerTests', 0777, true);
+	function prepare_pridction($details_obj){
+		chdir($details_obj->userProjectRoot);
+		exec("dir DebuggerTests /s /b > ".$details_obj->runingRoot."\\DebuggerTests.txt");
+		if (!file_exists($details_obj->outputPython.'\\DebuggerTests')){
+			mkdir($details_obj->outputPython.'\\DebuggerTests', 0777, true);
 		}
-		$arr = explode("\n",file_get_contents($runingRoot."DebuggerTests.txt"));
+		$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\DebuggerTests.txt"));
+		$str = "";
 		if (sizeof($arr)>0){
 			for ($i=0; $i < sizeof($arr); $i++) { 
-				$command = 'start /B xcopy '.$arr[$i].' '.$outputPython.'\\DebuggerTests /-Y';
-				pclose(popen($command, "w"));
+				if (strlen($arr[$i])>0){
+					$tmp = substr($arr[$i], 0,(strlen($arr[$i])-1));
+					$str .= "start /B xcopy ".$tmp." ".$details_obj->outputPython."\\DebuggerTests /-Y\n";
+				}
 			}
 		}
-		$obj = update_progress('prepare_prediction', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "ready to run prediction";
-		return $returnJson;
+		return $str;
 	}	
-	function run_pridction($folderRoot,$learnDir){
-		chdir($learnDir);
-		$command = 'start /B python wrapper.py antConf.txt experiments 2>ee.log';
-		pclose(popen($command, "w"));
-		$obj = update_progress('run_prediction', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
-		return $returnJson;
+	function run_pridction($details_obj){
+		$command = "cd ".$details_obj->learnDir."\n";
+		$command .= "python wrapper.py antConf.txt experiments 2>pred.log\n";
+		return $command;
 	}
 	function get_pridction($folderRoot,$learnDir){
 		chdir($learnDir);
@@ -58,5 +46,16 @@
 		return $returnJson;
 		*/
 	}		
+
+	function all_pred($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
+		$obj->details->progress->mille_stones->end_testing->flag = true;
+		$str = prepare_pridction($details_obj);
+		$obj->details->progress->mille_stones->run_prediction->flag = true;
+		$str .= run_pridction($details_obj);
+		file_put_contents('filename',$str);
+		run_cmd_file($details_obj,$str,"runpred","all_done");
+		
+	}
 		
 ?>

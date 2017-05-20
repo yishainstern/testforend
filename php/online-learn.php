@@ -67,11 +67,12 @@
 			$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 			$obj->details->pomPath = $str;
 			$obj->details->files = $files;
+			$obj->details->progress->mille_stones->start_testing->flag = true;
 			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 			$str = "";
 			$str .="cd ".$details_obj->full_pom_path."\n";
 			$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
-			run_cmd_file($details_obj,$str,"runOnline","pred");
+			run_cmd_file($details_obj,$str,"runOnline","all_pred");
 		}else{
 			$returnJson['status'] = 1;
 			$returnJson['message'] = "no files with surfire plugin";

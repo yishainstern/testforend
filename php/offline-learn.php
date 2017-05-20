@@ -81,6 +81,7 @@
 		$obj->details->testVersion = $details_obj->testVersion;
 		$obj->details->pomPath = $details_obj->pomPath;
 		$obj->details->bugFileName = $details_obj->fileObj["name"];
+		$obj->details->progress->mille_stones->start_offline->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json', json_encode($obj));
 		return $obj;		
 	}

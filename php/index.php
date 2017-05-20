@@ -6,7 +6,7 @@
 	require_once 'prediction.php';
 	require_once 'list.php';	
 	require_once 'new-project.php';
-	header('Content-Type: false');
+	//header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
 	
@@ -56,16 +56,16 @@
 		$returnJson = run_maven_task($details_obj);
 	}elseif ($task=="maven_done") {
 		$returnJson = maven_done($details_obj);
-	}elseif ($task=="prepare_pridction") {
-		$returnJson = prepare_pridction($details_obj);
-	}elseif ($task=="run_pridction") {
-		$returnJson = run_pridction($details_obj);
 	}elseif ($task=="get_pridction") {
 		$returnJson = get_pridction($details_obj);
 	}elseif ($task=="get_tags"){
 		$returnJson = get_tags($details_obj);
 	}elseif ($task=="all_details"){
 		$returnJson = all_details($details_obj);
+	}elseif ($task=="all_pred"){
+		$returnJson = all_pred($details_obj);
+	}elseif ($task== "all_done") {
+		//do nothing
 	}
 
 	echo json_encode((object)$returnJson);
