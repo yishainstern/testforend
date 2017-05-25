@@ -5,3 +5,15 @@
 .form-group {
 	position: relative;
 }
+
+.pom_path {
+
+display: inline-block;
+
+width: 70%;
+}
+
+.pom_path_lable {
+	
+display: inline-block;
+}

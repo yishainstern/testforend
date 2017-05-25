@@ -34,29 +34,33 @@
                                 <label for="disabledSelect">project url</label>
                                 <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitUrl" ng-disabled="true">
                                 <p class="help-block">enter here the <b>full</b> url of git</p>
+                            </div> 
+                            <div class="form-group" ng-mouseover="bugzilla_product = true" ng-mouseleave="bugzilla_product = false" >
+                                <label for="disabledSelect">Bugzilla product name</label>
+                                <input class="form-control" type="text" placeholder="bugzilla product" ng-model="project.details.bugzilla_product"/>
+                                <p class="help-block" ng-class="{open_help:bugzilla_product}">What is your product name in bugzila</p>
+                            </div> 
+                             <div class="form-group" ng-mouseover="bugzilla_url = true" ng-mouseleave="bugzilla_url = false" >
+                                <label for="disabledSelect">Bugzilla url</label>
+                                <input class="form-control" name="bugzilla_url" type="text" placeholder="bugzilla url" ng-model="project.details.bugzilla_url"/>
+                                 <p class="help-block" ng-class="{open_help:bugzilla_url}">What is thie url to the reported bugs in bugzilla</p>
                             </div>                            
-                            
+                            <!--
                             <div class="form-group">
                                 <label>csv bug file (from bugzila etc...)</label>
                                 <input class="form-control" type="file" placeholder="Enter text" ng-model="project.details.csvFile" name="csvFile" onchange="angular.element(this).scope().uploadFile(this.files)" ng-mouseover="csv_file = true" ng-mouseleave="csv_file = false"/>
                                  <p class="help-block" ng-class="{open_help:csv_file}">upload a scv file of known bugs from bugzila</p>
-                            </div>
+                            </div>-->
+
                             <div class="form-group"  ng-mouseover="versions = true" ng-mouseleave="versions = false" >
                                 <label for="disabledSelect" ng-click="ff">versions to check</label>
                                 <multiple-autocomplete ng-model="optionsList" suggestions-arr="list" after-select-item="afterSelectItem"></multiple-autocomplete>   
                                 <!--<input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"/>-->
                                 <p class="help-block" ng-class="{open_help:versions}">insert 4 versions for checking</p>
                             </div>
-                            <!--
-                            <div class="form-group" ng-mouseover="version = true" ng-mouseleave="version = false">
-                                <label>test version </label><label ng-show="only_one" style="margin-left: 3px;">only one!!</label>
-                                <multiple-autocomplete ng-model="optionsList2" suggestions-arr="list" after-select-item="afterSelectItem2"></multiple-autocomplete> 
-                                <p class="help-block" ng-class="{open_help:version}">insert 1 version for maven testing</p>
-                            </div>
-                            -->
                             <div class="form-group">
-                                <label>root of poom.xml files</label>
-                                <input class="form-control" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" ng-model="project.details.pomPath" />
+                                <label style="display: block;">root of poom.xml files</label>
+                                <span class="pom_path_lable">{{project.details.gitName}}\</span><input class="form-control pom_path" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" ng-model="project.details.pomPath" /><span class="pom_path_lable">\pom.xml</span>
                                 <p class="help-block" ng-class="{open_help:pomPath}">insert the root of pom in your project</p>
                             </div>
                             <div class="" ng-class="{'has-error':upload_error, 'has-success':run_success}">

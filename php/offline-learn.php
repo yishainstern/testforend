@@ -80,7 +80,9 @@
 		$obj->details->all_versions = $details_obj->all_versions;
 		$obj->details->testVersion = $details_obj->testVersion;
 		$obj->details->pomPath = $details_obj->pomPath;
-		$obj->details->bugFileName = $details_obj->fileObj["name"];
+		$obj->details->full_pomPath = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
+		$obj->details->bugzilla_product = $details_obj->bugzilla_product;
+		$obj->details->bugzilla_url = $details_obj->bugzilla_url;
 		$obj->details->progress->mille_stones->start_offline->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json', json_encode($obj));
 		return $obj;		
@@ -88,7 +90,8 @@
 	function creat_conf_for_offline($details_obj,$obj){
         $str = 'workingDir='.$details_obj->outputPython."\r\n";
         $str = $str.'git='.$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
-        $str = $str.'bugs='.$details_obj->folderRoot."\\rootBugs\\".$obj->details->bugFileName."\r\n";
+        $str = $str.'bugzilla_product='.$details_obj->bugzilla_product."\r\n";
+        $str = $str.'bugzilla_url='.$details_obj->bugzilla_url."\r\n";
         $str = $str."vers=(". $details_obj->all_versions.")";
         file_put_contents($details_obj->DebuugerRoot."\\Debugger\\learner\\antConf.txt",$str); 
 	}
@@ -103,9 +106,9 @@
 			return;
 		}
 		$obj = updates($details_obj);
-		put_bug_file_in_place($details_obj,$obj);
+		//put_bug_file_in_place($details_obj,$obj);
 		creat_conf_for_offline($details_obj,$obj);
-		go_run_python($details_obj);
+		//go_run_python($details_obj);
 		$ans['status'] = 111;
 		$ans['message'] = "offline task started";
 		$ans['project'] = $obj;

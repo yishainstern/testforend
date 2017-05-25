@@ -26,6 +26,8 @@
 		if (isset($PROJt->details->all_versions)){$details_obj->all_versions = $PROJt->details->all_versions;}
 		if (isset($PROJt->details->pomPath)){$details_obj->pomPath = $PROJt->details->pomPath;}
 		if (isset($PROJt->details->discription)){$details_obj->discription = $PROJt->details->discription;}
+		if (isset($PROJt->details->bugzilla_product)){$details_obj->bugzilla_product = $PROJt->details->bugzilla_product;}
+		if (isset($PROJt->details->bugzilla_url)){$details_obj->bugzilla_url = $PROJt->details->bugzilla_url;}
 		$details_obj->task = $argv[4];
 		file_put_contents($argv[2]."_".$argv[3]."_".$argv[4],'sss');
 	}else {
@@ -93,6 +95,16 @@
 			$details_obj->discription = $_POST["description"];
 		}else{
 			$details_obj->discription = '';
+		}
+		if (isset($_POST["bugzilla_product"])){
+			$details_obj->bugzilla_product = $_POST["bugzilla_product"];
+		}else{
+			$details_obj->bugzilla_product = '';
+		}
+		if (isset($_POST["bugzilla_url"])){
+			$details_obj->bugzilla_url = $_POST["bugzilla_url"];
+		}else{
+			$details_obj->bugzilla_url = '';
 		}
 	}
 
