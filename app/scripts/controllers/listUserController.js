@@ -14,7 +14,7 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
     }
 
     $scope.go_to_project = function(name){
-    	$state.transitionTo('dashboard.project',{id:name});
+    	$state.transitionTo('dashboard.project',{id:name,user:$rootScope.user.details.userName});
     }
 
 ;}]);

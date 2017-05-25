@@ -158,7 +158,7 @@
 		echo($details_obj->runingRoot);
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
-		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task;
+		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task." >".$file_name.".log";
 		file_put_contents($details_obj->runingRoot."\\".$full_name, $current_string);
 		chdir($details_obj->runingRoot);
 		$command = "start /B ".$full_name;

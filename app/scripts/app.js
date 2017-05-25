@@ -147,7 +147,7 @@ angular
     })
     .state('dashboard.project',{
       templateUrl:'views/pages/project-page.html',
-      url:'/project/:id',
+      url:'/project/:id/:user',
       controller:'projectController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -195,7 +195,7 @@ angular
     })
     .state('dashboard.all_details',{
       templateUrl:'views/pages/all_details.html',
-      url:'/all_details/:id/:task',
+      url:'/all_details/:user/:id/:task',
       controller:'all_details',
       resolve: {
         loadMyFile:function($ocLazyLoad) {

@@ -65,7 +65,7 @@
 		}
 		if (sizeof($files)>0){
 			$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-			$obj->details->pomPath = $str;
+			//$obj->details->pomPath = $str;
 			$obj->details->files = $files;
 			$obj->details->progress->mille_stones->start_testing->flag = true;
 			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));

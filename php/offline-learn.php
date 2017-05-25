@@ -59,9 +59,7 @@
 			file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
 			move_to_online_task($details_obj);
 		}else {
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "not done yet//check agin";
-			return $returnJson;	
+			run_cmd_file($details_obj,"","offline","check_python");
 		}
 	}
 	function any_prob_offline($details_obj){
@@ -108,7 +106,7 @@
 		$obj = updates($details_obj);
 		//put_bug_file_in_place($details_obj,$obj);
 		creat_conf_for_offline($details_obj,$obj);
-		//go_run_python($details_obj);
+		go_run_python($details_obj);
 		$ans['status'] = 111;
 		$ans['message'] = "offline task started";
 		$ans['project'] = $obj;

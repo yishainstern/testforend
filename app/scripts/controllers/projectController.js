@@ -27,7 +27,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			task:'details',
  			title:'give us all details for your project',
  			state: 'dashboard.all_details',
- 			send:{id:$rootScope.project.details.folderName, task:'all_details'},
+ 			send:{task:'all_details'},
  			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction',
  			flag:false,
  			status:"",
@@ -61,6 +61,10 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		}
  	});
  	$scope.go_page = function(item){
+ 		if (item.send){
+ 			item.send.id = $rootScope.project.details.folderName;
+ 			item.send.user = $rootScope.user.details.userName;
+ 		}
  		$state.transitionTo(item.state,item.send);
  	}
  	$scope.get_state = function(str){

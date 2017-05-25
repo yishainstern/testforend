@@ -37,7 +37,7 @@
                             </div> 
                             <div class="form-group" ng-mouseover="bugzilla_product = true" ng-mouseleave="bugzilla_product = false" >
                                 <label for="disabledSelect">Bugzilla product name</label>
-                                <input class="form-control" type="text" placeholder="bugzilla product" ng-model="project.details.bugzilla_product"/>
+                                <input class="form-control" type="text" placeholder="bugzilla product" name="bugzilla_product" ng-model="project.details.bugzilla_product"/>
                                 <p class="help-block" ng-class="{open_help:bugzilla_product}">What is your product name in bugzila</p>
                             </div> 
                              <div class="form-group" ng-mouseover="bugzilla_url = true" ng-mouseleave="bugzilla_url = false" >
@@ -60,7 +60,7 @@
                             </div>
                             <div class="form-group">
                                 <label style="display: block;">root of poom.xml files</label>
-                                <span class="pom_path_lable">{{project.details.gitName}}\</span><input class="form-control pom_path" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" ng-model="project.details.pomPath" /><span class="pom_path_lable">\pom.xml</span>
+                                <span class="pom_path_lable" style="padding-right: 3px;">{{project.details.gitName}}\</span><input class="form-control pom_path" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" ng-model="project.details.pomPath" /><span class="pom_path_lable" style="padding-left: 3px;">\pom.xml</span>
                                 <p class="help-block" ng-class="{open_help:pomPath}">insert the root of pom in your project</p>
                             </div>
                             <div class="" ng-class="{'has-error':upload_error, 'has-success':run_success}">
