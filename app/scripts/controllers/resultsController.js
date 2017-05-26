@@ -32,11 +32,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         data_to_send.append('witch_file',item);
         service.ajaxfunc('get_file','results',data_to_send)
         .then(function(data){
-                data = $rootScope.checkJson(data);
-                if (data.status == "111"){
-                    $scope.files = data.files;
-                    console.log($scope.files);
-                }
+                
             },function(data){alert('bad')}
             );  
     }
