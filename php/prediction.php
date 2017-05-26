@@ -67,15 +67,21 @@
 		$ans['files'] = $arr;
 		return $ans;
 	}
-	function results($details_obj){
+	function get_file($details_obj){
 		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		chdir($details_obj->outputPython);
-		$arr =  file_get_contents($details_obj->outputPython."\\weka");
-		$ans = array();
-		$ans['status'] = "111";
-		$ans['message'] = "get files";
-		$ans['files'] = $arr;
-		return $ans;
+		chdir($details_obj->outputPython."\\weka");
+		$file = $details_obj->witch_file;
+		if (file_exists($file)) {
+		    header('Content-Description: File Transfer');
+		    header('Content-Type: application/octet-stream');
+		    header('Content-Disposition: attachment; filename="'.basename($file).'"');
+		    header('Expires: 0');
+		    header('Cache-Control: must-revalidate');
+		    header('Pragma: public');
+		    header('Content-Length: '.filesize($file));
+		    readfile($file);
+		    exit;
+		}
 	}	
 		
 ?>
