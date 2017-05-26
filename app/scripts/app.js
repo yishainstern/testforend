@@ -229,7 +229,26 @@ angular
           })
         }
       }
-    })    
+    })
+    .state('dashboard.results',{
+      templateUrl:'views/pages/results.html',
+      url:'/results/:user/:id/:task',
+      controller:'resultsController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/resultsController.js',
+                'styles/results.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'scripts/directives/goToList/goToList.js',
+                'bower_components/swiper/dist/css/swiper.min.css'
+              ]
+          })
+        }
+      }
+    })        
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id/:task',

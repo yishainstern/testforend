@@ -57,5 +57,16 @@
 		run_cmd_file($details_obj,$str,"runpred","all_done");
 		
 	}
+
+	function results($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
+		$arr =  scandir($details_obj->outputPython."\\weka");
+		$ans = array();
+		$ans['status'] = "111";
+		$ans['message'] = "get files";
+		$ans['files'] = $arr;
+		return $ans;
+
+	}
 		
 ?>

@@ -36,9 +36,10 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
 		{
  			task:'prediction',
  			title:'get prediction',
- 			state:'',
- 			description:'In this part we will get a prediction for your part in the code' ,
- 			flag:false,
+ 			state:'dashboard.results',
+ 			description:'In this part we will get a prediction for your code' ,
+ 			send:{task:'get_results'},
+ 			flag:true,
  			status:"",
  			has_page:true
  		} 		

@@ -66,6 +66,8 @@
 		$returnJson = all_pred($details_obj);
 	}elseif ($task== "all_done") {
 		//do nothing
+	}elseif ($task== "get_output") {
+		$returnJson = results($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);

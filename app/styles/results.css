@@ -1,0 +1,10 @@
+.files_btn {
+
+}
+#my_table tr, #my_table td{
+	vertical-align: middle;
+}
+
+#my_table i {
+	padding-right: 5px;
+} 
