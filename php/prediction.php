@@ -66,7 +66,16 @@
 		$ans['message'] = "get files";
 		$ans['files'] = $arr;
 		return $ans;
-
 	}
+	function results($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
+		chdir($details_obj->outputPython);
+		$arr =  file_get_contents($details_obj->outputPython."\\weka");
+		$ans = array();
+		$ans['status'] = "111";
+		$ans['message'] = "get files";
+		$ans['files'] = $arr;
+		return $ans;
+	}	
 		
 ?>

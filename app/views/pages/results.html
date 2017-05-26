@@ -29,7 +29,7 @@
                                                         <tr ng-hide="item=='.' || item=='..'" ng-repeat="item in files" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{item}}</td>
-                                                            <td><button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}">get file</td>
+                                                            <td><button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item)">get file</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

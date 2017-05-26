@@ -68,6 +68,8 @@
 		//do nothing
 	}elseif ($task== "get_output") {
 		$returnJson = results($details_obj);
+	}elseif ($task== "get_file") {
+		$returnJson = file($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);

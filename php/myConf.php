@@ -107,6 +107,12 @@
 		}else{
 			$details_obj->bugzilla_url = '';
 		}
+		if (isset($_POST["witch_file"])){
+			$details_obj->bugzilla_url = $_POST["witch_file"];
+		}else{
+			$details_obj->bugzilla_url = '';
+		}
+
 	}
 
 

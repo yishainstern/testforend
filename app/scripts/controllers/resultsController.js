@@ -26,6 +26,20 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
     $scope.files = [];
+    $scope.get_file = function(item){
+        form = document.forms.namedItem(results);
+        data_to_send = new FormData(form);
+        data_to_send.append('witch_file',item);
+        service.ajaxfunc('get_file','results',data_to_send)
+        .then(function(data){
+                data = $rootScope.checkJson(data);
+                if (data.status == "111"){
+                    $scope.files = data.files;
+                    console.log($scope.files);
+                }
+            },function(data){alert('bad')}
+            );  
+    }
     $scope.get_res = function(){
         t_stop = $interval(function() {
         if ($rootScope.user.details.userName && $rootScope.project.details.folderName && $rootScope.project.details.gitName){
