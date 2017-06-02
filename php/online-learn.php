@@ -81,24 +81,56 @@
 	}
 	//
 
-	function get_tags($details_obj){
-		$str = $details_obj->runingRoot."\\tagList.txt";
-		$str1 = $details_obj->folderRoot."\\project_details.json";
-		if (is_file($str)){
-			$obj = file_get_contents($str);
-			$arr1 = explode("\n",$obj);
-			$arr1 = array_reverse ($arr1);
-			$tmp = json_decode(file_get_contents($str1));
-			$tmp->details->tags = $arr1;
-			file_put_contents($str1, json_encode($tmp));
+	function get_some_list($details_obj,$s1,$s2,$s3,$message,$attribute){
+		$obj = json_decode(file_get_contents($s2));
+		$tt = $details_obj->userProjectRoot."\\".$obj->details->gitName;
+		$count = strlen($tt);
+		if (is_file($s3)){
+			$tmp = file_get_contents($s3);
 			$ans = array();
-			$ans['project'] = $tmp;
 			$ans['status'] = 111;
-			$ans['message'] = "gut tag list";
+			$ans['message'] = $message;
+			$ans[$attribute] = $tmp;
 			return $ans;
 		}
-		
+		if (is_file($s1)){
+			$obj = file_get_contents($s1);
+			$arr1 = explode("\n",$obj);
+			$arr1 = array_reverse ($arr1);
+			$ret_arr = array();
+			for ($i=0; $i < sizeof($arr1); $i++) { 
+				if($arr1[$i]=="" || $arr1[$i]==''){
+					//do nothing
+				}else{
+					if ($attribute=="poms"){
+						$sub = substr($arr1[$i], ($count+1));
+						$arr1[$i] = $sub;
+					}
+					array_push($ret_arr, $arr1[$i]);
+				}
+			}
+			//file_put_contents($s3,json_encode($ret_arr));
+			$ans = array();
+			$ans['status'] = 111;
+			$ans['message'] = $message;
+			$ans[$attribute] = json_encode($ret_arr);
+			return $ans;
+		}
 	}
+
+	function get_tags($details_obj){
+		$s1 = $details_obj->runingRoot."\\tagList.txt";
+		$s2 = $details_obj->folderRoot."\\project_details.json";
+		$s3 = $details_obj->runingRoot."\\tagList.json";
+		return get_some_list($details_obj,$s1,$s2,$s3,"gut tags list","tags");
+	}
+
+	function get_poms($details_obj){
+		$s1 = $details_obj->runingRoot."\\pomList.txt";
+		$s2 = $details_obj->folderRoot."\\project_details.json";
+		$s3 = $details_obj->runingRoot."\\pomList.json";
+		return get_some_list($details_obj,$s1,$s2,$s3,"gut pom list","poms");
+	}	
 
 	function chane_tracer_mvn_and_checkout_version($details_obj){
 		$str ="";

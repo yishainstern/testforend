@@ -58,10 +58,11 @@
                                 <!--<input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"/>-->
                                 <p class="help-block" ng-class="{open_help:versions}">insert 4 versions for checking</p>
                             </div>
-                            <div class="form-group">
-                                <label style="display: block;">root of poom.xml files</label>
-                                <span class="pom_path_lable" style="padding-right: 3px;">{{project.details.gitName}}\</span><input class="form-control pom_path" placeholder="src\etc\tc" name="pomPath" ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" ng-model="project.details.pomPath" /><span class="pom_path_lable" style="padding-left: 3px;">\pom.xml</span>
-                                <p class="help-block" ng-class="{open_help:pomPath}">insert the root of pom in your project</p>
+                             <div class="form-group"  ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" >
+                                <label for="disabledSelect">pom root</label>
+                                <multiple-autocomplete ng-model="optionsList2" suggestions-arr="poms" after-select-item="afterSelectItem2"></multiple-autocomplete>   
+                                <!--<input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"/>-->
+                                <p class="help-block" ng-class="{open_help:pomPath}">insert pom root file in your project</p>
                             </div>
                             <div class="" ng-class="{'has-error':upload_error, 'has-success':run_success}">
                                 <label class="control-label" ng-show="upload_error">{{display_text}}</label>        

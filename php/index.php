@@ -60,6 +60,8 @@
 		$returnJson = get_pridction($details_obj);
 	}elseif ($task=="get_tags"){
 		$returnJson = get_tags($details_obj);
+	}elseif ($task=="get_poms"){
+		$returnJson = get_poms($details_obj);
 	}elseif ($task=="all_details"){
 		$returnJson = all_details($details_obj);
 	}elseif ($task=="all_pred"){

@@ -16,34 +16,33 @@
                         <form role="form" name="new-project" ng-class="{'has-error':page_error}">
                             <div class="form-group" ng-mouseover="userName=true" ng-mouseleave="userName=false">
                                 <label for="disabledSelect">User name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project_details.userName" name="user" disabled>
-                                <input type="hidden" name="userName" value="{{project_details.userName}}">
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.details.userName" disabled>
+                                <input type="hidden" name="userName" value="{{user.details.userName}}">
                                 <p class="help-block" ng-class="{open_help:userName}">This is your user name that you picked</p>
                             </div>
                             <div class="form-group" ng-mouseover="folderName=true" ng-mouseleave="folderName=false">
                                 <label>uniq folder name</label>
-                                <input class="form-control"  type="text" placeholder="Enter text" ng-model="project_details.folderName" name="id">
+                                <input class="form-control" type="text" placeholder="Enter text" name="id"  ng-model="new_id" />
                                <p class="help-block" ng-class="{open_help:folderName}">insert here a uniq name for you project</p>
                             </div>
                             <div class="form-group" ng-mouseover="disciption=true" ng-mouseleave="disciption=false">
                                 <label>project disciption</label>
-                                <textarea class="form-control" rows="4" ng-model="project_details.project_description" name="description"></textarea>
+                                <textarea class="form-control" rows="4" name="description" ng-model="new_description"></textarea>
                                 <p class="help-block" ng-class="{open_help:disciption}">insert here a short discription of your project</p>
                             </div>
                             <div class="form-group" ng-mouseover="gitUrl=true" ng-mouseleave="gitUrl=false">
                                 <label for="disabledSelect">project url</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitUrl" name="gitUrl">
+                                <input class="form-control" type="text" placeholder="Disabled input" name="gitUrl" ng-model="new_url">
                                 <p class="help-block" ng-class="{open_help:gitUrl}">insert here a <b>full</b> url from git tou your project. must be a public project</p>
                             </div>  
                             <div class="form-group" ng-mouseover="gitName=true" ng-mouseleave="gitName=false">
                                 <label for="disabledSelect">git name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitName" name="gitName">
+                                <input class="form-control" type="text" placeholder="Disabled input" name="gitName" ng-model="new_name">
                                 <p class="help-block" ng-class="{open_help:gitName}">insert here the name of the project in git that we will dounload to are server</p>
                             </div>                                                                                    
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
                                 <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
                             </div>
-                            <label class="control-label" ng-show="page_error">{{page_text}}</label>
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project and clone to server</button>
                         </form>
                     </div>

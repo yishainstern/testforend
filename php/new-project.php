@@ -27,7 +27,22 @@
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 		return $obj;
 	}
-	function get_git_folfer_name(){
+	function is_git_project($details_obj){
+		$flag = TRUE;
+		set_time_limit(100);
+		$check_git_file = $details_obj->userNameRoot."\\".$details_obj->gitName."_is_git.txt";
+		file_put_contents($check_git_file, "");
+		exec("git ls-remote ".$details_obj->gitUrl." 2>".$check_git_file);
+		$str = file_get_contents($check_git_file);
+		$place1 =strpos($str,"fatal");
+		$place2 =strpos($str,"Fatal");
+		if ($place2===FALSE && $place2===false && $place1===FALSE && $place1===false){
+			$flag = TRUE;
+		}else{
+			$flag = false;
+		}
+		unlink($check_git_file);
+		return $flag;
 
 	}
 	function start_and_prepare_folders($details_obj){
@@ -35,6 +50,9 @@
 		if ((is_dir($details_obj->folderRoot)==TRUE)){
 			$ans['status'] = 1;
 			$ans['message'] = "you have already a project with this name, pick a new name";
+		}else if(!is_git_project($details_obj)){
+			$ans['status'] = 2;
+			$ans['message'] = "the git that was inseretef does not exsists in git reposetories!!";
 		}else{
 			mkdir($details_obj->folderRoot, 0777, true);
 			mkdir($details_obj->userProjectRoot, 0777, true);
@@ -47,6 +65,7 @@
 			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
 			$filr_tmp .= "cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
 			$filr_tmp .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
+			$filr_tmp .= "dir /s /b *pom.xml >".$details_obj->runingRoot."\\pomList.txt\n";
 			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
 			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone";
 			file_put_contents($details_obj->runingRoot.'\\dd.cmd', $filr_tmp);

@@ -14,8 +14,10 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.optionsList = [];
     $scope.optionsList2 = [];
     $scope.list = [];
+    $scope.poms = [];
     $scope.only_one = false;
     $scope.sss='';
+    $scope.pom_root = "";
     $scope.display_upload_text = '';
     $scope.ff = function(){
         $scope.sss='sss';
@@ -26,11 +28,10 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     }
     $scope.afterSelectItem2 = function(arr, item){
         if (arr.length>0){
-            $scope.only_one = true;
-
+            arr[0] = item;
         }else {
-             $scope.false = true;
             arr.push(item);  
+            $scope.pom_root = item.substring(0,(item.length-9));
         }
     }
 
@@ -39,27 +40,31 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     }
     $scope.arr = ['a','b'];
     $scope.success_tag = function(obj){
-        if (obj.status == 111){
-            $rootScope.project = obj.project;
-            $scope.list = $rootScope.project.details.tags;
+        if (obj.status == 111  && obj.tags){
+            $scope.list = JSON.parse(obj.tags);
+        }
+    }
+    $scope.success_pom = function(obj){
+        if (obj.status == 111  && obj.poms){
+            $scope.poms = JSON.parse(obj.poms);
         }
     }
     $scope.$on('project_object_exsites',function(){
-       if (!$rootScope.project.details.tags){
-            var ff = new FormData();
-            ff.append('id',$rootScope.project.details.folderName);
-            ff.append('userName',$rootScope.user.details.userName);
-            service.ajaxfunc('get_tags','get_tags',ff).then(
-                function(data){$scope.success_tag(JSON.parse(data));},
-                function(data){$scope.fail_tag(data);}
-            );      
-       }else {
-              $scope.list = $rootScope.project.details.tags;
-       }
+        var ff = new FormData();
+        ff.append('id',$rootScope.project.details.folderName);
+        ff.append('userName',$rootScope.user.details.userName);
+        service.ajaxfunc('get_tags','get_tags',ff).then(
+            function(data){$scope.success_tag(JSON.parse(data));},
+            function(data){$scope.fail_tag(data);}
+        );
+        service.ajaxfunc('get_poms','get_tags',ff).then(
+            function(data){$scope.success_pom(JSON.parse(data));},
+            function(data){$scope.fail_pom(data);}
+        );
     });
     $scope.upload_details = function(){
         $scope.upload_error = false;
-        if (!$rootScope.project.details.pomPath||$scope.optionsList.length<1||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product){
+        if ($scope.optionsList.length<1||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product || !$scope.pom_root){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
             return;
@@ -83,6 +88,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             }
         }
         data_to_send.append('all_versions',tmp_str);
+        data_to_send.append('pomPath',$scope.pom_root);
         service.ajaxfunc('all_details','files',data_to_send)
         .then(function(data){
             data = JSON.parse(data);

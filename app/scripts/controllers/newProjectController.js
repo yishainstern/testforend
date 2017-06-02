@@ -30,12 +30,16 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         if (data && data.status==111){
             $rootScope.user = data.user;
             $rootScope.project = data.project;
-            $state.transitionTo('dashboard.project',{id:$scope.project_details.folderName});
+            $state.transitionTo('dashboard.project',{id:$rootScope.project.details.folderName});
 //            service.ajaxfunc('clone_git','new-project',false)
 //            .then(function(data){$scope.success_clone(data);}, 
 //            function(data){$scope.fail_clone(data);});
         }else if (data && data.status==1){
             $scope.display_new_project_text = 'this name already exits...try a diffrent name';    
+            $scope.new_project_error = true;
+            $scope.new_project_success = false;            
+        }else if (data && data.status==2){
+            $scope.display_new_project_text = data.message;    
             $scope.new_project_error = true;
             $scope.new_project_success = false;            
         }
@@ -58,16 +62,15 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }        
 
     $scope.create_new_project = function(){
-         $scope.page_error = false;
-        if (!$rootScope.project.details.gitUrl || !$rootScope.project.details.gitName || !$scope.project_details.project_description || !$scope.project_details.folderName){
+        $scope.display_new_project_text = "";
+        $scope.new_project_error = false;  
+        if (!$scope.new_id || !$scope.new_description || !$scope.new_url || !$scope.new_name){
              $scope.page_error = true;
-             $scope.page_text = 'all fileds are requried';
+             $scope.display_new_project_text = 'all fileds are requried';
              return;
         }
         service.ajaxfunc('open_folder','new-project',false)
         .then(function(data){$scope.success_new_project(JSON.parse(data));},
             function(data){$scope.fail_new_project(data);});
     }
-    $scope.project_details.userName = localStorage.getItem('name');
-
 ;}]);
