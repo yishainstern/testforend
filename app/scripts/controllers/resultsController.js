@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
  	service.intervalfunc(service);
+    $scope.witch_file_name;
     var t_stop;
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
@@ -30,7 +31,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         var form = document.forms.namedItem('results');
         var data_to_send = new FormData(form);
         data_to_send.append('witch_file',item);
-        service.ajaxfunc('get_file','results',data_to_send)
+        service.filefunc('get_file','results',data_to_send)
         .then(function(data){
                 
             },function(data){alert('bad')}
@@ -59,5 +60,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     }
     
         
-   
+    $scope.get_file_info = function(item){
+        $scope.witch_file_name = item;
+    }
 }]);

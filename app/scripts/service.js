@@ -56,12 +56,12 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
                 error: function(data){
                     deferred.reject(data);
                 },
-                success:  function(data, status, headers, config){
+                success:  function(data, status, headers, xhr){
                     var anchor = angular.element('<a/>');
                     anchor.attr({
                         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
                         target: '_blank',
-                        download: 'filename.csv'
+                        download: headers.getResponseHeader("thename")
                     })[0].click();
                     deferred.resolve(data);
                 } 

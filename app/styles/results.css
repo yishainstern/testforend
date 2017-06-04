@@ -8,3 +8,36 @@
 #my_table i {
 	padding-right: 5px;
 } 
+
+.swiper-panel {
+
+padding: 15px 33px;
+}
+
+#wrapper .swiper-button-next{
+
+right: 17px;
+}
+
+#wrapper .swiper-button-prev{
+	
+left: 17px;
+}
+
+
+.swiper-panel .row{
+
+}
+
+.main-row {
+	
+}
+
+.swiper_wrapper{
+	position: relative;
+	padding: 0px 13px;
+}
+
+#wrapper .swiper-pagination {
+	position: relative;
+}

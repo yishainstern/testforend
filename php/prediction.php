@@ -79,6 +79,7 @@
 		    header('Cache-Control: must-revalidate');
 		    header('Pragma: public');
 		    header('Content-Length: '.filesize($file));
+		    header('thename: '.basename($file));
 		    readfile($file);
 		    exit;
 		}
