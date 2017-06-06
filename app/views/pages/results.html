@@ -58,19 +58,73 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    run task
+                                    Here you can see all files from meaching learning over your software code.
                                 </div>
-                                <div class="panel-body">
+                                <div class="panel-body swiper-panel">
                                     <div class="row">
-                                        <div class="col-lg-8">
-                                            
+                                        <div class="col-lg-12">
+                                            <h3>List of files..click to get them</h3>
+                                            <div class="form-group">
+                                                    <label>search file</label>
+                                                    <input class="form-control" placeholder="file name" ng-model="searchText_e">
+                                                    <p class="help-block" style="max-height: initial;">search for file by name</p>
+                                                </div>
+                                            <div class="table-responsive">
+                                                <div ng-repeat="obj in experiments">
+                                                    <table class="table" id="my_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>file name</th>
+                                                             <th>information</th>
+                                                            <th>get file</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr><td>{{obj.dir_name}}</td></tr>
+                                                        <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                            <td>{{$index +1}}</td>
+                                                            <td><i class="fa fa-file-text"></i>{{inner_obj}}</td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_info(inner_obj)" data-target="#myModal" data-toggle="modal">get information</button>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj)">get file</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                                <table class="table" id="my_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>file name</th>
+                                                             <th>information</th>
+                                                            <th>get file</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-hide="item=='.' || item=='..'" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                            <td>{{$index +1}}</td>
+                                                            <td><i class="fa fa-file-text"></i>{{item}}</td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_info(item)" data-target="#myModal" data-toggle="modal">get information</button>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item)">get file</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>    
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>                                                                 
+                </div>                                                           
             </div>
             <div class="swiper-pagination"></div>
         </div>

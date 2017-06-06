@@ -11,6 +11,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
  	}
+ 	var p_interval;
  	$scope.get_status = function(){
 
  	}
@@ -30,8 +31,8 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			send:{task:'all_details'},
  			description:'In this part we will run an AI algorithim to learn about your code, follow the instroction',
  			flag:false,
- 			status:"",
- 			has_page:true
+ 			status:"can not enter yet",
+ 			has_page:false
  		},
 		{
  			task:'prediction',
@@ -40,26 +41,41 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			description:'In this part we will get a prediction for your code' ,
  			send:{task:'get_results'},
  			flag:true,
- 			status:"",
- 			has_page:true
+ 			status:"no results yet",
+ 			has_page:false
  		} 		
  	];
  	$scope.$on('project_object_exsites',function(){
  		$scope.tmp = $rootScope.project.details.progress.mille_stones;
+ 		if ($rootScope.project.details.problem){
+ 			alert("aborted testing because "+$rootScope.project.details.problem);
+ 		}
  		if (!$scope.tmp.end_clone.flag){
  			$scope.userArray[0].status= 'still cloning';
  			$scope.userArray[0].flag= false;
  		}else {
  			$scope.userArray[0].status= 'finsied cloning go to next task';
  			$scope.userArray[0].flag= true;
+ 			$scope.userArray[1].status= 'enter arev page';
+ 			$scope.userArray[1].has_page= true;
  		}
  		if (!$scope.tmp.start_offline.flag){
  			$scope.userArray[1].status= 'did not do it yet';
  			$scope.userArray[1].flag= false;
  		}else {
  			$scope.userArray[1].status= 'strrted learning';
- 			$scope.userArray[1].flag= false;
+ 			$scope.userArray[1].flag= true;
+ 			$scope.userArray[1].has_page= false;
+ 			if ($scope.tmp.start_testing.flag){
+ 				$scope.userArray[1].status= 'strted maven testing';
+ 				$scope.userArray[2].status= 'has some details';
+ 				$scope.userArray[2].has_page= true;
+ 				if ($scope.tmp.get_prediction.flag){
+ 					$scope.userArray[2].status= 'has all details';
+ 				}
+ 			}
  		}
+ 		$timeout(function() {service.intervalfunc(service);}, 5000);
  	});
  	$scope.go_page = function(item){
  		if (item.send){
@@ -68,61 +84,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		}
  		$state.transitionTo(item.state,item.send);
  	}
- 	$scope.get_state = function(str){
- 		switch (str){
- 			case 'create_folders':
- 				return null;
- 			break;
- 			case 'start_clone':
- 				return 'dashboard.clone';
- 			break;
- 			case 'end_clone':
- 				return 'dashboard.clone';
- 			break;
- 			case 'upload_bug_file':
- 				return 'dashboard.prepareOffline';
- 			break;
- 			case 'get_prediction':
-
- 			break;
- 			case 'start_offline':
- 				return 'dashboard.runOffline';
- 			break;
- 			case 'start_testing':
- 				return 'dashboard.prepareOnline';
- 			break;
- 			case 'end_testing':
- 				return 'dashboard.prepareOnline';
- 			break;
- 			case 'end_offline':
- 				return 'dashboard.runOffline';
- 			break;
- 			case 'pick_version':
- 				return 'dashboard.prepareVersion';
- 			break;
- 			case 'check_version':
- 				return 'dashboard.prepareVersion';
- 			break;
- 			case 'prepare_jar':
- 				return 'dashboard.prepareVersion';
- 			break; 	
- 			case 'update_pom':
- 				return 'dashboard.pomUpdate';
- 			break;		 			
- 			case 'prepare_mvn':
- 				return 'dashboard.prepareOnline';
- 			break;
- 			case 'get_prediction':
- 				return 'dashboard.prediction';
- 			break;
- 			case 'run_prediction':
- 				return 'dashboard.prediction';
- 			break;
- 			case 'prepare_prediction':
- 				return 'dashboard.prediction';
- 			break; 			 			
- 		}
- 	}
+ 
 //    
 	$scope.task_page = function(state,params){
 		$scope.task = state

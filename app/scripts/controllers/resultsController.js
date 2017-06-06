@@ -50,8 +50,15 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                     $scope.files = data.files;
                     console.log($scope.files);
                 }
-            },function(data){alert('bad')}
-            );      
+            },function(data){alert('bad')});
+            service.ajaxfunc('get_experiments','results',false)
+            .then(function(data){
+                data = $rootScope.checkJson(data);
+                if (data.status == "111"){
+                    $scope.experiments = data.files;
+                    console.log($scope.experiments);
+                }
+            },function(data){alert('bad')}); 
         }else {
             //keep it alive
         }

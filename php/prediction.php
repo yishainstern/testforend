@@ -67,6 +67,36 @@
 		$ans['files'] = $arr;
 		return $ans;
 	}
+	function experiments($details_obj){
+		$arrays = array();
+		$ex = $details_obj->outputPython."\\experiments";
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
+		$arr =  scandir($ex);
+		for ($i=0; $i < sizeof($arr); $i++) { 
+			$tmp = $arr[$i];
+			$tmp_path = $ex."\\".$tmp;
+			if (is_dir($tmp_path)){
+				$tmp_obj = new stdClass();
+				$tmp_obj->dir_name = $tmp;
+				$tmp_obj->dir_arr = array();
+				$tmp_arr = scandir($tmp_path);
+				for ($j=0; $j < sizeof($tmp_arr); $j++) { 
+					$tmp_inner = $tmp_arr($j);
+					if ($tmp_inner=="barinelOptA.csv" || $tmp_inner=="plannerResall.csv"){
+						array_push($tmp_obj->dir_arr, $tmp_obj->dir_name."\\".$tmp_inner);
+					}
+				}
+				if (sizeof($dir_arr)>0){
+					array_push($arrays,$tmp_obj);
+				}
+			}
+		}
+		$ans = array();
+		$ans['status'] = "111";
+		$ans['message'] = "get files";
+		$ans['files'] = $arrays;
+		return $ans;
+	}
 	function get_file($details_obj){
 		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 		chdir($details_obj->outputPython."\\weka");
@@ -83,6 +113,12 @@
 		    readfile($file);
 		    exit;
 		}
+	}
+	function all_done($details_obj){
+		$witch_file = $details_obj->folderRoot.'\\project_details.json';
+		$obj = json_decode(file_get_contents($witch_file));
+		$obj->details->progress->mille_stones->get_prediction->flag = true;
+		file_put_contents($witch_file, json_encode($obj));
 	}	
 		
 ?>

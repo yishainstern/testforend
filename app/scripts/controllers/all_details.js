@@ -19,6 +19,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.sss='';
     $scope.pom_root = "";
     $scope.display_upload_text = '';
+    $scope.did_start= false;
     $scope.ff = function(){
         $scope.sss='sss';
         console.log($scope.optionsList);
@@ -31,7 +32,6 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             arr[0] = item;
         }else {
             arr.push(item);  
-            $scope.pom_root = item.substring(0,(item.length-9));
         }
     }
 
@@ -63,17 +63,12 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         );
     });
     $scope.upload_details = function(){
+        $scope.did_start= true;
         $scope.upload_error = false;
         if ($scope.optionsList.length<1||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product || !$scope.pom_root){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
-            return;
-        }
-
-        var tt = $rootScope.project.details.pomPath;
-        if (tt.includes("/")){
-            $scope.display_text="change all of your / marks to \\ ";
-            $scope.upload_error = true;
+            $scope.did_start= false;
             return;
         }
         var form = document.forms.namedItem('get_tags');
@@ -87,6 +82,11 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
                 tmp_str = tmp_str + $scope.optionsList[i];
             }
         }
+        if ($scope.pom_root=="pom.xml"){
+            $scope.pom_root = "";
+        }else {
+            $scope.pom_root = item.substring(0,($scope.pom_root.length-9));
+        }
         data_to_send.append('all_versions',tmp_str);
         data_to_send.append('pomPath',$scope.pom_root);
         service.ajaxfunc('all_details','files',data_to_send)
@@ -95,6 +95,10 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             if (data.status==111){
                 $scope.upload_success = true;
                 $scope.display_upload_text = data.message;
+                if (data.project){
+                    $rootScope.project = data.project;
+                    $scope.did_start= true;
+                }
             }
         },function(data){
 

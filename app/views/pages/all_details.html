@@ -56,9 +56,9 @@
                                 <label for="disabledSelect" ng-click="ff">versions to check</label>
                                 <multiple-autocomplete ng-model="optionsList" suggestions-arr="list" after-select-item="afterSelectItem"></multiple-autocomplete>   
                                 <!--<input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"/>-->
-                                <p class="help-block" ng-class="{open_help:versions}">insert 4 versions for checking</p>
+                                <p class="help-block" ng-class="{open_help:versions}">insert 6 versions for checking</p>
                             </div>
-                             <div class="form-group"  ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" >
+                             <div class="form-group pom_root_class"  ng-mouseover="pomPath = true" ng-mouseleave="pomPath = false" >
                                 <label for="disabledSelect">pom root</label>
                                 <multiple-autocomplete ng-model="optionsList2" suggestions-arr="poms" after-select-item="afterSelectItem2"></multiple-autocomplete>   
                                 <!--<input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.versions"/>-->
@@ -67,8 +67,7 @@
                             <div class="" ng-class="{'has-error':upload_error, 'has-success':run_success}">
                                 <label class="control-label" ng-show="upload_error">{{display_text}}</label>        
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="upload_details()" ng-show="!project.details.progress.mille_stones.start_offline.flag">start task</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="ff()" ng-show="project.details.progress.mille_stones.start_offline.flag">check if done</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="upload_details()" ng-show="!project.details.progress.mille_stones.start_offline.flag || did_start">start task</button>
                         </form>
                     </div>
                 </div>

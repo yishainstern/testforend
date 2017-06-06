@@ -12,7 +12,7 @@
     		$arrArt = $dom->getElementsByTagName('artifactId');
     		foreach ($arrArt as $key ) {
                 $flagVersion = FALSE;
-    			if ($key->nodeValue=="maven-surefire-plugin"){
+    			if ($key->nodeValue=="maven-surefire-plugin" || $key->nodeValue=="tycho-surefire-plugin"){
     				$rr = $key->parentNode;
     				$confArr = $rr->childNodes;
                     foreach ($confArr as $confElemnt ) {
@@ -53,7 +53,12 @@
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($details_obj){
 		$tmp_project = get_project_details($details_obj->folderRoot);
-		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
+		if ($details_obj->pomPath==""){
+			$str_tmp_pom_path = "";
+		}else{
+			$str_tmp_pom_path = "\\".$details_obj->pomPath;
+		}
+		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName.$str_tmp_pom_path;
 		exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
 		$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
 		$files = array();
@@ -63,8 +68,8 @@
 			$pathForPathtx = $details_obj->runingRoot."\\path.txt";
 			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
 		}
+		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 		if (sizeof($files)>0){
-			$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 			//$obj->details->pomPath = $str;
 			$obj->details->files = $files;
 			$obj->details->progress->mille_stones->start_testing->flag = true;
@@ -74,8 +79,8 @@
 			$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
 			run_cmd_file($details_obj,$str,"runOnline","all_pred");
 		}else{
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "no files with surfire plugin";
+			$obj->details->problem = "no surfire plugin";
+			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 			return $returnJson;
 		}
 	}

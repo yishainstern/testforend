@@ -28,23 +28,6 @@
                             </div>
                         </li>
                     </ul>
-
-                    <ul class="timeline">
-                        <li ng-repeat="item in project_arr" ng-class="{'timeline-inverted':$odd}">
-                            <div class="timeline-badge" ng-class="{'primary':$index%4==0, 'success':$index%4==1, 'warning':$index%4==2, 'info':$index%4==3}">{{$index+1}}</div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>{{item.title}}</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <div>{{item.text}}</div>
-                                    <div class="alert alert-info" ng-class="{'alert-info': item.flag, 'alert-danger':!item.flag}" style="padding: 8px 5px; margin-top: 8px; margin-bottom: 0px;">
-                                        task status: <span ng-show="item.flag">done!  </span><span ng-show="!item.flag">not done!  </span><a href="" class="alert-link" ng-click="task_page(item.name,project.details.name)">task page</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
                 <!-- /.panel-body -->
             </div>

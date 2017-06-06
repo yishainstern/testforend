@@ -66,11 +66,13 @@
 		$returnJson = all_details($details_obj);
 	}elseif ($task=="all_pred"){
 		$returnJson = all_pred($details_obj);
-	}elseif ($task== "all_done") {
-		//do nothing
-	}elseif ($task== "get_output") {
+	}elseif ($task== "all_done"){
+		all_done($details_obj);
+	}elseif ($task== "get_output"){
 		$returnJson = results($details_obj);
-	}elseif ($task== "get_file") {
+	}elseif ($task== "get_experiments"){
+		$returnJson = experiments($details_obj);
+	}elseif ($task== "get_file"){
 		$returnJson = get_file($details_obj);
 	}
 
