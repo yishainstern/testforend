@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
  	service.intervalfunc(service);
+ 	$scope.how_much_done = 10;
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
  	}
@@ -40,7 +41,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			state:'dashboard.results',
  			description:'In this part we will get a prediction for your code' ,
  			send:{task:'get_results'},
- 			flag:true,
+ 			flag:false,
  			status:"no results yet",
  			has_page:false
  		} 		
@@ -58,6 +59,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.userArray[0].flag= true;
  			$scope.userArray[1].status= 'enter arev page';
  			$scope.userArray[1].has_page= true;
+ 			$scope.how_much_done = 30;
  		}
  		if (!$scope.tmp.start_offline.flag){
  			$scope.userArray[1].status= 'did not do it yet';
@@ -67,10 +69,12 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.userArray[1].flag= true;
  			$scope.userArray[1].has_page= false;
  			if ($scope.tmp.start_testing.flag){
+ 				$scope.how_much_done = 70;
  				$scope.userArray[1].status= 'strted maven testing';
  				$scope.userArray[2].status= 'has some details';
  				$scope.userArray[2].has_page= true;
  				if ($scope.tmp.get_prediction.flag){
+ 					$scope.how_much_done = 70;
  					$scope.userArray[2].status= 'has all details';
  				}
  			}

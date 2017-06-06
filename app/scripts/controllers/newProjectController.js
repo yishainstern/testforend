@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$timeout', '$rootScope','service','config','$state', function ($scope, $timeout, $rootScope, service,config,$state) {
     $scope.project_details = {};
+    $scope.did_start = false;
     $scope.new_project_error = false;
     $scope.new_project_success = false;
     $scope.page_error = false;
@@ -37,16 +38,18 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         }else if (data && data.status==1){
             $scope.display_new_project_text = 'this name already exits...try a diffrent name';    
             $scope.new_project_error = true;
-            $scope.new_project_success = false;            
+            $scope.new_project_success = false; 
+            $scope.did_start = false;         
         }else if (data && data.status==2){
             $scope.display_new_project_text = data.message;    
             $scope.new_project_error = true;
-            $scope.new_project_success = false;            
+            $scope.new_project_success = false;  
+            $scope.did_start = false;          
         }
     }
 
     $scope.fail_new_project = function(data){
-
+        $scope.did_start = false;
     }
 
     $scope.success_clone = function(data){
@@ -62,11 +65,13 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }        
 
     $scope.create_new_project = function(){
+        $scope.did_start = true;
         $scope.display_new_project_text = "";
         $scope.new_project_error = false;  
         if (!$scope.new_id || !$scope.new_description || !$scope.new_url || !$scope.new_name){
              $scope.page_error = true;
              $scope.display_new_project_text = 'all fileds are requried';
+             $scope.did_start = false;
              return;
         }
         service.ajaxfunc('open_folder','new-project',false)

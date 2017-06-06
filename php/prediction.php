@@ -75,18 +75,19 @@
 		for ($i=0; $i < sizeof($arr); $i++) { 
 			$tmp = $arr[$i];
 			$tmp_path = $ex."\\".$tmp;
+			
 			if (is_dir($tmp_path)){
 				$tmp_obj = new stdClass();
 				$tmp_obj->dir_name = $tmp;
 				$tmp_obj->dir_arr = array();
 				$tmp_arr = scandir($tmp_path);
 				for ($j=0; $j < sizeof($tmp_arr); $j++) { 
-					$tmp_inner = $tmp_arr($j);
+					$tmp_inner = $tmp_arr[$j];
 					if ($tmp_inner=="barinelOptA.csv" || $tmp_inner=="plannerResall.csv"){
 						array_push($tmp_obj->dir_arr, $tmp_obj->dir_name."\\".$tmp_inner);
 					}
 				}
-				if (sizeof($dir_arr)>0){
+				if (sizeof($tmp_obj->dir_arr)>0){
 					array_push($arrays,$tmp_obj);
 				}
 			}
@@ -99,7 +100,7 @@
 	}
 	function get_file($details_obj){
 		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		chdir($details_obj->outputPython."\\weka");
+		chdir($details_obj->outputPython."\\".$details_obj->witch_folder);
 		$file = $details_obj->witch_file;
 		if (file_exists($file)) {
 		    header('Content-Description: File Transfer');

@@ -6,9 +6,9 @@
 	$details_obj->phpRoot = "C:\\xampp\\htdocs\\testforend\\php";
 	//
 	//yishai local computer
-	$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
-	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\php";
+	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
+	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\php";
 	//	
 	if (isset($argv[1]) && $argv[1]=="trigger" && sizeof($argv)==5){
 		$userT = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\user_details.json"));
@@ -111,6 +111,11 @@
 			$details_obj->witch_file = $_POST["witch_file"];
 		}else{
 			$details_obj->witch_file = '';
+		}
+		if (isset($_POST["witch_folder"])){
+			$details_obj->witch_folder = $_POST["witch_folder"];
+		}else{
+			$details_obj->witch_folder = '';
 		}
 
 	}

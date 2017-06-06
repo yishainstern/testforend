@@ -27,10 +27,11 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
     $scope.files = [];
-    $scope.get_file = function(item){
+    $scope.get_file = function(item,folder){
         var form = document.forms.namedItem('results');
         var data_to_send = new FormData(form);
         data_to_send.append('witch_file',item);
+        data_to_send.append('witch_folder',folder);
         service.filefunc('get_file','results',data_to_send)
         .then(function(data){
                 
