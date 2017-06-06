@@ -114,7 +114,7 @@
 					array_push($ret_arr, $arr1[$i]);
 				}
 			}
-			//file_put_contents($s3,json_encode($ret_arr));
+			file_put_contents($s3,json_encode($ret_arr));
 			$ans = array();
 			$ans['status'] = 111;
 			$ans['message'] = $message;

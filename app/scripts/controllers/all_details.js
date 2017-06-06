@@ -31,8 +31,10 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         if (arr.length>0){
             arr[0] = item;
         }else {
+
             arr.push(item);  
         }
+         $scope.pom_root = item;
     }
 //ddfd
     $scope.uploadFile = function(files) {
@@ -85,7 +87,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         if ($scope.pom_root=="pom.xml"){
             $scope.pom_root = "";
         }else {
-            $scope.pom_root = item.substring(0,($scope.pom_root.length-9));
+            $scope.pom_root = $scope.pom_root.substring(0,($scope.pom_root.length-9));
         }
         data_to_send.append('all_versions',tmp_str);
         data_to_send.append('pomPath',$scope.pom_root);
