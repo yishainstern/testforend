@@ -34,7 +34,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             arr.push(item);  
         }
     }
-
+//ddfd
     $scope.uploadFile = function(files) {
         $scope.file = files[0];
     }
