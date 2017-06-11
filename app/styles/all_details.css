@@ -18,6 +18,27 @@ width: 70%;
 display: inline-block;
 }
 
-.pom_root_class {
+.pom_root_class .list-inline li:first-child {
+	display:block;
+	position: relative;
+}
+
+.pom_root_class .list-inline li:first-child input {
+	width:100%;
 	
+}
+
+.pom_root_class .list-inline li:first-child span{
+	width:100%;
+	display: inline-block;
+}
+
+.pom_root_class .list-inline li:first-child span span{
+	width:auto;
+	display: inline-block;
+	float:right;
+}
+
+.pom_root_class .list-inline li {
+	display:none;
 }
