@@ -1,15 +1,20 @@
 .help-block{
 	padding-left: 7px;
-	max-height: 0px;
+	height: auto;
 	overflow: hidden;
+	opacity: 0;
 	transition-property: all;
 	transition-duration: 1s;
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 .help-block.open_help {
-	max-height: 600px;
+	opacity: 1;
 }
 
 .form-group {
 	
+}
+
+.sidebar-nav li{
+	cursor: pointer;
 }

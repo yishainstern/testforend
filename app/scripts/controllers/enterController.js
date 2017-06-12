@@ -17,6 +17,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.error_login = false;
     $scope.display_sgin_text = 'משתמש כבר קיים';
     $scope.display_login_text = 'משתמש כבר קיים';
+    $scope.show_loader = false;
     $scope.log_show = true;
     $scope.valid_email = function(email){
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,6 +28,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.display_sgin_text = str;
         $scope.display_login_text = str; 
         $scope[flag] = true;
+         $scope.show_loader = false;
     }
 
     $scope.success_sgin = function(data){
@@ -67,6 +69,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
 
     $scope.sgin_task = function(form_naame){
+        $scope.show_loader = true;
         if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email ){
             $scope.show_error('all fileds are required','error_sign');        
             return;
@@ -84,6 +87,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
 
     $scope.login_task = function(){
+         $scope.show_loader = true;
         if (!$scope.login_details.userName || !$scope.login_details.password){
             $scope.show_error('both fileds are required','error_login');        
             return;

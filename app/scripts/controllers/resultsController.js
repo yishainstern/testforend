@@ -9,6 +9,8 @@
 angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeout', '$rootScope','service','config','$state', '$stateParams', '$interval', function ($scope, $timeout, $rootScope, service,config,$state, $stateParams, $interval) {
  	service.intervalfunc(service);
     $scope.witch_file_name;
+    $scope.show_loader = true;
+    $scope.load_count = 0;
     var t_stop;
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
@@ -28,14 +30,15 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     },300);
     $scope.files = [];
     $scope.get_file = function(item,folder){
+         $scope.show_loader = true;
         var form = document.forms.namedItem('results');
         var data_to_send = new FormData(form);
         data_to_send.append('witch_file',item);
         data_to_send.append('witch_folder',folder);
         service.filefunc('get_file','results',data_to_send)
         .then(function(data){
-                
-            },function(data){alert('bad')}
+                 $scope.show_loader = false;
+            },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
     $scope.get_res = function(){
@@ -46,14 +49,21 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             t_stop = undefined;
             service.ajaxfunc('get_output','results',false)
             .then(function(data){
+                $scope.load_count ++;
+                if ($scope.load_count==2){
+                    $scope.show_loader = false;
+                }
                 data = $rootScope.checkJson(data);
                 if (data.status == "111"){
                     $scope.files = data.files;
-                    console.log($scope.files);
                 }
             },function(data){alert('bad')});
             service.ajaxfunc('get_experiments','results',false)
             .then(function(data){
+                $scope.load_count ++;
+                if ($scope.load_count==2){
+                    $scope.show_loader = false;
+                }
                 data = $rootScope.checkJson(data);
                 if (data.status == "111"){
                     $scope.experiments = data.files;

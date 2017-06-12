@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
  	service.intervalfunc(service);
+ 	$scope.show_loader = true;
  	$scope.how_much_done = 10;
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
@@ -47,6 +48,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		} 		
  	];
  	$scope.$on('project_object_exsites',function(){
+ 		$scope.show_loader = false;
  		$scope.tmp = $rootScope.project.details.progress.mille_stones;
  		if ($rootScope.project.details.problem){
  			alert("aborted testing because "+$rootScope.project.details.problem);
@@ -73,9 +75,11 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  				$scope.userArray[1].status= 'strted maven testing';
  				$scope.userArray[2].status= 'has some details';
  				$scope.userArray[2].has_page= true;
+
  				if ($scope.tmp.get_prediction.flag){
- 					$scope.how_much_done = 70;
+ 					$scope.how_much_done = 100;
  					$scope.userArray[2].status= 'has all details';
+ 					$scope.userArray[2].flag= true;
  				}
  			}
  		}

@@ -12,7 +12,11 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     $scope.new_project_error = false;
     $scope.new_project_success = false;
     $scope.page_error = false;
+    $scope.show_loader = false;
     $scope.display_new_project_text = '';
+    $rootScope.project = {
+        details: {}
+    };
     $scope.yishaifill = {
         root: 'sternyi',
         name: 'ant',
@@ -28,6 +32,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }
 
     $scope.success_new_project = function(data){
+        $scope.show_loader = false;
         if (data && data.status==111){
             $rootScope.user = data.user;
             $rootScope.project = data.project;
@@ -65,6 +70,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     }        
 
     $scope.create_new_project = function(){
+        $scope.show_loader = true;
         $scope.did_start = true;
         $scope.display_new_project_text = "";
         $scope.new_project_error = false;  
@@ -72,6 +78,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
              $scope.page_error = true;
              $scope.display_new_project_text = 'all fileds are requried';
              $scope.did_start = false;
+             $scope.show_loader = false;
              return;
         }
         service.ajaxfunc('open_folder','new-project',false)

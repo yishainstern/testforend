@@ -8,14 +8,14 @@
  */
 
 angular.module('sbAdminApp')
-  .directive('sidebar',['$location' ,function($rootScope) {
+  .directive('sidebar',['$location','$state' ,function($rootScope,$state) {
     return {
       templateUrl:'scripts/directives/sidebar/sidebar.html',
       restrict: 'E',
       replace: true,
       /*scope: {
       },*/
-      controller:function($scope,$rootScope){
+      controller:function($scope,$rootScope,$state){
         $scope.ff = $rootScope;
         $scope.selectedMenu = 'dashboard';
         $scope.collapseVar = 0;
@@ -26,7 +26,12 @@ angular.module('sbAdminApp')
           else
             $scope.collapseVar = x;
         };
-        
+        $scope.project_list = function(){
+          $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
+        }
+        $scope.add_project = function(){
+          $state.transitionTo('dashboard.newProject',{user:$rootScope.user.details.userName});
+        }
         $scope.multiCheck = function(y){
           
           if(y==$scope.multiCollapseVar)

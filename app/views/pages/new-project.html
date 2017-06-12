@@ -1,3 +1,5 @@
+<div style="position: relative;">
+<loader></loader>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">New Project</h1>
@@ -23,22 +25,22 @@
                             <div class="form-group" ng-mouseover="folderName=true" ng-mouseleave="folderName=false">
                                 <label>uniq folder name</label>
                                 <input class="form-control" type="text" placeholder="Enter text" name="id"  ng-model="new_id" />
-                               <p class="help-block" ng-class="{open_help:folderName}">insert here a uniq name for you project</p>
+                               <p class="help-block" ng-class="{open_help:folderName}">Insert here a uniq name for you project. Every project <b>must</b> have a uniq name</p>
                             </div>
                             <div class="form-group" ng-mouseover="disciption=true" ng-mouseleave="disciption=false">
                                 <label>project disciption</label>
                                 <textarea class="form-control" rows="4" name="description" ng-model="new_description"></textarea>
-                                <p class="help-block" ng-class="{open_help:disciption}">insert here a short discription of your project</p>
+                                <p class="help-block" ng-class="{open_help:disciption}">Tell us a little bit about your project.</p>
                             </div>
                             <div class="form-group" ng-mouseover="gitUrl=true" ng-mouseleave="gitUrl=false">
                                 <label for="disabledSelect">project url</label>
                                 <input class="form-control" type="text" placeholder="Disabled input" name="gitUrl" ng-model="new_url">
-                                <p class="help-block" ng-class="{open_help:gitUrl}">insert here a <b>full</b> url from git tou your project. must be a public project</p>
+                                <p class="help-block" ng-class="{open_help:gitUrl}">Insert here a <b>full</b> url from git tou your project. The project <b>must</b> be a public project</p>
                             </div>  
                             <div class="form-group" ng-mouseover="gitName=true" ng-mouseleave="gitName=false">
                                 <label for="disabledSelect">git name</label>
                                 <input class="form-control" type="text" placeholder="Disabled input" name="gitName" ng-model="new_name">
-                                <p class="help-block" ng-class="{open_help:gitName}">insert here the name of the project in git that we will dounload to are server</p>
+                                <p class="help-block" ng-class="{open_help:gitName}">Git projects have a name, please insert it.</p>
                             </div>                                                                                    
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
                                 <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
@@ -54,4 +56,5 @@
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->
+</div>
 </div>

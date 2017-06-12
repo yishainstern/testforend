@@ -11,6 +11,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.file = false;
     $scope.upload_error = false;
     $scope.upload_success = false;
+    $scope.show_loader = true;
+    $scope.succ_counter = 0;
     $scope.optionsList = [];
     $scope.optionsList2 = [];
     $scope.list = [];
@@ -42,11 +44,19 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     }
     $scope.arr = ['a','b'];
     $scope.success_tag = function(obj){
+        $scope.succ_counter++;
+        if ($scope.succ_counter==2){
+            $scope.show_loader = false;
+        }
         if (obj.status == 111  && obj.tags){
             $scope.list = JSON.parse(obj.tags);
         }
     }
     $scope.success_pom = function(obj){
+        $scope.succ_counter++;
+        if ($scope.succ_counter==2){
+            $scope.show_loader = false;
+        }
         if (obj.status == 111  && obj.poms){
             $scope.poms = JSON.parse(obj.poms);
         }
@@ -65,17 +75,19 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         );
     });
     $scope.upload_details = function(){
+        $scope.show_loader = true;
         $scope.did_start= true;
         $scope.upload_error = false;
-        if ($scope.optionsList.length<1||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product || !$scope.pom_root){
+        if ($scope.optionsList.length<2||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product || !$scope.pom_root){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
             $scope.did_start= false;
+            $scope.show_loader = false;
             return;
         }
         var form = document.forms.namedItem('get_tags');
         var data_to_send = new FormData(form);
-        data_to_send.append('testVersion',$scope.optionsList[$scope.optionsList.length-1]);
+        data_to_send.append('testVersion',$scope.optionsList[$scope.optionsList.length-2]);
         var tmp_str = "";
         for (var i=0 ; i<$scope.optionsList.length;i++){
             if (i<($scope.optionsList.length-1)){
@@ -95,6 +107,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         .then(function(data){
             data = JSON.parse(data);
             if (data.status==111){
+                $scope.show_loader = false;
+                $state.transitionTo('dashboard.project',{id:$rootScope.project.details.folderName,user:$rootScope.user.details.userName});
                 $scope.upload_success = true;
                 $scope.display_upload_text = data.message;
                 if (data.project){

@@ -28,6 +28,19 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 		}
 	}
 */
+
+    $rootScope.log_out = function(){
+        $rootScope.user = {
+            details: {},
+            list:[]
+        }
+        $rootScope.project = {
+            details: {}
+        };  
+        localStorage.setItem('name',"");
+        localStorage.setItem('password',"");  
+        $state.transitionTo('enter');    
+    }
     $rootScope.checkJson = function(str){
         try{
             var obj = JSON.parse(str);
@@ -52,6 +65,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
                 data = JSON.parse(data);
                 if (data && data.status && data.status==111){
                     $rootScope.user = data.user;
+                    $rootScope.$broadcast('user_in');
                     console.log($rootScope.user);
                 }
             },function(data){

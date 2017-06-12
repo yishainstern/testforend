@@ -14,4 +14,37 @@
                 
             </div>
             <!-- /#page-wrapper -->
-    </div>
+            <div class="modal fade" id="profilemyModal">
+        		<div class="modal-dialog">
+            		<div class="modal-content">
+                		<div class="modal-header">
+                    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    		<h4 class="modal-title" id="myModalLabel"> {{user.details.first_name}} {{user.details.last_name}}</h4>
+                		</div>
+                		<div class="modal-body">
+                    		<form role="form">
+                                <fieldset disabled="">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">User first and last name</label>
+                                        <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="" value="{{user.details.first_name}} {{user.details.last_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Users userName</label>
+                                        <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="" value="{{user.details.userName}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Users email</label>
+                                        <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="" value="{{user.details.user_email}}">
+                                    </div>
+                                </fieldset>
+                            </form>
+                		</div>
+                		<div class="modal-footer">
+                		    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                		</div>
+            		</div>
+        		<!-- /.modal-content -->
+        		</div>
+    		<!-- /.modal-dialog -->
+    		</div>
+</div>
