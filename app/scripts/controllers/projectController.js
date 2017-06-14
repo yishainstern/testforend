@@ -10,6 +10,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	service.intervalfunc(service);
  	$scope.show_loader = true;
  	$scope.how_much_done = 10;
+ 	$scope.open_details = false;
  	if (!$stateParams.id){
  		$state.transitionTo('enter');
  	}
@@ -50,9 +51,6 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	$scope.$on('project_object_exsites',function(){
  		$scope.show_loader = false;
  		$scope.tmp = $rootScope.project.details.progress.mille_stones;
- 		if ($rootScope.project.details.problem){
- 			alert("aborted testing because "+$rootScope.project.details.problem);
- 		}
  		if (!$scope.tmp.end_clone.flag){
  			$scope.userArray[0].status= 'still cloning';
  			$scope.userArray[0].flag= false;
@@ -75,7 +73,6 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  				$scope.userArray[1].status= 'strted maven testing';
  				$scope.userArray[2].status= 'has some details';
  				$scope.userArray[2].has_page= true;
-
  				if ($scope.tmp.get_prediction.flag){
  					$scope.how_much_done = 100;
  					$scope.userArray[2].status= 'has all details';
@@ -83,7 +80,20 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  				}
  			}
  		}
- 		$timeout(function() {service.intervalfunc(service);}, 5000);
+ 		if ($rootScope.project.details.problem){
+ 			if ($rootScope.project.details.problem.code=="0"){
+
+ 			}else{
+ 				alert("aborted testing because "+$rootScope.project.details.problem.txt);
+ 				if ($rootScope.project.details.problem.code=="3"){
+ 					$scope.userArray[1].status= 'stoped learning....try agin';
+ 					$scope.userArray[1].flag= false;
+ 					$scope.userArray[1].has_page= true;
+ 				}
+ 			}
+ 			
+ 		}
+ 		$timeout(function() {service.intervalfunc(service);}, 30000);
  	});
  	$scope.go_page = function(item){
  		if (item.send){

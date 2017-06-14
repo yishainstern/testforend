@@ -33,15 +33,24 @@
                                 <input class="form-control" type="text" placeholder="Disabled input" ng-model="project.details.gitUrl" ng-disabled="true">
                                 <p class="help-block">enter here the <b>full</b> url of git</p>
                             </div> 
-                            <div class="form-group" ng-mouseover="bugzilla_product = true" ng-mouseleave="bugzilla_product = false" >
-                                <label for="disabledSelect">Bugzilla product name</label>
-                                <input class="form-control" type="text" placeholder="bugzilla product" name="bugzilla_product" ng-model="project.details.bugzilla_product"/>
-                                <p class="help-block" ng-class="{open_help:bugzilla_product}">Use buggzila to get reported bugs from other developers. What is your product name in bugzila</p>
+                            <div class="form-group">
+                                <label>Witch issue tracker we will use</label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="bugzilla" checked="true" ng-model="issue_tracker.name">bugzilla
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="jira" ng-model="issue_tracker.name">jira
+                                </label>
+                            </div>
+                            <div class="form-group" ng-mouseover="issue_tracker_product_name = true" ng-mouseleave="issue_tracker_product_name = false" >
+                                <label for="disabledSelect">Issue tracker product name ({{issue_tracker.name}})</label>
+                                <input class="form-control" type="text" placeholder="issue tracker product name" name="issue_tracker_product_name" ng-model="project.details.issue_tracker_product_name"/>
+                                <p class="help-block" ng-class="{open_help:issue_tracker_product_name}">Use {{issue_tracker.name}} to get reported bugs from other developers. What is your product name in {{issue_tracker.name}}</p>
                             </div> 
-                             <div class="form-group" ng-mouseover="bugzilla_url = true" ng-mouseleave="bugzilla_url = false" >
-                                <label for="disabledSelect">Bugzilla url</label>
-                                <input class="form-control" name="bugzilla_url" type="text" placeholder="bugzilla url" ng-model="project.details.bugzilla_url"/>
-                                 <p class="help-block" ng-class="{open_help:bugzilla_url}">Use buggzila to get reported bugs from other developers.What is thie url to the reported bugs in bugzilla</p>
+                             <div class="form-group" ng-mouseover="issue_tracker_url = true" ng-mouseleave="issue_tracker_url = false" >
+                                <label for="disabledSelect">Issue tracker  url</label>
+                                <input class="form-control" name="issue_tracker_url" type="text" placeholder="Issue tracker url" ng-model="project.details.issue_tracker_url"/>
+                                 <p class="help-block" ng-class="{open_help:issue_tracker_url}">Use {{issue_tracker.name}} to get reported bugs from other developers. What is the url to the reported bugs in {{issue_tracker.name}}</p>
                             </div>                            
                             <!--
                             <div class="form-group">

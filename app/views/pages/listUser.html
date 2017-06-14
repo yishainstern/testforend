@@ -6,8 +6,8 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-	<div class="row">
-        <div class="col-lg-3 col-md-6 ng-isolate-scope" number="24" comments="Support tickets!" colour="red" type="support" ng-repeat="item in user.list">
+	<div class="row projects_list">
+        <div class="col-lg-3 col-md-6 ng-isolate-scope projects_list_item" number="24" comments="Support tickets!" colour="red" type="support" ng-repeat="item in user.list">
             <div class="panel" ng-class="{'panel-primary':$index%3==0, 'panel-green':$index%3==1, 'panel-yellow':$index%3==2}" ng-click="go_to_project(item.name)">
                 <div class="panel-heading">
                     <div class="row">
