@@ -22,6 +22,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.pom_root = "";
     $scope.display_upload_text = '';
     $scope.did_start= false;
+    $scope.issue_tracker = {name:"bugzilla"};
     $scope.ff = function(){
         $scope.sss='sss';
         console.log($scope.optionsList);
@@ -78,7 +79,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         $scope.show_loader = true;
         $scope.did_start= true;
         $scope.upload_error = false;
-        if ($scope.optionsList.length<2||!$rootScope.project.details.bugzilla_url||!$rootScope.project.details.bugzilla_product || !$scope.pom_root){
+        if ($scope.optionsList.length<2||!$rootScope.project.details.issue_tracker_product_name||!$rootScope.project.details.issue_tracker_url || !$scope.pom_root){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
             $scope.did_start= false;
@@ -103,6 +104,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         }
         data_to_send.append('all_versions',tmp_str);
         data_to_send.append('pomPath',$scope.pom_root);
+        data_to_send.append('issue_tracker',$scope.issue_tracker.name);
         service.ajaxfunc('all_details','files',data_to_send)
         .then(function(data){
             data = JSON.parse(data);

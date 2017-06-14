@@ -18,3 +18,12 @@
 .sidebar-nav li{
 	cursor: pointer;
 }
+
+@media (min-width: 1200px) {
+	.projects_list .projects_list_item{
+		display: inline-block;
+    float: none;
+    vertical-align: top;
+}
+	}
+
