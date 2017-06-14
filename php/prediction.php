@@ -75,7 +75,6 @@
 		for ($i=0; $i < sizeof($arr); $i++) { 
 			$tmp = $arr[$i];
 			$tmp_path = $ex."\\".$tmp;
-			
 			if (is_dir($tmp_path)){
 				$tmp_obj = new stdClass();
 				$tmp_obj->dir_name = $tmp;

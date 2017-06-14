@@ -48,6 +48,7 @@
 	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($details_obj){
+		$tmp_str = "";
 		$tmp_project = get_project_details($details_obj->folderRoot);
 		if ($details_obj->pomPath==""){
 			$str_tmp_pom_path = "";
@@ -55,30 +56,41 @@
 			$str_tmp_pom_path = "\\".$details_obj->pomPath;
 		}
 		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName.$str_tmp_pom_path;
-		exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
-		$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
-		$files = array();
-		for ($i=0; $i < sizeof($arr) ; $i++) { 
-			set_time_limit(20);
-			$pathForJar = $details_obj->runingRoot."\\".$details_obj->jarName;
-			$pathForPathtx = $details_obj->runingRoot."\\path.txt";
-			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
-		}
-		
-		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		if (sizeof($files)>0){
-			//$obj->details->pomPath = $str;
-			$obj->details->files = $files;
-			$obj->details->progress->mille_stones->start_testing->flag = true;
-			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
-			$str = "";
-			$str .="cd ".$details_obj->full_pom_path."\n";
-			$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
-			run_cmd_file($details_obj,$str,"runOnline","all_pred");
+		if (is_dir($str)){
+			exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
+			$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
+			if (is_file($str."/pom.xml")){
+				$tmp_str .="cd ".$str."\n";
+				$tmp_str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
+			}
+			if ((isset($arr)) && (sizeof($arr)>0)){
+				$files = array();
+				for ($i=0; $i < sizeof($arr) ; $i++) { 
+					set_time_limit(30);
+					$pathForJar = $details_obj->runingRoot."\\".$details_obj->jarName;
+					$pathForPathtx = $details_obj->runingRoot."\\path.txt";
+					$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
+				}
+				if (sizeof($files)>0){
+					$tmp_project->details->files = $files;
+					$tmp_project->details->progress->mille_stones->start_testing->flag = true;
+				}else{
+					$tmp_project->details->problem = new stdClass();
+					$tmp_project->details->problem->code = "3";
+					$tmp_project->details->problem->txt = "No surefire plugin in pom files";
+				}				
+			}else{
+				$tmp_project->details->problem = new stdClass();
+				$tmp_project->details->problem->code = "2";
+				$tmp_project->details->problem->txt = "There is no pom files in the version tag that you picked";
+			}
 		}else{
-			$obj->details->problem = "no surfire plugin";
-			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
+			$tmp_project->details->problem = new stdClass();
+			$tmp_project->details->problem->code = "1";
+			$tmp_project->details->problem->txt = "the directory does not exit in the version tag that you picked";
 		}
+		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($tmp_project));
+		run_cmd_file($details_obj,$tmp_str,"runOnline","all_pred");
 	}
 	//
 
