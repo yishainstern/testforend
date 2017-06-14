@@ -26,8 +26,9 @@
 		if (isset($PROJt->details->all_versions)){$details_obj->all_versions = $PROJt->details->all_versions;}
 		if (isset($PROJt->details->pomPath)){$details_obj->pomPath = $PROJt->details->pomPath;}
 		if (isset($PROJt->details->discription)){$details_obj->discription = $PROJt->details->discription;}
-		if (isset($PROJt->details->bugzilla_product)){$details_obj->bugzilla_product = $PROJt->details->bugzilla_product;}
-		if (isset($PROJt->details->bugzilla_url)){$details_obj->bugzilla_url = $PROJt->details->bugzilla_url;}
+		if (isset($PROJt->details->issue_tracker_product_name)){$details_obj->issue_tracker_product_name = $PROJt->details->issue_tracker_product_name;}
+		if (isset($PROJt->details->issue_tracker_url)){$details_obj->issue_tracker_url = $PROJt->details->issue_tracker_url;}
+		if (isset($PROJt->details->issue_tracker)){$details_obj->issue_tracker = $PROJt->details->issue_tracker;}
 		$details_obj->task = $argv[4];
 	}else {
 		if (isset($_POST["task"])){
@@ -95,15 +96,15 @@
 		}else{
 			$details_obj->discription = '';
 		}
-		if (isset($_POST["bugzilla_product"])){
-			$details_obj->bugzilla_product = $_POST["bugzilla_product"];
+		if (isset($_POST["issue_tracker_product_name"])){
+			$details_obj->issue_tracker_product_name = $_POST["issue_tracker_product_name"];
 		}else{
-			$details_obj->bugzilla_product = '';
+			$details_obj->issue_tracker_product_name = '';
 		}
-		if (isset($_POST["bugzilla_url"])){
-			$details_obj->bugzilla_url = $_POST["bugzilla_url"];
+		if (isset($_POST["issue_tracker_url"])){
+			$details_obj->issue_tracker_url = $_POST["issue_tracker_url"];
 		}else{
-			$details_obj->bugzilla_url = '';
+			$details_obj->issue_tracker_url = '';
 		}
 		if (isset($_POST["witch_file"])){
 			$details_obj->witch_file = $_POST["witch_file"];
@@ -115,7 +116,11 @@
 		}else{
 			$details_obj->witch_folder = '';
 		}
-
+		if (isset($_POST["issue_tracker"])){
+			$details_obj->issue_tracker = $_POST["issue_tracker"];
+		}else{
+			$details_obj->issue_tracker = '';
+		}
 	}
 
 
@@ -167,7 +172,7 @@
 	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
-		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task." >".$file_name.".log";
+		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task." >".$details_obj->runingRoot."\\".$file_name.".log";
 		file_put_contents($details_obj->runingRoot."\\".$full_name, $current_string);
 		chdir($details_obj->runingRoot);
 		$command = "start /B ".$full_name;

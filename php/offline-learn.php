@@ -1,14 +1,7 @@
 <?php 
 	//
-	//
-	//create antConf.txt that contains all the paths that are needed for the Python project.
-	function creat_conf_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot){
-        $str = 'workingDir='.$outputPython."\r\n";
-        $str = $str.'git='.$userProjectRoot.$gitName."\r\n";
-        $str = $str.'bugs='.$folderRoot."rootBugs\\".$name."\r\n";
-        $str = $str."vers=(". $all_versions.")";
-        file_put_contents($DebuugerRoot."Debugger\\learner\\antConf.txt",$str); 
-	}
+	//issue_tracker_product_name  issue_tracker_url issue_tracker
+	
 	function update_details($folderRoot,$fileObj,$all_versions){
 		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
 		$obj->details->progress->mille_stones->upload_bug_file->flag = TRUE;
@@ -51,15 +44,24 @@
 	}
 	//check if offline task is over
 	function check_if_python_end($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 		$ans = array();
 		if (file_exists($details_obj->outputPython.'\\markers\\learner_phase_file')){
-		//if(1==1){
-			$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 			$obj->details->progress->mille_stones->end_offline->flag = true;
 			file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
 			move_to_online_task($details_obj);
 		}else {
-			run_cmd_file($details_obj,"","offline","check_python");
+			$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
+			if (file_exists($a_file)){
+				$a_txt = file_get_contents($a_file);
+				if ($a_txt=="failed"){
+					$obj->details->problem = new stdClass();
+					$obj->details->problem->code = "3";
+					$obj->details->problem->txt = "bad issue tracker name or url";
+					file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
+				}
+			}
+			//run_cmd_file($details_obj,"","offline","check_python");
 		}
 	}
 	function any_prob_offline($details_obj){
@@ -74,22 +76,31 @@
         chmod($uploadDir."\\".$name, 0777);
 	}
 	function updates($details_obj){
+		$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
+		if (is_file($a_file)){
+			file_put_contents($a_file,"strat agin");
+		}
 		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
+		$obj->details->problem = new stdClass();
+		$obj->details->problem->code = "0";
 		$obj->details->all_versions = $details_obj->all_versions;
 		$obj->details->testVersion = $details_obj->testVersion;
 		$obj->details->pomPath = $details_obj->pomPath;
 		$obj->details->full_pomPath = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
-		$obj->details->bugzilla_product = $details_obj->bugzilla_product;
-		$obj->details->bugzilla_url = $details_obj->bugzilla_url;
+		$obj->details->issue_tracker_product_name = $details_obj->issue_tracker_product_name;
+		$obj->details->issue_tracker_url = $details_obj->issue_tracker_url;
+		$obj->details->issue_tracker = $details_obj->issue_tracker;
 		$obj->details->progress->mille_stones->start_offline->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json', json_encode($obj));
 		return $obj;		
 	}
+	//issue_tracker_product_name  issue_tracker_url issue_tracker
 	function creat_conf_for_offline($details_obj,$obj){
         $str = 'workingDir='.$details_obj->outputPython."\r\n";
         $str = $str.'git='.$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
-        $str = $str.'bugzilla_product='.$details_obj->bugzilla_product."\r\n";
-        $str = $str.'bugzilla_url='.$details_obj->bugzilla_url."\r\n";
+        $str = $str.'issue_tracker_product_name='.$details_obj->issue_tracker_product_name."\r\n";
+        $str = $str.'issue_tracker_url='.$details_obj->issue_tracker_url."\r\n";
+        $str = $str.'issue_tracker='.$details_obj->issue_tracker."\r\n";
         $str = $str."vers=(". $details_obj->all_versions.")";
         file_put_contents($details_obj->DebuugerRoot."\\Debugger\\learner\\antConf.txt",$str); 
 	}
