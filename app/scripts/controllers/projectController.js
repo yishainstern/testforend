@@ -38,7 +38,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			has_page:false
  		},
 		{
- 			task:'prediction',
+ 			task:'prediction and diagnosis',
  			title:'get prediction',
  			state:'dashboard.results',
  			description:'In this part we will get a prediction for your code' ,
