@@ -18,12 +18,8 @@
                     foreach ($confArr as $confElemnt ) {
                         if ($confElemnt->nodeName=="configuration"){
                         	$was_change = $confElemnt->getElementsByTagName('argLine');
-                        	if ($was_change->length>0){
-                        		//echo "did it";
-                        	}else{
                         		$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
                             	$confElemnt->appendChild($e);
-                        	}
                             $tmp = $str;
                             $vowels = array($userProjectRoot);
                             $tmp = str_replace($vowels, "", $tmp);
@@ -68,6 +64,7 @@
 			$pathForPathtx = $details_obj->runingRoot."\\path.txt";
 			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
 		}
+		
 		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
 		if (sizeof($files)>0){
 			//$obj->details->pomPath = $str;
@@ -81,7 +78,6 @@
 		}else{
 			$obj->details->problem = "no surfire plugin";
 			file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
-			return $returnJson;
 		}
 	}
 	//

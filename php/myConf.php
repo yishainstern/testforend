@@ -14,7 +14,6 @@
 		$userT = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\user_details.json"));
 		$details_obj->userName = $argv[2];
 		$PROJt = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\".$argv[3]."\\project_details.json"));
-		
 		if (isset($PROJt->details->gitName)){$details_obj->gitName = $PROJt->details->gitName;}
 		if (isset($PROJt->details->gitUrl)){$details_obj->gitUrl = $PROJt->details->gitUrl;}
 		if (isset($PROJt->details->folderName)){$details_obj->folderName = $PROJt->details->folderName;}
@@ -30,7 +29,6 @@
 		if (isset($PROJt->details->bugzilla_product)){$details_obj->bugzilla_product = $PROJt->details->bugzilla_product;}
 		if (isset($PROJt->details->bugzilla_url)){$details_obj->bugzilla_url = $PROJt->details->bugzilla_url;}
 		$details_obj->task = $argv[4];
-		file_put_contents($argv[2]."_".$argv[3]."_".$argv[4],'sss');
 	}else {
 		if (isset($_POST["task"])){
 			$details_obj->task = $_POST["task"];
@@ -167,7 +165,6 @@
 	}
 
 	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
-		echo($details_obj->runingRoot);
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
 		$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task." >".$file_name.".log";
