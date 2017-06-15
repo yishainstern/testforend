@@ -15,6 +15,19 @@
 	
 }
 
+
+.side_img {
+
+text-align: center;
+
+padding: 13px 0px;
+}
+
+.side_img img{
+	
+width: 46px;
+}
+
 .sidebar-nav li{
 	cursor: pointer;
 }
