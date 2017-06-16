@@ -10,18 +10,17 @@
 } 
 
 .swiper-panel {
-
-padding: 15px 33px;
+	padding: 15px 33px;
 }
 
 #wrapper .swiper-button-next{
-
-right: 17px;
+	right: 17px;
+	display:none;
 }
 
 #wrapper .swiper-button-prev{
-	
-left: 17px;
+	left: 17px;
+	display:none;
 }
 
 
@@ -35,9 +34,21 @@ left: 17px;
 
 .swiper_wrapper{
 	position: relative;
-	padding: 0px 13px;
 }
 
 #wrapper .swiper-pagination {
 	position: relative;
+}
+
+.bottns_raw {
+
+margin-bottom: 21px;
+}
+
+.bottns_raw div{text-align: center;}
+.bottns_raw div button{
+	
+width: 80%;
+	
+font-size: 21px;
 }
