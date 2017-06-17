@@ -42,3 +42,32 @@ margin-top: 26px;
 	
 font-size: 23px;
 }
+
+.bgu_wrapper{
+
+display: table;
+
+width: 100%;
+
+margin-bottom: 14px;
+}
+.bgu_cell{
+
+	}
+
+.first_cell{
+    direction: ltr;
+}
+.bgu_cell{
+    display: table-cell;
+}
+.second_cell {
+	
+direction: rtl;
+}
+.first_cell img{
+    height: 56px;
+}
+.second_cell img{
+    height: 60px;
+}

@@ -15,7 +15,27 @@
 	
 }
 
+.go_wrapper {
 
+position: relative;
+
+padding-top: 30px;
+
+padding-bottom: 40px;
+}
+
+.go_col_12 {
+
+position: relative;
+}
+.go_h1{
+	
+margin: 0px;
+}
+
+.go_btn {
+	
+}
 .side_img {
 
 text-align: center;
