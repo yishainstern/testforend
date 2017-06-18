@@ -1,5 +1,30 @@
 <?php
+	function get_file_info($details_obj){
+		$ans = array();
+		chdir("files");
+		if ($details_obj->which_output=="prediction"){
+			if (is_file($details_obj->file_name_output)){
+				$ans["status"] = 1;
+				$ans["info"] = file_get_contents($details_obj->file_name_output);
+			}else {
+				$ans["status"] = 2;
+				$ans["info"] = "no information";	
+			}
 
+		}else{
+			if(!strpos($details_obj->file_name_output, "barinelOptA")===FALSE){
+				$ans["status"] = 1;
+				$ans["info"] = file_get_contents("barinelOptA.csv");
+			}elseif (!strpos($details_obj->file_name_output, "plannerResall")===FALSE){
+				$ans["status"] = 1;
+				$ans["info"] = file_get_contents("plannerResall.csv");
+			}else{
+				$ans["status"] = 2;
+				$ans["info"] = "no information";	
+			}
+		}
+		return $ans;
+	}
 	function prepare_pridction($details_obj){
 		chdir($details_obj->userProjectRoot);
 		exec("dir DebuggerTests /s /b > ".$details_obj->runingRoot."\\DebuggerTests.txt");
