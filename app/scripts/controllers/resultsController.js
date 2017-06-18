@@ -11,13 +11,16 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.witch_file_name;
     $scope.show_loader = true;
     $scope.load_count = 0;
+    $scope.info_txt = {txt:""};
+    $scope.a_counter = 0;
     var t_stop;
+    var swiper;
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
             $interval.cancel(p_stop);
             p_stop = undefined;
-            var swiper = new Swiper('.swiper-container', {
+            swiper = new Swiper('.swiper-container', {
                 pagination: '.swiper-pagination',
                 paginationClickable: true,
                 nextButton: '.swiper-button-next',
@@ -29,6 +32,11 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
     $scope.files = [];
+    $scope.swipe_res = function(index){
+        if (typeof Swiper == 'function'){
+            swiper.slideTo(index);
+        }
+    }
     $scope.get_file = function(item,folder){
          $scope.show_loader = true;
         var form = document.forms.namedItem('results');
@@ -76,9 +84,25 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     },300);
         
     }
-    
-        
-    $scope.get_file_info = function(item){
+         
+    $scope.get_file_info = function(flag,item,index){
+        $scope.show_loader = true;
         $scope.witch_file_name = item;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('file_name_output',item);
+        data_to_send.append('which_output',flag);
+        service.ajaxfunc('get_file_info','results',data_to_send)
+            .then(function(data){
+                data = $rootScope.checkJson(data);
+                $scope.show_loader = false;
+                if ((data.status==1||data.status==2)&& data.info){
+                     $scope.info_txt.txt = data.info;
+                }
+                $($('.togglt_trigger')[index]).click();        
+            },function(data){
+                alert('try agin');
+                $scope.show_loader = false;
+            }); 
     }
 }]);
