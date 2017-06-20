@@ -105,4 +105,26 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 $scope.show_loader = false;
             }); 
     }
+
+
+    $scope.get_file_diagnosis = function(flag,item,parent, index){
+        $scope.show_loader = true;
+        $scope.witch_file_name = item;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('file_name_output',item);
+        data_to_send.append('which_output',flag);
+        service.ajaxfunc('get_file_info','results',data_to_send)
+            .then(function(data){
+                data = $rootScope.checkJson(data);
+                $scope.show_loader = false;
+                if ((data.status==1||data.status==2)&& data.info){
+                     $scope.info_txt.txt = data.info;
+                }
+                $($('.togglt_trigger')[index]).click();        
+            },function(data){
+                alert('try agin');
+                $scope.show_loader = false;
+            }); 
+    }
 }]);

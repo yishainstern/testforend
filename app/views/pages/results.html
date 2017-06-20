@@ -71,7 +71,7 @@
                                 <div class="panel-body swiper-panel">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h3>List of files..click to get them</h3>
+                                            <h3 >List of files..click to get them</h3>
                                             <div class="form-group">
                                                     <label>search file</label>
                                                     <input class="form-control" placeholder="file name" ng-model="searchText_e">
@@ -79,7 +79,7 @@
                                                 </div>
                                             <div class="table-responsive">
                                                 <div ng-repeat="obj in experiments" class="table_experiments">
-                                                    <h3>Folder name: {{obj.dir_name}}</h3>
+                                                    <h3 class="folder_name">Folder name: {{obj.dir_name}}</h3>
                                                     <table class="table" id="my_table">
                                                     <thead>
                                                         <tr>
@@ -94,7 +94,7 @@
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{inner_obj}}</td>
                                                             <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_info2('diagnosis',inner_obj,$parent.$index,$index)" >get information</button>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_diagnosis('diagnosis',inner_obj,$parent.$index,$index)" >get information</button>
                                                                 <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" class="togglt_trigger_d-{{$parent.$index}}-{{$index}}" data-target="#myModal" data-toggle="modal"></button>
                                                             </td>
                                                             <td>
