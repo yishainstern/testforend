@@ -50,6 +50,7 @@
 	function update_pom_files($details_obj){
 		$tmp_str = "";
 		$tmp_project = get_project_details($details_obj->folderRoot);
+		$tmp_project->details->progress->mille_stones->start_testing->flag = true;
 		if ($details_obj->pomPath==""){
 			$str_tmp_pom_path = "";
 		}else{
@@ -73,7 +74,7 @@
 				}
 				if (sizeof($files)>0){
 					$tmp_project->details->files = $files;
-					$tmp_project->details->progress->mille_stones->start_testing->flag = true;
+					
 				}else{
 					$tmp_project->details->problem = new stdClass();
 					$tmp_project->details->problem->code = "3";

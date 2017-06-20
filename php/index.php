@@ -74,6 +74,10 @@
 		$returnJson = experiments($details_obj);
 	}elseif ($task== "get_file"){
 		$returnJson = get_file($details_obj);
+	}elseif ($task== "get_file_info"){
+		$returnJson = get_file_info($details_obj);
+	}elseif ($task== "checkout"){
+		$returnJson = checkout($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);

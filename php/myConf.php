@@ -14,20 +14,20 @@
 		$userT = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\user_details.json"));
 		$details_obj->userName = $argv[2];
 		$PROJt = json_decode(file_get_contents($details_obj->root."\\".$argv[2]."\\".$argv[3]."\\project_details.json"));
-		if (isset($PROJt->details->gitName)){$details_obj->gitName = $PROJt->details->gitName;}
-		if (isset($PROJt->details->gitUrl)){$details_obj->gitUrl = $PROJt->details->gitUrl;}
-		if (isset($PROJt->details->folderName)){$details_obj->folderName = $PROJt->details->folderName;}
-		if (isset($userT->details->userName)){$details_obj->userName = $userT->details->userName;}
-		if (isset($userT->details->first_name)){$details_obj->first_name = $userT->details->first_name;}
-		if (isset($userT->details->last_name)){$details_obj->last_name = $userT->details->last_name;}
-		if (isset($userT->details->user_email)){$details_obj->user_email = $userT->details->user_email;}
-		if (isset($userT->details->password)){$details_obj->password = $userT->details->password;}
-		if (isset($PROJt->details->testVersion)){$details_obj->testVersion = $PROJt->details->testVersion;}
-		if (isset($PROJt->details->all_versions)){$details_obj->all_versions = $PROJt->details->all_versions;}
-		if (isset($PROJt->details->pomPath)){$details_obj->pomPath = $PROJt->details->pomPath;}
-		if (isset($PROJt->details->discription)){$details_obj->discription = $PROJt->details->discription;}
-		if (isset($PROJt->details->issue_tracker_product_name)){$details_obj->issue_tracker_product_name = $PROJt->details->issue_tracker_product_name;}
-		if (isset($PROJt->details->issue_tracker_url)){$details_obj->issue_tracker_url = $PROJt->details->issue_tracker_url;}
+		if (isset($PROJt->details->gitName)){$details_obj->gitName = $PROJt->details->gitName;}else{$details_obj->gitName = "";}
+		if (isset($PROJt->details->gitUrl)){$details_obj->gitUrl = $PROJt->details->gitUrl;}else{$details_obj->gitUrl = "";}
+		if (isset($PROJt->details->folderName)){$details_obj->folderName = $PROJt->details->folderName;}else{$details_obj->folderName = "";}
+		if (isset($userT->details->userName)){$details_obj->userName = $userT->details->userName;}else{$details_obj->userName = "";}
+		if (isset($userT->details->first_name)){$details_obj->first_name = $userT->details->first_name;}else{$details_obj->first_name = "";}
+		if (isset($userT->details->last_name)){$details_obj->last_name = $userT->details->last_name;}else{$details_obj->last_name = "";}
+		if (isset($userT->details->user_email)){$details_obj->user_email = $userT->details->user_email;}else{$details_obj->user_email = "";}
+		if (isset($userT->details->password)){$details_obj->password = $userT->details->password;}else{$details_obj->password = "";}
+		if (isset($PROJt->details->testVersion)){$details_obj->testVersion = $PROJt->details->testVersion;}else{$details_obj->testVersion = "";}
+		if (isset($PROJt->details->all_versions)){$details_obj->all_versions = $PROJt->details->all_versions;}else{$details_obj->gitName = "";}
+		if (isset($PROJt->details->pomPath)){$details_obj->pomPath = $PROJt->details->pomPath;}else{$details_obj->pomPath = "";}
+		if (isset($PROJt->details->discription)){$details_obj->discription = $PROJt->details->discription;}else{$details_obj->discription = "";}
+		if (isset($PROJt->details->issue_tracker_product_name)){$details_obj->issue_tracker_product_name = $PROJt->details->issue_tracker_product_name;}else{$details_obj->issue_tracker_product_name = "";}
+		if (isset($PROJt->details->issue_tracker_url)){$details_obj->issue_tracker_url = $PROJt->details->issue_tracker_url;}else{$details_obj->issue_tracker_url = "";}
 		if (isset($PROJt->details->issue_tracker)){$details_obj->issue_tracker = $PROJt->details->issue_tracker;}
 		$details_obj->task = $argv[4];
 	}else {
@@ -113,13 +113,23 @@
 		}
 		if (isset($_POST["witch_folder"])){
 			$details_obj->witch_folder = $_POST["witch_folder"];
-		}else{
+		}else{ 
 			$details_obj->witch_folder = '';
 		}
 		if (isset($_POST["issue_tracker"])){
 			$details_obj->issue_tracker = $_POST["issue_tracker"];
 		}else{
 			$details_obj->issue_tracker = '';
+		}
+		if (isset($_POST["file_name_output"])){
+			$details_obj->file_name_output = $_POST["file_name_output"];
+		}else{
+			$details_obj->file_name_output = '';
+		}
+		if (isset($_POST["which_output"])){
+			$details_obj->which_output = $_POST["which_output"];
+		}else{
+			$details_obj->which_output = '';
 		}
 	}
 

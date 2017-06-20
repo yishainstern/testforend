@@ -67,12 +67,12 @@
 			$filr_tmp .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
 			$filr_tmp .= "dir /s /b *pom.xml >".$details_obj->runingRoot."\\pomList.txt\n";
 			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
-			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone";
-			file_put_contents($details_obj->runingRoot.'\\dd.cmd', $filr_tmp);
+			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone >".$details_obj->runingRoot."\\check_clone.log";
+			file_put_contents($details_obj->runingRoot.'\\clone_task.cmd', $filr_tmp);
 			$user_details = update_user_details($details_obj);
 			$project_details = update_project_details($details_obj);
 			chdir($details_obj->runingRoot);
-			$command = "start /B dd.cmd";
+			$command = "start /B clone_task.cmd";
 			pclose(popen($command, "w"));
 			$ans['status'] = 111;
 			$ans['message'] = "created folders, and stated to clone";		
@@ -109,11 +109,10 @@
 		$ans = array();
 		$old_path = getcwd();
 		chdir($details_obj->runingRoot);
-		$data = file('proj.log');
-		$output = $data[count($data)-1];
-		$data = file('Debugger.log');
-		$output1 = $data[count($data)-1];
+		$output = file_get_contents('proj.log');
+		$output1 = file_get_contents('Debugger.log');
 		$flag1 = strpos($output, "done");
+		$flag11 = strpos($output, "git checkout -f HEAD");
 		$flag21 = strpos($output, "Checking out files: 100%");
 		$flag22 = strpos($output, "Resolving deltas: 100%");
 		$flag3 = strpos($output1, "done");
@@ -123,14 +122,20 @@
 		$flag6 = strpos($output1, "Fatal");
 		$flag7 = strpos($output, "fatal");
 		$flag8 = strpos($output1, "fatal");
-		//echo($flag5.' '.$flag6.' '.$flag7.' '.$flag8);
-		//echo($output);
-		//return;
 		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 		$obj->details->try_git_agin = FALSE;
 		$obj->details->try_learn_agin = FALSE;
 		$obj->details->try_agin = FALSE;
-		if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
+		if ($flag11 && $flag3 && ($flag41 || $flag42)){
+			$filr_tmp_1 = "cd ".$details_obj->userProjectRoot."\\".$obj->details->gitName."\n";
+			$filr_tmp_1 .= "git checkout -f HEAD >".$details_obj->runingRoot."\\checkout.log\n";
+			$filr_tmp_1 .= "cd ".$details_obj->phpRoot."\n";
+			$filr_tmp_1 .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." checkout >".$details_obj->runingRoot."\\check_clone1.log";
+			file_put_contents($details_obj->runingRoot.'\\checkout.cmd', $filr_tmp_1);
+			chdir($details_obj->runingRoot);
+			$command = "start /B checkout.cmd";
+			pclose(popen($command, "w"));
+		}else if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
 			$obj->details->progress->mille_stones->end_clone->flag = true;
 			$ans['status'] = 111;
 			$ans['message'] = "all cloned";
@@ -151,7 +156,12 @@
 			$ans['project'] = $obj;
 		}
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
-		return $ans;		
+				
+	}
+	function checkout($details_obj){
+		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
+		$obj->details->progress->mille_stones->end_clone->flag = true;
+		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 	}
 	//
 	//clone from github the latest versin of Debugger and the project of user
