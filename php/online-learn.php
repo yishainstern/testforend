@@ -15,26 +15,25 @@
     			if ($key->nodeValue=="maven-surefire-plugin" || $key->nodeValue=="tycho-surefire-plugin"){
     				$rr = $key->parentNode;
     				$confArr = $rr->childNodes;
+    				$configuration_count = 0;
+    				$flag = TRUE;
+    				$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
                     foreach ($confArr as $confElemnt ) {
                         if ($confElemnt->nodeName=="configuration"){
+                        	$configuration_count = 1;
                         	$was_change = $confElemnt->getElementsByTagName('argLine');
-                        		$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
-                            	$confElemnt->appendChild($e);
+                            $confElemnt->appendChild($e);
                             $tmp = $str;
                             $vowels = array($userProjectRoot);
                             $tmp = str_replace($vowels, "", $tmp);
                             $files[sizeof($files)] = $tmp;
-                            $flag = TRUE;
                         }
-                        /*if ($confElemnt->nodeName=="version"){
-                            $confElemnt->nodeValue = "2.19.1";
-                            $flagVersion = TRUE;
-                        }*/
                     }
-                    /*if ($flagVersion == FALSE){
-                        $e = $dom->createElement('version', "2.19.1");
-                        $rr->appendChild($e);
-                    }*/
+                    if ($configuration_count==0){
+                    	$tmp_conf = $dom->createElement('configuration', "");
+                    	$tmp_conf->appendChild($e);
+                    	$rr->appendChild($e);
+                    }
     			}
     		}
             if($flag==TRUE){
