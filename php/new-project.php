@@ -129,6 +129,8 @@
 		if ($flag11 && $flag3 && ($flag41 || $flag42)){
 			$filr_tmp_1 = "cd ".$details_obj->userProjectRoot."\\".$obj->details->gitName."\n";
 			$filr_tmp_1 .= "git checkout -f HEAD >".$details_obj->runingRoot."\\checkout.log\n";
+			$filr_tmp_1 .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
+			$filr_tmp_1 .= "dir /s /b *pom.xml >".$details_obj->runingRoot."\\pomList.txt\n";
 			$filr_tmp_1 .= "cd ".$details_obj->phpRoot."\n";
 			$filr_tmp_1 .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." checkout >".$details_obj->runingRoot."\\check_clone1.log";
 			file_put_contents($details_obj->runingRoot.'\\checkout.cmd', $filr_tmp_1);

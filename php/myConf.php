@@ -1,7 +1,7 @@
 <?php
 	$details_obj = new stdClass();
 	//windows server in BG|U
-	$details_obj->root = "C:\\Users\\sternyi\\Desktop\\Users\\";
+	$details_obj->root = "C:\\DebuggerUsers\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	$details_obj->phpRoot = "C:\\xampp\\htdocs\\testforend\\php";
 	//
