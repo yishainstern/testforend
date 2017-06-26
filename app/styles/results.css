@@ -41,14 +41,15 @@
 }
 
 .bottns_raw {
-
-margin-bottom: 21px;
+	margin-bottom: 21px;
 }
 
 .bottns_raw div{text-align: center;}
 .bottns_raw div button{
-	
-width: 80%;
-	
-font-size: 21px;
+	width: 80%;
+	font-size: 21px;
+	font-weight: bold;
+}
+.folder_name {
+	text-indent: 8px;
 }

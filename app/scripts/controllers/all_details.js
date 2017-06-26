@@ -12,7 +12,9 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.upload_error = false;
     $scope.upload_success = false;
     $scope.show_loader = true;
+    $scope.do_init = false;
     $scope.succ_counter = 0;
+    $scope.a_details = {issue_tracker_url:"",issue_tracker_product_name:""};
     $scope.optionsList = [];
     $scope.optionsList2 = [];
     $scope.list = [];
@@ -23,6 +25,17 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.display_upload_text = '';
     $scope.did_start= false;
     $scope.issue_tracker = {name:"bugzilla"};
+    $scope.issues = [
+        {name:"bugzilla",url:"bz.apache.org/bugzilla"},
+        {name:"jira",url:"https://issues.apache.org/jira"}
+    ];
+    $scope.slidet = function(){
+        $('.table_responsive_all').slideToggle();
+    }
+    $scope.insert = function(url){
+        $scope.a_details.issue_tracker_url = url;
+        $('.table_responsive_all').slideToggle();
+    }
     $scope.ff = function(){
         $scope.sss='sss';
         console.log($scope.optionsList);
@@ -64,6 +77,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     }
     $scope.$on('project_object_exsites',function(){
         var ff = new FormData();
+        $rootScope.project.details.issue_tracker_url = "";
+        $rootScope.project.details.issue_tracker_product_name = "";
         ff.append('id',$rootScope.project.details.folderName);
         ff.append('userName',$rootScope.user.details.userName);
         service.ajaxfunc('get_tags','get_tags',ff).then(
@@ -79,7 +94,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         $scope.show_loader = true;
         $scope.did_start= true;
         $scope.upload_error = false;
-        if ($scope.optionsList.length<2||!$rootScope.project.details.issue_tracker_product_name||!$rootScope.project.details.issue_tracker_url || !$scope.pom_root){
+        if ($scope.optionsList.length<2||!$scope.a_details.issue_tracker_product_name||!$scope.a_details.issue_tracker_url || !$scope.pom_root){
             $scope.display_text="all files are reqiured";
             $scope.upload_error = true;
             $scope.did_start= false;

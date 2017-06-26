@@ -44,13 +44,36 @@
                             </div>
                             <div class="form-group" ng-mouseover="issue_tracker_product_name = true" ng-mouseleave="issue_tracker_product_name = false" >
                                 <label for="disabledSelect">Issue tracker product name ({{issue_tracker.name}})</label>
-                                <input class="form-control" type="text" placeholder="issue tracker product name" name="issue_tracker_product_name" ng-model="project.details.issue_tracker_product_name"/>
+                                <input class="form-control" type="text" placeholder="issue tracker product name" name="issue_tracker_product_name" ng-model="a_details.issue_tracker_product_name"/>
                                 <p class="help-block" ng-class="{open_help:issue_tracker_product_name}">Use {{issue_tracker.name}} to get reported bugs from other developers. What is your product name in {{issue_tracker.name}}</p>
                             </div> 
                              <div class="form-group" ng-mouseover="issue_tracker_url = true" ng-mouseleave="issue_tracker_url = false" >
                                 <label for="disabledSelect">Issue tracker  url</label>
-                                <input class="form-control" name="issue_tracker_url" type="text" placeholder="Issue tracker url" ng-model="project.details.issue_tracker_url"/>
+                                <input class="form-control" name="issue_tracker_url" type="text" placeholder="Issue tracker url" ng-model="a_details.issue_tracker_url"/>
                                  <p class="help-block" ng-class="{open_help:issue_tracker_url}">Use {{issue_tracker.name}} to get reported bugs from other developers. What is the url to the reported bugs in {{issue_tracker.name}}</p>
+                                <div>
+                                    <button type="button" class="btn btn-primary btn-sm" ng-click="slidet()">Pick from known url's</button>
+                                    <div class="table-responsive table_responsive_all" style="display: none;">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>issue tracker</th>
+                                                    <th>url</th>
+                                                    <th>insert</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in issues">
+                                                    <td>{{$index}}</td>
+                                                    <td>{{item.name}}</td>
+                                                    <td>{{item.url}}</td>
+                                                    <td> <button type="button" class="btn btn-primary btn-sm" ng-click="insert(item.url)">Inser url</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>                            
                             <!--
                             <div class="form-group">

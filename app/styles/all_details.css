@@ -42,3 +42,12 @@ display: inline-block;
 .pom_root_class .list-inline li {
 	display:none;
 }
+
+.h4_details {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.table_responsive_all {
+	margin-top: 10px;
+}
