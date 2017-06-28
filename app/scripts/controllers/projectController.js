@@ -57,7 +57,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  		}else {
  			$scope.userArray[0].status= 'finsied cloning go to next task';
  			$scope.userArray[0].flag= true;
- 			$scope.userArray[1].status= 'enter arev page';
+ 			$scope.userArray[1].status= 'enter this page';
  			$scope.userArray[1].has_page= true;
  			$scope.how_much_done = 30;
  		}
@@ -65,12 +65,12 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.userArray[1].status= 'did not do it yet';
  			$scope.userArray[1].flag= false;
  		}else {
- 			$scope.userArray[1].status= 'strrted learning';
+ 			$scope.userArray[1].status= 'started learning';
  			$scope.userArray[1].flag= true;
  			$scope.userArray[1].has_page= false;
  			if ($scope.tmp.start_testing.flag){
  				$scope.how_much_done = 70;
- 				$scope.userArray[1].status= 'strted maven testing';
+ 				$scope.userArray[1].status= 'started maven testing';
  				$scope.userArray[2].status= 'has some details';
  				$scope.userArray[2].has_page= true;
  				if ($scope.tmp.get_prediction.flag){
