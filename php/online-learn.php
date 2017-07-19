@@ -32,7 +32,7 @@
                     if ($configuration_count==0){
                     	$tmp_conf = $dom->createElement('configuration', "");
                     	$tmp_conf->appendChild($e);
-                    	$rr->appendChild($e);
+                    	$rr->appendChild($tmp_conf);
                     }
     			}
     		}

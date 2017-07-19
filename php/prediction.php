@@ -26,7 +26,7 @@
 		return $ans;
 	}
 	function prepare_pridction($details_obj){
-		chdir($details_obj->userProjectRoot);
+		chdir($details_obj->folderRoot);
 		exec("dir DebuggerTests /s /b > ".$details_obj->runingRoot."\\DebuggerTests.txt");
 		if (!file_exists($details_obj->outputPython.'\\DebuggerTests')){
 			mkdir($details_obj->outputPython.'\\DebuggerTests', 0777, true);
