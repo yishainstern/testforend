@@ -59,7 +59,6 @@
 			mkdir($details_obj->DebuugerRoot, 0777, true);
 			mkdir($details_obj->outputPython, 0777, true);
 			mkdir($details_obj->runingRoot, 0777, true);
-			mkdir($details_obj->bugRoot, 0777, true);
 			$filr_tmp = '';
 			$filr_tmp .= "git clone --progress ".$details_obj->gitUrl." ".$details_obj->userProjectRoot."\\".$details_obj->gitName." 2>".$details_obj->runingRoot."\\proj.log\n";
 			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
@@ -81,30 +80,7 @@
 		}
 		return $ans;
 	}
-	//check if clone task is done.
-	function try_agin_to_clone($returnJson, $DebuugerRoot, $gitUrl, $startGit, $userProjectRoot, $gitName, $relativeToUserRoot, $amirGit, $runingRoot, $folderRoot){
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		if ($obj->details->try_git_agin){
-			if (file_exists($userProjectRoot.$gitName)){
-				rename ($userProjectRoot.$gitName,$userProjectRoot.'by');
-				pclose(popen('start /B rmdir /s /q'.' '.$userProjectRoot.'by>'.$runingRoot."\\show","w"));
-			}
-			pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$runingRoot."\\proj.log", "w"));
-			$obj->details->gitName = $gitName;
-			$obj->details->gitUrl = $gitUrl;
-		}
-		if($obj->details->try_learn_agin){
-			set_time_limit(400);
-			exec('RD /S'.' '.$DebuugerRoot."Debugger");
-			pclose(popen($startGit." ".$amirGit." ".$DebuugerRoot."Debugger 2>".$runingRoot."\\Debugger.log", "w"));
-		}
-		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "wait 5 minites and check clone";
-		$returnJson['project'] = $obj; 
-		return $returnJson;
-
-	}
+	
 	function check_if_clone_is_done($details_obj){
 		$ans = array();
 		$old_path = getcwd();

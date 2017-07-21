@@ -13,22 +13,6 @@
 		return $obj;
 	}
 	//
-	//get a scv file from user than contains a bug list in a spesific format.
-	function add_bug_file_and_prepare_to_run($returnJson,$relativeToUserRoot,$fileObj,$outputPython,$all_versions,$folderRoot,$gitName,$userProjectRoot,$DebuugerRoot,$folderNmae,$runingRoot,$bugRoot){
-		if ($fileObj&&$fileObj["error"]==UPLOAD_ERR_OK&& $fileObj["tmp_name"]){
-			$name = put_bug_file_in_place($fileObj,$folderRoot,$bugRoot);
-			creat_conf_for_offline($outputPython,$userProjectRoot,$gitName,$name,$all_versions,$folderRoot,$DebuugerRoot);
-			//prepare_runing_file_for_offline_task($folderNmae);
-			$project_details = update_details($folderRoot,$fileObj,$all_versions);
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "all ready for offline task:)";
-			$returnJson['project'] = $project_details;
-		}else {
-			$returnJson = json_return($returnJson,1,"somthing went rong...try again");
-		}
-		return $returnJson;
-	}
-	//
 	//use http get request to run the python project.
 	function run_python_code($folderRoot,$learn,$learnDir){
 		chdir($learnDir);
@@ -67,14 +51,7 @@
 	function any_prob_offline($details_obj){
 		return false;
 	}
-	//put the scv file in the right place.
-	function put_bug_file_in_place($details_obj,$obj){
-		$tmp_name = $details_obj->fileObj["tmp_name"];
-        $name = basename($details_obj->fileObj["name"]);
-        $uploadDir = $details_obj->folderRoot."\\rootBugs";
-        move_uploaded_file($tmp_name, $details_obj->bugRoot."\\".$name);
-        chmod($uploadDir."\\".$name, 0777);
-	}
+
 	function updates($details_obj){
 		$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
 		if (is_file($a_file)){
@@ -115,7 +92,6 @@
 			return;
 		}
 		$obj = updates($details_obj);
-		//put_bug_file_in_place($details_obj,$obj);
 		creat_conf_for_offline($details_obj,$obj);
 		go_run_python($details_obj);
 		$ans['status'] = 111;

@@ -132,22 +132,16 @@
 			$details_obj->which_output = '';
 		}
 	}
-
-
 	$details_obj->userNameRoot = $details_obj->root.$details_obj->userName;
 	$details_obj->folderRoot = $details_obj->userNameRoot.'\\'.$details_obj->folderName;
 	$details_obj->userProjectRoot = $details_obj->folderRoot.'\\rootGit';
 	$details_obj->DebuugerRoot = $details_obj->folderRoot.'\\rootLearn';
-	$details_obj->bugRoot = $details_obj->folderRoot.'\\rootBugs';
 	$details_obj->outputPython = $details_obj->folderRoot.'\\out';
-	$details_obj->runingRoot = $details_obj->folderRoot.'\\run'; 
-	$details_obj->relativeToUserRoot = '..\\users\\'.$details_obj->folderName;
-	$details_obj->localUsers = 'users\\'.$details_obj->folderName;
+	$details_obj->runingRoot = $details_obj->folderRoot.'\\run';
 	$details_obj->full_pom_path = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
 	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
 	$details_obj->startGit = "start /B git clone --progress";
 	$details_obj->startGit = "git clone --progress";
-	$details_obj->domain = "http://local.test/";
 	$details_obj->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
 	$details_obj->learnDir = $details_obj->root.$details_obj->userName.'\\'.$details_obj->folderName.'\\rootLearn\\Debugger\\learner';
 	$details_obj->learn = $details_obj->DebuugerRoot.'\\Debugger\\learner';
