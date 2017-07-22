@@ -156,14 +156,13 @@
 	}else {
 		$details_obj->fileObj = FALSE;
 	}
-
+	//Extract from the server all details of the project.
 	function get_project_details($folderRoot)
 	{
 		$obj = json_decode(file_get_contents($folderRoot.'\\project_details.json'));
-		//var_dump($obj);
 		return $obj;
 	}
-
+	//Update details of the project in server.
 	function update_progress($str, $projet,$flag, $folderRoot)
 	{
 		if (isset($projet->details->progress->mille_stones->$str)){
@@ -172,7 +171,7 @@
 		file_put_contents($folderRoot.'project_details.json', json_encode($projet));
 		return $projet;
 	}
-
+	//Create a cmd file to run on the server (usually for running learning task)
 	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
