@@ -11,7 +11,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
        //yishai computer
 	   $rootScope.server_domain = 'http://local.test/testforend/php/index.php';
 	   //windows server
-        $rootScope.server_domain = 'http://132.72.64.18/testforend/php/index.php';
+        //$rootScope.server_domain = 'http://132.72.64.18/testforend/php/index.php';
 	//user object, all of users details
 	$rootScope.user = {
 		details: {},
@@ -48,13 +48,11 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
     //check the localStorage who was looed in last.
     $rootScope.call_user = function(){
         var form_data = new FormData();
-        if (!$rootScope.user.details.userName || !$rootScope.user.details.password){
+        if (!$rootScope.user.details.userName){
             $rootScope.user.details.userName = localStorage.getItem('name');
-            $rootScope.user.details.password = localStorage.getItem('password');
         }
-        if ($rootScope.user.details.userName && $rootScope.user.details.password){
+        if ($rootScope.user.details.userName){
             form_data.append('userName',$rootScope.user.details.userName);
-            form_data.append('password',$rootScope.user.details.password);
             service.ajaxfunc('get_user_list','',form_data)
             .then(function(data){
                 data = JSON.parse(data);
@@ -62,6 +60,9 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
                     $rootScope.user = data.user;
                     $rootScope.$broadcast('user_in');
                     console.log($rootScope.user);
+                }
+                if (data && data.status && data.status==555){
+                    $state.transitionTo('enter');
                 }
             },function(data){
                 console.log(data);

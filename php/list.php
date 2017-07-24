@@ -1,14 +1,30 @@
 <?php
-	function get_user_list($details_obj){
-		$ans = array();
+	//Check the session of user
+	function check_session($details_obj){
+		$arr = array();
+		session_start();
+		$r = session_id();
+		$time = time();
 		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
-		if (!$str->details->userName == $details_obj->userName || !$str->details->password == $details_obj->password){
-			$ans['status'] = 1;
-			$ans['message'] = "do not try to brake in theaf!!";
+		$arr["user"] = $str;
+		if (($str->details->session_id==$r)&&($time-$str->details->session_time < (60*60*30))){
+			$arr["flag"] = true;
+		}else{
+			$arr["flag"] = false;
+		}
+		return $arr;
+	}
+	//
+	function get_user_list($details_obj){
+		$arr= check_session($details_obj);
+		$ans = array();
+		if ($arr["flag"] == false){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
 		}else {
-			$ans['user'] = $str; 
+			$ans['user'] = $arr["user"]; 
 			$ans['status'] = 111;
-			$ans['message'] = "user folder created";
+			$ans['message'] = "Get user details";
 		}
 		return $ans;
 	}

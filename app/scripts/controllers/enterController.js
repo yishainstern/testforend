@@ -40,15 +40,15 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         if (data && data.status && data.status==111){
             $rootScope.user = data.user; 
             localStorage.setItem('name',$rootScope.user.details.userName);
-            localStorage.setItem('password',$rootScope.user.details.password);
+            //localStorage.setItem('password',$rootScope.user.details.password);
             $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
         }else if (data && data.status && data.status==1){
-            $scope.show_error('user alredy exsists','error_sign');
+            $scope.show_error('User already exists.','error_sign');
         }
     }
     //When the sign-in process fails. 
     $scope.fail_sgin = function(data){
-        $scope.show_error('some failer..try agin','error_sign');        
+        $scope.show_error('Server failed, try again.','error_sign');        
         console.log(data);
     }
     //When the log-in process returns from the server with a success message. 
@@ -61,24 +61,24 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
             localStorage.setItem('password',$rootScope.user.details.password);
             $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
         }else if (data && data.status && data.status==1){
-            $scope.show_error('rong user name or password','error_login');
+            $scope.show_error('Wrong user name or password.','error_login');
         }else if (data && data.status && data.status==2){
-            $scope.show_error('rong user name...user name does not exsit','error_login');
+            $scope.show_error('Wrong user name...user name does not exist.','error_login');
         }        
     }
     //When the log-in process fails. 
     $scope.fail_log_in = function(data){
-        $scope.show_error('some failer..try agin','error_login'); 
+        $scope.show_error('Server failed, try again.','error_login'); 
     }
     //Run the "sign-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.sgin_task = function(form_naame){
         $scope.show_loader = true;
         if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email ){
-            $scope.show_error('all fileds are required','error_sign');        
+            $scope.show_error('All fields are required.','error_sign');        
             return;
         }
         if (!$scope.valid_email($scope.sginup_details.user_email)){
-            $scope.show_error('email not valid','error_sign');        
+            $scope.show_error('Email not valid.','error_sign');        
             return;
         }  
         $scope.display_sgin_text = '';        
@@ -87,11 +87,11 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         .then(function(data){$scope.success_sgin(data);},
             function(data){$scope.fail_sgin(data);});
     }
-
+    //Run the "log-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.login_task = function(){
          $scope.show_loader = true;
         if (!$scope.login_details.userName || !$scope.login_details.password){
-            $scope.show_error('both fileds are required','error_login');        
+            $scope.show_error('Both fields are required!','error_login');        
             return;
         }
         $scope.display_sgin_text = '';        
