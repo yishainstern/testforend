@@ -75,6 +75,8 @@
 		$returnJson = get_file_info($details_obj);
 	}elseif ($task== "checkout"){
 		$returnJson = checkout($details_obj);
+	}elseif ($task== "remove_project"){
+		$returnJson = remove_project($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);

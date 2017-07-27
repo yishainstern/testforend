@@ -5,9 +5,29 @@
 }	
 
 .big_l {
-	line-height: 26px;
+	line-height: 35px;
 }
 
-.rd_wrapper{
+.rd_wrapper.in{
 	display: block;
+}
+
+.trash_logo{
+		
+}
+.go_logo {
+	
+font-size: 32px;
+}
+.rd_trash {
+	
+margin-left: 18px;
+	
+font-size: 16px;
+	
+width: 35px;
+	
+height: 35px;
+	
+border-radius: 52px;
 }

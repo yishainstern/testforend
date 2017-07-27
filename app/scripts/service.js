@@ -31,6 +31,9 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         			deferred.reject(data);
         		},
         		success: function(data){
+                    if (data && data.status && data.status==555){
+                       $state.$state.transitionTo('enter');
+                    }
         			deferred.resolve(data);
         		} 
     		});

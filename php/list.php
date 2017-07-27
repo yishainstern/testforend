@@ -54,4 +54,30 @@
 		$returnJson['message'] = "got the progress";	
 		return $returnJson;	
 	}
+
+
+	function remove_project($details_obj){
+		$arr = check_session($details_obj);
+		$ans = array();
+		if ($arr["flag"] == false){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
+		}else {
+			if (file_exists($details_obj->userNameRoot."/rm.txt")){
+				$ans['status'] = 555;
+				$ans['message'] = "Session expired or not exists.";
+			}
+			$str = "cd ".$details_obj->userNameRoot."\n";
+			$str .= "echo start>rm.txt";
+			$str .= "cd ".$details_obj->folderRoot."\n";
+			$str .= "del /Q /S *\n";
+			$str .= "del /Q /S *\n";
+			$str .= "cd ".$details_obj->userNameRoot."\n";
+			$str .="rename";
+			$str .= "rd ".$details_obj->folderRoot." /Q /S *\n";
+			run_cmd_file($details_obj,$str,$file_name,$next_task)
+
+		}
+		return $ans;
+	}
 ?>

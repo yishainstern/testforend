@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeout', '$rootScope','service','config','$state','$stateParams', function ($scope, $timeout, $rootScope, service,config,$state,$stateParams) {
 	$scope.show_loader = true;
+    $scope.picked_item = {};
     $scope.show_mask ={
         flag:false
     }
@@ -25,8 +26,24 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
     	$state.transitionTo('dashboard.project',{id:name,user:$rootScope.user.details.userName});
     }
     //remove project from server
-    $scope.remove_project = function(item){
+    $scope.remove_project = function(){
         var data_to_send = new FormData();
         data_to_send.append('userName',$rootScope.user.details.userName);
+        data_to_send.append('folderName',$scope.picked_item.name);
+        service.ajaxfunc('remove_project',form_naame,false)
+        .then(function(data){
+
+        },
+        function(data){
+
+        });
+    }
+    //prepare to remove item
+    $scope.prepare_trash = function(item){
+         $scope.picked_item = item;
+    }
+    //clear the remove elemnt
+    $scope.clear_p = function(){
+        $scope.picked_item = {};
     }
 ;}]);
