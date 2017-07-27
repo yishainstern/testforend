@@ -1,5 +1,5 @@
 <?php	
-	function update_user_details($details_obj){
+	function update_user_detailsf($details_obj){
 		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
 		$arr = $str->list;
 		$count = sizeof($arr);
@@ -16,7 +16,7 @@
 		$ans = json_decode(file_get_contents('progress.json'));
 		return $ans;
 	}
-	function update_project_details($details_obj){
+	function update_project_detailsf($details_obj){
 		$obj = new stdClass();
 		$obj->details = new stdClass();
 		$obj->details->folderName = $details_obj->folderName;
@@ -49,10 +49,10 @@
 		$ans = array();
 		if ((is_dir($details_obj->folderRoot)==TRUE)){
 			$ans['status'] = 1;
-			$ans['message'] = "you have already a project with this name, pick a new name";
+			$ans['message'] = "You have already a project with this name, pick a new name.";
 		}else if(!is_git_project($details_obj)){
 			$ans['status'] = 2;
-			$ans['message'] = "the git that was inseretef does not exsists in git reposetories!!";
+			$ans['message'] = "The Git url that was inserted does not exist in Git repositories. Try a different url.";
 		}else{
 			mkdir($details_obj->folderRoot, 0777, true);
 			mkdir($details_obj->userProjectRoot, 0777, true);

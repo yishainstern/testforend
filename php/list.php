@@ -5,18 +5,24 @@
 		session_start();
 		$r = session_id();
 		$time = time();
-		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
-		$arr["user"] = $str;
-		if (($str->details->session_id==$r)&&($time-$str->details->session_time < (60*60*30))){
-			$arr["flag"] = true;
-		}else{
+		$arr = get_all_details_of_user($details_obj);
+		if ($arr["problem"]==true){
 			$arr["flag"] = false;
+		}else{
+			$int = (int)$arr["details"]->session_time;
+			if (($arr["details"]->session_id==$r)&&($time-$int < (60*60*30))){
+				$arr["details"]->session_time = "".$time;
+				update_user_hash($details_obj,$arr["details"]);
+				$arr["flag"] = true;
+			}else{
+				$arr["flag"] = false;
+			}
 		}
 		return $arr;
 	}
 	//
 	function get_user_list($details_obj){
-		$arr= check_session($details_obj);
+		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["flag"] == false){
 			$ans['status'] = 555;

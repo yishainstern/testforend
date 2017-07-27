@@ -134,6 +134,8 @@
 	}
 	$details_obj->userNameRoot = $details_obj->root.$details_obj->userName;
 	$details_obj->folderRoot = $details_obj->userNameRoot.'\\'.$details_obj->folderName;
+	$details_obj->user_details = $details_obj->userNameRoot.'\\user_details.json';
+	$details_obj->user_server_details = $details_obj->userNameRoot.'\\user_server_details.json';
 	$details_obj->userProjectRoot = $details_obj->folderRoot.'\\rootGit';
 	$details_obj->DebuugerRoot = $details_obj->folderRoot.'\\rootLearn';
 	$details_obj->outputPython = $details_obj->folderRoot.'\\out';
@@ -180,6 +182,34 @@
 		chdir($details_obj->runingRoot);
 		$command = "start /B ".$full_name;
 		pclose(popen($command, "w"));		
+	}
+	//Get user details, session details and user details.
+	function get_all_details_of_user($details_obj){
+		$arr = array();
+		if (file_exists($details_obj->user_details)&&$details_obj->user_details){
+			$arr["user"] = json_decode(file_get_contents($details_obj->user_details));
+			$arr["details"] = json_decode(file_get_contents($details_obj->user_server_details));
+			$arr["problem"] = false;
+		}else {
+			$arr["problem"] = true;
+		}
+		return $arr;
+	}
+	//Update user details
+	function update_user_details($details_obj,$user){
+		file_put_contents($details_obj->userNameRoot.'\\user_details.json', json_encode($user));
+	}
+	//Update user details for the server like the session id and last time that he was connected
+	function update_user_hash($details_obj,$hash){
+		file_put_contents($details_obj->userNameRoot.'\\user_server_details.json', json_encode($hash));
+	}
+	//Update project details
+	function update_project_details($details_obj,$project){
+
+	}
+	//get all details of project
+	function get_all_details_of_project($details_obj){
+		$arr = array();
 	}
 
 ?>
