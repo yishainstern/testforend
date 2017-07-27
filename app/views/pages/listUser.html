@@ -1,3 +1,4 @@
+<div class="modal-backdrop fade" ng-if="show_mask.flag" ng-class="{'in':show_mask.flag}"></div>
 <div style="position: relative;">
     <loader></loader>
 	<div class="row">
@@ -27,12 +28,17 @@
                     </div>
                 </div>
                 <a >
-                    <div class="panel-footer">
-                        <span class="pull-left">go to {{item.name}}</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="panel-footer" ng-init="item.openpopup = false">
+                        <span class="pull-left big_l">Go to {{item.name}}</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right big_l"></i></span>
+                        <span class="pull-right"><i class="fa fa-trash-o remove_p big_l" ng-click="item.openpopup = false; $event.stopPropagation(); show_mask.flag = !show_mask.flag"></i></span>
                         <div class="clearfix"></div>
                     </div>
                 </a>
+            </div>
+
+            <div ng-show="item.openpopup" class="modal fade rd_wrapper" ng-class="{'in':item.openpopup}">
+                <!--ng-click="remove_project(item)"-->
             </div>
         </div>
         <div class="col-lg-3 col-md-6 ng-isolate-scope text-center" number="24" comments="Support tickets!" colour="red" type="support" ng-click="go_to_new_project()">
@@ -45,13 +51,13 @@
                     </div>
                     <div class="row">
         		        <div class="col-xs-12">
-        		            <h2>add project</h2>
+        		            <h2>Add project</h2>
         		        </div>
         		    </div>
         		</div>
         		<a >
         		    <div class="panel-footer">
-        		        <span class="pull-left">click to add a project</span>
+        		        <span class="pull-left">Click to add a project</span>
         		        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
         		        <div class="clearfix"></div>
         		    </div>

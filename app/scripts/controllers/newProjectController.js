@@ -53,7 +53,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         $scope.new_project_error = false;  
         if (!$scope.new_id || !$scope.new_description || !$scope.new_url || !$scope.new_name){
              $scope.page_error = true;
-             $scope.new_project_error = true;
+             $scope.new_project_error = true    ;
              $scope.display_new_project_text = "All fields are required.";
              $scope.did_start = false;
              $scope.show_loader = false;

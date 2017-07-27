@@ -1,0 +1,13 @@
+.remove_p {
+    font-size: 24px;
+    margin-right: 17px;
+    cursor: pointer;
+}	
+
+.big_l {
+	line-height: 26px;
+}
+
+.rd_wrapper{
+	display: block;
+}

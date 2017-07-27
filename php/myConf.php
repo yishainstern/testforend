@@ -136,6 +136,7 @@
 	$details_obj->folderRoot = $details_obj->userNameRoot.'\\'.$details_obj->folderName;
 	$details_obj->user_details = $details_obj->userNameRoot.'\\user_details.json';
 	$details_obj->user_server_details = $details_obj->userNameRoot.'\\user_server_details.json';
+	$details_obj->projet_details_file = $details_obj->folderRoot."\\project_details.json";
 	$details_obj->userProjectRoot = $details_obj->folderRoot.'\\rootGit';
 	$details_obj->DebuugerRoot = $details_obj->folderRoot.'\\rootLearn';
 	$details_obj->outputPython = $details_obj->folderRoot.'\\out';
@@ -205,11 +206,17 @@
 	}
 	//Update project details
 	function update_project_details($details_obj,$project){
-
+		file_put_contents($details_obj->projet_details_file,json_encode($project));
 	}
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
+		if (file_exists($details_obj->projet_details_file)){
+			$arr["projet"] = json_decode(file_get_contents($details_obj->projet_details_file));
+			$arr["problem"] = false;
+		}else {
+			$arr["problem"] = true;
+		}
+		return $arr;
 	}
-
 ?>

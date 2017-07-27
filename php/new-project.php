@@ -1,35 +1,38 @@
 <?php	
-	function update_user_detailsf($details_obj){
-		$str = json_decode(file_get_contents($details_obj->userNameRoot.'\\user_details.json'));
-		$arr = $str->list;
+	//Update user's details after creating a new project.
+	function update_user_new_project($details_obj,$user){
+		$arr = $user->list;
 		$count = sizeof($arr);
 		$obj = new stdClass();
 		$obj->name =$details_obj->folderName;
 		$obj->discription = $details_obj->discription;
 		$arr[$count] = $obj; 
-		$str->list = $arr;
-		file_put_contents($details_obj->userNameRoot.'\\user_details.json',json_encode($str));
-		return $str;
+		$user->list = $arr;
+		update_user_details($details_obj,$user);
+		return $user;
 	}
+	//Get all steps of a project.
 	function get_progress_array(){
 		$ans = new stdClass();
 		$ans = json_decode(file_get_contents('progress.json'));
 		return $ans;
 	}
-	function update_project_detailsf($details_obj){
-		$obj = new stdClass();
-		$obj->details = new stdClass();
-		$obj->details->folderName = $details_obj->folderName;
-		$obj->details->discription = $details_obj->discription;
-		$obj->details->gitUrl = $details_obj->gitUrl;
-		$obj->details->gitName = $details_obj->gitName;
-		$obj->details->progress = get_progress_array();
-		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
-		return $obj;
+	//Create project file on the server.
+	function create_project_details($details_obj){
+		$project = new stdClass();
+		$project->details = new stdClass();
+		$project->details->folderName = $details_obj->folderName;
+		$project->details->discription = $details_obj->discription;
+		$project->details->gitUrl = $details_obj->gitUrl;
+		$project->details->gitName = $details_obj->gitName;
+		$project->details->progress = get_progress_array();
+		update_project_details($details_obj,$project);
+		return $project;
 	}
+	//Check if the Git URL that was given by user exists in the Git repository.
 	function is_git_project($details_obj){
 		$flag = TRUE;
-		set_time_limit(100);
+		set_time_limit(300);
 		$check_git_file = $details_obj->userNameRoot."\\".$details_obj->gitName."_is_git.txt";
 		file_put_contents($check_git_file, "");
 		exec("git ls-remote ".$details_obj->gitUrl." 2>".$check_git_file);
@@ -45,9 +48,14 @@
 		return $flag;
 
 	}
+	//All activities that are needed for a new project on the server.
 	function start_and_prepare_folders($details_obj){
+		$arr = check_session($details_obj);
 		$ans = array();
-		if ((is_dir($details_obj->folderRoot)==TRUE)){
+		if ($arr["problem"]==true){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
+		}else if ((is_dir($details_obj->folderRoot)==TRUE)){
 			$ans['status'] = 1;
 			$ans['message'] = "You have already a project with this name, pick a new name.";
 		}else if(!is_git_project($details_obj)){
@@ -68,19 +76,19 @@
 			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
 			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone >".$details_obj->runingRoot."\\check_clone.log";
 			file_put_contents($details_obj->runingRoot.'\\clone_task.cmd', $filr_tmp);
-			$user_details = update_user_details($details_obj);
-			$project_details = update_project_details($details_obj);
+			$user_details = update_user_new_project($details_obj,$arr["user"]);
+			$project_details = create_project_details($details_obj);
 			chdir($details_obj->runingRoot);
 			$command = "start /B clone_task.cmd";
 			pclose(popen($command, "w"));
 			$ans['status'] = 111;
-			$ans['message'] = "created folders, and stated to clone";		
+			$ans['message'] = "Created project, and started to clone.";		
 			$ans['user'] = $user_details;
 			$ans['project'] = $project_details;
 		}
 		return $ans;
 	}
-	
+	//Did the server finish to clone the project from Git?
 	function check_if_clone_is_done($details_obj){
 		$ans = array();
 		$old_path = getcwd();
@@ -98,7 +106,8 @@
 		$flag6 = strpos($output1, "Fatal");
 		$flag7 = strpos($output, "fatal");
 		$flag8 = strpos($output1, "fatal");
-		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
+		$obj = get_all_details_of_project($details_obj);
+		$obj = $obj["project"];
 		$obj->details->try_git_agin = FALSE;
 		$obj->details->try_learn_agin = FALSE;
 		$obj->details->try_agin = FALSE;
@@ -133,30 +142,14 @@
 			$ans['message'] = "did not finish cloning, check agin in 5 minites";
 			$ans['project'] = $obj;
 		}
-		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
-				
+		update_project_details($details_obj,$obj);
 	}
+	//When the server needs to do "git checkout" to finish downloading all the project.
 	function checkout($details_obj){
 		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
 		$obj->details->progress->mille_stones->end_clone->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 	}
-	//
-	//clone from github the latest versin of Debugger and the project of user
-	function clone_from_git_to_server($details_obj){
-		pclose(popen($startGit." ".$gitUrl." ".$userProjectRoot.$gitName." 2>".$runingRoot."\\proj.log", "w"));
-		pclose(popen($startGit." ".$amirGit." ".$DebuugerRoot."Debugger 2>".$runingRoot."\\Debugger.log", "w"));
-		file_put_contents($runingRoot."\\goD.sh", "#!/bin/bash\n tail -n 1 Debugger.log");
-		file_put_contents($runingRoot."\\goG.sh", "#!/bin/bash\n tail -n 1 proj.log");
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->gitName = $gitName;
-		$obj->details->gitUrl = $gitUrl;
-		$obj->details->progress->mille_stones->start_clone->flag = true;
-		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "wait 5 minites and check clone";
-		$returnJson['project'] = $obj; 
-		return $returnJson;
-	}
-	//
+//del /Q /S *
+//rd path /Q /S	
 ?>
