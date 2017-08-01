@@ -90,9 +90,10 @@
 	}
 	//Did the server finish to clone the project from Git?
 	function check_if_clone_is_done($details_obj){
+		$p_obj = $details_obj->project;
 		$ans = array();
 		$old_path = getcwd();
-		chdir($details_obj->runingRoot);
+		chdir($details_obj->project->runingRoot);
 		$output = file_get_contents('proj.log');
 		$output1 = file_get_contents('Debugger.log');
 		$flag1 = strpos($output, "done");
@@ -106,43 +107,30 @@
 		$flag6 = strpos($output1, "Fatal");
 		$flag7 = strpos($output, "fatal");
 		$flag8 = strpos($output1, "fatal");
-		$obj = get_all_details_of_project($details_obj);
-		$obj = $obj["project"];
-		$obj->details->try_git_agin = FALSE;
-		$obj->details->try_learn_agin = FALSE;
-		$obj->details->try_agin = FALSE;
 		if ($flag11 && $flag3 && ($flag41 || $flag42)){
-			$filr_tmp_1 = "cd ".$details_obj->userProjectRoot."\\".$obj->details->gitName."\n";
-			$filr_tmp_1 .= "git checkout -f HEAD >".$details_obj->runingRoot."\\checkout.log\n";
-			$filr_tmp_1 .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
-			$filr_tmp_1 .= "dir /s /b *pom.xml >".$details_obj->runingRoot."\\pomList.txt\n";
+			$filr_tmp_1 = "cd ".$p_obj->userProjectRoot."\\".$p_obj->gitName."\n";
+			$filr_tmp_1 .= "git checkout -f HEAD >".$p_obj->runingRoot."\\checkout.log\n";
+			$filr_tmp_1 .= "git tag>".$p_obj->runingRoot."\\tagList.txt\n";
+			$filr_tmp_1 .= "dir /s /b *pom.xml >".$p_obj->runingRoot."\\pomList.txt\n";
 			$filr_tmp_1 .= "cd ".$details_obj->phpRoot."\n";
-			$filr_tmp_1 .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." checkout >".$details_obj->runingRoot."\\check_clone1.log";
-			file_put_contents($details_obj->runingRoot.'\\checkout.cmd', $filr_tmp_1);
-			chdir($details_obj->runingRoot);
+			$filr_tmp_1 .= "php -f index.php trigger ".$details_obj->user->userName." ".$p_obj->folderName." checkout >".$p_obj->runingRoot."\\check_clone1.log";
+			file_put_contents($p_obj->runingRoot.'\\checkout.cmd', $filr_tmp_1);
+			chdir($p_obj->runingRoot);
 			$command = "start /B checkout.cmd";
 			pclose(popen($command, "w"));
 		}else if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
-			$obj->details->progress->mille_stones->end_clone->flag = true;
+			$p_obj = update_project_list($p_obj,"end_clone",true);
+			update_project_details($details_obj,$p_obj);
 			$ans['status'] = 111;
 			$ans['message'] = "all cloned";
-			$ans['project'] = $obj; 
+			$ans['project'] = $p_obj; 
 		}else if (!($flag5===FALSE) || !($flag6===FALSE) || !($flag7===FALSE) || !($flag8===FALSE)){
 			$obj->details->try_agin = TRUE;
 			$ans['status'] = 2;
 			$ans['message'] = 'some failer in server try agin....';
-			$ans['project'] = $obj;
-			if (!($flag5===FALSE) || !($flag7===FALSE) ){
-				$obj->details->try_git_agin = TRUE;
-			}else{
-				$obj->details->try_learn_agin = TRUE;
-			}
-		}else {
-			$ans['status'] = 1;
-			$ans['message'] = "did not finish cloning, check agin in 5 minites";
-			$ans['project'] = $obj;
+			$ans['project'] = $p_obj;
 		}
-		update_project_details($details_obj,$obj);
+		var_dump($ans);
 	}
 	//When the server needs to do "git checkout" to finish downloading all the project.
 	function checkout($details_obj){

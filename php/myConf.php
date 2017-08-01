@@ -2,8 +2,6 @@
 	$details_obj = new stdClass();
 	$details_obj->user = new stdClass();
 	$details_obj->project = new stdClass();
-	$project = $details_obj->project;
-	$user = $details_obj->user;
 	//windows server in BG|U
 	$details_obj->root = "C:\\DebuggerUsers\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
@@ -30,9 +28,9 @@
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
-		$arr["projet"] = "";
-		if ($details_obj->project->projet_details_file && file_exists($details_obj->project->projet_details_file)){
-			$arr["projet"] = json_decode(file_get_contents($details_obj->projet_details_file));
+		$arr["project"] = "";
+		if (isset($details_obj->project->project_details_file) && file_exists($details_obj->project->project_details_file)){
+			$arr["project"] = json_decode(file_get_contents($details_obj->project->project_details_file));
 			$arr["problem"] = false;
 		}else {
 			$arr["problem"] = true;
@@ -42,17 +40,17 @@
 	//check if this php scipt is exeuted in the server.
 	if (isset($argv[1]) && $argv[1]=="trigger" && sizeof($argv)==5){
 		$details_obj->task = $argv[4];
-		$user->userName = $argv[2];
-		$project->folderName = $argv[3];
-		$user->userNameRoot = $details_obj->root.$user->userName;
-		$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
-		$user->user_details = $user->userNameRoot.'\\user_details.json';
-		$user->user_server_details = $user->userNameRoot.'\\user_server_details.json';
-		$project->project_details_file = $details_obj->folderRoot."\\project_details.json";
+		$details_obj->user->userName = $argv[2];
+		$details_obj->project->folderName = $argv[3];
+		$details_obj->user->userNameRoot = $details_obj->root.$details_obj->user->userName;
+		$details_obj->project->folderRoot = $details_obj->user->userNameRoot.'\\'.$details_obj->project->folderName;
+		$details_obj->user->user_details = $details_obj->user->userNameRoot.'\\user_details.json';
+		$details_obj->user->user_server_details = $details_obj->user->userNameRoot.'\\user_server_details.json';
+		$details_obj->project->project_details_file = $details_obj->project->folderRoot."\\project_details.json";
 		$tmp_arr = get_all_details_of_user($details_obj);
-		$user = $tmp_arr["user"];
+		$details_obj->user = $tmp_arr["user"];
 		$tmp_arr1 = get_all_details_of_project($details_obj);
-		$project = $tmp_arr1["project"];
+		$details_obj->project = $tmp_arr1["project"];
 	}else {
 		if (isset($_POST["task"])){
 			$details_obj->task = $_POST["task"];
@@ -60,133 +58,133 @@
 			$details_obj->task = '';
 		}
 		if (isset($_POST["gitName"])){
-			$project->gitName = $_POST["gitName"];
+			$details_obj->project->gitName = $_POST["gitName"];
 		}else{
-			$project->gitName = '';					
+			$details_obj->project->gitName = '';					
 		}
 		if (isset($_POST["gitUrl"])){
-			$project->gitUrl = $_POST["gitUrl"];
+			$details_obj->project->gitUrl = $_POST["gitUrl"];
 		}else{
-			$project->gitUrl = '';
+			$details_obj->project->gitUrl = '';
 		}
 		if (isset($_POST["id"])){
-			$project->folderName = $_POST["id"];
+			$details_obj->project->folderName = $_POST["id"];
 		}else{
-			$project->folderName = '';
+			$details_obj->project->folderName = '';
 		}
 		if (isset($_POST["userName"])){
-			$user->userName = $_POST["userName"];
+			$details_obj->user->userName = $_POST["userName"];
 		}else{
-			$user->userName = '';
+			$details_obj->user->userName = '';
 		}
 		if (isset($_POST["first_name"])){
-			$user->first_name = $_POST["first_name"];
+			$details_obj->user->first_name = $_POST["first_name"];
 		}else{
-			$user->first_name = '';
+			$details_obj->user->first_name = '';
 		}
 		if (isset($_POST["last_name"])){
-			$user->last_name = $_POST["last_name"];
+			$details_obj->user->last_name = $_POST["last_name"];
 		}else{
-			$user->last_name = '';
+			$details_obj->user->last_name = '';
 		}	
 		if (isset($_POST["user_email"])){
-			$user->user_email = $_POST["user_email"];
+			$details_obj->user->user_email = $_POST["user_email"];
 		}else{
-			$user->user_email = '';
+			$details_obj->user->user_email = '';
 		}		
 		if (isset($_POST["password"])){
-			$user->password = $_POST["password"];	
+			$details_obj->user->password = $_POST["password"];	
 		}else{
-			$user->password = '';
+			$details_obj->user->password = '';
 		}
 		if (isset($_POST["testVersion"])){
-			$project->testVersion = $_POST["testVersion"];
+			$details_obj->project->testVersion = $_POST["testVersion"];
 		}else{
-			$project->testVersion = '';
+			$details_obj->project->testVersion = '';
 		}
 		if (isset($_POST["all_versions"])){
-			$project->all_versions = $_POST["all_versions"];
+			$details_obj->project->all_versions = $_POST["all_versions"];
 		}else{
-			$project->all_versions = '';
+			$details_obj->project->all_versions = '';
 		}				 
 		if (isset($_POST["pomPath"])){
-			$project->pomPath = $_POST["pomPath"];
+			$details_obj->project->pomPath = $_POST["pomPath"];
 		}else{
-			$project->pomPath = '';
+			$details_obj->project->pomPath = '';
 		}
 		if (isset($_POST["description"])){
-			$project->discription = $_POST["description"];
+			$details_obj->project->discription = $_POST["description"];
 		}else{
-			$project->discription = '';
+			$details_obj->project->discription = '';
 		}
 		if (isset($_POST["issue_tracker_product_name"])){
-			$project->issue_tracker_product_name = $_POST["issue_tracker_product_name"];
+			$details_obj->project->issue_tracker_product_name = $_POST["issue_tracker_product_name"];
 		}else{
-			$project->issue_tracker_product_name = '';
+			$details_obj->project->issue_tracker_product_name = '';
 		}
 		if (isset($_POST["issue_tracker_url"])){
-			$project->issue_tracker_url = $_POST["issue_tracker_url"];
+			$details_obj->project->issue_tracker_url = $_POST["issue_tracker_url"];
 		}else{
-			$project->issue_tracker_url = '';
+			$details_obj->project->issue_tracker_url = '';
 		}
 		if (isset($_POST["witch_file"])){
-			$project->witch_file = $_POST["witch_file"];
+			$details_obj->project->witch_file = $_POST["witch_file"];
 		}else{
-			$project->witch_file = '';
+			$details_obj->project->witch_file = '';
 		}
 		if (isset($_POST["witch_folder"])){
-			$project->witch_folder = $_POST["witch_folder"];
+			$details_obj->project->witch_folder = $_POST["witch_folder"];
 		}else{ 
-			$project->witch_folder = '';
+			$details_obj->project->witch_folder = '';
 		}
 		if (isset($_POST["issue_tracker"])){
-			$project->issue_tracker = $_POST["issue_tracker"];
+			$details_obj->project->issue_tracker = $_POST["issue_tracker"];
 		}else{
-			$project->issue_tracker = '';
+			$details_obj->project->issue_tracker = '';
 		}
 		if (isset($_POST["file_name_output"])){
-			$project->file_name_output = $_POST["file_name_output"];
+			$details_obj->project->file_name_output = $_POST["file_name_output"];
 		}else{
-			$project->file_name_output = '';
+			$details_obj->project->file_name_output = '';
 		}
 		if (isset($_POST["which_output"])){
-			$project->which_output = $_POST["which_output"];
+			$details_obj->project->which_output = $_POST["which_output"];
 		}else{
-			$project->which_output = '';
+			$details_obj->project->which_output = '';
 		}
 	}
-	if (!isset($user->userName)){
-		$user->userName = "";
+	if (!isset($details_obj->user->userName)){
+		$details_obj->user->userName = "";
 	}
-	if (!isset($project->folderName)){
-		$project->folderName = "";
+	if (!isset($details_obj->project->folderName)){
+		$details_obj->project->folderName = "";
 	}
-	if (!isset($project->gitName)){
-		$project->gitName = "";
+	if (!isset($details_obj->project->gitName)){
+		$details_obj->project->gitName = "";
 	}
-	if (!isset($project->pomPath)){
-		$project->pomPath = "";
+	if (!isset($details_obj->project->pomPath)){
+		$details_obj->project->pomPath = "";
 	}
-	$user->userNameRoot = $details_obj->root.$user->userName;
-	$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
-	$user->user_details = $user->userNameRoot.'\\user_details.json';
-	$user->user_server_details = $user->userNameRoot.'\\user_server_details.json';
-	$project->project_details_file = $project->folderRoot."\\project_details.json";
-	$project->userProjectRoot = $project->folderRoot.'\\rootGit';
-	$project->DebuugerRoot = $project->folderRoot.'\\rootLearn';
-	$project->outputPython = $project->folderRoot.'\\out';
-	$project->runingRoot = $project->folderRoot.'\\run';
-	$project->full_pom_path = $project->userProjectRoot."\\".$project->gitName."\\".$project->pomPath;
+	$details_obj->user->userNameRoot = $details_obj->root.$details_obj->user->userName;
+	$details_obj->project->folderRoot = $details_obj->user->userNameRoot.'\\'.$details_obj->project->folderName;
+	$details_obj->user->user_details = $details_obj->user->userNameRoot.'\\user_details.json';
+	$details_obj->user->user_server_details = $details_obj->user->userNameRoot.'\\user_server_details.json';
+	$details_obj->project->project_details_file = $details_obj->project->folderRoot."\\project_details.json";
+	$details_obj->project->userProjectRoot = $details_obj->project->folderRoot.'\\rootGit';
+	$details_obj->project->DebuugerRoot = $details_obj->project->folderRoot.'\\rootLearn';
+	$details_obj->project->outputPython = $details_obj->project->folderRoot.'\\out';
+	$details_obj->project->runingRoot = $details_obj->project->folderRoot.'\\run';
+	$details_obj->project->full_pom_path = $details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\\".$details_obj->project->pomPath;
 	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
 	$details_obj->startGit = "start /B git clone --progress";
 	$details_obj->startGit = "git clone --progress";
 	$details_obj->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-	$project->learnDir = $project->DebuugerRoot.'\\Debugger\\learner';
-	$project->jar_creater = $project->DebuugerRoot.'\\Debugger\\tracer';
-	$details_obj->jar_test = $project->jar_creater.'\\target\\'.$details_obj->jarName;
+	$details_obj->project->learnDir = $details_obj->project->DebuugerRoot.'\\Debugger\\learner';
+	$details_obj->project->jar_creater = $details_obj->project->DebuugerRoot.'\\Debugger\\tracer';
+	$details_obj->jar_test = $details_obj->project->jar_creater.'\\target\\'.$details_obj->jarName;
 	if (isset( $_GET["own"])){
 		$pieces = explode(",", $_GET["own"]);
-		file_put_contents($project->runingRoot."\\".$pieces[2]."data", "data");
+		file_put_contents($details_obj->project->runingRoot."\\".$pieces[2]."data", "data");
 	}
 	//Update details of the project in server.
 	function update_progress($str, $projet,$flag, $folderRoot)
@@ -220,6 +218,19 @@
 	//Update project details
 	function update_project_details($details_obj,$project){
 		file_put_contents($details_obj->project->project_details_file,json_encode($project));
+	}
+	//Update project list
+	function update_project_list($project,$str,$flag){
+		$p_obj = $project->progress->mille_stones;
+		switch ($str) {
+			case 'end_clone':
+				$p_obj->end_clone->flag = $flag;
+				break;
+			default:
+				# code...
+				break;
+		}
+		return $project;
 	}
 
 ?>
