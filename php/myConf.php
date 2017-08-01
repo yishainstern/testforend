@@ -217,7 +217,7 @@
 	function update_user_hash($details_obj,$hash){
 		file_put_contents($details_obj->user->user_server_details, json_encode($hash));
 	}
-	//Update project details
+	//Update project details.
 	function update_project_details($details_obj,$project){
 		file_put_contents($details_obj->project->project_details_file,json_encode($project));
 	}
