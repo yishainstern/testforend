@@ -14,7 +14,6 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
     $scope.page_error = false;
     $scope.display_new_project_text = '';
     $rootScope.project = {
-        details: {}
     };
     $scope.show_loader = true;
     $rootScope.call_user();
@@ -28,7 +27,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         if (data && data.status==111){
             $rootScope.user = data.user;
             $rootScope.project = data.project;
-            $state.transitionTo('dashboard.project',{id:$rootScope.project.details.folderName});
+            $state.transitionTo('dashboard.project',{id:$rootScope.project.folderName});
         }else if (data && data.status==1){
             $scope.display_new_project_text = 'This "project-name" already exists...try a different name.';    
             $scope.new_project_error = true;

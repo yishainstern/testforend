@@ -63,20 +63,24 @@
 			$ans['status'] = 555;
 			$ans['message'] = "Session expired or not exists.";
 		}else {
-			if (file_exists($details_obj->userNameRoot."/rm.txt")){
-				$ans['status'] = 555;
-				$ans['message'] = "Session expired or not exists.";
+			if ($arr["details"]->start_remove == true){
+				$ans['status'] = 444;
+				$ans['message'] = "Still removing old project.";
+			}else {
+				$arr["details"]->start_remove = true;
+				update_user_hash($details_obj,$arr["details"]);
+				$str = "cd ".$details_obj->userNameRoot."\n";
+				$str .= "echo start>rm.txt";
+				$str .= "cd ".$details_obj->folderRoot."\n";
+				$str .= "del /Q /S *\n";
+				$str .= "del /Q /S *\n";
+				$str .= "cd ".$details_obj->userNameRoot."\n";
+				$str .="rename";
+				$str .= "rd ".$details_obj->folderRoot." /Q /S \n";
+				$details_obj->runingRoot = $details_obj->userNameRoot;
+				run_cmd_file($details_obj,$str,$file_name,$next_task);	
 			}
-			$str = "cd ".$details_obj->userNameRoot."\n";
-			$str .= "echo start>rm.txt";
-			$str .= "cd ".$details_obj->folderRoot."\n";
-			$str .= "del /Q /S *\n";
-			$str .= "del /Q /S *\n";
-			$str .= "cd ".$details_obj->userNameRoot."\n";
-			$str .="rename";
-			$str .= "rd ".$details_obj->folderRoot." /Q /S *\n";
-			run_cmd_file($details_obj,$str,$file_name,$next_task)
-
+			
 		}
 		return $ans;
 	}

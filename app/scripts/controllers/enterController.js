@@ -39,9 +39,9 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         console.log(data);
         if (data && data.status && data.status==111){
             $rootScope.user = data.user; 
-            localStorage.setItem('name',$rootScope.user.details.userName);
+            localStorage.setItem('name',$rootScope.user.userName);
             //localStorage.setItem('password',$rootScope.user.details.password);
-            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
         }else if (data && data.status && data.status==1){
             $scope.show_error('User already exists.','error_sign');
         }
@@ -57,9 +57,8 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         console.log(data);
         if (data && data.status && data.status==111){
             $rootScope.user = data.user; 
-            localStorage.setItem('name',$rootScope.user.details.userName);
-            localStorage.setItem('password',$rootScope.user.details.password);
-            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
+            localStorage.setItem('name',$rootScope.user.userName);
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
         }else if (data && data.status && data.status==1){
             $scope.show_error('Wrong user name or password.','error_login');
         }else if (data && data.status && data.status==2){

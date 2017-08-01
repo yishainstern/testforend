@@ -14,25 +14,20 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
         //$rootScope.server_domain = 'http://132.72.64.18/testforend/php/index.php';
 	//user object, all of users details
 	$rootScope.user = {
-		details: {},
 		list:[]
 	}
     //project object, all of projects details
 	$rootScope.project = {
-        details: {}
     };
 
     //clean all objects and logs out to login page.
     $rootScope.log_out = function(){
         $rootScope.user = {
-            details: {},
             list:[]
         }
         $rootScope.project = {
-            details: {}
         };  
         localStorage.setItem('name',"");
-        localStorage.setItem('password',"");  
         $state.transitionTo('enter');    
     }
     //after getting a json from server, check if the json is valid or alert if there was a crash in the server
@@ -48,11 +43,11 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
     //check the localStorage who was looed in last.
     $rootScope.call_user = function(){
         var form_data = new FormData();
-        if (!$rootScope.user.details.userName){
-            $rootScope.user.details.userName = localStorage.getItem('name');
+        if (!$rootScope.user.userName){
+            $rootScope.user.userName = localStorage.getItem('name');
         }
-        if ($rootScope.user.details.userName){
-            form_data.append('userName',$rootScope.user.details.userName);
+        if ($rootScope.user.userName){
+            form_data.append('userName',$rootScope.user.userName);
             service.ajaxfunc('get_user_list','',form_data)
             .then(function(data){
                 data = JSON.parse(data);

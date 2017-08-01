@@ -19,16 +19,16 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
 	});
     //change state to make a new project
     $scope.go_to_new_project = function(){
-        $state.transitionTo('dashboard.newProject',{user:$rootScope.user.details.userName});
+        $state.transitionTo('dashboard.newProject',{user:$rootScope.user.userName});
     }
     //change state to project page.
     $scope.go_to_project = function(name){
-    	$state.transitionTo('dashboard.project',{id:name,user:$rootScope.user.details.userName});
+    	$state.transitionTo('dashboard.project',{id:name,user:$rootScope.user.userName});
     }
     //remove project from server
     $scope.remove_project = function(){
         var data_to_send = new FormData();
-        data_to_send.append('userName',$rootScope.user.details.userName);
+        data_to_send.append('userName',$rootScope.user.userName);
         data_to_send.append('folderName',$scope.picked_item.name);
         service.ajaxfunc('remove_project',form_naame,false)
         .then(function(data){

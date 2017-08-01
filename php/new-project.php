@@ -4,8 +4,8 @@
 		$arr = $user->list;
 		$count = sizeof($arr);
 		$obj = new stdClass();
-		$obj->name =$details_obj->folderName;
-		$obj->discription = $details_obj->discription;
+		$obj->name =$details_obj->project->folderName;
+		$obj->discription = $details_obj->project->discription;
 		$arr[$count] = $obj; 
 		$user->list = $arr;
 		update_user_details($details_obj,$user);
@@ -20,12 +20,11 @@
 	//Create project file on the server.
 	function create_project_details($details_obj){
 		$project = new stdClass();
-		$project->details = new stdClass();
-		$project->details->folderName = $details_obj->folderName;
-		$project->details->discription = $details_obj->discription;
-		$project->details->gitUrl = $details_obj->gitUrl;
-		$project->details->gitName = $details_obj->gitName;
-		$project->details->progress = get_progress_array();
+		$project->folderName = $details_obj->project->folderName;
+		$project->discription = $details_obj->project->discription;
+		$project->gitUrl = $details_obj->project->gitUrl;
+		$project->gitName = $details_obj->project->gitName;
+		$project->progress = get_progress_array();
 		update_project_details($details_obj,$project);
 		return $project;
 	}
@@ -33,9 +32,9 @@
 	function is_git_project($details_obj){
 		$flag = TRUE;
 		set_time_limit(300);
-		$check_git_file = $details_obj->userNameRoot."\\".$details_obj->gitName."_is_git.txt";
+		$check_git_file = $details_obj->user->userNameRoot."\\".$details_obj->project->gitName."_is_git.txt";
 		file_put_contents($check_git_file, "");
-		exec("git ls-remote ".$details_obj->gitUrl." 2>".$check_git_file);
+		exec("git ls-remote ".$details_obj->project->gitUrl." 2>".$check_git_file);
 		$str = file_get_contents($check_git_file);
 		$place1 =strpos($str,"fatal");
 		$place2 =strpos($str,"Fatal");
@@ -50,35 +49,36 @@
 	}
 	//All activities that are needed for a new project on the server.
 	function start_and_prepare_folders($details_obj){
+		$project =  $details_obj->project;
 		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["problem"]==true){
 			$ans['status'] = 555;
 			$ans['message'] = "Session expired or not exists.";
-		}else if ((is_dir($details_obj->folderRoot)==TRUE)){
+		}else if ((is_dir($project->folderRoot)==TRUE)){
 			$ans['status'] = 1;
 			$ans['message'] = "You have already a project with this name, pick a new name.";
 		}else if(!is_git_project($details_obj)){
 			$ans['status'] = 2;
 			$ans['message'] = "The Git url that was inserted does not exist in Git repositories. Try a different url.";
 		}else{
-			mkdir($details_obj->folderRoot, 0777, true);
-			mkdir($details_obj->userProjectRoot, 0777, true);
-			mkdir($details_obj->DebuugerRoot, 0777, true);
-			mkdir($details_obj->outputPython, 0777, true);
-			mkdir($details_obj->runingRoot, 0777, true);
+			mkdir($project->folderRoot, 0777, true);
+			mkdir($project->userProjectRoot, 0777, true);
+			mkdir($project->DebuugerRoot, 0777, true);
+			mkdir($project->outputPython, 0777, true);
+			mkdir($project->runingRoot, 0777, true);
 			$filr_tmp = '';
-			$filr_tmp .= "git clone --progress ".$details_obj->gitUrl." ".$details_obj->userProjectRoot."\\".$details_obj->gitName." 2>".$details_obj->runingRoot."\\proj.log\n";
-			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$details_obj->DebuugerRoot."\\Debugger 2>".$details_obj->runingRoot."\\Debugger.log\n";
-			$filr_tmp .= "cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
-			$filr_tmp .= "git tag>".$details_obj->runingRoot."\\tagList.txt\n";
-			$filr_tmp .= "dir /s /b *pom.xml >".$details_obj->runingRoot."\\pomList.txt\n";
+			$filr_tmp .= "git clone --progress ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
+			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
+			$filr_tmp .= "cd ".$project->userProjectRoot."\\".$project->gitName."\n";
+			$filr_tmp .= "git tag>".$project->runingRoot."\\tagList.txt\n";
+			$filr_tmp .= "dir /s /b *pom.xml >".$project->runingRoot."\\pomList.txt\n";
 			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
-			$filr_tmp .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." check_clone >".$details_obj->runingRoot."\\check_clone.log";
-			file_put_contents($details_obj->runingRoot.'\\clone_task.cmd', $filr_tmp);
+			$filr_tmp .= "php -f index.php trigger ".$details_obj->user->userName." ".$project->folderName." check_clone >".$project->runingRoot."\\check_clone.log";
+			file_put_contents($project->runingRoot.'\\clone_task.cmd', $filr_tmp);
 			$user_details = update_user_new_project($details_obj,$arr["user"]);
 			$project_details = create_project_details($details_obj);
-			chdir($details_obj->runingRoot);
+			chdir($project->runingRoot);
 			$command = "start /B clone_task.cmd";
 			pclose(popen($command, "w"));
 			$ans['status'] = 111;

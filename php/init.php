@@ -5,29 +5,30 @@
 	}
 	//Sgin up a new user and create him a session
 	function sign_up_new_user($details_obj){
+		$user = $details_obj->user;
 		session_start();
 		$r = session_id();
 		$time = time();
 		$ans = array();
-		if (is_dir($details_obj->userNameRoot)){
+		if (is_dir($user->userNameRoot)){
 			$ans['status'] = 1;
 			$ans['message'] = "There is a folder like this already, pick a new name.";
 		}else {
-			mkdir($details_obj->userNameRoot, 0777, true);
-			chmod($details_obj->userNameRoot, 0777);
+			mkdir($user->userNameRoot, 0777, true);
+			chmod($user->userNameRoot, 0777);
 			$obj = new stdClass();
 			$hash = new stdClass();
-			$obj->details = new stdClass();
-			$obj->details->userName = $details_obj->userName;
-			$obj->details->first_name = $details_obj->first_name;
-			$obj->details->last_name = $details_obj->last_name;
-			$obj->details->user_email = $details_obj->user_email;
+			$obj->userName = $user->userName;
+			$obj->first_name = $user->first_name;
+			$obj->last_name = $user->last_name;
+			$obj->user_email = $user->user_email;
 			$hash->session_id = $r;
 			$hash->session_time = "".$time;
+			$hash->start_remove = false;
 			$obj->list = array();
-			$hash->password = get_hash($details_obj->password);
-			file_put_contents($details_obj->userNameRoot.'\\user_details.json',json_encode($obj));
-			file_put_contents($details_obj->userNameRoot.'\\user_server_details.json',json_encode($hash));
+			$hash->password = get_hash($user->password);
+			update_user_details($details_obj,$obj);
+			update_user_hash($details_obj,$hash);
 			$ans['status'] = 111;
 			$ans['message'] = "User folder created";
 			$ans['user'] = $obj;		
@@ -36,8 +37,9 @@
 	}
 	//log in user
 	function log_in($details_obj){
+		$user = $details_obj->user;
 		$ans = array();
-		if (!is_dir($details_obj->userNameRoot)){
+		if (!is_dir($user->userNameRoot)){
 			$ans['status'] = 2;
 			$ans['message'] = "User does not exist.";			
 			return $ans;
@@ -46,7 +48,7 @@
 		$r = session_id();
 		$time = time();
 		$arr = get_all_details_of_user($details_obj);
-		if (!($arr["user"]->details->userName==$details_obj->userName) || !($arr["details"]->password==get_hash($details_obj->password))){
+		if (!($arr["user"]->userName==$user->userName) || !($arr["details"]->password==get_hash($user->password))){
 			$ans['status'] = 1;
 			$ans['message'] = "Do not try to break in, thief!!";
 			session_unset(); // remove all session variables

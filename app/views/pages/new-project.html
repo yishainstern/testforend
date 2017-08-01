@@ -18,8 +18,8 @@
                         <form role="form" name="new-project" ng-class="{'has-error':page_error}">
                             <div class="form-group" ng-mouseover="userName=true" ng-mouseleave="userName=false">
                                 <label for="disabledSelect">User Name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.details.userName" disabled>
-                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.userName" disabled>
+                                <input type="hidden" name="userName" value="{{user.userName}}">
                                 <p class="help-block" ng-class="{open_help:userName}">This is your user name that you picked.</p>
                             </div>
                             <div class="form-group" ng-mouseover="folderName=true" ng-mouseleave="folderName=false">
