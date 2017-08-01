@@ -1,7 +1,7 @@
 <?php
 	//
 	//updates the pom file
-	function pastPom($str,$jar,$path,$returnJson,$files,$userProjectRoot){
+	function pastPom($str,$jar,$path,$files,$userProjectRoot){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
 		if(file_exists($str)){
@@ -12,33 +12,28 @@
     		$arrArt = $dom->getElementsByTagName('artifactId');
     		foreach ($arrArt as $key ) {
                 $flagVersion = FALSE;
-    			if ($key->nodeValue=="maven-surefire-plugin"){
+    			if ($key->nodeValue=="maven-surefire-plugin" || $key->nodeValue=="tycho-surefire-plugin"){
     				$rr = $key->parentNode;
     				$confArr = $rr->childNodes;
+    				$configuration_count = 0;
+    				$flag = TRUE;
+    				$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
                     foreach ($confArr as $confElemnt ) {
                         if ($confElemnt->nodeName=="configuration"){
+                        	$configuration_count = 1;
                         	$was_change = $confElemnt->getElementsByTagName('argLine');
-                        	if ($was_change->length>0){
-                        		//echo "did it";
-                        	}else{
-                        		$e = $dom->createElement('argLine', "-javaagent:".$jar."=".$path);
-                            	$confElemnt->appendChild($e);
-                        	}
+                            $confElemnt->appendChild($e);
                             $tmp = $str;
                             $vowels = array($userProjectRoot);
                             $tmp = str_replace($vowels, "", $tmp);
                             $files[sizeof($files)] = $tmp;
-                            $flag = TRUE;
                         }
-                        /*if ($confElemnt->nodeName=="version"){
-                            $confElemnt->nodeValue = "2.19.1";
-                            $flagVersion = TRUE;
-                        }*/
                     }
-                    /*if ($flagVersion == FALSE){
-                        $e = $dom->createElement('version', "2.19.1");
-                        $rr->appendChild($e);
-                    }*/
+                    if ($configuration_count==0){
+                    	$tmp_conf = $dom->createElement('configuration', "");
+                    	$tmp_conf->appendChild($e);
+                    	$rr->appendChild($tmp_conf);
+                    }
     			}
     		}
             if($flag==TRUE){
@@ -47,144 +42,128 @@
     	}
     	return $files;
 	}
+
+	function run_online_task(){}
 	//
 	//updates the pom.xml files for using the online learning
-	function update_pom_files($returnJson,$pomPath,$userProjectRoot,$runingRoot,$gitName,$jarName,$folderRoot){
-		$tmp_project = get_project_details($folderRoot);
-		if (!$tmp_project->details->progress->mille_stones->check_version->flag){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "can not edit before picking a test version";	
-			return $returnJson;	
-		}
-		$str = $userProjectRoot.$gitName."\\".$pomPath;
-		exec("dir /s /b " .$str."\*pom.xml* > ".$runingRoot."\\poms.txt");
-		$arr = explode("\n",file_get_contents($runingRoot."\\poms.txt"));
-		$files = array();
-		for ($i=0; $i < sizeof($arr) ; $i++) { 
-			set_time_limit(20);
-			$pathForJar = $runingRoot.$jarName;
-			$pathForPathtx = $runingRoot."path.txt";
-			$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$returnJson,$files,$userProjectRoot);
-		}
-		if (sizeof($files)>0){
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "we updated your files";	
-			$obj = update_progress('update_pom',$tmp_project,true,$folderRoot);
-			$obj->details->pomPath = $str;
-			file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-			$returnJson['project'] = $obj;
-			$returnJson['data'] = $files;
-			return $returnJson;
+	function update_pom_files($details_obj){
+		$tmp_str = "";
+		$tmp_project = get_project_details($details_obj->folderRoot);
+		$tmp_project->details->progress->mille_stones->start_testing->flag = true;
+		if ($details_obj->pomPath==""){
+			$str_tmp_pom_path = "";
 		}else{
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "no files with surfire plugin";
-			return $returnJson;
+			$str_tmp_pom_path = "\\".$details_obj->pomPath;
 		}
-	}
-	//
-	//create a jar file from Debbuger program with maven
-	function ctrate_jar_for_online_task($returnJson,$jar_creater,$folderRoot,$runingRoot){
-		$old_path = getcwd();
-		chdir($jar_creater);
-		set_time_limit(300);
-		$command = "start /B mvn clean install -fn >".$runingRoot."\\create_jar_log.txt";
-		pclose(popen($command, "w"));
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "thank you we are creating the jar";
-		$obj = update_progress('prepare_jar', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		return $returnJson;
-	}
-	//
-	//create a file paths.txt witch contents maven repository path and the program path.
-	function create_path_txt($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName){
-		$str = $mavenroot."\r\n".$userProjectRoot.$gitName."\r\n";
-		file_put_contents($runingRoot."path.txt",$str);
-		$oldTarget = $jar_test;
-		$newTarget = $runingRoot.$jarName;
-		copy($oldTarget, $newTarget);
-		chmod($newTarget, 0777);
-		chmod($runingRoot."path.txt", 0777);
-		return json_return($returnJson,0,"files in place");		
-	}
-	//
-	//chane git pointer from "master" to a spesific versoin that was giiven by user. 
-	function point_to_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot,$runingRoot){
-		$old_path = getcwd();
-		$tmp_project = get_project_details($folderRoot);
-		chdir($userProjectRoot.$gitName);
-		$flag = git_tag_list($runingRoot,array($newVersion));
-		if (!$flag){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "version does not exsist";	
-			return $returnJson;	
-		}
-		if ($tmp_project->details->progress->mille_stones->update_pom->flag){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "you can not chane any more after editing pom files";	
-			return $returnJson;	
-		}
-		$command = "start /B git checkout ".$newVersion." 2>../../run/newVersion.txt";
-		pclose(popen($command, "w"));
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "checking out to version ".$newVersion." check to see if done";
-		$obj = update_progress('pick_version', $tmp_project,true,$folderRoot);
-		$obj->details->testVersion = $newVersion;
-		file_put_contents($folderRoot.'project_details.json', json_encode($obj));
-		$returnJson['project'] = $obj;
-		return $returnJson;	
-	}
-	//
-	//check if the version is the right one.
-	function check_version($returnJson,$userProjectRoot,$gitName,$newVersion,$folderRoot){
-		$old_path = getcwd();
-		chdir($userProjectRoot.$gitName);
-		$command = "git branch >../../run/branch.txt";
-		set_time_limit(700);
-		exec($command);
-		$str = file_get_contents("../../run/branch.txt");
-		$pos = strpos($str, $newVersion);
-		if ($pos==FALSE){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "rong version....change it agin";	
-			return $returnJson;			
+		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName.$str_tmp_pom_path;
+		if (is_dir($str)){
+			exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
+			$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
+			if (is_file($str."/pom.xml")){
+				$tmp_str .="cd ".$str."\n";
+				$tmp_str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
+			}
+			if ((isset($arr)) && (sizeof($arr)>0)){
+				$files = array();
+				for ($i=0; $i < sizeof($arr) ; $i++) { 
+					set_time_limit(30);
+					$pathForJar = $details_obj->runingRoot."\\".$details_obj->jarName;
+					$pathForPathtx = $details_obj->runingRoot."\\path.txt";
+					$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
+				}
+				if (sizeof($files)>0){
+					$tmp_project->details->files = $files;
+					
+				}else{
+					$tmp_project->details->problem = new stdClass();
+					$tmp_project->details->problem->code = "3";
+					$tmp_project->details->problem->txt = "No surefire plugin in pom files";
+				}				
+			}else{
+				$tmp_project->details->problem = new stdClass();
+				$tmp_project->details->problem->code = "2";
+				$tmp_project->details->problem->txt = "There is no pom files in the version tag that you picked";
+			}
 		}else{
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "the current version is ".$newVersion.".";
-			$obj = update_progress('check_version', get_project_details($folderRoot),TRUE,$folderRoot);
-			$returnJson['project'] = $obj;
-			return $returnJson;
+			$tmp_project->details->problem = new stdClass();
+			$tmp_project->details->problem->code = "1";
+			$tmp_project->details->problem->txt = "the directory does not exit in the version tag that you picked";
+		}
+		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($tmp_project));
+		run_cmd_file($details_obj,$tmp_str,"runOnline","all_pred");
+	}
+	//
+
+	function get_some_list($details_obj,$s1,$s2,$s3,$message,$attribute){
+		$obj = json_decode(file_get_contents($s2));
+		$tt = $details_obj->userProjectRoot."\\".$obj->details->gitName;
+		$count = strlen($tt);
+		if (is_file($s3)){
+			$tmp = file_get_contents($s3);
+			$ans = array();
+			$ans['status'] = 111;
+			$ans['message'] = $message;
+			$ans[$attribute] = $tmp;
+			return $ans;
+		}
+		if (is_file($s1)){
+			$obj = file_get_contents($s1);
+			$arr1 = explode("\n",$obj);
+			$arr1 = array_reverse ($arr1);
+			$ret_arr = array();
+			for ($i=0; $i < sizeof($arr1); $i++) { 
+				if($arr1[$i]=="" || $arr1[$i]==''){
+					//do nothing
+				}else{
+					if ($attribute=="poms"){
+						$sub = substr($arr1[$i], ($count+1));
+						$arr1[$i] = $sub;
+					}
+					array_push($ret_arr, $arr1[$i]);
+				}
+			}
+			file_put_contents($s3,json_encode($ret_arr));
+			$ans = array();
+			$ans['status'] = 111;
+			$ans['message'] = $message;
+			$ans[$attribute] = json_encode($ret_arr);
+			return $ans;
 		}
 	}
 
-	function last_preperations($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName){
-		create_path_txt($returnJson,$userProjectRoot,$gitName,$folderRoot,$jar_test,$mavenroot,$runingRoot,$jarName);
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "all done....lets go";
-		$obj = update_progress('prepare_mvn', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		return $returnJson;
+	function get_tags($details_obj){
+		$s1 = $details_obj->runingRoot."\\tagList.txt";
+		$s2 = $details_obj->folderRoot."\\project_details.json";
+		$s3 = $details_obj->runingRoot."\\tagList.json";
+		return get_some_list($details_obj,$s1,$s2,$s3,"gut tags list","tags");
 	}
-	//
-	function run_maven_task($returnJson,$userProjectRoot,$gitName,$folderRoot,$runingRoot){
-		$obj = get_project_details($folderRoot);
-		$path = $obj->details->pomPath;
-		$old_path = getcwd();
-		chdir($path);
-		$command = "start /B mvn clean install -fn >".$runingRoot."mavenLog.txt";
-		pclose(popen($command, "w"));
-		$obj = update_progress('start_testing', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
-		return $returnJson;
-	}
-	//
-	function maven_done($folderRoot){
-		$obj = update_progress('end_testing', get_project_details($folderRoot),TRUE,$folderRoot);
-		$returnJson['project'] = $obj;
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "starting to test...check in 20 mintes what's doing";
-		return $returnJson;
+
+	function get_poms($details_obj){
+		$s1 = $details_obj->runingRoot."\\pomList.txt";
+		$s2 = $details_obj->folderRoot."\\project_details.json";
+		$s3 = $details_obj->runingRoot."\\pomList.json";
+		return get_some_list($details_obj,$s1,$s2,$s3,"gut pom list","poms");
 	}	
+
+	function chane_tracer_mvn_and_checkout_version($details_obj){
+		$str ="";
+		$str .="cd ".$details_obj->jar_creater."\r\n";
+		$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\create_jar_log.txt\r\n";
+		$str .="cd target\r\n";
+		$str .="copy ".$details_obj->jarName." ".$details_obj->runingRoot."\\".$details_obj->jarName."\r\n";	
+		$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
+		$str .="git checkout ".$details_obj->testVersion." 2>../../run/newVersion.txt\r\n";
+		run_cmd_file($details_obj,$str,"pomrun","update_pom");
+	}
+
+	function put_path_txt($details_obj){
+		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
+		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
+		chmod($details_obj->runingRoot."\\path.txt", 0777);
+	}
+
+	function move_to_online_task($details_obj){
+		put_path_txt($details_obj);
+		chane_tracer_mvn_and_checkout_version($details_obj);
+	}
 ?>

@@ -1,3 +1,5 @@
+<div style="position: relative;">
+<loader></loader>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">New Project</h1>
@@ -9,30 +11,41 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div class="panel-heading">project details</div>
+            <div class="panel-heading">Project Details</div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form role="form" name="new-project">
-                            <div class="form-group">
-                                <label for="disabledSelect">User name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="project_details.userName" name="user" disabled>
-                                <input type="hidden" name="userName" value="{{project_details.userName}}">
+                        <form role="form" name="new-project" ng-class="{'has-error':page_error}">
+                            <div class="form-group" ng-mouseover="userName=true" ng-mouseleave="userName=false">
+                                <label for="disabledSelect">User Name</label>
+                                <input class="form-control" type="text" placeholder="Disabled input" ng-model="user.userName" disabled>
+                                <input type="hidden" name="userName" value="{{user.userName}}">
+                                <p class="help-block" ng-class="{open_help:userName}">This is your user name that you picked.</p>
                             </div>
-                            <div class="form-group">
-                                <label>uniq folder name</label>
-                                <input class="form-control"  type="text" placeholder="Enter text" ng-model="project_details.folderName" name="id">
+                            <div class="form-group" ng-mouseover="folderName=true" ng-mouseleave="folderName=false">
+                                <label>Uniq folder name</label>
+                                <input class="form-control" type="text" placeholder="Enter text" name="id"  ng-model="new_id" />
+                               <p class="help-block" ng-class="{open_help:folderName}">Insert here a uniq name for your project. Every project <b>must</b> have a uniq name</p>
                             </div>
-                            <div class="form-group">
-                                <label>project disciption</label>
-                                <textarea class="form-control" rows="4" ng-model="project_details.project_description" name="project_description"></textarea>
+                            <div class="form-group" ng-mouseover="disciption=true" ng-mouseleave="disciption=false">
+                                <label>Project description</label>
+                                <textarea class="form-control" rows="4" name="description" ng-model="new_description"></textarea>
+                                <p class="help-block" ng-class="{open_help:disciption}">Tell us a little bit about your project.</p>
                             </div>
+                            <div class="form-group" ng-mouseover="gitUrl=true" ng-mouseleave="gitUrl=false">
+                                <label for="disabledSelect">Project url</label>
+                                <input class="form-control" type="text" placeholder="Disabled input" name="gitUrl" ng-model="new_url">
+                                <p class="help-block" ng-class="{open_help:gitUrl}">Insert here a <b>full</b> url from git tou your project. The project <b>must</b> be a public project.</p>
+                            </div>  
+                            <div class="form-group" ng-mouseover="gitName=true" ng-mouseleave="gitName=false">
+                                <label for="disabledSelect">Git name</label>
+                                <input class="form-control" type="text" placeholder="Disabled input" name="gitName" ng-model="new_name">
+                                <p class="help-block" ng-class="{open_help:gitName}">Git projects have a name, please insert it.</p>
+                            </div>                                                                                    
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
                                 <label class="control-label" ng-show="new_project_error || new_project_success">{{display_new_project_text}}</label>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="autoFill()">auto fill</button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="could_check_clone" ng-click="check_clone()">auto fill</button>
+                            <button type="button" ng-show="!did_start" class="btn btn-primary btn-lg btn-block" ng-click="create_new_project()">add new project and clone to the server.</button>
                         </form>
                     </div>
                 </div>
@@ -43,4 +56,5 @@
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->
+</div>
 </div>

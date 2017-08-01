@@ -13,6 +13,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'multipleSelect'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -120,7 +121,7 @@ angular
     })
     .state('dashboard.listUser',{
       templateUrl:'views/pages/listUser.html',
-      url:'/listUser',
+      url:'/listUser/:user',
       controller:'listUserController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -133,7 +134,7 @@ angular
     })
     .state('dashboard.newProject',{
       templateUrl:'views/pages/new-project.html',
-      url:'/newProject',
+      url:'/newProject/:user',
       controller:'newProjectController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -146,7 +147,7 @@ angular
     })
     .state('dashboard.project',{
       templateUrl:'views/pages/project-page.html',
-      url:'/project/:id',
+      url:'/project/:id/:user',
       controller:'projectController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -194,7 +195,7 @@ angular
     })
     .state('dashboard.all_details',{
       templateUrl:'views/pages/all_details.html',
-      url:'/all_details/:id/:task',
+      url:'/all_details/:user/:id/:task',
       controller:'all_details',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -228,7 +229,26 @@ angular
           })
         }
       }
-    })    
+    })
+    .state('dashboard.results',{
+      templateUrl:'views/pages/results.html',
+      url:'/results/:user/:id/:task',
+      controller:'resultsController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/resultsController.js',
+                'styles/results.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'scripts/directives/goToList/goToList.js',
+                'bower_components/swiper/dist/css/swiper.min.css'
+              ]
+          })
+        }
+      }
+    })        
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id/:task',

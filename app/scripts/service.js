@@ -8,6 +8,7 @@
  */
 angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$http', '$q', '$state', '$timeout','$stateParams', function ($interval, $rootScope, $http, $q, $state, $timeout, $stateParams) {
 	return {
+        //main function for http post request's. can get a form data or get a form id and send it to ther server_domain var
 		ajaxfunc: function(task,form_name,form_data){
 			var deferred = $q.defer();
 			var form;
@@ -29,12 +30,16 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         		error: function(data){
         			deferred.reject(data);
         		},
-        		success:  function(data){
+        		success: function(data){
+                    if (data && data.status && data.status==555){
+                       $state.$state.transitionTo('enter');
+                    }
         			deferred.resolve(data);
         		} 
     		});
             return deferred.promise;
 		},
+        //after getting a output of the learning task, from here you download a file from the output to your pc.
         filefunc: function(task,form_name,form_data){
             var deferred = $q.defer();
             var form;
@@ -56,18 +61,19 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
                 error: function(data){
                     deferred.reject(data);
                 },
-                success:  function(data, status, headers, config){
+                success:  function(data, status, headers, xhr){
                     var anchor = angular.element('<a/>');
                     anchor.attr({
                         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
                         target: '_blank',
-                        download: 'filename.csv'
+                        download: headers.getResponseHeader("thename")
                     })[0].click();
                     deferred.resolve(data);
                 } 
             });
             return deferred.promise;
-        },        
+        },     
+        //When loading a controller or opening a direct url (the javascripts objects do not exist). get the details from the server to know which user and witch project we are standing on.   
 		intervalfunc:function(delegate){
 			var stop = $interval(function() {
 				if ($rootScope.user.details.first_name && $rootScope.user.details.password && $stateParams.id){

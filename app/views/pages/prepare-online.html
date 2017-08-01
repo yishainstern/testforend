@@ -15,13 +15,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-8">
-                                            <form role="form" name="change-version" ng-class="{'has-error':new_clone_error}">
-                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
-                                                <input type="hidden" name="id" value="{{project.details.name}}">
-                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
-                                                <p>click to finish all preperations for are task</p>
-                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="last_preperations()">last preperations</button>
-                                            </form>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -52,31 +46,7 @@
                             </div>
                         </div>
                     </div>
-                </div>    
-                <div class="swiper-slide">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    check if maven task is done
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
-                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
-                                                <input type="hidden" name="id" value="{{project.details.name}}">
-                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
-                                                <p>click to check if the task is done</p>
-                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="check_maven()">run</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                                                               
+                </div>                                                                
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -84,3 +54,9 @@
         <div class="swiper-button-prev"></div>
     </div>
 </div>
+
+<form role="form" name="results" ng-class="{'has-error':new_clone_error}">
+    <input type="hidden" name="userName" value="{{user.details.userName}}">
+    <input type="hidden" name="id" value="{{project.details.folderName}}">
+    <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+</form>

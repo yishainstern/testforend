@@ -1,16 +1,25 @@
 <div class="container">
+    <div class="cover_start" style="background-image: url('./img/s2.png');"></div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please Enter our System</h3>
+                    <div class="bgu_wrapper">
+                        <div class="bgu_cell first_cell"><img src="./img/ise.png"></div>
+                        <div class="bgu_cell second_cell"><img src="./img/bgu.png"></div>
+                    </div>
+                    <div class="logo">
+                        <img src="./img/s2.png"><span class="">Am I Bugged?</span><img src="./img/s2.png">
+                    </div>
+                    
                 </div>
-                <div class="panel-body" style="padding-top: 0px;">
+                <div class="panel-body" style="padding-top: 0px; position: relative;">
+                    <loader></loader>
                     <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_show">
                         <h2>Log In</h2>
                         <fieldset>
                             <div class="form-group input-group">
-                                <span class="input-group-addon">@</span>
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
                                 <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="login_details.userName" autofocus />
                             </div>
                             <div class="form-group input-group">
@@ -19,16 +28,16 @@
                             </div>
                             <label class="control-label" ng-show="error_login">{{display_sgin_text}}</label>
                             <a class="btn btn-lg btn-success btn-block" ng-click="login_task()">Login</a>
-                            <label class="open_sgin">do not have a user? sgin up below</label>
-                            <a class="btn btn-lg btn-success btn-block" ng-click="log_show = false">sign up</a>
+                            <label class="open_sgin">Do not have a user? sign up below</label>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="log_show = false">Sign up area</a>
                         </fieldset>
                     </form>
                     <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="!log_show">
-                        <h2>Sgin Up</h2>
+                        <h2>Sign Up</h2>
                         <fieldset>
                             <div class="form-group input-group">
-                                <span class="input-group-addon">@</span>
-                                <input type="text" class="form-control" placeholder="userName" name="userName" ng-model="sginup_details.userName" autofocus>
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input type="text" class="form-control" placeholder="pick uor username" name="userName" ng-model="sginup_details.userName" autofocus>
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
@@ -36,7 +45,11 @@
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
-                                <input class="form-control" placeholder="userName" name="last_name" type="text" ng-model="sginup_details.last_name" autofocus />
+                                <input class="form-control" placeholder="last name" name="last_name" type="text" ng-model="sginup_details.last_name" autofocus />
+                            </div>  
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input class="form-control" placeholder="email" name="user_email" type="text" ng-model="sginup_details.user_email" autofocus />
                             </div>                            
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>

@@ -17,67 +17,80 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.error_login = false;
     $scope.display_sgin_text = 'משתמש כבר קיים';
     $scope.display_login_text = 'משתמש כבר קיים';
+    $scope.show_loader = false;
     $scope.log_show = true;
+    
+    //Use regular expression to check if the email is a valid email address 
+    $scope.valid_email = function(email){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    
+    //Show test of error or success.
     $scope.show_error = function(str,flag){
         $scope.display_sgin_text = str;
         $scope.display_login_text = str; 
         $scope[flag] = true;
+        $scope.show_loader = false;
     }
-
+    //If the sign-in process was finished properly, sign-in and move to the next page.
     $scope.success_sgin = function(data){
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
-            $rootScope.user.details.name = $scope.sginup_details.userName; 
-            $rootScope.user.details.password = $scope.sginup_details.password;
-            localStorage.setItem('name',$rootScope.user.details.name);
-            localStorage.setItem('password',$rootScope.user.details.password);
-            $state.transitionTo('dashboard.listUser');
+            $rootScope.user = data.user; 
+            localStorage.setItem('name',$rootScope.user.userName);
+            //localStorage.setItem('password',$rootScope.user.details.password);
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
         }else if (data && data.status && data.status==1){
-            $scope.show_error('user alredy exsists','error_sign');
+            $scope.show_error('User already exists.','error_sign');
         }
     }
-
+    //When the sign-in process fails. 
     $scope.fail_sgin = function(data){
-        $scope.show_error('some failer..try agin','error_sign');        
+        $scope.show_error('Server failed, try again.','error_sign');        
         console.log(data);
     }
-
+    //When the log-in process returns from the server with a success message. 
     $scope.success_log_in = function(data){
         data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
-            $rootScope.current_name = $scope.login_details.userName; 
-            $rootScope.current_password = $scope.login_details.password;
-            localStorage.setItem('name',$rootScope.current_name);
-            localStorage.setItem('password',$rootScope.current_password);
-            $state.transitionTo('dashboard.listUser');
+            $rootScope.user = data.user; 
+            localStorage.setItem('name',$rootScope.user.userName);
+            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
         }else if (data && data.status && data.status==1){
-            $scope.show_error('rong user name or password','error_login');
+            $scope.show_error('Wrong user name or password.','error_login');
         }else if (data && data.status && data.status==2){
-            $scope.show_error('rong user name...user name does not exsit','error_login');
+            $scope.show_error('Wrong user name...user name does not exist.','error_login');
         }        
     }
-
+    //When the log-in process fails. 
     $scope.fail_log_in = function(data){
-        $scope.show_error('some failer..try agin','error_login'); 
+        $scope.show_error('Server failed, try again.','error_login'); 
     }
-
+    //Run the "sign-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.sgin_task = function(form_naame){
-        if (!$scope.sginup_details.userName || !$scope.sginup_details.password){
-            $scope.show_error('both fileds are required','error_sign');        
+        $scope.show_loader = true;
+        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email ){
+            $scope.show_error('All fields are required.','error_sign');        
             return;
         }
+        if (!$scope.valid_email($scope.sginup_details.user_email)){
+            $scope.show_error('Email not valid.','error_sign');        
+            return;
+        }  
         $scope.display_sgin_text = '';        
         $scope.error_sign = false;
         service.ajaxfunc('sgin_up',form_naame,false)
         .then(function(data){$scope.success_sgin(data);},
             function(data){$scope.fail_sgin(data);});
     }
-
+    //Run the "log-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.login_task = function(){
+         $scope.show_loader = true;
         if (!$scope.login_details.userName || !$scope.login_details.password){
-            $scope.show_error('both fileds are required','error_login');        
+            $scope.show_error('Both fields are required!','error_login');        
             return;
         }
         $scope.display_sgin_text = '';        

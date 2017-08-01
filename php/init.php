@@ -1,46 +1,68 @@
 <?php
-	function json_return($returnJson,$status,$str){
-		$returnJson['status'] = $status;
-		$returnJson['message'] = $str;
-		return $returnJson;		
+	//Hash function for password
+	function get_hash($string){
+		return hash('md5', $string);
 	}
-	function sign_up_new_user($returnJson,$userNmae,$password,$userNameRoot,$first_name,$last_name){
-		if (is_dir($userNameRoot)){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "there is a folder like this alredy, pick a new name";
+	//Sgin up a new user and create him a session
+	function sign_up_new_user($details_obj){
+		$user = $details_obj->user;
+		session_start();
+		$r = session_id();
+		$time = time();
+		$ans = array();
+		if (is_dir($user->userNameRoot)){
+			$ans['status'] = 1;
+			$ans['message'] = "There is a folder like this already, pick a new name.";
 		}else {
-			mkdir($userNameRoot, 0777, true);
-			chmod($userNameRoot, 0777);
+			mkdir($user->userNameRoot, 0777, true);
+			chmod($user->userNameRoot, 0777);
 			$obj = new stdClass();
-			$obj->details = new stdClass();
-			$obj->details->userName = $userNmae;
-			$obj->details->password = $password;
-			$obj->details->first_name = $first_name;
-			$obj->details->last_name = $last_name;
+			$hash = new stdClass();
+			$obj->userName = $user->userName;
+			$obj->first_name = $user->first_name;
+			$obj->last_name = $user->last_name;
+			$obj->user_email = $user->user_email;
+			$hash->session_id = $r;
+			$hash->session_time = "".$time;
+			$hash->start_remove = false;
 			$obj->list = array();
-			file_put_contents($userNameRoot.'user_details.json',json_encode($obj));
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "user folder created";			
+			$hash->password = get_hash($user->password);
+			update_user_details($details_obj,$obj);
+			update_user_hash($details_obj,$hash);
+			$ans['status'] = 111;
+			$ans['message'] = "User folder created";
+			$ans['user'] = $obj;		
 		}
-		return $returnJson;
+		return $ans;
 	}
-
-	function log_in($returnJson,$userNmae,$password,$userNameRoot){
-		if (!is_dir($userNameRoot)){
-			$returnJson['status'] = 2;
-			$returnJson['message'] = "user does not exsist";			
-			return $returnJson;
+	//log in user
+	function log_in($details_obj){
+		$user = $details_obj->user;
+		$ans = array();
+		if (!is_dir($user->userNameRoot)){
+			$ans['status'] = 2;
+			$ans['message'] = "User does not exist.";			
+			return $ans;
 		}
-		$str = json_decode(file_get_contents($userNameRoot.'user_details.json'));
-		if (!($str->details->userName==$userNmae) || !($str->details->password==$password)){
-			$returnJson['status'] = 1;
-			$returnJson['message'] = "do not try to brake in theaf!!";
+		session_start();
+		$r = session_id();
+		$time = time();
+		$arr = get_all_details_of_user($details_obj);
+		if (!($arr["user"]->userName==$user->userName) || !($arr["details"]->password==get_hash($user->password))){
+			$ans['status'] = 1;
+			$ans['message'] = "Do not try to break in, thief!!";
+			session_unset(); // remove all session variables
+			session_destroy(); // destroy the session 
 		}else {
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "welcome";			
+			session_regenerate_id();
+			$r = session_id();
+			$arr["details"]->session_id = $r;
+			$arr["details"]->session_time = "".$time;
+			update_user_hash($details_obj,$arr["details"]);
+			$ans['status'] = 111;
+			$ans['message'] = "Welcome";
+			$ans['user'] = 	$arr["user"];		
 		}
-		return $returnJson;
+		return $ans;
 	}
-	
-
 ?>
