@@ -50,10 +50,13 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         $scope.did_start = true;
         $scope.display_new_project_text = "";
         $scope.new_project_error = false;  
-        if (!$scope.new_id || !$scope.new_description || !$scope.new_url || !$scope.new_name){
+        if (!$scope.new_id || !$scope.new_description || !$scope.new_url || !$scope.new_name || $scope.new_id == $scope.new_name){
              $scope.page_error = true;
              $scope.new_project_error = true    ;
              $scope.display_new_project_text = "All fields are required.";
+             if ($scope.new_id == $scope.new_name){
+               $scope.display_new_project_text = "Folder name and git name must be different.";  
+             }
              $scope.did_start = false;
              $scope.show_loader = false;
              return;

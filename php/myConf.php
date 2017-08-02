@@ -14,8 +14,8 @@
 	//Get user details, session details and user details.
 	function get_all_details_of_user($details_obj){
 		$arr = array();
-		$arr["user"] = "";
-		$arr["details"] = "";
+		$arr["user"] = new stdClass();
+		$arr["details"] = new stdClass();
 		if ($details_obj->user->user_details&&file_exists($details_obj->user->user_details)){
 			$arr["user"] = json_decode(file_get_contents($details_obj->user->user_details));
 			$arr["details"] = json_decode(file_get_contents($details_obj->user->user_server_details));
@@ -28,7 +28,7 @@
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
-		$arr["project"] = "";
+		$arr["project"] = new stdClass();
 		if (isset($details_obj->project->project_details_file) && file_exists($details_obj->project->project_details_file)){
 			$arr["project"] = json_decode(file_get_contents($details_obj->project->project_details_file));
 			$arr["problem"] = false;
@@ -200,10 +200,10 @@
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
 		if (strlen($next_task)>0){
-			$current_string .= "php -f index.php trigger ".$details_obj->userName." ".$details_obj->folderName." ".$next_task." >".$details_obj->runingRoot."\\".$file_name.".log";
+			$current_string .= "php -f index.php trigger ".$details_obj->user->userName." ".$details_obj->project->folderName." ".$next_task." >".$details_obj->project->runingRoot."\\".$file_name.".log";
 		}
-		file_put_contents($details_obj->runingRoot."\\".$full_name, $current_string);
-		chdir($details_obj->runingRoot);
+		file_put_contents($details_obj->project->runingRoot."\\".$full_name, $current_string);
+		chdir($details_obj->project->runingRoot);
 		$command = "start /B ".$full_name;
 		pclose(popen($command, "w"));		
 	}

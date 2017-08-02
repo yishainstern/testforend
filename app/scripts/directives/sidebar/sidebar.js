@@ -27,10 +27,10 @@ angular.module('sbAdminApp')
             $scope.collapseVar = x;
         };
         $scope.project_list = function(){
-          $state.transitionTo('dashboard.listUser',{user:$rootScope.user.details.userName});
+          $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
         }
         $scope.add_project = function(){
-          $state.transitionTo('dashboard.newProject',{user:$rootScope.user.details.userName});
+          $state.transitionTo('dashboard.newProject',{user:$rootScope.user.userName});
         }
         $scope.multiCheck = function(y){
           

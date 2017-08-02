@@ -29,10 +29,13 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
     $scope.remove_project = function(){
         var data_to_send = new FormData();
         data_to_send.append('userName',$rootScope.user.userName);
-        data_to_send.append('folderName',$scope.picked_item.name);
-        service.ajaxfunc('remove_project',form_naame,false)
+        data_to_send.append('id',$scope.picked_item.name);
+        service.ajaxfunc('remove_project',true,data_to_send)
         .then(function(data){
-
+            data = $rootScope.checkJson(data);
+            if (data.status==111){
+                $rootScope.user = data.user;
+            }
         },
         function(data){
 

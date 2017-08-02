@@ -54,9 +54,17 @@
 		$returnJson['message'] = "got the progress";	
 		return $returnJson;	
 	}
-
+	//did cone finish
+	function not_finish($details_obj){
+		$arr = get_all_details_of_project($details_obj);
+		if (!$arr["project"]->progress->mille_stones->end_clone->flag){
+			return true;
+		}
+		return false;
+	}
 
 	function remove_project($details_obj){
+		
 		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["flag"] == false){
@@ -66,22 +74,37 @@
 			if ($arr["details"]->start_remove == true){
 				$ans['status'] = 444;
 				$ans['message'] = "Still removing old project.";
+			}else if(not_finish($details_obj)){
+				$ans['status'] = 444;
+				$ans['message'] = "Not finish.";
 			}else {
+				$time = time();
 				$arr["details"]->start_remove = true;
 				update_user_hash($details_obj,$arr["details"]);
-				$str = "cd ".$details_obj->userNameRoot."\n";
-				$str .= "echo start>rm.txt";
-				$str .= "cd ".$details_obj->folderRoot."\n";
-				$str .= "del /Q /S *\n";
-				$str .= "del /Q /S *\n";
-				$str .= "cd ".$details_obj->userNameRoot."\n";
-				$str .="rename";
-				$str .= "rd ".$details_obj->folderRoot." /Q /S \n";
-				$details_obj->runingRoot = $details_obj->userNameRoot;
-				run_cmd_file($details_obj,$str,$file_name,$next_task);	
+				$list = array();
+				for ($i=0; $i < sizeof($arr["user"]->list); $i++) { 
+					$tmp = $arr["user"]->list[$i];
+					if ($tmp->name != $details_obj->project->folderName){
+						array_push($list, $tmp);
+					}
+				}
+				$arr["user"]->list = $list;
+				update_user_details($details_obj,$arr["user"]);
+				$str = "cd ".$details_obj->user->userNameRoot."\\".$details_obj->project->folderName."\n";
+				$str .= "del /Q /S *\n"."cd ../\n";
+				$str .= "rd ".$details_obj->project->folderName." /Q /S \n";
+				$details_obj->project->runingRoot = $details_obj->user->userNameRoot;
+				run_cmd_file($details_obj,$str,"rm","done_remove_project");
+				$ans['status'] = 111;
+				$ans['user'] = $arr["user"];
 			}
 			
 		}
 		return $ans;
+	}
+	function done_remove_project($details_obj){
+		$arr = get_all_details_of_user($details_obj);
+		$details_obj->start_remove = false;
+		update_user_hash($details_obj,$arr["details"]);
 	}
 ?>

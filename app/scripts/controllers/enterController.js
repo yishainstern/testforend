@@ -72,7 +72,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     //Run the "sign-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.sgin_task = function(form_naame){
         $scope.show_loader = true;
-        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email ){
+        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email || !$scope.sginup_details.first_name || !$scope.sginup_details.last_name ){
             $scope.show_error('All fields are required.','error_sign');        
             return;
         }

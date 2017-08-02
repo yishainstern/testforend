@@ -11,7 +11,6 @@
 	$returnJson = array();
 	
 	$task = $details_obj->task;
-
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
 		$returnJson = start_and_prepare_folders($details_obj);
@@ -77,6 +76,8 @@
 		$returnJson = checkout($details_obj);
 	}elseif ($task== "remove_project"){
 		$returnJson = remove_project($details_obj);
+	}elseif ($task== "done_remove_project"){
+		$returnJson = done_remove_project($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);
