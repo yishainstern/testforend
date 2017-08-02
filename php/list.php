@@ -104,7 +104,7 @@
 	}
 	function done_remove_project($details_obj){
 		$arr = get_all_details_of_user($details_obj);
-		$details_obj->start_remove = false;
+		$arr["details"]->start_remove = false;
 		update_user_hash($details_obj,$arr["details"]);
 	}
 ?>

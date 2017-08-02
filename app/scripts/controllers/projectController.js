@@ -11,13 +11,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	$scope.show_loader = true;
  	$scope.how_much_done = 10;
  	$scope.open_details = false;
- 	if (!$stateParams.id){
- 		$state.transitionTo('enter');
- 	}
  	var p_interval;
- 	$scope.get_status = function(){
-
- 	}
  	$scope.userArray = [
  		{
  			task:'sign & clone ',
@@ -50,7 +44,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	];
  	$scope.$on('project_object_exsites',function(){
  		$scope.show_loader = false;
- 		$scope.tmp = $rootScope.project.details.progress.mille_stones;
+ 		$scope.tmp = $rootScope.project.progress.mille_stones;
  		if (!$scope.tmp.end_clone.flag){
  			$scope.userArray[0].status= 'still cloning';
  			$scope.userArray[0].flag= false;
@@ -80,18 +74,8 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  				}
  			}
  		}
- 		if ($rootScope.project.details.problem){
- 			if ($rootScope.project.details.problem.code=="0"){
-
- 			}else{
- 				alert("aborted testing because "+$rootScope.project.details.problem.txt);
- 				if ($rootScope.project.details.problem.code=="3"){
- 					$scope.userArray[1].status= 'stoped learning....try agin';
- 					$scope.userArray[1].flag= false;
- 					$scope.userArray[1].has_page= true;
- 				}
- 			}
- 			
+ 		if ($rootScope.project.problem){
+ 			alert("aborted testing because failuer, remove project");
  		}
  		$timeout(function() {service.intervalfunc(service);}, 30000);
  	});

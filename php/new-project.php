@@ -25,6 +25,7 @@
 		$project->gitUrl = $details_obj->project->gitUrl;
 		$project->gitName = $details_obj->project->gitName;
 		$project->progress = get_progress_array();
+		$project->problem = false;
 		update_project_details($details_obj,$project);
 		return $project;
 	}
