@@ -20,7 +20,7 @@
 		}
 		return $arr;
 	}
-	//
+	//Get the list of all the projects of the user.
 	function get_user_list($details_obj){
 		$arr = check_session($details_obj);
 		$ans = array();
@@ -34,27 +34,20 @@
 		}
 		return $ans;
 	}
-
+	//Get all the details for the user of the project.
 	function get_project_progress($details_obj){
-		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
-		if (file_exists($a_file)){
-			$a_txt = file_get_contents($a_file);
-			$a_flag = strpos($a_txt, "failed");
-			if (!$a_flag===FALSE){
-				$obj->details->problem = new stdClass();
-				$obj->details->problem->code = "3";
-				$obj->details->problem->txt = "bad issue tracker name or url";
-				$obj->details->progress->mille_stones->start_offline->flag = false;
-				file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
-			}
-		}		
-		$returnJson['project'] = $obj; 
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "got the progress";	
+		$obj = get_all_details_of_project($details_obj);
+		if ($obj["problem"] == true	){
+			$returnJson['status'] = 555;
+			$returnJson['message'] = "Project doe's not exsit.";
+		}else {
+			$returnJson['project'] = $obj["project"]; 
+			$returnJson['status'] = 111;
+			$returnJson['message'] = "got the progress";				
+		}
 		return $returnJson;	
 	}
-	//did cone finish
+	//Check if conle finished.
 	function not_finish($details_obj){
 		$arr = get_all_details_of_project($details_obj);
 		if (!$arr["project"]->progress->mille_stones->end_clone->flag){
@@ -62,9 +55,8 @@
 		}
 		return false;
 	}
-
+	//Remove all project files from the server.
 	function remove_project($details_obj){
-		
 		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["flag"] == false){
@@ -76,7 +68,7 @@
 				$ans['message'] = "Still removing old project.";
 			}else if(not_finish($details_obj)){
 				$ans['status'] = 444;
-				$ans['message'] = "Not finish.";
+				$ans['message'] = "Not finish to clone.";
 			}else {
 				$time = time();
 				$arr["details"]->start_remove = true;
@@ -102,6 +94,7 @@
 		}
 		return $ans;
 	}
+	//Update the server that we finished to remove the project.
 	function done_remove_project($details_obj){
 		$arr = get_all_details_of_user($details_obj);
 		$arr["details"]->start_remove = false;

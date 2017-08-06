@@ -76,7 +76,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         //When loading a controller or opening a direct url (the javascripts objects do not exist). get the details from the server to know which user and witch project we are standing on.   
 		intervalfunc:function(delegate){
 			var stop = $interval(function() {
-				if ($rootScope.user.first_name && $rootScope.user.password && $stateParams.id){
+				if ($rootScope.user.first_name && $stateParams.id){
 					//stop interval
 					$interval.cancel(stop);
 	        		stop = undefined;
@@ -86,7 +86,7 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
     				delegate.ajaxfunc('get_project_progress','',form_data)
     				.then(function(data){
         				data = JSON.parse(data);
-        				if (data && data.progress){
+        				if (data && data.project.progress){
         					$rootScope.project = data.project; 
         					$rootScope.project_arr = [];
         					var flag = $rootScope.project.progress.start;

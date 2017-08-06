@@ -13,7 +13,7 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
         flag:false
     }
 	$rootScope.call_user();
-	//event after user was loded from server.
+	//Event after user was loded from server.
     $scope.$on('user_in',function(){
 		$scope.show_loader = false;
 	});
@@ -25,7 +25,7 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
     $scope.go_to_project = function(name){
     	$state.transitionTo('dashboard.project',{id:name,user:$rootScope.user.userName});
     }
-    //remove project from server
+    //remove project from server.
     $scope.remove_project = function(){
         var data_to_send = new FormData();
         data_to_send.append('userName',$rootScope.user.userName);
@@ -41,11 +41,11 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
 
         });
     }
-    //prepare to remove item
+    //Prepare to remove project.
     $scope.prepare_trash = function(item){
          $scope.picked_item = item;
     }
-    //clear the remove elemnt
+    //Do not remove project.
     $scope.clear_p = function(){
         $scope.picked_item = {};
     }
