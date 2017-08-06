@@ -36,10 +36,6 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         $scope.a_details.issue_tracker_url = url;
         $('.table_responsive_all').slideToggle();
     }
-    $scope.ff = function(){
-        $scope.sss='sss';
-        console.log($scope.optionsList);
-    }
     $scope.afterSelectItem = function(arr, item){
      arr.push(item);   
     }
@@ -52,11 +48,6 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         }
          $scope.pom_root = item;
     }
-//ddfd
-    $scope.uploadFile = function(files) {
-        $scope.file = files[0];
-    }
-    $scope.arr = ['a','b'];
     $scope.success_tag = function(obj){
         $scope.succ_counter++;
         if ($scope.succ_counter==2){
