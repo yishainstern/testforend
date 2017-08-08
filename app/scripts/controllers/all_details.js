@@ -53,8 +53,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         if ($scope.succ_counter==2){
             $scope.show_loader = false;
         }
-        if (obj.status == 111  && obj.tags){
-            $scope.list = JSON.parse(obj.tags);
+        if (obj.status == 111  && obj.array){
+            $scope.list = obj.array;
         }
     }
     $scope.success_pom = function(obj){
@@ -62,8 +62,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         if ($scope.succ_counter==2){
             $scope.show_loader = false;
         }
-        if (obj.status == 111  && obj.poms){
-            $scope.poms = JSON.parse(obj.poms);
+        if (obj.status == 111  && obj.array){
+            $scope.poms = obj.array;
         }
     }
     $scope.$on('project_object_exsites',function(){

@@ -138,7 +138,7 @@
 		$obj->details->progress->mille_stones->end_clone->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 	}
-
+	//Gets a list of tags or pom files
 	function get_some_list($project,$attribute,$message){
 		$json = $project->runingRoot."\\".$attribute.".json";
 		$txt = $project->runingRoot."\\".$attribute.".txt";
@@ -147,7 +147,7 @@
 		$count = strlen($tt);
 		if (is_file($json)){
 			$tmp = file_get_contents($json);
-			return $tmp;
+			return json_decode($tmp);
 		}else if (is_file($txt)){
 			$obj = file_get_contents($txt);
 			$arr1 = explode("\n",$obj);
@@ -157,7 +157,7 @@
 				if($arr1[$i]=="" || $arr1[$i]==''){
 					//do nothing
 				}else{
-					if ($attribute=="poms"){
+					if ($attribute=="pomList"){
 						$sub = substr($arr1[$i], ($count+1));
 						$arr1[$i] = $sub;
 					}
@@ -166,12 +166,12 @@
 			}
 			$ret_j = json_encode($ret_arr);
 			file_put_contents($json,$ret_j);
-			return $ret_j;
+			return $ret_arr;
 		}else {
 			return array();
 		}
 	}
-
+	//Return list of tags of current project.
 	function get_tags($details_obj){
 		$arr = check_session($details_obj);
 		$ans = array();
@@ -191,12 +191,25 @@
 		}
 		return $ans;
 	}
-	//
+	//Return list of pom files of current project.
 	function get_poms($details_obj){
-		/*$s1 = $details_obj->runingRoot."\\pomList.txt";
-		$s2 = $details_obj->folderRoot."\\project_details.json";
-		$s3 = $details_obj->runingRoot."\\pomList.json";
-		return get_some_list($tmp_p,"poms","Get poms list");*/
+		$arr = check_session($details_obj);
+		$ans = array();
+		if ($arr["problem"]==true){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
+		}else{
+			$obj = get_all_details_of_project($details_obj);
+			if ($obj["problem"] == true	){
+				$ans['status'] = 555;
+				$ans['message'] = "Project doe's not exsit.";
+			}else {
+				$tmp_p = $obj["project"];
+				$ans['status'] = 111;
+				$ans["array"] = get_some_list($tmp_p,"pomList","Get poms list");
+			}
+		}
+		return $ans;
 	}	
 
 ?>
