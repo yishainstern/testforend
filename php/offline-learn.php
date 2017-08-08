@@ -51,30 +51,31 @@
 	
 
 	//issue_tracker_product_name  issue_tracker_url issue_tracker
-	function creat_conf_for_offline($details_obj){
-        $str = 'workingDir='.$details_obj->outputPython."\r\n";
-        $str = $str.'git='.$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
-        $str = $str.'issue_tracker_product_name='.$details_obj->issue_tracker_product_name."\r\n";
-        $str = $str.'issue_tracker_url='.$details_obj->issue_tracker_url."\r\n";
-        $str = $str.'issue_tracker='.$details_obj->issue_tracker."\r\n";
-        $str = $str."vers=(". $details_obj->all_versions.")";
-        file_put_contents($details_obj->learnDir."\\antConf.txt",$str); 
+	function creat_conf_for_offline($project){
+		var_dump($project);
+        $str = 'workingDir='.$project->outputPython."\r\n";
+        $str = $str.'git='.$project->userProjectRoot."\\".$project->gitName."\r\n";
+        $str = $str.'issue_tracker_product_name='.$project->issue_tracker_product_name."\r\n";
+        $str = $str.'issue_tracker_url='.$project->issue_tracker_url."\r\n";
+        $str = $str.'issue_tracker='.$project->issue_tracker."\r\n";
+        $str = $str."vers=(". $project->all_versions.")";
+        file_put_contents($project->learnDir."\\antConf.txt",$str); 
 	}
-	function go_run_python($details_obj){
-		$str = "cd ".$details_obj->learnDir."\n";
+	function go_run_python($details_obj,$project,$user){
+		$str = "cd ".$project->learnDir."\n";
 		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
-		run_cmd_file($details_obj,$str,"offline","check_python");
+		run_cmd_file($details_obj,$project,$user,$str,"offline","check_python");
 	}
 	function updates($details_obj,$project){
 		$project->all_versions = $details_obj->project->all_versions;
 		$project->testVersion = $details_obj->project->testVersion;
 		$project->pomPath = $details_obj->project->pomPath;
-		$project->full_pomPath = $details_obj->project->userProjectRoot."\\".$project->gitName."\\".$project->pomPath;
+		$project->full_pomPath = $project->userProjectRoot."\\".$project->gitName."\\".$project->pomPath;
 		$project->issue_tracker_product_name = $details_obj->project->issue_tracker_product_name;
 		$project->issue_tracker_url = $details_obj->project->issue_tracker_url;
 		$project->issue_tracker = $details_obj->project->issue_tracker;
 		$project = update_project_list($project,"start_offline",true);
-		update_project_details($details_obj,$project);
+		update_project_details($project);
 		return $project;		
 	}
 
@@ -87,8 +88,8 @@
 		}else{
 			$obj = get_all_details_of_project($details_obj);
 			$obj_1 = updates($details_obj,$obj["project"]);
-			creat_conf_for_offline($details_obj,$obj);
-			go_run_python($obj_1);
+			creat_conf_for_offline($obj_1);
+			go_run_python($details_obj,$obj_1,$arr["user"]);
 			$ans['status'] = 111;
 			$ans['message'] = "offline task started";
 			$ans['project'] = $obj_1;

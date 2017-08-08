@@ -36,16 +36,23 @@
 	}
 	//Get all the details for the user of the project.
 	function get_project_progress($details_obj){
-		$obj = get_all_details_of_project($details_obj);
-		if ($obj["problem"] == true	){
-			$returnJson['status'] = 555;
-			$returnJson['message'] = "Project doe's not exsit.";
+		$arr = check_session($details_obj);
+		$ans = array();
+		if ($arr["flag"] == false){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
 		}else {
-			$returnJson['project'] = $obj["project"]; 
-			$returnJson['status'] = 111;
-			$returnJson['message'] = "got the progress";				
+			$obj = get_all_details_of_project($details_obj);
+			if ($obj["problem"] == true	){
+				$ans['status'] = 555;
+				$ans['message'] = "Project doe's not exsit.";
+			}else {
+				$ans['project'] = $obj["project"]; 
+				$ans['status'] = 111;
+				$ans['message'] = "got the progress";				
+			}
 		}
-		return $returnJson;	
+		return $ans;	
 	}
 	//Check if conle finished.
 	function not_finish($details_obj){

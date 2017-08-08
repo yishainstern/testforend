@@ -35,7 +35,7 @@
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
-		$file = $details_obj->user->userNameRoot.'\\'.$details_obj->project->folderName."\\project_details.json";
+		$file = $details_obj->root.$details_obj->user->userName.'\\'.$details_obj->project->folderName."\\project_details.json";
 		$arr["project"] = new stdClass();
 		if (file_exists($file)){
 			$arr["project"] = json_decode(file_get_contents($file));
@@ -59,6 +59,7 @@
 		$details_obj->user = $tmp_arr["user"];
 		$tmp_arr1 = get_all_details_of_project($details_obj);
 		$details_obj->project = $tmp_arr1["project"];
+
 	}else {
 		if (isset($_POST["task"])){
 			$details_obj->task = $_POST["task"];
@@ -186,14 +187,14 @@
 		file_put_contents($details_obj->project->runingRoot."\\".$pieces[2]."data", "data");
 	}
 	//Create a cmd file to run on the server (usually for running learning task)
-	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
+	function run_cmd_file($details_obj,$project,$user,$current_string,$file_name,$next_task){
 		$full_name = $file_name.".cmd";
 		$current_string .= "cd ".$details_obj->phpRoot."\n";
 		if (strlen($next_task)>0){
-			$current_string .= "php -f index.php trigger ".$details_obj->user->userName." ".$details_obj->project->folderName." ".$next_task." >".$details_obj->project->runingRoot."\\".$file_name.".log";
+			$current_string .= "php -f index.php trigger ".$user->userName." ".$project->folderName." ".$next_task." >".$project->runingRoot."\\".$file_name.".log";
 		}
-		file_put_contents($details_obj->project->runingRoot."\\".$full_name, $current_string);
-		chdir($details_obj->project->runingRoot);
+		file_put_contents($project->runingRoot."\\".$full_name, $current_string);
+		chdir($project->runingRoot);
 		$command = "start /B ".$full_name;
 		pclose(popen($command, "w"));		
 	}

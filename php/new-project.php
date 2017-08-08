@@ -1,14 +1,13 @@
 <?php	
 	//Update user's details after creating a new project.
-	function update_user_new_project($details_obj,$user){
+	function update_user_new_project($project,$user){
 		$arr = $user->list;
 		$count = sizeof($arr);
 		$obj = new stdClass();
-		$obj->name =$details_obj->project->folderName;
-		$obj->discription = $details_obj->project->discription;
+		$obj->name =$project->folderName;
+		$obj->discription = $project->discription;
 		$arr[$count] = $obj; 
 		$user->list = $arr;
-		update_user_details($details_obj,$user);
 		return $user;
 	}
 	//Get all steps of a project.
@@ -18,13 +17,13 @@
 		return $ans;
 	}
 	//Create project file on the server.
-	function create_project_details($details_obj){
+	function create_project_details($details_obj,$user){
 		$project = new stdClass();
 		$project->folderName = $details_obj->project->folderName;
 		$project->discription = $details_obj->project->discription;
 		$project->gitUrl = $details_obj->project->gitUrl;
 		$project->gitName = $details_obj->project->gitName;
-		$project->folderRoot = $details_obj->user->userNameRoot.'\\'.$project->folderName;
+		$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
 		$project->project_details_file = $project->folderRoot."\\project_details.json";
 		$project->userProjectRoot = $project->folderRoot.'\\rootGit';
 		$project->DebuugerRoot = $project->folderRoot.'\\rootLearn';
@@ -39,12 +38,12 @@
 		return $project;
 	}
 	//Check if the Git URL that was given by user exists in the Git repository.
-	function is_git_project($details_obj){
+	function is_git_project($project,$user){
 		$flag = TRUE;
 		set_time_limit(300);
-		$check_git_file = $details_obj->user->userNameRoot."\\".$details_obj->project->gitName."_is_git.txt";
+		$check_git_file = $user->userNameRoot."\\".$project->project->gitName."_is_git.txt";
 		file_put_contents($check_git_file, "");
-		exec("git ls-remote ".$details_obj->project->gitUrl." 2>".$check_git_file);
+		exec("git ls-remote ".$project->project->gitUrl." 2>".$check_git_file);
 		$str = file_get_contents($check_git_file);
 		$place1 =strpos($str,"fatal");
 		$place2 =strpos($str,"Fatal");
@@ -55,47 +54,49 @@
 		}
 		unlink($check_git_file);
 		return $flag;
-
 	}
 	//All activities that are needed for a new project on the server.
 	function start_and_prepare_folders($details_obj){
-		$project =  create_project_details($details_obj);
 		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["problem"]==true){
 			$ans['status'] = 555;
 			$ans['message'] = "Session expired or not exists.";
-		}else if ((is_dir($project->folderRoot)==TRUE)){
-			$ans['status'] = 1;
-			$ans['message'] = "You have already a project with this name, pick a new name.";
-		}else if(!is_git_project($details_obj)){
-			$ans['status'] = 2;
-			$ans['message'] = "The Git url that was inserted does not exist in Git repositories. Try a different url.";
-		}else{
-			mkdir($project->folderRoot, 0777, true);
-			mkdir($project->userProjectRoot, 0777, true);
-			mkdir($project->DebuugerRoot, 0777, true);
-			mkdir($project->outputPython, 0777, true);
-			mkdir($project->runingRoot, 0777, true);
-			$filr_tmp = '';
-			$filr_tmp .= "git clone --progress ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
-			$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
-			$filr_tmp .= "cd ".$project->userProjectRoot."\\".$project->gitName."\n";
-			$filr_tmp .= "git tag>".$project->runingRoot."\\tagList.txt\n";
-			$filr_tmp .= "dir /s /b *pom.xml >".$project->runingRoot."\\pomList.txt\n";
-			$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
-			$filr_tmp .= "php -f index.php trigger ".$details_obj->user->userName." ".$project->folderName." check_clone >".$project->runingRoot."\\check_clone.log";
-			file_put_contents($project->runingRoot.'\\clone_task.cmd', $filr_tmp);
-			$user_details = update_user_new_project($details_obj,$arr["user"]);
-			$project_details = create_project_details($details_obj);
-			chdir($project->runingRoot);
-			$command = "start /B clone_task.cmd";
-			pclose(popen($command, "w"));
-			update_project_details($project);
-			$ans['status'] = 111;
-			$ans['message'] = "Created project, and started to clone.";		
-			$ans['user'] = $user_details;
-			$ans['project'] = $project_details;
+		}else{ 
+			$project =  create_project_details($details_obj,$arr["user"]);
+			if ((is_dir($project->folderRoot)==TRUE)){
+				$ans['status'] = 1;
+				$ans['message'] = "You have already a project with this name, pick a new name.";
+			}else if(!is_git_project($details_obj,$arr["user"])){
+				$ans['status'] = 2;
+				$ans['message'] = "The Git url that was inserted does not exist in Git repositories. Try a different url.";
+			}else{
+				mkdir($project->folderRoot, 0777, true);
+				mkdir($project->userProjectRoot, 0777, true);
+				mkdir($project->DebuugerRoot, 0777, true);
+				mkdir($project->outputPython, 0777, true);
+				mkdir($project->runingRoot, 0777, true);
+				$filr_tmp = '';
+				$filr_tmp .= "git clone --progress ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
+				$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
+				$filr_tmp .= "cd ".$project->userProjectRoot."\\".$project->gitName."\n";
+				$filr_tmp .= "git tag>".$project->runingRoot."\\tagList.txt\n";
+				$filr_tmp .= "dir /s /b *pom.xml >".$project->runingRoot."\\pomList.txt\n";
+				$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
+				$filr_tmp .= "php -f index.php trigger ".$details_obj->user->userName." ".$project->folderName." check_clone >".$project->runingRoot."\\check_clone.log";
+				file_put_contents($project->runingRoot.'\\clone_task.cmd', $filr_tmp);
+				$project_details = create_project_details($details_obj,$arr["user"]);
+				update_project_details($project_details);
+				$user_details = update_user_new_project($project_details,$arr["user"]);
+				update_user_details($arr["user"]);
+				chdir($project_details->runingRoot);
+				$command = "start /B clone_task.cmd";
+				pclose(popen($command, "w"));
+				$ans['status'] = 111;
+				$ans['message'] = "Created project, and started to clone.";		
+				$ans['user'] = $user_details;
+				$ans['project'] = $project_details;
+			}
 		}
 		return $ans;
 	}
@@ -131,7 +132,7 @@
 			pclose(popen($command, "w"));
 		}else if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
 			$p_obj = update_project_list($p_obj,"end_clone",true);
-			update_project_details($details_obj,$p_obj);
+			update_project_details($p_obj);
 			$ans['status'] = 111;
 			$ans['message'] = "all cloned";
 			$ans['project'] = $p_obj; 
