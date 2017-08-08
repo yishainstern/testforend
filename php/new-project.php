@@ -139,20 +139,19 @@
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 	}
 
-
-
 	function get_some_list($project,$attribute,$message){
-		$json = $project->runingRoot."\\".$attribute."json";
-		$txt = $project->runingRoot."\\".$attribute."txt";
+		$json = $project->runingRoot."\\".$attribute.".json";
+		$txt = $project->runingRoot."\\".$attribute.".txt";
 		$tt = $project->userProjectRoot."\\".$project->gitName;
+		//echo($json);
 		$count = strlen($tt);
 		if (is_file($json)){
 			$tmp = file_get_contents($json);
 			return $tmp;
 		}else if (is_file($txt)){
-			$obj = file_get_contents($s1);
+			$obj = file_get_contents($txt);
 			$arr1 = explode("\n",$obj);
-			$arr1 = array_reverse ($arr1);
+			//$arr1 = array_reverse ($arr1);
 			$ret_arr = array();
 			for ($i=0; $i < sizeof($arr1); $i++) { 
 				if($arr1[$i]=="" || $arr1[$i]==''){
@@ -165,12 +164,11 @@
 					array_push($ret_arr, $arr1[$i]);
 				}
 			}
-			file_put_contents($s3,json_encode($ret_arr));
-			$ans = array();
-			$ans['status'] = 111;
-			$ans['message'] = $message;
-			$ans[$attribute] = json_encode($ret_arr);
-			return $ans;
+			$ret_j = json_encode($ret_arr);
+			file_put_contents($json,$ret_j);
+			return $ret_j;
+		}else {
+			return array();
 		}
 	}
 
@@ -187,18 +185,18 @@
 				$ans['message'] = "Project doe's not exsit.";
 			}else {
 				$tmp_p = $obj["project"];
-				$s1 = $details_obj->project->runingRoot."\\";
-				$s3 = $details_obj->runingRoot."\\tagList.json";
-				return get_some_list($tmp_p,"tagList","Get tags list","tags");	
+				$ans['status'] = 111;
+				$ans["array"] = get_some_list($tmp_p,"tagList","Get tags list");
 			}
-		
+		}
+		return $ans;
 	}
 	//
 	function get_poms($details_obj){
-		$s1 = $details_obj->runingRoot."\\pomList.txt";
+		/*$s1 = $details_obj->runingRoot."\\pomList.txt";
 		$s2 = $details_obj->folderRoot."\\project_details.json";
 		$s3 = $details_obj->runingRoot."\\pomList.json";
-		return get_some_list($details_obj,$s1,$s2,$s3,"gut pom list","poms");
+		return get_some_list($tmp_p,"poms","Get poms list");*/
 	}	
 
 ?>

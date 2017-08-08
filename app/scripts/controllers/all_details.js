@@ -69,7 +69,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.$on('project_object_exsites',function(){
         var ff = new FormData();
         $rootScope.project.issue_tracker_url = "";
-        $rootScope.projec.issue_tracker_product_name = "";
+        $rootScope.project.issue_tracker_product_name = "";
         ff.append('id',$rootScope.project.folderName);
         ff.append('userName',$rootScope.user.userName);
         service.ajaxfunc('get_tags','get_tags',ff).then(
