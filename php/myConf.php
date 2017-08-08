@@ -12,17 +12,20 @@
 	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
 	//yishai wrock computer
-	$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
-	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\Users\\home\\Desktop\\Github\\testforend\\php";
+	//$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
+	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//$details_obj->phpRoot = "C:\\Users\\home\\Desktop\\Github\\testforend\\php";
 	//Get user details, session details and user details.
 	function get_all_details_of_user($details_obj){
 		$arr = array();
+		$user = $details_obj->user;
+		$file = $details_obj->root.$user->userName.'\\user_details.json';
+		$file1 = $details_obj->root.$user->userName.'\\user_server_details.json';
 		$arr["user"] = new stdClass();
 		$arr["details"] = new stdClass();
-		if ($details_obj->user->user_details&&file_exists($details_obj->user->user_details)){
-			$arr["user"] = json_decode(file_get_contents($details_obj->user->user_details));
-			$arr["details"] = json_decode(file_get_contents($details_obj->user->user_server_details));
+		if (file_exists($file)&&file_exists($file1)){
+			$arr["user"] = json_decode(file_get_contents($file));
+			$arr["details"] = json_decode(file_get_contents($file1));
 			$arr["problem"] = false;
 		}else {
 			$arr["problem"] = true;
@@ -32,9 +35,10 @@
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
+		$file = $details_obj->user->userNameRoot.'\\'.$details_obj->project->folderName."\\project_details.json";
 		$arr["project"] = new stdClass();
-		if (isset($details_obj->project->project_details_file) && file_exists($details_obj->project->project_details_file)){
-			$arr["project"] = json_decode(file_get_contents($details_obj->project->project_details_file));
+		if (file_exists($file)){
+			$arr["project"] = json_decode(file_get_contents($file));
 			$arr["problem"] = false;
 		}else {
 			$arr["problem"] = true;
@@ -169,23 +173,14 @@
 	if (!isset($details_obj->project->pomPath)){
 		$details_obj->project->pomPath = "";
 	}
-	$details_obj->user->userNameRoot = $details_obj->root.$details_obj->user->userName;
-	$details_obj->project->folderRoot = $details_obj->user->userNameRoot.'\\'.$details_obj->project->folderName;
-	$details_obj->user->user_details = $details_obj->user->userNameRoot.'\\user_details.json';
-	$details_obj->user->user_server_details = $details_obj->user->userNameRoot.'\\user_server_details.json';
-	$details_obj->project->project_details_file = $details_obj->project->folderRoot."\\project_details.json";
-	$details_obj->project->userProjectRoot = $details_obj->project->folderRoot.'\\rootGit';
-	$details_obj->project->DebuugerRoot = $details_obj->project->folderRoot.'\\rootLearn';
-	$details_obj->project->outputPython = $details_obj->project->folderRoot.'\\out';
-	$details_obj->project->runingRoot = $details_obj->project->folderRoot.'\\run';
-	$details_obj->project->full_pom_path = $details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\\".$details_obj->project->pomPath;
+	
+	//$details_obj->project->full_pom_path = $details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\\".$details_obj->project->pomPath;
 	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
 	$details_obj->startGit = "start /B git clone --progress";
 	$details_obj->startGit = "git clone --progress";
-	$details_obj->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-	$details_obj->project->learnDir = $details_obj->project->DebuugerRoot.'\\Debugger\\learner';
-	$details_obj->project->jar_creater = $details_obj->project->DebuugerRoot.'\\Debugger\\tracer';
-	$details_obj->jar_test = $details_obj->project->jar_creater.'\\target\\'.$details_obj->jarName;
+	
+
+	
 	if (isset( $_GET["own"])){
 		$pieces = explode(",", $_GET["own"]);
 		file_put_contents($details_obj->project->runingRoot."\\".$pieces[2]."data", "data");
@@ -203,16 +198,16 @@
 		pclose(popen($command, "w"));		
 	}
 	//Update user details
-	function update_user_details($details_obj,$user){
-		file_put_contents($details_obj->user->user_details, json_encode($user));
+	function update_user_details($user){
+		file_put_contents($user->user_details, json_encode($user));
 	}
 	//Update user details for the server like the session id and last time that he was connected
 	function update_user_hash($details_obj,$hash){
-		file_put_contents($details_obj->user->user_server_details, json_encode($hash));
+		file_put_contents($details_obj->user_server_details, json_encode($hash));
 	}
 	//Update project details in server
-	function update_project_details($details_obj,$project){
-		file_put_contents($details_obj->project->project_details_file,json_encode($project));
+	function update_project_details($project){
+		file_put_contents($project->project_details_file,json_encode($project));
 	}
 	//Update project list
 	function update_project_list($project,$str,$flag){

@@ -12,7 +12,7 @@
 			$int = (int)$arr["details"]->session_time;
 			if (($arr["details"]->session_id==$r)&&($time-$int < (60*60*30))){
 				$arr["details"]->session_time = "".$time;
-				update_user_hash($details_obj,$arr["details"]);
+				update_user_hash($arr["user"],$arr["details"]);
 				$arr["flag"] = true;
 			}else{
 				$arr["flag"] = false;

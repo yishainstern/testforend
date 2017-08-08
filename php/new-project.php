@@ -24,9 +24,18 @@
 		$project->discription = $details_obj->project->discription;
 		$project->gitUrl = $details_obj->project->gitUrl;
 		$project->gitName = $details_obj->project->gitName;
+		$project->folderRoot = $details_obj->user->userNameRoot.'\\'.$project->folderName;
+		$project->project_details_file = $project->folderRoot."\\project_details.json";
+		$project->userProjectRoot = $project->folderRoot.'\\rootGit';
+		$project->DebuugerRoot = $project->folderRoot.'\\rootLearn';
+		$project->outputPython = $project->folderRoot.'\\out';
+		$project->runingRoot = $project->folderRoot.'\\run';
+		$project->learnDir = $project->DebuugerRoot.'\\Debugger\\learner';
+		$project->jar_creater = $project->DebuugerRoot.'\\Debugger\\tracer';
+		$project->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
+		$project->jar_test = $project->jar_creater.'\\target\\'.$project->jarName;
 		$project->progress = get_progress_array();
 		$project->problem = false;
-		update_project_details($details_obj,$project);
 		return $project;
 	}
 	//Check if the Git URL that was given by user exists in the Git repository.
@@ -50,7 +59,7 @@
 	}
 	//All activities that are needed for a new project on the server.
 	function start_and_prepare_folders($details_obj){
-		$project =  $details_obj->project;
+		$project =  create_project_details($details_obj);
 		$arr = check_session($details_obj);
 		$ans = array();
 		if ($arr["problem"]==true){
@@ -82,6 +91,7 @@
 			chdir($project->runingRoot);
 			$command = "start /B clone_task.cmd";
 			pclose(popen($command, "w"));
+			update_project_details($project);
 			$ans['status'] = 111;
 			$ans['message'] = "Created project, and started to clone.";		
 			$ans['user'] = $user_details;
