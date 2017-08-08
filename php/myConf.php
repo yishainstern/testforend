@@ -11,6 +11,10 @@
 	$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
 	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
 	$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
+	//yishai wrock computer
+	$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
+	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	$details_obj->phpRoot = "C:\\Users\\home\\Desktop\\Github\\testforend\\php";
 	//Get user details, session details and user details.
 	function get_all_details_of_user($details_obj){
 		$arr = array();

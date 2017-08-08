@@ -68,10 +68,10 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     }
     $scope.$on('project_object_exsites',function(){
         var ff = new FormData();
-        $rootScope.project.details.issue_tracker_url = "";
-        $rootScope.project.details.issue_tracker_product_name = "";
-        ff.append('id',$rootScope.project.details.folderName);
-        ff.append('userName',$rootScope.user.details.userName);
+        $rootScope.project.issue_tracker_url = "";
+        $rootScope.projec.issue_tracker_product_name = "";
+        ff.append('id',$rootScope.project.folderName);
+        ff.append('userName',$rootScope.user.userName);
         service.ajaxfunc('get_tags','get_tags',ff).then(
             function(data){$scope.success_tag(JSON.parse(data));},
             function(data){$scope.fail_tag(data);}
@@ -116,7 +116,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             data = JSON.parse(data);
             if (data.status==111){
                 $scope.show_loader = false;
-                $state.transitionTo('dashboard.project',{id:$rootScope.project.details.folderName,user:$rootScope.user.details.userName});
+                $state.transitionTo('dashboard.project',{id:$rootScope.project.folderName,user:$rootScope.user.userName});
                 $scope.upload_success = true;
                 $scope.display_upload_text = data.message;
                 if (data.project){

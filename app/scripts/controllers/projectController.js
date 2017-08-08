@@ -59,7 +59,7 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			$scope.how_much_done = 30;
  		}
  		if ($scope.tmp.end_clone.flag && !$scope.tmp.start_offline.flag){
- 			$scope.userArray[1].status= 'Enter this page, Did not do it yet.';
+ 			$scope.userArray[1].status= 'Enter this page. Did not start learning.';
  			$scope.userArray[1].flag= false;
  		}
  		if ($scope.tmp.end_clone.flag && $scope.tmp.start_offline.flag) {
