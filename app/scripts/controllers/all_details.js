@@ -26,8 +26,8 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
     $scope.did_start= false;
     $scope.issue_tracker = {name:"bugzilla"};
     $scope.issues = [
-        {name:"bugzilla",url:"bz.apache.org/bugzilla"},
-        {name:"jira",url:"https://issues.apache.org/jira"}
+        {name:"Bugzilla",url:"bz.apache.org/bugzilla"},
+        {name:"Jira",url:"https://issues.apache.org/jira"}
     ];
     $scope.slidet = function(){
         $('.table_responsive_all').slideToggle();

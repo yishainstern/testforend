@@ -138,7 +138,7 @@
 		$obj->details->progress->mille_stones->end_clone->flag = true;
 		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($obj));
 	}
-	//Gets a list of tags or pom files
+	//Gets a list of tags or pom files.
 	function get_some_list($project,$attribute,$message){
 		$json = $project->runingRoot."\\".$attribute.".json";
 		$txt = $project->runingRoot."\\".$attribute.".txt";

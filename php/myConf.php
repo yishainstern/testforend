@@ -190,15 +190,6 @@
 		$pieces = explode(",", $_GET["own"]);
 		file_put_contents($details_obj->project->runingRoot."\\".$pieces[2]."data", "data");
 	}
-	//Update details of the project in server.
-	function update_progress($str, $projet,$flag, $folderRoot)
-	{
-		if (isset($projet->details->progress->mille_stones->$str)){
-			$projet->details->progress->mille_stones->$str->flag = $flag;
-		}
-		file_put_contents($folderRoot.'project_details.json', json_encode($projet));
-		return $projet;
-	}
 	//Create a cmd file to run on the server (usually for running learning task)
 	function run_cmd_file($details_obj,$current_string,$file_name,$next_task){
 		$full_name = $file_name.".cmd";
@@ -219,7 +210,7 @@
 	function update_user_hash($details_obj,$hash){
 		file_put_contents($details_obj->user->user_server_details, json_encode($hash));
 	}
-	//Update project details
+	//Update project details in server
 	function update_project_details($details_obj,$project){
 		file_put_contents($details_obj->project->project_details_file,json_encode($project));
 	}
@@ -229,6 +220,9 @@
 		switch ($str) {
 			case 'end_clone':
 				$p_obj->end_clone->flag = $flag;
+				break;
+			case 'start_offline':
+				$p_obj->start_offline->flag = $flag;
 				break;
 			default:
 				# code...

@@ -48,55 +48,51 @@
 			//run_cmd_file($details_obj,"","offline","check_python");
 		}
 	}
-	function any_prob_offline($details_obj){
-		return false;
-	}
+	
 
-	function updates($details_obj){
-		$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
-		if (is_file($a_file)){
-			file_put_contents($a_file,"strat agin");
-		}
-		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		$obj->details->problem = new stdClass();
-		$obj->details->problem->code = "0";
-		$obj->details->all_versions = $details_obj->all_versions;
-		$obj->details->testVersion = $details_obj->testVersion;
-		$obj->details->pomPath = $details_obj->pomPath;
-		$obj->details->full_pomPath = $details_obj->userProjectRoot."\\".$details_obj->gitName."\\".$details_obj->pomPath;
-		$obj->details->issue_tracker_product_name = $details_obj->issue_tracker_product_name;
-		$obj->details->issue_tracker_url = $details_obj->issue_tracker_url;
-		$obj->details->issue_tracker = $details_obj->issue_tracker;
-		$obj->details->progress->mille_stones->start_offline->flag = true;
-		file_put_contents($details_obj->folderRoot.'\\project_details.json', json_encode($obj));
-		return $obj;		
-	}
 	//issue_tracker_product_name  issue_tracker_url issue_tracker
-	function creat_conf_for_offline($details_obj,$obj){
+	function creat_conf_for_offline($details_obj){
         $str = 'workingDir='.$details_obj->outputPython."\r\n";
         $str = $str.'git='.$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
         $str = $str.'issue_tracker_product_name='.$details_obj->issue_tracker_product_name."\r\n";
         $str = $str.'issue_tracker_url='.$details_obj->issue_tracker_url."\r\n";
         $str = $str.'issue_tracker='.$details_obj->issue_tracker."\r\n";
         $str = $str."vers=(". $details_obj->all_versions.")";
-        file_put_contents($details_obj->DebuugerRoot."\\Debugger\\learner\\antConf.txt",$str); 
+        file_put_contents($details_obj->learnDir."\\antConf.txt",$str); 
 	}
 	function go_run_python($details_obj){
 		$str = "cd ".$details_obj->learnDir."\n";
 		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
 		run_cmd_file($details_obj,$str,"offline","check_python");
 	}
+	function updates($details_obj,$project){
+		$project->all_versions = $details_obj->project->all_versions;
+		$project->testVersion = $details_obj->project->testVersion;
+		$project->pomPath = $details_obj->project->pomPath;
+		$project->full_pomPath = $details_obj->project->userProjectRoot."\\".$project->gitName."\\".$project->pomPath;
+		$project->issue_tracker_product_name = $details_obj->project->issue_tracker_product_name;
+		$project->issue_tracker_url = $details_obj->project->issue_tracker_url;
+		$project->issue_tracker = $details_obj->project->issue_tracker;
+		$project = update_project_list($project,"start_offline",true);
+		update_project_details($details_obj,$project);
+		return $project;		
+	}
+
 	function all_details($details_obj){
+		$arr = check_session($details_obj);
 		$ans = array();
-		if (any_prob_offline($details_obj)){
-			return;
+		if ($arr["problem"]==true){
+			$ans['status'] = 555;
+			$ans['message'] = "Session expired or not exists.";
+		}else{
+			$obj = get_all_details_of_project($details_obj);
+			$obj_1 = updates($details_obj,$obj["project"]);
+			creat_conf_for_offline($details_obj,$obj);
+			go_run_python($obj_1);
+			$ans['status'] = 111;
+			$ans['message'] = "offline task started";
+			$ans['project'] = $obj_1;
 		}
-		$obj = updates($details_obj);
-		creat_conf_for_offline($details_obj,$obj);
-		go_run_python($details_obj);
-		$ans['status'] = 111;
-		$ans['message'] = "offline task started";
-		$ans['project'] = $obj;
 		return $ans;
 	}
 ?>
