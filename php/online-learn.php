@@ -47,9 +47,7 @@
 	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($details_obj){
-		$tmp_str = "";
-		$tmp_project = get_project_details($details_obj->folderRoot);
-		$tmp_project->details->progress->mille_stones->start_testing->flag = true;
+		$project = update_project_list($details_obj->project,"start_testing",true);
 		if ($details_obj->pomPath==""){
 			$str_tmp_pom_path = "";
 		}else{
@@ -97,19 +95,18 @@
 
 
 	function chane_tracer_mvn_and_checkout_version($details_obj){
-		$str ="";
-		$str .="cd ".$details_obj->jar_creater."\r\n";
-		$str .="call mvn clean install -fn >".$details_obj->runingRoot."\\create_jar_log.txt\r\n";
+		$str ="cd ".$details_obj->project->jar_creater."\r\n";
+		$str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\create_jar_log.txt\r\n";
 		$str .="cd target\r\n";
-		$str .="copy ".$details_obj->jarName." ".$details_obj->runingRoot."\\".$details_obj->jarName."\r\n";	
-		$str .="cd ".$details_obj->userProjectRoot."\\".$details_obj->gitName."\n";
-		$str .="git checkout ".$details_obj->testVersion." 2>../../run/newVersion.txt\r\n";
+		$str .="copy ".$details_obj->project->jarName." ".$details_obj->project->runingRoot."\\".$details_obj->project->jarName."\r\n";	
+		$str .="cd ".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\n";
+		$str .="git checkout ".$details_obj->project->testVersion." 2>../../run/newVersion.txt\r\n";
 		run_cmd_file($details_obj,$str,"pomrun","update_pom");
 	}
 
 	function put_path_txt($details_obj){
-		$str = $details_obj->mavenroot."\r\n".$details_obj->userProjectRoot."\\".$details_obj->gitName."\r\n";
-		file_put_contents($details_obj->runingRoot."\\path.txt",$str);
+		$str = $details_obj->mavenroot."\r\n".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\r\n";
+		file_put_contents($details_obj->project->runingRoot."\\path.txt",$str);
 		chmod($details_obj->runingRoot."\\path.txt", 0777);
 	}
 

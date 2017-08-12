@@ -13,43 +13,17 @@
 		return $obj;
 	}
 	//
-	//use http get request to run the python project.
-	function run_python_code($folderRoot,$learn,$learnDir){
-		chdir($learnDir);
-		$command = 'start /B python wrapper.py antConf.txt learn 2>ff.log';
-		pclose(popen($command, "w"));
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->progress->mille_stones->start_offline->flag = true;
-		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-		$returnJson['status'] = 111;
-		$returnJson['message'] = "strted...check later";
-		$returnJson['project'] = $obj;
-		return $returnJson;
-	}
 	//check if offline task is over
 	function check_if_python_end($details_obj){
-		$obj = json_decode(file_get_contents($details_obj->folderRoot."\\project_details.json"));
-		$ans = array();
-		if (file_exists($details_obj->outputPython.'\\markers\\learner_phase_file')){
-			$obj->details->progress->mille_stones->end_offline->flag = true;
-			file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
+		if (file_exists($details_obj->project->outputPython.'\\markers\\learner_phase_file')){
+			$project = update_project_list($details_obj->project,"end_offline",true);
+			update_project_details($details_obj->project);
 			move_to_online_task($details_obj);
 		}else {
-			$a_file = $details_obj->outputPython.'\\markers\\issue_tracker_file';
-			if (file_exists($a_file)){
-				$a_txt = file_get_contents($a_file);
-				if ($a_txt=="failed"){
-					$obj->details->problem = new stdClass();
-					$obj->details->problem->code = "3";
-					$obj->details->problem->txt = "bad issue tracker name or url";
-					file_put_contents($details_obj->folderRoot."\\project_details.json",json_encode($obj));
-				}
-			}
+			
 			//run_cmd_file($details_obj,"","offline","check_python");
 		}
 	}
-	
-
 	//issue_tracker_product_name  issue_tracker_url issue_tracker
 	function creat_conf_for_offline($project){
 		var_dump($project);
