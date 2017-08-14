@@ -26,7 +26,6 @@
 	}
 	//issue_tracker_product_name  issue_tracker_url issue_tracker
 	function creat_conf_for_offline($project){
-		var_dump($project);
         $str = 'workingDir='.$project->outputPython."\r\n";
         $str = $str.'git='.$project->userProjectRoot."\\".$project->gitName."\r\n";
         $str = $str.'issue_tracker_product_name='.$project->issue_tracker_product_name."\r\n";
@@ -44,7 +43,12 @@
 		$project->all_versions = $details_obj->project->all_versions;
 		$project->testVersion = $details_obj->project->testVersion;
 		$project->pomPath = $details_obj->project->pomPath;
-		$project->full_pomPath = $project->userProjectRoot."\\".$project->gitName."\\".$project->pomPath;
+		if ($project->pomPath==""){
+			$str_tmp_pom_path = "";
+		}else{
+			$str_tmp_pom_path = "\\".$project->pomPath;
+		}
+		$project->full_pomPath = $project->userProjectRoot."\\".$project->gitName.$str_tmp_pom_path;
 		$project->issue_tracker_product_name = $details_obj->project->issue_tracker_product_name;
 		$project->issue_tracker_url = $details_obj->project->issue_tracker_url;
 		$project->issue_tracker = $details_obj->project->issue_tracker;

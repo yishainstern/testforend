@@ -29,16 +29,20 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         {name:"Bugzilla",url:"bz.apache.org/bugzilla"},
         {name:"Jira",url:"https://issues.apache.org/jira"}
     ];
+    //Open and close the options of the URL of the issue tracker.
     $scope.slidet = function(){
         $('.table_responsive_all').slideToggle();
     }
+    //Insert the URL of the issue tracker to the input text
     $scope.insert = function(url){
         $scope.a_details.issue_tracker_url = url;
         $('.table_responsive_all').slideToggle();
     }
+    //After picking a version to diff on it.
     $scope.afterSelectItem = function(arr, item){
      arr.push(item);   
     }
+    //After picking the root for the pom file.
     $scope.afterSelectItem2 = function(arr, item){
         if (arr.length>0){
             arr[0] = item;
@@ -48,6 +52,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         }
          $scope.pom_root = item;
     }
+    //Getting all the tags of current project from git.
     $scope.success_tag = function(obj){
         $scope.succ_counter++;
         if ($scope.succ_counter==2){
@@ -57,6 +62,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             $scope.list = obj.array;
         }
     }
+    //Getting all the from the file system.
     $scope.success_pom = function(obj){
         $scope.succ_counter++;
         if ($scope.succ_counter==2){
@@ -66,6 +72,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             $scope.poms = obj.array;
         }
     }
+    //Event after project was lodaed from server. Get all details that are needed.
     $scope.$on('project_object_exsites',function(){
         var ff = new FormData();
         $rootScope.project.issue_tracker_url = "";
@@ -81,6 +88,7 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
             function(data){$scope.fail_pom(data);}
         );
     });
+    //Upload the details to the server' and start learning.
     $scope.upload_details = function(){
         $scope.show_loader = true;
         $scope.did_start= true;
