@@ -3,14 +3,14 @@
 	$details_obj->user = new stdClass();
 	$details_obj->project = new stdClass();
 	//windows server in BG|U
-	$details_obj->root = "C:\\DebuggerUsers\\";
+	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\xampp\\htdocs\\testforend\\php";
+	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\php";
 	//
 	//yishai local computer
-	$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
-	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
+	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
+	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
 	//yishai wrock computer
 	//$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
 	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
