@@ -220,6 +220,12 @@
 			case 'start_offline':
 				$p_obj->start_offline->flag = $flag;
 				break;
+			case 'end_offline':
+				$p_obj->end_offline->flag = $flag;
+				break;
+			case 'start_testing':
+				$p_obj->start_testing->flag = $flag;
+				break;
 			default:
 				# code...
 				break;
