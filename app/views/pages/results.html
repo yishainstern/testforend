@@ -35,7 +35,7 @@
                                                         <tr>
                                                             <th>#</th>
                                                             <th>file name</th>
-                                                             <th>information</th>
+                                                             <!--<th>information</th>-->
                                                             <th>get file</th>
                                                         </tr>
                                                     </thead>
@@ -43,10 +43,10 @@
                                                         <tr ng-hide="item=='.' || item=='..'" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{item}}</td>
-                                                            <td>
+                                                            <!--<td>
                                                                 <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_info('prediction',item,$index)" >get information</button>
                                                                 <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" class="togglt_trigger" data-target="#myModal" data-toggle="modal"></button>
-                                                            </td>
+                                                            </td>-->
                                                             <td>
                                                                 <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'weka')">get file</button>
                                                             </td>
@@ -85,7 +85,7 @@
                                                         <tr>
                                                             <th>#</th>
                                                             <th>file name</th>
-                                                             <th>information</th>
+                                                             <!--<th>information</th>-->
                                                             <th>get file</th>
                                                         </tr>
                                                     </thead>
@@ -93,10 +93,10 @@
                                                         <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" class="inner_table" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{inner_obj}}</td>
-                                                            <td>
+                                                            <!--<td>
                                                                 <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_diagnosis('diagnosis',inner_obj,$parent.$index,$index)" >get information</button>
                                                                 <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" class="togglt_trigger_d-{{$parent.$index}}-{{$index}}" data-target="#myModal" data-toggle="modal"></button>
-                                                            </td>
+                                                            </td>-->
                                                             <td>
                                                                 <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj,'experiments')">get file</button>
                                                             </td>
@@ -122,9 +122,9 @@
 </div>
 
 <form role="form" name="results" ng-class="{'has-error':validation_error}">
-    <input type="hidden" name="userName" value="{{user.details.userName}}">
-    <input type="hidden" name="id" value="{{project.details.folderName}}">
-    <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+    <input type="hidden" name="userName" value="{{user.userName}}">
+    <input type="hidden" name="id" value="{{project.folderName}}">
+    <input type="hidden" name="gitName" value="{{project.gitName}}">
 </form>
 <span ng-init=get_res()></span>
 

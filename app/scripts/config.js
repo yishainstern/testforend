@@ -54,7 +54,6 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
             form_data.append('userName',$rootScope.user.userName);
             service.ajaxfunc('get_user_list','',form_data)
             .then(function(data){
-                data = JSON.parse(data);
                 if (data && data.status && data.status==111){
                     $rootScope.user = data.user;
                     $rootScope.$broadcast('user_in');

@@ -31,8 +31,9 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
         			deferred.reject(data);
         		},
         		success: function(data){
+                    data = $rootScope.checkJson(data);
                     if (data && data.status && data.status==555){
-                       $state.$state.transitionTo('enter');
+                       $state.transitionTo('enter');
                     }
         			deferred.resolve(data);
         		} 
@@ -85,7 +86,9 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
     				form_data.append('id',$stateParams.id);
     				delegate.ajaxfunc('get_project_progress','',form_data)
     				.then(function(data){
-        				data = JSON.parse(data);
+                        if (data && data.status && data.status==555){
+                            $state.transitionTo('enter');
+                        }
         				if (data && data.project.progress){
         					$rootScope.project = data.project; 
         					$rootScope.project_arr = [];

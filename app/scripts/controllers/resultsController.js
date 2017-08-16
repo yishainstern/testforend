@@ -49,9 +49,10 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
-    $scope.get_res = function(){
+    //Event after project was loded from server.
+    $scope.$on('project_object_exsites',function(){
         t_stop = $interval(function() {
-        if ($rootScope.user.details.userName && $rootScope.project.details.folderName && $rootScope.project.details.gitName){
+        if ($rootScope.user.userName && $rootScope.project.folderName && $rootScope.project.gitName){
             //stop interval
             $interval.cancel(t_stop);
             t_stop = undefined;
@@ -61,7 +62,6 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 if ($scope.load_count==2){
                     $scope.show_loader = false;
                 }
-                data = $rootScope.checkJson(data);
                 if (data.status == "111"){
                     $scope.files = data.files;
                 }
@@ -72,8 +72,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 if ($scope.load_count==2){
                     $scope.show_loader = false;
                 }
-                data = $rootScope.checkJson(data);
-                if (data.status == "111"){
+                if (data.status == 111){
                     $scope.experiments = data.files;
                     console.log($scope.experiments);
                 }
@@ -83,7 +82,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
         
-    }
+    });
          
     $scope.get_file_info = function(flag,item,index){
         $scope.show_loader = true;

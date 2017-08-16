@@ -35,7 +35,6 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
     //If the sign-in process was finished properly, sign-in and move to the next page.
     $scope.success_sgin = function(data){
-        data = JSON.parse(data);
         console.log(data);
         if (data && data.status && data.status==111){
             $rootScope.user = data.user; 
@@ -53,8 +52,6 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
     //When the log-in process returns from the server with a success message. 
     $scope.success_log_in = function(data){
-        data = JSON.parse(data);
-        console.log(data);
         if (data && data.status && data.status==111){
             $rootScope.user = data.user; 
             localStorage.setItem('name',$rootScope.user.userName);
