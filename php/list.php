@@ -48,6 +48,7 @@
 				$ans['message'] = "Project doe's not exsit.";
 			}else {
 				$ans['project'] = $obj["project"]; 
+				$ans['user'] = $arr["user"]; 
 				$ans['status'] = 111;
 				$ans['message'] = "got the progress";				
 			}

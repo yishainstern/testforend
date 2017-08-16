@@ -232,8 +232,8 @@
 			case 'run_prediction':
 				$p_obj->run_prediction->flag = $flag;
 				break;
-			default:
-				# code...
+			case 'get_prediction':
+				$p_obj->get_prediction->flag = $flag;
 				break;
 		}
 		return $project;

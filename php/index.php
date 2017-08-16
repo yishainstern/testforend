@@ -3,8 +3,8 @@
 	require_once 'init.php';
 	require_once 'online-learn.php';
 	require_once 'offline-learn.php';
-	require_once 'prediction.php';
 	require_once 'list.php';	
+	require_once 'prediction.php';
 	require_once 'new-project.php';
 	//header('Content-Type: false');
 	error_reporting(E_ALL);
