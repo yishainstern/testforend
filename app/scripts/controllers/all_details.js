@@ -80,11 +80,11 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         ff.append('id',$rootScope.project.folderName);
         ff.append('userName',$rootScope.user.userName);
         service.ajaxfunc('get_tags','get_tags',ff).then(
-            function(data){$scope.success_tag(JSON.parse(data));},
+            function(data){$scope.success_tag(data);},
             function(data){$scope.fail_tag(data);}
         );
         service.ajaxfunc('get_poms','get_tags',ff).then(
-            function(data){$scope.success_pom(JSON.parse(data));},
+            function(data){$scope.success_pom(data);},
             function(data){$scope.fail_pom(data);}
         );
     });
@@ -121,7 +121,6 @@ angular.module('sbAdminApp').controller('all_details', ['$scope', '$timeout', '$
         data_to_send.append('issue_tracker',$scope.issue_tracker.name);
         service.ajaxfunc('all_details','files',data_to_send)
         .then(function(data){
-            data = JSON.parse(data);
             if (data.status==111){
                 $scope.show_loader = false;
                 $state.transitionTo('dashboard.project',{id:$rootScope.project.folderName,user:$rootScope.user.userName});
