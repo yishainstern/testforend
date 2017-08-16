@@ -226,6 +226,12 @@
 			case 'start_testing':
 				$p_obj->start_testing->flag = $flag;
 				break;
+			case 'end_testing':
+				$p_obj->end_testing->flag = $flag;
+				break;
+			case 'run_prediction':
+				$p_obj->run_prediction->flag = $flag;
+				break;
 			default:
 				# code...
 				break;

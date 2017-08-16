@@ -26,25 +26,26 @@
 		return $ans;
 	}
 	function prepare_pridction($details_obj){
-		chdir($details_obj->folderRoot);
-		exec("dir DebuggerTests /s /b > ".$details_obj->runingRoot."\\DebuggerTests.txt");
-		if (!file_exists($details_obj->outputPython.'\\DebuggerTests')){
-			mkdir($details_obj->outputPython.'\\DebuggerTests', 0777, true);
+		$tmp_path = $details_obj->project->runingRoot."\\DebuggerTests.txt";
+		chdir($details_obj->project->folderRoot);
+		exec("dir DebuggerTests /s /b > ".$tmp_path);
+		if (!file_exists($details_obj->project->outputPython.'\\DebuggerTests')){
+			mkdir($details_obj->project->outputPython.'\\DebuggerTests', 0777, true);
 		}
-		$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\DebuggerTests.txt"));
+		$arr = explode("\n",file_get_contents($tmp_path));
 		$str = "";
 		if (sizeof($arr)>0){
 			for ($i=0; $i < sizeof($arr); $i++) { 
 				if (strlen($arr[$i])>0){
 					$tmp = substr($arr[$i], 0,(strlen($arr[$i])-1));
-					$str .= "start /B xcopy ".$tmp." ".$details_obj->outputPython."\\DebuggerTests /-Y\n";
+					$str .= "start /B xcopy ".$tmp." ".$details_obj->project->outputPython."\\DebuggerTests /-Y\n";
 				}
 			}
 		}
 		return $str;
 	}	
 	function run_pridction($details_obj){
-		$command = "cd ".$details_obj->learnDir."\n";
+		$command = "cd ".$details_obj->project->learnDir."\n";
 		$command .= "python wrapper.py antConf.txt experiments 2>pred.log\n";
 		return $command;
 	}
@@ -73,13 +74,13 @@
 	}		
 
 	function all_pred($details_obj){
-		$obj = json_decode(file_get_contents($details_obj->folderRoot.'\\project_details.json'));
-		$obj->details->progress->mille_stones->end_testing->flag = true;
+		var_dump($details_obj);
+		$details_obj->project = update_project_list($details_obj->project,"end_testing",true);
+		$details_obj->project = update_project_list($details_obj->project,"run_prediction",true);
+		update_project_details($details_obj->project);
 		$str = prepare_pridction($details_obj);
-		$obj->details->progress->mille_stones->run_prediction->flag = true;
 		$str .= run_pridction($details_obj);
-		file_put_contents('filename',$str);
-		run_cmd_file($details_obj,$str,"runpred","all_done");
+		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"runpred","all_done");
 		
 	}
 
