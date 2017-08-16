@@ -47,48 +47,44 @@
 	//
 	//updates the pom.xml files for using the online learning
 	function update_pom_files($details_obj){
-		$project = update_project_list($details_obj->project,"start_testing",true);
-		if ($details_obj->pomPath==""){
-			$str_tmp_pom_path = "";
-		}else{
-			$str_tmp_pom_path = "\\".$details_obj->pomPath;
-		}
-		$str = $details_obj->userProjectRoot."\\".$details_obj->gitName.$str_tmp_pom_path;
-		if (is_dir($str)){
-			exec("dir /s /b " .$str."\*pom.xml* > ".$details_obj->runingRoot."\\poms.txt");
-			$arr = explode("\n",file_get_contents($details_obj->runingRoot."\\poms.txt"));
-			if (is_file($str."/pom.xml")){
-				$tmp_str .="cd ".$str."\n";
-				$tmp_str .="call mvn clean install -fn >".$details_obj->runingRoot."\\mavenLog.txt\n";
+		$tmp_str =  "";
+		$details_obj->project = update_project_list($details_obj->project,"start_testing",true);
+		if (is_dir($details_obj->project->full_pomPath)){
+			exec("dir /s /b " .$details_obj->project->full_pomPath."\\*pom.xml* > ".$details_obj->project->runingRoot."\\poms.txt");
+			$arr = explode("\n",file_get_contents($details_obj->project->runingRoot."\\poms.txt"));
+			if (is_file($details_obj->project->full_pomPath."/pom.xml")){
+				$tmp_str .="cd ".$details_obj->project->full_pomPath."\n";
+				$tmp_str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\mavenLog.txt\n";
 			}
 			if ((isset($arr)) && (sizeof($arr)>0)){
 				$files = array();
 				for ($i=0; $i < sizeof($arr) ; $i++) { 
 					set_time_limit(30);
-					$pathForJar = $details_obj->runingRoot."\\".$details_obj->jarName;
-					$pathForPathtx = $details_obj->runingRoot."\\path.txt";
-					$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->userProjectRoot);
+					$pathForJar = $details_obj->project->runingRoot."\\".$details_obj->project->jarName;
+					$pathForPathtx = $details_obj->project->path_online;
+					$files = pastPom($arr[$i],$pathForJar,$pathForPathtx,$files,$details_obj->project->userProjectRoot);
 				}
 				if (sizeof($files)>0){
-					$tmp_project->details->files = $files;
+					$details_obj->project->pom_files = $files;
 					
 				}else{
-					$tmp_project->details->problem = new stdClass();
-					$tmp_project->details->problem->code = "3";
-					$tmp_project->details->problem->txt = "No surefire plugin in pom files";
+					$details_obj->project->problem = true;
+					$details_obj->project->problem_code = "3";
+					$details_obj->project->problem_txt = "No surefire plugin in pom files";
 				}				
 			}else{
-				$tmp_project->details->problem = new stdClass();
-				$tmp_project->details->problem->code = "2";
-				$tmp_project->details->problem->txt = "There is no pom files in the version tag that you picked";
+				$details_obj->project->problem = true;
+				$details_obj->project->problem_code = "2";
+				$details_obj->project->problem_txt = "There is no pom files in the version tag that you picked";
 			}
 		}else{
-			$tmp_project->details->problem = new stdClass();
-			$tmp_project->details->problem->code = "1";
-			$tmp_project->details->problem->txt = "the directory does not exit in the version tag that you picked";
+			$details_obj->project->problem = true;
+			$details_obj->project->problem_code = "1";
+			$details_obj->project->problem_txt = "the directory does not exit in the version tag that you picked";
 		}
-		file_put_contents($details_obj->folderRoot.'\\project_details.json',json_encode($tmp_project));
-		run_cmd_file($details_obj,$tmp_str,"runOnline","all_pred");
+		$details_obj->project = update_project_list($details_obj->project,"start_testing",true);
+		update_project_details($details_obj->project);
+		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$tmp_str,"runOnline","all_pred");
 	}
 	//
 
@@ -101,13 +97,13 @@
 		$str .="copy ".$details_obj->project->jarName." ".$details_obj->project->runingRoot."\\".$details_obj->project->jarName."\r\n";	
 		$str .="cd ".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\n";
 		$str .="git checkout ".$details_obj->project->testVersion." 2>../../run/newVersion.txt\r\n";
-		run_cmd_file($details_obj,$str,"pomrun","update_pom");
+		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"pomrun","update_pom");
 	}
 
 	function put_path_txt($details_obj){
 		$str = $details_obj->mavenroot."\r\n".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\r\n";
-		file_put_contents($details_obj->project->runingRoot."\\path.txt",$str);
-		chmod($details_obj->runingRoot."\\path.txt", 0777);
+		file_put_contents($details_obj->project->path_online,$str);
+		chmod($details_obj->project->path_online, 0777);
 	}
 
 	function move_to_online_task($details_obj){

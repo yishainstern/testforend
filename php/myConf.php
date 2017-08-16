@@ -3,14 +3,14 @@
 	$details_obj->user = new stdClass();
 	$details_obj->project = new stdClass();
 	//windows server in BG|U
-	$details_obj->root = "C:\\DebuggerUsers\\";
+	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\xampp\\htdocs\\testforend\\php";
+	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\php";
 	//
 	//yishai local computer
-	$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
-	$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
+	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
+	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
+	//$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
 	//yishai wrock computer
 	//$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
 	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
@@ -219,6 +219,18 @@
 				break;
 			case 'start_offline':
 				$p_obj->start_offline->flag = $flag;
+				break;
+			case 'end_offline':
+				$p_obj->end_offline->flag = $flag;
+				break;
+			case 'start_testing':
+				$p_obj->start_testing->flag = $flag;
+				break;
+			case 'end_testing':
+				$p_obj->end_testing->flag = $flag;
+				break;
+			case 'run_prediction':
+				$p_obj->run_prediction->flag = $flag;
 				break;
 			default:
 				# code...

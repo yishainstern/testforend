@@ -131,6 +131,7 @@
 			$command = "start /B checkout.cmd";
 			pclose(popen($command, "w"));
 		}else if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
+			echo "string";
 			$p_obj = update_project_list($p_obj,"end_clone",true);
 			update_project_details($p_obj);
 			$ans['status'] = 111;

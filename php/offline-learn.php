@@ -16,7 +16,7 @@
 	//check if offline task is over
 	function check_if_python_end($details_obj){
 		if (file_exists($details_obj->project->outputPython.'\\markers\\learner_phase_file')){
-			$project = update_project_list($details_obj->project,"end_offline",true);
+			$details_obj->project = update_project_list($details_obj->project,"end_offline",true);
 			update_project_details($details_obj->project);
 			move_to_online_task($details_obj);
 		}else {
@@ -52,6 +52,7 @@
 		$project->issue_tracker_product_name = $details_obj->project->issue_tracker_product_name;
 		$project->issue_tracker_url = $details_obj->project->issue_tracker_url;
 		$project->issue_tracker = $details_obj->project->issue_tracker;
+		$project->path_online = $project->runingRoot."\\path.txt";
 		$project = update_project_list($project,"start_offline",true);
 		update_project_details($project);
 		return $project;		
