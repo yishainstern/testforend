@@ -1,6 +1,6 @@
 <?php
 	//
-	//updates the pom file
+	//Update a pom.xml file with the surefire plugin.
 	function pastPom($str,$jar,$path,$files,$userProjectRoot){
 		$arr = array("\n","\r\n","\r");
 		$str = str_replace($arr, "", $str);
@@ -42,10 +42,7 @@
     	}
     	return $files;
 	}
-
-	function run_online_task(){}
-	//
-	//updates the pom.xml files for using the online learning
+	//Get a list of all pom.xml files in the "pom root path" and update them if necessary. 
 	function update_pom_files($details_obj){
 		$tmp_str =  "";
 		$details_obj->project = update_project_list($details_obj->project,"start_testing",true);
@@ -89,7 +86,7 @@
 	//
 
 
-
+	//Create a jar file from the Debbuger system and copy it into our project files.
 	function chane_tracer_mvn_and_checkout_version($details_obj){
 		$str ="cd ".$details_obj->project->jar_creater."\r\n";
 		$str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\create_jar_log.txt\r\n";
@@ -99,13 +96,13 @@
 		$str .="git checkout ".$details_obj->project->testVersion." 2>../../run/newVersion.txt\r\n";
 		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"pomrun","update_pom");
 	}
-
+	//Running maven for our learning requires a path.txt file here we create it.
 	function put_path_txt($details_obj){
 		$str = $details_obj->mavenroot."\r\n".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\r\n";
 		file_put_contents($details_obj->project->path_online,$str);
 		chmod($details_obj->project->path_online, 0777);
 	}
-
+	//After finishing "offline" part we start to execute the online part.
 	function move_to_online_task($details_obj){
 		put_path_txt($details_obj);
 		chane_tracer_mvn_and_checkout_version($details_obj);

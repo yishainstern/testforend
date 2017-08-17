@@ -15,6 +15,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.a_counter = 0;
     var t_stop;
     var swiper;
+
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
@@ -32,11 +33,13 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
     $scope.files = [];
+    //Slide between sections of results, prediction and diagnoses.
     $scope.swipe_res = function(index){
         if (typeof Swiper == 'function'){
             swiper.slideTo(index);
         }
     }
+    //Get a from the server.
     $scope.get_file = function(item,folder){
          $scope.show_loader = true;
         var form = document.forms.namedItem('results');
@@ -49,7 +52,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
-    //Event after project was loded from server.
+    //Event after project was loded from server. get all list of files we need.
     $scope.$on('project_object_exsites',function(){
         t_stop = $interval(function() {
         if ($rootScope.user.userName && $rootScope.project.folderName && $rootScope.project.gitName){
@@ -83,7 +86,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     },300);
         
     });
-         
+    //Get information in files, is not ready until we will have all the information we need.
     $scope.get_file_info = function(flag,item,index){
         $scope.show_loader = true;
         $scope.witch_file_name = item;
@@ -104,8 +107,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 $scope.show_loader = false;
             }); 
     }
-
-
+    //Get information in files, is not ready until we will have all the information we need.
     $scope.get_file_diagnosis = function(flag,item,parent, index){
         $scope.show_loader = true;
         $scope.witch_file_name = item;
