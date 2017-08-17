@@ -42,7 +42,6 @@
 	function log_in($details_obj){
 		$user = $details_obj->user;
 		$ans = array();
-		
 		session_start();
 		$r = session_id();
 		$time = time();
