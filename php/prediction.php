@@ -1,4 +1,5 @@
 <?php
+	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
 		$ans = array();
 		chdir("files");
@@ -25,6 +26,7 @@
 		}
 		return $ans;
 	}
+	//To run the diagnosis part we need the output of the maven part. This function takes the output of the Maven testing and copies it to a relevant place in the server.
 	function prepare_pridction($details_obj){
 		$tmp_path = $details_obj->project->runingRoot."\\DebuggerTests.txt";
 		chdir($details_obj->project->folderRoot);
@@ -43,12 +45,14 @@
 			}
 		}
 		return $str;
-	}	
+	}
+	//Execute the diagnoses part.
 	function run_pridction($details_obj){
 		$command = "cd ".$details_obj->project->learnDir."\n";
 		$command .= "python wrapper.py antConf.txt experiments 2>pred.log\n";
 		return $command;
 	}
+	//Get and download a file from the output of learning task.
 	function get_pridction($folderRoot,$learnDir){
 		chdir($learnDir);
 		$file = 'antBugs.csv';
@@ -64,18 +68,16 @@
 		    exit;//f
 		}
 	}		
-
+	//Start the prediction part.
 	function all_pred($details_obj){
-		var_dump($details_obj);
 		$details_obj->project = update_project_list($details_obj->project,"end_testing",true);
 		$details_obj->project = update_project_list($details_obj->project,"run_prediction",true);
 		update_project_details($details_obj->project);
 		$str = prepare_pridction($details_obj);
 		$str .= run_pridction($details_obj);
 		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"runpred","all_done");
-		
 	}
-
+	//Get a list of all files in the weka folder (out put of the first part).
 	function results($details_obj){
 		$tmp_arr = get_project_progress($details_obj);
 		$ans = array();
@@ -88,9 +90,9 @@
 		}else {
 			$ans['status'] = 555;
 		}
-		
 		return $ans;
 	}
+	//Get all files of diagnoses part.
 	function experiments($details_obj){
 		$tmp_arr = get_project_progress($details_obj);
 		$ans = array();
@@ -126,6 +128,7 @@
 		}	
 		return $ans;
 	}
+	//Send the file to the user.
 	function get_file($details_obj){
 		$tmp_arr = get_project_progress($details_obj);
 		$ans = array();
@@ -150,6 +153,7 @@
 			}
 
 	}
+	//After the last task is done.
 	function all_done($details_obj){
 		$details_obj->project = update_project_list($details_obj->project,"get_prediction",true);
 		update_project_details($details_obj->project);

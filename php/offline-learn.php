@@ -1,19 +1,7 @@
 <?php 
-	//
-	//issue_tracker_product_name  issue_tracker_url issue_tracker
 	
-	function update_details($folderRoot,$fileObj,$all_versions){
-		$obj = json_decode(file_get_contents($folderRoot.'project_details.json'));
-		$obj->details->progress->mille_stones->upload_bug_file->flag = TRUE;
-		if ($fileObj["name"]){
-			$obj->details->bugFileName = $fileObj["name"];
-		}
-		$obj->details->versions = $all_versions;
-		file_put_contents($folderRoot.'project_details.json',json_encode($obj));
-		return $obj;
-	}
 	//
-	//check if offline task is over
+	//Check if the preiction learning part is done.
 	function check_if_python_end($details_obj){
 		if (file_exists($details_obj->project->outputPython.'\\markers\\learner_phase_file')){
 			$details_obj->project = update_project_list($details_obj->project,"end_offline",true);
@@ -24,7 +12,7 @@
 			//run_cmd_file($details_obj,"","offline","check_python");
 		}
 	}
-	//issue_tracker_product_name  issue_tracker_url issue_tracker
+	//One requirement of the prediction part is a configuration file in the current folder' this functions creates the folder for this task.
 	function creat_conf_for_offline($project){
         $str = 'workingDir='.$project->outputPython."\r\n";
         $str = $str.'git='.$project->userProjectRoot."\\".$project->gitName."\r\n";
@@ -34,11 +22,13 @@
         $str = $str."vers=(". $project->all_versions.")";
         file_put_contents($project->learnDir."\\antConf.txt",$str); 
 	}
+	//Execute the python command to start the task.
 	function go_run_python($details_obj,$project,$user){
 		$str = "cd ".$project->learnDir."\n";
 		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
 		run_cmd_file($details_obj,$project,$user,$str,"offline","check_python");
 	}
+	//Update in the project details all of the relevant information of the project that we got from the server.
 	function updates($details_obj,$project){
 		$project->all_versions = $details_obj->project->all_versions;
 		$project->testVersion = $details_obj->project->testVersion;
@@ -57,7 +47,7 @@
 		update_project_details($project);
 		return $project;		
 	}
-
+	//
 	function all_details($details_obj){
 		$arr = check_session($details_obj);
 		$ans = array();
