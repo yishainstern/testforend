@@ -83,6 +83,18 @@
 		if (!$arr["project"]->progress->mille_stones->end_clone->flag){
 			return true;
 		}
+		if ($arr["project"]->progress->mille_stones->start_offline->flag){
+			if(!$arr["project"]->progress->mille_stones->end_offline->flag){
+				if(!$arr["project"]->problem){
+					return true;
+				}	
+			}
+			if(!$arr["project"]->progress->mille_stones->get_prediction->flag){
+				if(!$arr["project"]->problem){
+					return true;
+				}	
+			}
+		}
 		return false;
 	}
 	//Remove all project files from the server.
@@ -95,11 +107,12 @@
 				$ans['message'] = "Still removing old project.";
 			}else if(not_finish($details_obj)){
 				$ans['status'] = 444;
-				$ans['message'] = "Not finish to clone.";
+				$ans['message'] = "Not finish to clone or learning task";
 			}else {
 				$time = time();
+				$time_str = "" + $time;
 				$tmp_arr["details"]->start_remove = true;
-				update_user_hash($details_obj,$tmp_arr["details"]);
+				update_user_hash($tmp_arr["user"],$tmp_arr["details"]);
 				$list = array();
 				for ($i=0; $i < sizeof($tmp_arr["user"]->list); $i++) { 
 					$tmp = $tmp_arr["user"]->list[$i];
@@ -108,11 +121,15 @@
 					}
 				}
 				$tmp_arr["user"]->list = $list;
-				update_user_details($details_obj,$tmp_arr["user"]);
-				$str = "cd ".$details_obj->user->userNameRoot."\\".$details_obj->project->folderName."\n";
-				$str .= "del /Q /S *\n"."cd ../\n";
-				$str .= "rd ".$details_obj->project->folderName." /Q /S \n";
-				$details_obj->project->runingRoot = $details_obj->user->userNameRoot;
+				$new_name = $time_str.$tmp_arr["user"]->userName;
+				$old_name = $tmp_arr["project"]->folderName;
+				update_user_details($tmp_arr["user"]);
+				$str = "cd ".$tmp_arr["user"]->userNameRoot."\\".$old_name."\n";
+				$str .= "del /Q /S *\n";
+				$str .= "cd ../\n";
+				$str .= "rename ".$old_name." ".$new_name."\n"; 
+				$str .= "rd ".$new_name." /Q /S \n";
+				$tmp_arr["project"]->runingRoot = $tmp_arr["user"]->userNameRoot;
 				//($details_obj,$project,$user,$current_string,$file_name,$next_task)
 				run_cmd_file($details_obj,$tmp_arr["project"],$tmp_arr["user"],$str,"rm","done_remove_project");
 				$ans['status'] = 111;
@@ -128,6 +145,6 @@
 	function done_remove_project($details_obj){
 		$arr = get_all_details_of_user($details_obj);
 		$arr["details"]->start_remove = false;
-		update_user_hash($details_obj,$arr["details"]);
+		update_user_hash($arr["user"],$arr["details"]);
 	}
 ?>
