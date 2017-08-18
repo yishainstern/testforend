@@ -32,9 +32,11 @@ angular.module('sbAdminApp').controller('listUserController', ['$scope', '$timeo
         data_to_send.append('id',$scope.picked_item.name);
         service.ajaxfunc('remove_project',true,data_to_send)
         .then(function(data){
-            data = $rootScope.checkJson(data);
             if (data.status==111){
                 $rootScope.user = data.user;
+            }
+            if (data.status==444&& data.message){
+                alert(data.message);
             }
         },
         function(data){
