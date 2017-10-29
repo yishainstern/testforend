@@ -15,7 +15,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
 	   //windows server
         //$rootScope.server_domain = 'http://132.72.64.18/testforend/php/index.php';
         //windows server
-        $rootScope.server_domain = 'http://132.72.64.18/in/testforend/php/index.php';
+        $rootScope.server_domain = 'http://132.72.64.18/php/index.php';
 	//user object, all of users details
 	$rootScope.user = {
 		list:[]

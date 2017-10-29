@@ -5,7 +5,7 @@
 	//windows server in BG|U
 	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\php";
+	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\app\\php";
 	//
 	//yishai local computer
 	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
