@@ -39,6 +39,19 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             swiper.slideTo(index);
         }
     }
+    //display the file
+    $scope.display_file = function(item,folder){
+         $scope.show_loader = true;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('witch_file',item);
+        data_to_send.append('witch_folder',folder);
+        service.filefunc('display_file','results',data_to_send)
+        .then(function(data){
+                 $scope.show_loader = false;
+            },function(data){alert('bad'); $scope.show_loader = false;}
+            );  
+    }
     //Get a from the server.
     $scope.get_file = function(item,folder){
          $scope.show_loader = true;
