@@ -1,4 +1,5 @@
 <?php
+	require_once 'vendor/autoload.php';
 	require_once 'myConf.php';
 	require_once 'init.php';
 	require_once 'online-learn.php';
@@ -77,6 +78,8 @@
 	}elseif ($task== "remove_project"){
 		$returnJson = remove_project($details_obj);
 	}elseif ($task== "done_remove_project"){
+		$returnJson = done_remove_project($details_obj);
+	}elseif ($task== "display_file"){
 		$returnJson = done_remove_project($details_obj);
 	}
 
