@@ -1,5 +1,5 @@
 <?php
-	use displayfile
+	use \displayfile;
 	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
 		$ans = array();
@@ -159,25 +159,12 @@
 		$ans = array();
 		if ($tmp_arr['status']==111){
 			$project = $tmp_arr['project']; 
-			$displayfile = new displayfile();
-			
-			chdir($project->outputPython."\\".$details_obj->project->witch_folder);
-			$file = $details_obj->project->witch_file;
-			if (file_exists($file)) {
-		    	header('Content-Description: File Transfer');
-		    	header('Content-Type: application/octet-stream');
-		    	header('Content-Disposition: attachment; filename="'.basename($file).'"');
-		    	header('Expires: 0');
-		    	header('Cache-Control: must-revalidate');
-		    	header('Pragma: public');
-		    	header('Content-Length: '.filesize($file));
-		    	header('thename: '.basename($file));
-		    	readfile($file);
-		    	exit;
-			}
-			}else {
-				//do nothins
-			}
+			$displayfile = new displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
+			$displayfile->setproject($project);
+			$displayfile->prepareFileFormat();
+		}else {
+			//do nothins
+		}
 	}
 	//After the last task is done.
 	function all_done($details_obj){
