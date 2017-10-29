@@ -13,7 +13,7 @@
 	//Get all steps of a project.
 	function get_progress_array(){
 		$ans = new stdClass();
-		$ans = json_decode(file_get_contents('progress.json'));
+		$ans = json_decode(file_get_contents(__DIR__."/".'progress.json'));
 		return $ans;
 	}
 	//Create project file on the server.

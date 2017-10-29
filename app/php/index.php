@@ -1,12 +1,12 @@
 <?php
 	require_once 'vendor/autoload.php';
-	require_once 'myConf.php';
-	require_once 'init.php';
-	require_once 'online-learn.php';
-	require_once 'offline-learn.php';
-	require_once 'list.php';	
-	require_once 'prediction.php';
-	require_once 'new-project.php';
+	require_once 'web/myConf.php';
+	require_once 'web/init.php';
+	require_once 'web/online-learn.php';
+	require_once 'web/offline-learn.php';
+	require_once 'web/list.php';	
+	require_once 'web/prediction.php';
+	require_once 'web/new-project.php';
 	//header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
