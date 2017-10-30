@@ -46,7 +46,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         var data_to_send = new FormData(form);
         data_to_send.append('witch_file',item);
         data_to_send.append('witch_folder',folder);
-        service.filefunc('display_file','results',data_to_send)
+        service.ajaxfunc('display_file','results',data_to_send)
         .then(function(data){
                  $scope.show_loader = false;
             },function(data){alert('bad'); $scope.show_loader = false;}

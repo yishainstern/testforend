@@ -1,9 +1,9 @@
 <?php
+	namespace \Debugger
 	/**
 	* 
 	*/
-	class displayfile
-	{	
+	class displayfile{	
 		private $project;
 		private $path;
 		private $folder;

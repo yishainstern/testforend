@@ -1,4 +1,5 @@
 <?php
+	namespace \Debugger
 	use \Debugger\displayfile;
 	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
@@ -158,7 +159,7 @@
 		$ans = array();
 		if ($tmp_arr['status']==111){
 			$project = $tmp_arr['project']; 
-			$displayfile = new displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
+			$displayfile = new Debugger\displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
 			$displayfile->setproject($project);
 			$displayfile->prepareFileFormat();
 		}else {
