@@ -158,7 +158,7 @@
 		$ans = array();
 		if ($tmp_arr['status']==111){
 			$project = $tmp_arr['project']; 
-			$displayfile = new displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
+			$displayfile = new \Debugger\displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
 			$displayfile->setproject($project);
 			$displayfile->prepareFileFormat();
 		}else {
