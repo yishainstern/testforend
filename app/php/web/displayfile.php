@@ -1,5 +1,5 @@
 <?php
-	namespace \Debugger
+	namespace Debugger;
 	/**
 	* 
 	*/
