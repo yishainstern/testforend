@@ -12,7 +12,6 @@
 				$ans["status"] = 2;
 				$ans["info"] = "no information";	
 			}
-
 		}else{
 			if(!strpos($details_obj->file_name_output, "barinelOptA")===FALSE){
 				$ans["status"] = 1;
@@ -171,5 +170,4 @@
 		$details_obj->project = update_project_list($details_obj->project,"get_prediction",true);
 		update_project_details($details_obj->project);
 	}	
-		
 ?>

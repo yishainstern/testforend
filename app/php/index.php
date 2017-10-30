@@ -80,7 +80,7 @@
 	}elseif ($task== "done_remove_project"){
 		$returnJson = done_remove_project($details_obj);
 	}elseif ($task== "display_file"){
-		$returnJson = done_remove_project($details_obj);
+		$returnJson = display_file($details_obj);
 	}
 
 	echo json_encode((object)$returnJson);
