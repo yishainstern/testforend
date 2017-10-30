@@ -1,6 +1,6 @@
 <?php
-	namespace \Debugger;
-	use \Debugger\displayfile;
+	namespace Debugger;
+	use Debugger\displayfile;
 	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
 		$ans = array();
@@ -106,7 +106,7 @@
 				$tmp = $arr[$i];
 				$tmp_path = $ex."\\".$tmp;
 				if (is_dir($tmp_path)){
-					$tmp_obj = new stdClass();
+					$tmp_obj = (object)(array());
 					$tmp_obj->dir_name = $tmp;
 					$tmp_obj->dir_arr = array();
 					$tmp_arr = scandir($tmp_path);
@@ -159,7 +159,7 @@
 		$ans = array();
 		if ($tmp_arr['status']==111){
 			$project = $tmp_arr['project']; 
-			$displayfile = new Debugger\displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
+			$displayfile = new \displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
 			$displayfile->setproject($project);
 			$displayfile->prepareFileFormat();
 		}else {

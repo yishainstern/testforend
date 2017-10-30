@@ -1,12 +1,14 @@
 <?php
-	require __DIR__ . '/vendor/autoload.php';
-	require_once 'web/myConf.php';
-	require_once 'web/init.php';
-	require_once 'web/online-learn.php';
-	require_once 'web/offline-learn.php';
-	require_once 'web/list.php';	
-	require_once 'web/prediction.php';
-	require_once 'web/new-project.php';
+	namespace Debugger;
+	require __DIR__.'/vendor/autoload.php';
+
+	require_once __DIR__.'/web/myConf.php';
+	require_once __DIR__.'/web/init.php';
+	require_once __DIR__.'/web/online-learn.php';
+	require_once __DIR__.'/web/offline-learn.php';
+	require_once __DIR__.'/web/list.php';	
+	require_once __DIR__.'/web/prediction.php';
+	require_once __DIR__.'/web/new-project.php';
 	//header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();

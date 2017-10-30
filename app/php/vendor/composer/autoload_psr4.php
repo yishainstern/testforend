@@ -17,4 +17,5 @@ return array(
     'Google\\Cloud\\Core\\' => array($vendorDir . '/google/cloud-core'),
     'Google\\Auth\\' => array($vendorDir . '/google/auth/src'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
+    'Debugger' => array($baseDir . '/web'),
 );
