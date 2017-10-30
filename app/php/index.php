@@ -1,5 +1,5 @@
 <?php
-	require_once 'vendor/autoload.php';
+	require __DIR__ . '/vendor/autoload.php';
 	require_once 'web/myConf.php';
 	require_once 'web/init.php';
 	require_once 'web/online-learn.php';

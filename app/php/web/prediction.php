@@ -1,5 +1,5 @@
 <?php
-	use \displayfile;
+	use \Debugger\displayfile;
 	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
 		$ans = array();
