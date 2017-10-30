@@ -3,6 +3,7 @@
 	/**
 	* 
 	*/
+	use Debugger\fileitems;
 	class displayfile{	
 		private $project;
 		private $path;
