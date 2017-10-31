@@ -50,6 +50,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         .then(function(data){
             $scope.show_loader = false;
             $("#openchartmodat").click();
+            $rootScope.$broadcast("chartdb",{data:data});
         },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }

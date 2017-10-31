@@ -6,6 +6,26 @@
                 <h4 class="modal-title" id="mm"></h4>
             </div>
             <div class="modal-body">
+              <div class="col-lg-4"> 
+                <div class="panel panel-primary"> 
+                  <div class="panel-heading"> Main fecer select </div> 
+                  <div class="panel-body">
+                    <div  class="mainitemwrap" ng-repeat="item in chartdb.values" ng-if="item.type=='main'">
+                      <h4 class="mainval_head" ng-init="item.flags=[]">{{item.name}}</h4>
+                      <div class="line_modal"></div>
+                      <div class="mainval" ng-repeat="val in item.values" ng-init="item.flags[$index]=true">
+                        <span>{{val}}</span>
+                        <span>
+                          <div class="check-wrapper" ng-class="{'waspicked':item.flags[$index]==true,'wasnotpicked':!(item.flags[$index]==true) }" ng-click="item.flags[$index]=!item.flags[$index]">
+                            <div class="valball"></div>                            
+                          </div>
+                        </span>
+                      </div>
+                    </div> 
+                  </div> 
+                  <div class="panel-footer"> Panel Footer </div> 
+                </div> 
+              </div>
             </div>
             <div class="modal-footer">
                 <button type="button" ng-click="up()" class="btn btn-default" data-dismiss="modal">Close</button>

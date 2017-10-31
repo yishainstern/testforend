@@ -15,6 +15,10 @@ angular.module('sbAdminApp')
             link:function(scope, element, attrs) {
             },
             controller:function ($state, $rootScope,$scope){
+                $scope.$on('chartdb',function(data,args){
+                    $scope.chartdb = args.data;
+                    console.log($scope.chartdb.values);
+                });
                 
             }
         }
