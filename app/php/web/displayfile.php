@@ -3,7 +3,7 @@
 	/**
 	* 
 	*/
-	use Debugger\fileitems;
+	//use Debugger\fileitems;
 	class displayfile{	
 		private $project;
 		private $path;
@@ -29,6 +29,7 @@
 		}
 		public function setfolder($content){
 			$this->folder = $content;
+			
 		}
 		public function setfileName($content){
 			$this->fileName = $content;
@@ -36,8 +37,8 @@
 		public function prepareFileFormat(){
 			$this->setpath($this->project->outputPython."/".$this->folder."/".$this->fileName);
 			if (file_exists($this->path)){
-				$txt = file_get_contents($this->path);
-				var_dump($txt);
+				$pieces = explode("\n", file_get_contents($this->path));
+				var_dump($pieces);
 			}
 		}
 		function __construct($folder,$file){
