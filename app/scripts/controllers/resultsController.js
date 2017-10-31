@@ -48,8 +48,9 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         data_to_send.append('witch_folder',folder);
         service.ajaxfunc('display_file','results',data_to_send)
         .then(function(data){
-                 $scope.show_loader = false;
-            },function(data){alert('bad'); $scope.show_loader = false;}
+            $scope.show_loader = false;
+            $("#openchartmodat").click();
+        },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
     //Get a from the server.
