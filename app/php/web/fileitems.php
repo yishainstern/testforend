@@ -3,10 +3,18 @@
 
 	class rawitem
 	{
-
-		function __construct()
-		{
-			# code...
+		private $list;
+		public function getlist(){
+			return $this->list;
+		}
+		public function getlistobj(){
+			return ((object)$this->list);
+		}
+		public function add_to_list($key,$value){
+			$this->list[$key] = $value;
+		}
+		function __construct(){
+			$this->list = array();
 		}
 	}
 	/**
@@ -18,7 +26,7 @@
 		private $values;
 		private $name;
 		private $index;
-		public function toJson(){
+		public function toObject(){
 			$ans = array();
 			$ans["type"] = $this->gettype();
 			$ans["name"] = $this->getname();
@@ -27,7 +35,7 @@
 			return ((object)$ans);
 		}
 		public function add_to_list($val){
-			if (!in_array($val)){
+			if (!in_array($val, $this->values)){
 				array_push($this->values,$val);
 			}
 		}

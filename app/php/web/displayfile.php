@@ -44,6 +44,7 @@
 				$first_raw = $pieces[0];
 				$first_raw = explode(",", $first_raw);
 				$values = array();
+				$raws = array();
 				for ($i=0;$i<sizeof($first_raw);$i++){
 					$val = $first_raw[$i];
 					if ($val =="algorithm" || $val =="times"){
@@ -55,14 +56,25 @@
 				}
 				for ($i=1; $i < sizeof($pieces); $i++) { 
 					$raw_tmp = $pieces[$i];
+					$raw_obj = new rawitem();
 					$raw_tmp = explode(",", $raw_tmp);
 					for ($j=0; $j < sizeof($raw_tmp); $j++) { 
-						//var_dump(get_class($values[$j]));
-						if ($values[$j]){
-							$values[$j]->add_to_list($raw_tmp[$j]);
+						if ($values[$j]){ 
+							if($values[$j]->gettype()=="main"){
+								$values[$j]->add_to_list($raw_tmp[$j]);
+							}
+							$raw_obj->add_to_list($values[$j]->getname(),$raw_tmp[$j]);
 						}
 					}
+					array_push($raws,$raw_obj->getlistobj());
 				}
+				for ($i=0; $i < sizeof($values); $i++) { 
+					$values[$i] = $values[$i]->toObject();
+				}
+				$ans["values"] = $values;
+				$ans["raws"] = $raws;
+				$ans['status'] = 111;
+				return($ans);
 			}else{
 				$ans['status'] = 555;
 				$ans['message'] = "File does not exsist";
