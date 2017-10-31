@@ -5,6 +5,7 @@
     "autoload": {
     	"psr-4": {
       		"Debugger\\": "web"
-    	}
+    	},
+    	"classmap":["web\\fileitems.php"]
   	}
 }

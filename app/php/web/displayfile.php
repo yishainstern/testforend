@@ -3,9 +3,9 @@
 	/**
 	*
 	*/
-	use Debugger\mainitem;
+	//use Debugger\mainitem;
 	use Debugger\rawitem;
-	use Debugger\subitem;
+	//use Debugger\fileitems;
 	class displayfile{
 		private $project;
 		private $path;
@@ -46,14 +46,23 @@
 				$values = array();
 				for ($i=0;$i<sizeof($first_raw);$i++){
 					$val = $first_raw[$i];
-					if ($val =="algorithem" || $val =="times"){
+					if ($val =="algorithm" || $val =="times"){
 						$obj = new mainitem($i,$val);
 					}else{
 						$obj = new subitem($i,$val);
 					}
 					array_push($values, $obj);
 				}
-				var_dump($values);
+				for ($i=1; $i < sizeof($pieces); $i++) { 
+					$raw_tmp = $pieces[$i];
+					$raw_tmp = explode(",", $raw_tmp);
+					for ($j=0; $j < sizeof($raw_tmp); $j++) { 
+						//var_dump(get_class($values[$j]));
+						if ($values[$j]){
+							$values[$j]->add_to_list($raw_tmp[$j]);
+						}
+					}
+				}
 			}else{
 				$ans['status'] = 555;
 				$ans['message'] = "File does not exsist";
