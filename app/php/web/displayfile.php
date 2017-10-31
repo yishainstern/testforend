@@ -5,8 +5,7 @@
 	*/
 	use Debugger\mainitem;
 	use Debugger\rawitem;
-	use Debugger\mainitems;
-	use Debugger\subitems;
+	use Debugger\subitem;
 	class displayfile{
 		private $project;
 		private $path;
@@ -49,8 +48,12 @@
 					$val = $first_raw[$i];
 					if ($val =="algorithem" || $val =="times"){
 						$obj = new mainitem($i,$val);
+					}else{
+						$obj = new subitem($i,$val);
 					}
+					array_push($values, $obj);
 				}
+				var_dump($values);
 			}else{
 				$ans['status'] = 555;
 				$ans['message'] = "File does not exsist";
