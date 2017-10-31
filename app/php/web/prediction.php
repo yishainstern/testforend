@@ -161,7 +161,7 @@
 			$project = $tmp_arr['project']; 
 			$displayfile = new displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
 			$displayfile->setproject($project);
-			$displayfile->prepareFileFormat();
+			return $displayfile->prepareFileFormat();
 		}else {
 			//do nothins
 		}
