@@ -243,6 +243,7 @@ angular
                 'styles/results.css',
                 'bower_components/swiper/dist/js/swiper.min.js',
                 'scripts/directives/goToList/goToList.js',
+                'scripts/directives/chartModal/chartModal.js',
                 'bower_components/swiper/dist/css/swiper.min.css'
               ]
           })
