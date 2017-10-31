@@ -18,6 +18,14 @@
 		private $values;
 		private $name;
 		private $index;
+		public function toJson(){
+			$ans = array();
+			$ans["type"] = $this->gettype();
+			$ans["name"] = $this->getname();
+			$ans["index"] = $this->getindex();
+			$ans["values"] = $this->get_list();
+			return ((object)$ans);
+		}
 		public function add_to_list($val){
 			if (!in_array($val)){
 				array_push($this->values,$val);
