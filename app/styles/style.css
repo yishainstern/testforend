@@ -10,18 +10,13 @@
 .help-block.open_help {
 	opacity: 1;
 }
-
 .form-group {
 	
 }
-
 .go_wrapper {
-
-position: relative;
-
-padding-top: 30px;
-
-padding-bottom: 40px;
+	position: relative;
+	padding-top: 30px;
+	padding-bottom: 40px;
 }
 
 .go_col_12 {
