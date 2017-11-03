@@ -1,0 +1,59 @@
+.line_modal{
+	height: 2px;
+	width: 100%;
+	background-color: #eee;
+	margin-bottom: 8px;
+	opacity: 0.7;
+}
+.mainval_head {
+	margin-top:0px; 
+	font-weight: bold; 
+}
+.mainitemwrap {
+	margin-bottom: 13px;
+	display: table;
+	width: 100%;
+}
+.mainval{margin-bottom: 9px;padding-left: 15px;}
+.check-wrapper{
+	width: 50px;
+	height: 26px;
+	border-radius: 4px;
+	position: relative;
+	vertical-align: top;
+	display: inline-block;
+	border: 1px solid;
+	border-radius: 15px;
+}
+.check-wrapper.waspicked{
+	border-color:#5cb85c;
+}
+.check-wrapper.wasnotpicked{
+	border-color:#d9534f;
+}
+.check-wrapper.waspicked .valball{
+	background-color:#5cb85c;
+	right: 27px;
+}
+.check-wrapper.wasnotpicked .valball{
+	background-color:#d9534f;
+	right: 2px;
+}
+.valball{
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 3px;
+	border-radius: 50%;
+	transition-property: all;
+	transition-timing-function: ease-in;
+	transition-duration: 0.3s;
+}
+
+.mainvaltext{
+	display: inline-block;
+	vertical-align: top;
+	line-height: 25px;
+	font-size: 17px;
+	width: 127px;
+}

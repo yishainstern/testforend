@@ -10,7 +10,7 @@
                 <div class="panel panel-primary"> 
                   <div class="panel-heading"> MAIN ATTIBUTES SELECT </div> 
                   <div class="panel-body">
-                    <div  class="mainitemwrap" ng-repeat="item in chartdb.values" ng-if="item.type=='main'">
+                    <div  class="mainitemwrap" ng-repeat="item in chartdb.values" ng-show="item.type=='main'">
                       <h4 class="mainval_head" ng-init="item.flags=[]">{{item.name}}</h4>
                       <div class="line_modal"></div>
                       <div class="mainval" ng-repeat="val in item.values" ng-init="item.flags[$index]=true" ng-if="val">
@@ -22,11 +22,30 @@
                     </div> 
                   </div> 
                   <div class="panel-footer"> Panel Footer </div> 
+                </div>
+                <div class="panel panel-primary"> 
+                  <div class="panel-heading"> Witch attributes </div> 
+                  <div class="panel-body">
+                    <div  class="mainitemwrap" ng-repeat="item in chartdb.values" 
+                    ng-show="((!(item.type=='main'))&&(!(item.name=='pBug'||item.name=='pValid')))" ng-init="chartdb.charts[$index]=true">
+                      <div style="width: 0px;height: 0px;" ng-if="(item.name=='pBug'||item.name=='pValid'||item.type=='main')">
+                        <span ng-init="chartdb.charts[$index]=false"></span>
+                      </div>
+                      <div class="mainval" >
+                        <span class="mainvaltext">{{item.name}}</span>
+                        <span class="check-wrapper" ng-class="{'waspicked':chartdb.charts[$index]==true,'wasnotpicked':!(chartdb.charts[$index]==true) }" ng-click="chartdb.charts[$index]=!chartdb.charts[$index]">
+                            <div class="valball"></div>                            
+                        </span>
+                      </div>
+                    </div> 
+                  </div> 
+                  <div class="panel-footer"> Panel Footer </div> 
                 </div> 
               </div>
             </div>
             <div class="modal-footer">
                 <button type="button" ng-click="up()" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" ng-click="displayChart()" class="btn btn-default">Display Charts</button>
             </div>
         </div>
     </div>
