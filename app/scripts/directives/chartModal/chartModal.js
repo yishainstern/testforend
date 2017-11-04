@@ -37,6 +37,8 @@ angular.module('sbAdminApp')
                     $scope.line.times = [];
                     $scope.line.alg = [];
                     $scope.line.data = [];
+                    $scope.view_charts= false;
+                    $scope.charts__arr= [];
                     for (var i = 0; i < $scope.chartdb.values.length; i++) {
                         if ($scope.chartdb.values[i].type=="main"){
                             for (var j = 0; j < $scope.chartdb.values[i].values.length; j++){
@@ -63,8 +65,7 @@ angular.module('sbAdminApp')
                             $scope.charts[$scope.chartdb.values[i].name] = {};
                             var tmp = $scope.charts[$scope.chartdb.values[i].name];
                             tmp.name = $scope.chartdb.values[i].name;
-                            tmp.chart = angular.copy($scope.line); 
-                            
+                            tmp.chart = angular.copy($scope.line);        
                         }
                     }
                     for (var rr = 0; rr < $scope.chartdb.raws.length; rr++) {
@@ -76,14 +77,22 @@ angular.module('sbAdminApp')
                                 try{
                                     var tt_rr = $scope.pos.alg[$scope.chartdb.raws[rr].algorithm];
                                     var tt_co = $scope.pos.times[$scope.chartdb.raws[rr].times];
-                                    if(tt_rr && tt_co){tmp_chart.chart.data[tt_rr][tt_co]=ttmp[1]};
+                                    if(tt_rr && tt_co){
+                                        //var num = ''+ttmp[1];
+
+                                        tmp_chart.chart.data[tt_rr][tt_co]=Math.floor(parseFloat(ttmp[1])*100);
+                                    };
                                 }catch(e){
                                     console.log("ss");
                                 }
                             }
                         }
                     }
-                    console.log($scope.charts);
+                    for (var key in $scope.charts) {
+                        $scope.charts__arr[$scope.charts__arr.length]=$scope.charts[key];
+                    }
+                    $scope.view_charts= true;
+                    console.log($scope.charts__arr);
                 }
             }
         }

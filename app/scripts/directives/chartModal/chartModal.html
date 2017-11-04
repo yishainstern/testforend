@@ -40,6 +40,16 @@
                     </div> 
                   </div> 
                   <div class="panel-footer"> Panel Footer </div> 
+                </div>
+                <div class="panel panel-primary" ng-if="view_charts"> 
+                  <div class="panel-heading"> charts </div> 
+                  <div class="panel-body">
+                    <div  class="mainitemwrap" ng-repeat="item in charts__arr" >
+                        {{item.name}}
+                      <canvas id="line-{{$index}}" class="chart chart-line chart-xl" data="item.chart.data" labels="item.chart.alg" legend="true" click="item.chart.onClick" series="item.chart.times"></canvas>
+                    </div> 
+                  </div> 
+                  <div class="panel-footer"> Panel Footer </div> 
                 </div> 
               </div>
             </div>
