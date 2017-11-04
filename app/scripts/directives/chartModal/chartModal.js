@@ -33,7 +33,7 @@ angular.module('sbAdminApp')
                     $scope.chartdb.charts=[];
                 });
                 $scope.displayChart = function(){
-                    console.log($scope.chartdb);
+                    $scope.charts = [];
                     $scope.line.times = [];
                     $scope.line.alg = [];
                     $scope.line.data = [];
@@ -52,15 +52,39 @@ angular.module('sbAdminApp')
                             }
                         }
                     }
-                    console.log($scope.pos);
-                    for (var i = 0; i < $scope.chartdb.values.length; i++) {
-                        if ($scope.chartdb.charts[i]==true){
-                            $scope.charts[$scope.charts.length] = angular.copy($scope.line);
+                    for (var t = 0; t < $scope.line.alg.length; t++) {
+                        $scope.line.data[t] = [];
+                        for (var tt = 0; tt < $scope.line.times.length; tt++) {
+                            $scope.line.data[t][tt]=0;
                         }
                     }
+                    for (var i = 0; i < $scope.chartdb.values.length; i++) {
+                        if ($scope.chartdb.charts[i]==true){
+                            $scope.charts[$scope.chartdb.values[i].name] = {};
+                            var tmp = $scope.charts[$scope.chartdb.values[i].name];
+                            tmp.name = $scope.chartdb.values[i].name;
+                            tmp.chart = angular.copy($scope.line); 
+                            
+                        }
+                    }
+                    for (var rr = 0; rr < $scope.chartdb.raws.length; rr++) {
+                        var arr = Object.entries($scope.chartdb.raws[rr]);
+                        for (var rrr = 0; rrr < arr.length; rrr++) {
+                            var ttmp = arr[rrr];
+                            var tmp_chart = $scope.charts[ttmp[0]];
+                            if (tmp_chart){
+                                try{
+                                    var tt_rr = $scope.pos.alg[$scope.chartdb.raws[rr].algorithm];
+                                    var tt_co = $scope.pos.times[$scope.chartdb.raws[rr].times];
+                                    if(tt_rr && tt_co){tmp_chart.chart.data[tt_rr][tt_co]=ttmp[1]};
+                                }catch(e){
+                                    console.log("ss");
+                                }
+                            }
+                        }
+                    }
+                    console.log($scope.charts);
                 }
-                
-                
             }
         }
     }]);
