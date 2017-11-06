@@ -15,6 +15,7 @@ angular.module('sbAdminApp')
             link:function(scope, element, attrs) {
             },
             controller:function ($state, $rootScope,$scope){
+                var showall = {};
                 var config = {
                     type: 'line',
                     data: {
@@ -53,7 +54,7 @@ angular.module('sbAdminApp')
                         responsive: true,
                         title:{
                             display:true,
-                            text:'Chart.js Line Chart'
+                            text:'are chart'
                         },
                         tooltips: {
                             mode: 'index',
@@ -98,9 +99,19 @@ angular.module('sbAdminApp')
                     $scope.chartdb = args.data;
                     $scope.chartdb.charts=[];
                 });
+                $scope.show_chart = function(item){
+                    showall = $scope.charts[item];
+                    var ctx = document.getElementById("myChart").getContext("2d");
+                    if (window.myLine){
+                        window.myLine.destroy();
+                        window.myLine = null;
+                        window.myLine = new Chart(ctx, showall);
+                    }else{
+                        window.myLine = new Chart(ctx, showall);
+                    }
+                }
                 $scope.displayChart = function(){
-                    //var ctx = document.getElementById("myChart").getContext("2d");
-                    //window.myLine = new Chart(ctx, config);
+                    
                     $scope.charts = [];
                     config.data.labels = [];
                     config.data.datasets = [];
@@ -151,7 +162,8 @@ angular.module('sbAdminApp')
                             }
                         }
                     }
-                    console.log($scope.charts);
+                    $scope.chartnames = Object.keys($scope.charts);
+
                     $scope.view_charts= true;
                 }
             }

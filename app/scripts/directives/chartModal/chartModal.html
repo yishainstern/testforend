@@ -39,18 +39,18 @@
                       </div>
                     </div> 
                   </div>
-                  <canvas id="myChart" width="300" height="300"></canvas> 
+                  
                   <div class="panel-footer"> Panel Footer </div> 
                 </div>
                 <div class="panel panel-primary" ng-if="view_charts"> 
                   <div class="panel-heading"> DISPALY </div> 
                   <div class="panel-body">
-                    <div  class="mainitemwrap" ng-repeat="item in charts__arr" >
-                      <div> {{item.name}}</div>
-                      <div style="width: 100%; position: relative;">
-                        
-                      </div>
+                    <div class="">
+                    <div  class="pickchartb" ng-repeat="item in chartnames" ng-click="show_chart(item)">
+                      {{item}}
+                    </div>
                     </div> 
+                    <canvas id="myChart" width="300" height="300"></canvas> 
                   </div> 
                   <div class="panel-footer"> CHARTS </div> 
                 </div> 
