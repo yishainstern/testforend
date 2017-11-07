@@ -15,6 +15,7 @@ angular.module('sbAdminApp')
             link:function(scope, element, attrs) {
             },
             controller:function ($state, $rootScope,$scope){
+                $scope.colorArr = ['rgba(28, 200, 28, 0.2)', 'rgba(255, 99, 132, 0.2)','rgba(37, 79, 248, 0.2)','rgba(164, 13, 190, 0.2)','rgba(164, 226, 8, 0.2)'];
                 var showall = {};
                 var config = {
                     type: 'line',
@@ -69,14 +70,14 @@ angular.module('sbAdminApp')
                                 display: true,
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Month'
+                                    labelString: 'Times'
                                 }
                             }],
                             yAxes: [{
                                 display: true,
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Value'
+                                    labelString: 'Score'
                                 }
                             }]
                         }
@@ -122,7 +123,7 @@ angular.module('sbAdminApp')
                             for (var j = 0; j < $scope.chartdb.values[i].values.length; j++){
                                 if($scope.chartdb.values[i].flags[j]){
                                     if ($scope.chartdb.values[i].name=="algorithm"){
-                                        config.data.datasets[config.data.datasets.length] = {label:$scope.chartdb.values[i].values[j],fill:false, backgroundColor: 'rgba(255, 99, 10, 0.2)',borderColor: 'rgba(255, 99, 10, 0.2)',data:[]};
+                                        config.data.datasets[config.data.datasets.length] = {label:$scope.chartdb.values[i].values[j],fill:false, backgroundColor: $scope.colorArr[j%$scope.colorArr.length],borderColor: $scope.colorArr[j%$scope.colorArr.length],data:[]};
                                         $scope.pos.alg[$scope.chartdb.values[i].values[j]]=config.data.datasets.length-1;
                                     } else if ($scope.chartdb.values[i].name=="times"){
                                         config.data.labels[config.data.labels.length] = $scope.chartdb.values[i].values[j];
@@ -140,7 +141,8 @@ angular.module('sbAdminApp')
                     }
                     for (var i = 0; i < $scope.chartdb.values.length; i++) {
                         if ($scope.chartdb.charts[i]==true){
-                            $scope.charts[$scope.chartdb.values[i].name] = angular.copy(config);        
+                            $scope.charts[$scope.chartdb.values[i].name] = angular.copy(config);
+                            $scope.charts[$scope.chartdb.values[i].name].options.title.text =  $scope.chartdb.values[i].name +' chart';       
                         }
                     }
                     for (var rr = 0; rr < $scope.chartdb.raws.length; rr++) {
@@ -153,11 +155,16 @@ angular.module('sbAdminApp')
                                     var tt_rr = $scope.pos.alg[$scope.chartdb.raws[rr].algorithm];
                                     var tt_co = $scope.pos.times[$scope.chartdb.raws[rr].times];
                                     if(tt_rr >= 0 && tt_co >= 0){
-                                        //var num = ''+ttmp[1];
-                                        tmp_chart.data.datasets[tt_rr].data[tt_co]=Math.floor(parseFloat(ttmp[1])*100);
-                                    };
+                                        var tmp_float_num = parseFloat(ttmp[1]);
+                                        tmp_float_num = tmp_float_num.toFixed(2);
+                                        var tmp_arr = ['auc_avg','recall_avg','precision_avg'];
+                                        if (tmp_arr.indexOf(ttmp[0])>=0) {
+                                            tmp_float_num = Math.floor(tmp_float_num*100);
+                                        }
+                                        tmp_chart.data.datasets[tt_rr].data[tt_co]=tmp_float_num;
+                                    }
                                 }catch(e){
-                                    console.log("ss");
+                                    
                                 }
                             }
                         }
