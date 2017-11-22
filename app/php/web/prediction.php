@@ -168,7 +168,14 @@
 	}
 	//After the last task is done.
 	function all_done($details_obj){
-		$details_obj->project = update_project_list($details_obj->project,"get_prediction",true);
-		update_project_details($details_obj->project);
+		$err_f = $details_obj->project->outputPython.'\\markers\\error_file';
+		if (file_exists($err_f)){
+			$details_obj->project->problem = true;
+			update_project_details($details_obj->project);
+		}else {
+			$details_obj->project = update_project_list($details_obj->project,"get_prediction",true);
+			update_project_details($details_obj->project);
+		}
+		
 	}	
 ?>

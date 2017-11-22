@@ -15,6 +15,7 @@ angular.module('sbAdminApp')
             link:function(scope, element, attrs) {
             },
             controller:function ($state, $rootScope,$scope){
+                $scope.last_chart = {};
                 $scope.colorArr = ['rgba(28, 200, 28, 0.2)', 'rgba(255, 99, 132, 0.2)','rgba(37, 79, 248, 0.2)','rgba(164, 13, 190, 0.2)','rgba(164, 226, 8, 0.2)'];
                 var showall = {};
                 var config = {
@@ -100,8 +101,25 @@ angular.module('sbAdminApp')
                     $scope.chartdb = args.data;
                     $scope.chartdb.charts=[];
                 });
+                $scope.chagechart = function () {
+                    if ($scope.last_chart.type=="line"){
+                        $scope.last_chart.type="bar";
+                    }else {
+                        $scope.last_chart.type="line";
+                   }
+                   showall = $scope.last_chart;
+                   var ctx = document.getElementById("myChart").getContext("2d");
+                    if (window.myLine){
+                        window.myLine.destroy();
+                        window.myLine = null;
+                        window.myLine = new Chart(ctx, showall);
+                    }else{
+                        window.myLine = new Chart(ctx, showall);
+                    }
+                }
                 $scope.show_chart = function(item){
                     showall = $scope.charts[item];
+                    $scope.last_chart = showall;
                     var ctx = document.getElementById("myChart").getContext("2d");
                     if (window.myLine){
                         window.myLine.destroy();

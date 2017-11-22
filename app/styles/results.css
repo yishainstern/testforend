@@ -53,3 +53,12 @@
 .folder_name {
 	text-indent: 8px;
 }
+
+#cModal .modal-dialog {
+	width: 90%;
+	max-width: 1100px;
+}
+
+#myChart {
+	max-height: 80vh;
+}

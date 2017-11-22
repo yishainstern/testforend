@@ -8,8 +8,13 @@
 			update_project_details($details_obj->project);
 			move_to_online_task($details_obj);
 		}else {
-			
-			//run_cmd_file($details_obj,"","offline","check_python");
+			$err_f = $details_obj->project->outputPython.'\\markers\\error_file';
+			if (file_exists($err_f)){
+				$details_obj->project->problem = true;
+				update_project_details($details_obj->project);
+			}else {
+				//nothing
+			}
 		}
 	}
 	//One requirement of the prediction part is a configuration file in the current folder' this functions creates the folder for this task.
