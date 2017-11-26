@@ -15,11 +15,13 @@ angular.module('sbAdminApp')
             link:function(scope, element, attrs) {
             },
             controller:function ($state, $rootScope,$scope){
+                $scope.height = Math.floor(window.innerHeight*0.7);
+                $scope.width = Math.floor(window.innerWidth*0.5);
                 $scope.last_chart = {};
-                $scope.colorArr = ['rgba(28, 200, 28, 0.2)', 'rgba(255, 99, 132, 0.2)','rgba(37, 79, 248, 0.2)','rgba(164, 13, 190, 0.2)','rgba(164, 226, 8, 0.2)'];
+                $scope.colorArr = ['rgba(28, 200, 28, 0.8)', 'rgba(255, 99, 132, 0.8)','rgba(37, 79, 248, 0.8)','rgba(164, 13, 190, 0.8)','rgba(164, 226, 8, 0.8)'];
                 var showall = {};
                 var config = {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: ["January", "February", "March", "April", "May", "June", "July"],
                         datasets: [{
