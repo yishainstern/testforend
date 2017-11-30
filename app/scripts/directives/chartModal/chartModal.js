@@ -17,7 +17,11 @@ angular.module('sbAdminApp')
             controller:function ($state, $rootScope,$scope){
                 $scope.height = Math.floor(window.innerHeight*0.7);
                 $scope.width = Math.floor(window.innerWidth*0.5);
+                $scope.first_chart = true;
+                $scope.second_chart = false;
                 $scope.last_chart = {};
+                var ctx = {};
+                var ctx2 ={};
                 $scope.colorArr = ['rgba(28, 200, 28, 0.8)', 'rgba(255, 99, 132, 0.8)','rgba(37, 79, 248, 0.8)','rgba(164, 13, 190, 0.8)','rgba(164, 226, 8, 0.8)'];
                 var showall = {};
                 var config = {
@@ -102,37 +106,61 @@ angular.module('sbAdminApp')
                     $scope.chartdb = {};
                     $scope.chartdb = args.data;
                     $scope.chartdb.charts=[];
-                });
-                $scope.chagechart = function () {
-                    if ($scope.last_chart.type=="line"){
-                        $scope.last_chart.type="bar";
-                    }else {
-                        $scope.last_chart.type="line";
-                   }
-                   showall = $scope.last_chart;
-                   var ctx = document.getElementById("myChart").getContext("2d");
                     if (window.myLine){
                         window.myLine.destroy();
                         window.myLine = null;
-                        window.myLine = new Chart(ctx, showall);
+                    }
+                    if (window.myBar){
+                        window.myBar.destroy();
+                    }
+                    $scope.view_charts= false;
+                    $scope.chartnames = [];
+                    $scope.first_chart = true;
+                    $scope.second_chart = false;
+                });
+                $scope.chagechart = function () {
+                    ctx = document.getElementById("myChart").getContext("2d");
+                    ctx2 = document.getElementById("myChart2").getContext("2d");
+                    if (window.myLine){
+                        window.myLine.destroy();
+                        window.myLine = null;
+                    }
+                    if (window.myBar){
+                        window.myBar.destroy();
+                        window.myBar = null;
+                    }
+                    $scope.first_chart = !$scope.first_chart;
+                    $scope.second_chart = !$scope.second_chart;
+                    if ($scope.first_chart){
+                        showall.type = 'bar';
+                        window.myBar = new Chart(ctx, showall);
                     }else{
-                        window.myLine = new Chart(ctx, showall);
+                        showall.type = 'line';
+                        window.myLine = new Chart(ctx2, showall);    
                     }
                 }
                 $scope.show_chart = function(item){
+                    ctx = document.getElementById("myChart").getContext("2d");
+                    ctx2 = document.getElementById("myChart2").getContext("2d");
                     showall = $scope.charts[item];
-                    $scope.last_chart = showall;
-                    var ctx = document.getElementById("myChart").getContext("2d");
+                    $scope.last_chart = showall;                   
                     if (window.myLine){
                         window.myLine.destroy();
                         window.myLine = null;
-                        window.myLine = new Chart(ctx, showall);
+                    }
+                    if (window.myBar){
+                        window.myBar.destroy();
+                        window.myBar = null;
+                    }
+                    if ($scope.first_chart){
+                        showall.type = 'bar';
+                        window.myBar = new Chart(ctx, showall);
                     }else{
-                        window.myLine = new Chart(ctx, showall);
+                        showall.type = 'line';
+                        window.myLine = new Chart(ctx2, showall);    
                     }
                 }
                 $scope.displayChart = function(){
-                    
                     $scope.charts = [];
                     config.data.labels = [];
                     config.data.datasets = [];
@@ -190,7 +218,6 @@ angular.module('sbAdminApp')
                         }
                     }
                     $scope.chartnames = Object.keys($scope.charts);
-
                     $scope.view_charts= true;
                 }
             }

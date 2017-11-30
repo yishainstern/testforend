@@ -62,3 +62,17 @@
 #myChart {
 	
 }
+.c_c {
+    width: 100%;
+    background-color: #83d0f2;
+    border: 1px solid #337ab7;
+    margin-bottom: 14px;
+    font-size: 22px;
+    border-radius: 14px;
+    padding: 4px;
+    font-weight: bold;
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
+    text-align: center;
+}
