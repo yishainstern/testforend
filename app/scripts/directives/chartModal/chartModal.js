@@ -136,8 +136,11 @@ angular.module('sbAdminApp')
                         window.myBar = new Chart(ctx, showall);
                     }else{
                         showall.type = 'line';
-                        window.myLine = new Chart(ctx2, showall);    
+                        window.myLine = new Chart(ctx2, showall);
                     }
+                    $('.modal-open .modal').animate({
+                        scrollTop: $("#scroll_to_me").offset().top
+                    }, 2000);
                 }
                 $scope.show_chart = function(item){
                     ctx = document.getElementById("myChart").getContext("2d");

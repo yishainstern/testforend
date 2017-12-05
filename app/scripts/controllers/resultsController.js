@@ -93,6 +93,34 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 if (data.status == 111){
                     $scope.experiments = data.files;
                     console.log($scope.experiments);
+                    $scope.matric = {
+                        all:{
+                            files: [],
+                            methods:[]
+                        },
+                        most:{
+                            files: [],
+                            methods:[]
+                        }
+                    };
+                    for (ext =0;ext<$scope.experiments.length;ext++){
+                        name = ($scope.experiments[ext]).dir_name;
+                        tmpArr = ($scope.experiments[ext]).dir_arr;
+                        for (inext =0;inext<tmpArr.length;inext++){
+                            if (name.includes("All") || name.includes("all")){
+                                t_p = "all";
+                            }
+                            if (name.includes("Most") || name.includes("most")){
+                                t_p = "all";
+                            }
+                            if (name.includes("File") || name.includes("file")){
+                                t_i_p = "files";
+                            }
+                            if (name.includes("Method") || name.includes("method")){
+                                t_i_p = "methods";
+                            }
+                        }
+                    }
                 }
             },function(data){alert('bad')}); 
         }else {
