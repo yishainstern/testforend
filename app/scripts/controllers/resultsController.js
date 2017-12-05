@@ -92,7 +92,6 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 }
                 if (data.status == 111){
                     $scope.experiments = data.files;
-                    console.log($scope.experiments);
                     $scope.matric = {
                         all:{
                             files: [],
@@ -103,10 +102,12 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                             methods:[]
                         }
                     };
-                    for (ext =0;ext<$scope.experiments.length;ext++){
-                        name = ($scope.experiments[ext]).dir_name;
-                        tmpArr = ($scope.experiments[ext]).dir_arr;
-                        for (inext =0;inext<tmpArr.length;inext++){
+                    for (var ext =0;ext<$scope.experiments.length;ext++){
+                        var name = ($scope.experiments[ext]).dir_name;
+                        var tmpArr = ($scope.experiments[ext]).dir_arr;
+                        for (var inext =0;inext<tmpArr.length;inext++){
+                            var t_p;
+                            var t_i_p;
                             if (name.includes("All") || name.includes("all")){
                                 t_p = "all";
                             }
@@ -119,8 +120,14 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                             if (name.includes("Method") || name.includes("method")){
                                 t_i_p = "methods";
                             }
+                            if (($scope.matric[t_p]) && (($scope.matric[t_p])[t_i_p]) ){
+                                var t_len = (($scope.matric[t_p])[t_i_p]).length;
+                                (($scope.matric[t_p])[t_i_p])[t_len] = {folder:name,file:tmpArr[inext]};
+                            }
+                            
                         }
                     }
+                    console.log($scope.matric);
                 }
             },function(data){alert('bad')}); 
         }else {
