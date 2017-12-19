@@ -54,6 +54,21 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
+    //display the file
+    $scope.zip_files = function(folder){
+         $scope.show_loader = true;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('witch_file',item);
+        data_to_send.append('witch_folder',folder);
+        service.filefunc('zip_files','results',data_to_send)
+        .then(function(data){
+            $scope.show_loader = false;
+            $("#openchartmodat").click();
+            $rootScope.$broadcast("chartdb",{data:data});
+        },function(data){alert('bad'); $scope.show_loader = false;}
+            );  
+    }
     //Get a from the server.
     $scope.get_file = function(item,folder){
          $scope.show_loader = true;
@@ -106,25 +121,22 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                         var name = ($scope.experiments[ext]).dir_name;
                         var tmpArr = ($scope.experiments[ext]).dir_arr;
                         for (var inext =0;inext<tmpArr.length;inext++){
-                            var t_p;
-                            var t_i_p;
+                            var t_p = "";
+                            var t_i_p = "";
                             if (name.includes("All") || name.includes("all")){
                                 t_p = "all";
-                            }
-                            if (name.includes("Most") || name.includes("most")){
-                                t_p = "all";
+                            }else if (name.includes("Most") || name.includes("most")){
+                                t_p = "most";
                             }
                             if (name.includes("File") || name.includes("file")){
                                 t_i_p = "files";
-                            }
-                            if (name.includes("Method") || name.includes("method")){
+                            }else if (name.includes("Method") || name.includes("method")){
                                 t_i_p = "methods";
                             }
                             if (($scope.matric[t_p]) && (($scope.matric[t_p])[t_i_p]) ){
                                 var t_len = (($scope.matric[t_p])[t_i_p]).length;
                                 (($scope.matric[t_p])[t_i_p])[t_len] = {folder:name,file:tmpArr[inext]};
                             }
-                            
                         }
                     }
                     console.log($scope.matric);

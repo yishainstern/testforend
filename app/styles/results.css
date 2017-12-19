@@ -59,6 +59,18 @@
 	max-width: 1100px;
 }
 
+.td_wrapper {
+
+}
+
+.show_wrapper {
+	margin-bottom: 8px;
+}
+
+.name_title{
+	margin-bottom: 10px;
+}
+
 #myChart {
 	
 }

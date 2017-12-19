@@ -44,10 +44,6 @@
                                                         <tr ng-hide="item=='.' || item=='..'" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{item}}</td>
-                                                            <!--<td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file_info('prediction',item,$index)" >get information</button>
-                                                                <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" class="togglt_trigger" data-target="#myModal" data-toggle="modal"></button>
-                                                            </td>-->
                                                             <td>
                                                                 <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'weka')">Get file</button>
                                                             </td>
@@ -72,42 +68,69 @@
                                 <div class="panel-body swiper-panel">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h3 >List of files..click to get them</h3>
-                                            <div class="form-group">
-                                                    <label>Search file</label>
-                                                    <input class="form-control" placeholder="file name" ng-model="searchText_e">
-                                                    <p class="help-block" style="max-height: initial;">Search for file by name</p>
-                                                </div>
-                                            <div class="table-responsive">
-                                                <div ng-repeat="obj in experiments" class="table_experiments">
-                                                    <h3 class="folder_name">Folder name: {{obj.dir_name}}</h3>
-                                                    <table class="table" id="my_table">
-                                                    <thead>
+                                            <h3 >Out put files of testing</h3>
+                                                <div class="table-responsive">  
+                                                    <table class="table table-bordered">
                                                         <tr>
-                                                            <th>#</th>
-                                                            <th>File name</th>
-                                                            <th>Get file</th>
-                                                            <th>Display charts</th>
+                                                            <td>#</td>
+                                                            <td><b>FILES</b></td>
+                                                            <td><b>METHODS</b></td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" class="inner_table" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
-                                                            <td>{{$index +1}}</td>
-                                                            <td>
-                                                                <i class="fa fa-file-text"></i>{{inner_obj}}
+                                                        <tr>
+                                                            <td style="vertical-align: middle;"><b>ALL</b></td>
+                                                            <td class="td_wrapper" style="background-color: #dff0d8;">
+                                                                <div class="show_wrapper" ng-repeat="item in matric.all.files">
+                                                                   <div class="name_title">
+                                                                        <i class="fa fa-file-text"></i>
+                                                                        {{item.file}}
+                                                                    </div>
+                                                                    <button type="button" class="btn files_btn btn-primary" ng-click="display_file(item.file,'experiments')">
+                                                                        show chart
+                                                                    </button>
+                                                                </div>
                                                             </td>
-                                                            <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj,'experiments')">Get file</button>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="display_file(inner_obj,'experiments')">show file</button>
+                                                            <td class="td_wrapper" style="background-color: #d9edf7;">
+                                                                <div class="show_wrapper" ng-repeat="item in matric.all.methods">
+                                                                    <div class="name_title">
+                                                                        <i class="fa fa-file-text"></i>
+                                                                        {{item.file}}
+                                                                    </div>
+                                                                    <button type="button" class="btn files_btn btn-success" ng-click="display_file(item.file,'experiments')">
+                                                                        show chart
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
+                                                        <tr>
+                                                            <td style="vertical-align: middle;"><b>MOST</b></td>
+                                                            <td class="td_wrapper" style="background-color: #fcf8e3;">
+                                                                <div class="show_wrapper" ng-repeat="item in matric.most.files">
+                                                                    <div class="name_title">
+                                                                        <i class="fa fa-file-text"></i>
+                                                                        {{item.file}}
+                                                                    </div>
+                                                                    <button type="button" class="btn files_btn btn-success" ng-click="display_file(item.file,'experiments')">
+                                                                        show chart
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td class="td_wrapper" style="background-color: #f2dede;">
+                                                                <div class="show_wrapper" ng-repeat="item in matric.most.methods">
+                                                                    <div class="name_title">
+                                                                        <i class="fa fa-file-text"></i>
+                                                                        {{item.file}}
+                                                                    </div>
+                                                                    <button ype="button" class="btn files_btn btn-primary" ng-click="display_file(item.file,'experiments')">
+                                                                        show chart
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     </table>
+                                                    <button type="button" class="btn files_btn btn-primary" ng-click="zip_files('experiments')">
+                                                        show chart
+                                                    </button>
                                                 </div>
-                                               
-                                            </div>    
                                         </div>
                                     </div>
                                 </div>
@@ -151,3 +174,35 @@
 <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" id="openchartmodat" data-target="#cModal" data-toggle="modal"></button>
 
 
+<!--
+<div class="table-responsive">
+                                                <div ng-repeat="obj in experiments" class="table_experiments">
+                                                    <h3 class="folder_name">Folder name: {{obj.dir_name}}</h3>
+                                                    <table class="table" id="my_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>File name</th>
+                                                            <th>Get file</th>
+                                                            <th>Display charts</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" class="inner_table" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                            <td>{{$index +1}}</td>
+                                                            <td>
+                                                                <i class="fa fa-file-text"></i>{{inner_obj}}
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj,'experiments')">Get file</button>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="display_file(inner_obj,'experiments')">show file</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> 
+
+    -->
