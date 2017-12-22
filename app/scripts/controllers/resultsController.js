@@ -15,7 +15,24 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.a_counter = 0;
     var t_stop;
     var swiper;
-
+    $scope.matric = {
+        all:{
+            files: [],
+            methods:[]
+        },
+        most:{
+            files: [],
+            methods:[]
+        }
+    };
+    $scope.add_to_list = function(arr,loop){
+        for (var i=0;i<loop.length;i++){
+            if (loop[i].file){
+                arr[arr.length]=loop[i].file;
+            }
+        }
+        return arr;
+    }
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
@@ -59,15 +76,17 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
          $scope.show_loader = true;
         var form = document.forms.namedItem('results');
         var data_to_send = new FormData(form);
-        data_to_send.append('witch_file',item);
+        var files_to_send = [];
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.all.files);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.all.methods);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.most.files);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.most.methods);
+        data_to_send.append('witch_files',files_to_send);
         data_to_send.append('witch_folder',folder);
         service.filefunc('zip_files','results',data_to_send)
         .then(function(data){
             $scope.show_loader = false;
-            $("#openchartmodat").click();
-            $rootScope.$broadcast("chartdb",{data:data});
-        },function(data){alert('bad'); $scope.show_loader = false;}
-            );  
+        },function(data){alert('bad'); $scope.show_loader = false;});  
     }
     //Get a from the server.
     $scope.get_file = function(item,folder){

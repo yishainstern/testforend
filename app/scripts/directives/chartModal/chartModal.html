@@ -27,8 +27,8 @@
                   <div class="panel-heading"> Witch attributes </div> 
                   <div class="panel-body">
                     <div  class="mainitemwrap" ng-repeat="item in chartdb.values" 
-                    ng-show="((!(item.type=='main'))&&(!(item.name=='pBug'||item.name=='pValid')))" ng-init="chartdb.charts[$index]=true">
-                      <div style="width: 0px;height: 0px;" ng-if="(item.name=='pBug'||item.name=='pValid'||item.type=='main')">
+                    ng-show="((!(item.type=='main'))&&(!(item.name=='pBug'||item.name=='pValid'||item.name=='bugged_avg'||item.name=='initials'||item.name=='tests')))" ng-init="chartdb.charts[$index]=true">
+                      <div style="width: 0px;height: 0px;" ng-if="(item.name=='pBug' || item.name=='pValid' || item.name=='bugged_avg' || item.name=='initials' || item.name=='tests' || item.type=='main')">
                         <span ng-init="chartdb.charts[$index]=false"></span>
                       </div>
                       <div class="mainval" >
