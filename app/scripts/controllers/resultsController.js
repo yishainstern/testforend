@@ -15,7 +15,24 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.a_counter = 0;
     var t_stop;
     var swiper;
-
+    $scope.matric = {
+        all:{
+            files: [],
+            methods:[]
+        },
+        most:{
+            files: [],
+            methods:[]
+        }
+    };
+    $scope.add_to_list = function(arr,loop){
+        for (var i=0;i<loop.length;i++){
+            if (loop[i].file){
+                arr[arr.length]=loop[i].file;
+            }
+        }
+        return arr;
+    }
     var p_stop = $interval(function() {
         if (typeof Swiper == 'function' && $('.swiper-container').length > 0 && $('.swiper-pagination').length > 0 && $('.swiper-slide').length > 0){
             //stop interval
@@ -53,6 +70,35 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             $rootScope.$broadcast("chartdb",{data:data});
         },function(data){alert('bad'); $scope.show_loader = false;}
             );  
+    }
+    //display the file
+    $scope.zip_files = function(folder){
+         $scope.show_loader = true;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        var files_to_send = [];
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.all.files);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.all.methods);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.most.files);
+        files_to_send = $scope.add_to_list(files_to_send,$scope.matric.most.methods);
+        data_to_send.append('witch_files',files_to_send);
+        data_to_send.append('witch_folder',folder);
+        service.ajaxfunc('zip_files','results',data_to_send)
+        .then(function(data){
+            var zip = new JSZip();
+            if (data.status==111 && data.files ){
+                var keys = Object.keys(data.files);
+                for (var i = 0; i < keys.length; i++) {
+                    zip.file(keys[i], data.files[keys[i]]);
+                }
+                zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    // see FileSaver.js
+                    saveAs(content, "example.zip");
+                });
+            }
+            $scope.show_loader = false;
+        },function(data){alert('bad'); $scope.show_loader = false;});  
     }
     //Get a from the server.
     $scope.get_file = function(item,folder){
@@ -92,7 +138,39 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 }
                 if (data.status == 111){
                     $scope.experiments = data.files;
-                    console.log($scope.experiments);
+                    $scope.matric = {
+                        all:{
+                            files: [],
+                            methods:[]
+                        },
+                        most:{
+                            files: [],
+                            methods:[]
+                        }
+                    };
+                    for (var ext =0;ext<$scope.experiments.length;ext++){
+                        var name = ($scope.experiments[ext]).dir_name;
+                        var tmpArr = ($scope.experiments[ext]).dir_arr;
+                        for (var inext =0;inext<tmpArr.length;inext++){
+                            var t_p = "";
+                            var t_i_p = "";
+                            if (name.includes("All") || name.includes("all")){
+                                t_p = "all";
+                            }else if (name.includes("Most") || name.includes("most")){
+                                t_p = "most";
+                            }
+                            if (name.includes("File") || name.includes("file")){
+                                t_i_p = "files";
+                            }else if (name.includes("Method") || name.includes("method")){
+                                t_i_p = "methods";
+                            }
+                            if (($scope.matric[t_p]) && (($scope.matric[t_p])[t_i_p]) ){
+                                var t_len = (($scope.matric[t_p])[t_i_p]).length;
+                                (($scope.matric[t_p])[t_i_p])[t_len] = {folder:name,file:tmpArr[inext]};
+                            }
+                        }
+                    }
+                    console.log($scope.matric);
                 }
             },function(data){alert('bad')}); 
         }else {

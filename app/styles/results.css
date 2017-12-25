@@ -59,6 +59,18 @@
 	max-width: 1100px;
 }
 
+.td_wrapper {
+
+}
+
+.show_wrapper {
+	margin-bottom: 8px;
+}
+
+.name_title{
+	margin-bottom: 10px;
+}
+
 #myChart {
 	
 }
@@ -75,4 +87,15 @@
     -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
     box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
     text-align: center;
+}
+
+.zip_btn {
+	
+width: 100%;
+	
+margin: auto;
+	
+display: block;
+	
+font-size: 19px;
 }

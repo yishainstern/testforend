@@ -246,7 +246,9 @@ angular
                 'scripts/directives/goToList/goToList.js',
                 'scripts/directives/chartModal/chartModal.js',
                 'bower_components/swiper/dist/css/swiper.min.css',
-                'bower_components/chartq.js/dist/Chart.js'
+                'bower_components/chartq.js/dist/Chart.js',
+                'bower_components/jszip/dist/jszip.js',
+                'bower_components/jszip/vendor/FileSaver.js'
               ]
           })
         }

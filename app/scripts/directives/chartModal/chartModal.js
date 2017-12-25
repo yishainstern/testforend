@@ -17,6 +17,7 @@ angular.module('sbAdminApp')
             controller:function ($state, $rootScope,$scope){
                 $scope.height = Math.floor(window.innerHeight*0.7);
                 $scope.width = Math.floor(window.innerWidth*0.5);
+                $scope.idcanvas = "myChart";
                 $scope.first_chart = true;
                 $scope.second_chart = false;
                 $scope.last_chart = {};
@@ -118,6 +119,17 @@ angular.module('sbAdminApp')
                     $scope.first_chart = true;
                     $scope.second_chart = false;
                 });
+                $scope.downloadcanvas = function(){
+                    var ff = document.getElementById($scope.idcanvas);
+                    var link = document.createElement('a');
+                    link.innerHTML = 'download image';
+                    link.addEventListener('click', function(ev) {
+                        link.href = ff.toDataURL();
+                        link.download = "mypainting.png";
+                    }, false);
+                    document.body.appendChild(link);
+                    link.click();
+                }
                 $scope.chagechart = function () {
                     ctx = document.getElementById("myChart").getContext("2d");
                     ctx2 = document.getElementById("myChart2").getContext("2d");
@@ -132,12 +144,17 @@ angular.module('sbAdminApp')
                     $scope.first_chart = !$scope.first_chart;
                     $scope.second_chart = !$scope.second_chart;
                     if ($scope.first_chart){
+                        $scope.idcanvas = "myChart";
                         showall.type = 'bar';
                         window.myBar = new Chart(ctx, showall);
                     }else{
+                        $scope.idcanvas = "myChart2";
                         showall.type = 'line';
-                        window.myLine = new Chart(ctx2, showall);    
+                        window.myLine = new Chart(ctx2, showall);
                     }
+                    $('.modal-open .modal').animate({
+                        scrollTop: $("#scroll_to_me").offset().top
+                    }, 2000);
                 }
                 $scope.show_chart = function(item){
                     ctx = document.getElementById("myChart").getContext("2d");
