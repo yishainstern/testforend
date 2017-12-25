@@ -83,7 +83,8 @@
 		$returnJson = done_remove_project($details_obj);
 	}elseif ($task== "display_file"){
 		$returnJson = display_file($details_obj);
+	}elseif ($task== "zip_files"){
+		$returnJson = zip_file($details_obj);
 	}
-
 	echo json_encode((object)$returnJson);
 ?>

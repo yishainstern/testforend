@@ -141,6 +141,11 @@
 		}else{
 			$details_obj->project->witch_file = '';
 		}
+		if (isset($_POST["witch_files"])){
+			$details_obj->project->witch_files = $_POST["witch_files"];
+		}else{
+			$details_obj->project->witch_files = '';
+		}
 		if (isset($_POST["witch_folder"])){
 			$details_obj->project->witch_folder = $_POST["witch_folder"];
 		}else{ 

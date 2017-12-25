@@ -1,6 +1,6 @@
 <?php
-	namespace Debugger;
 	use Debugger\displayfile;
+	use Debugger\compress;
 	//Every file needs to have a description that explains its purpose, This function will not be called yet because the descriptions are not ready
 	function get_file_info($details_obj){
 		$ans = array();
@@ -162,6 +162,22 @@
 			$displayfile = new displayfile($details_obj->project->witch_folder,$details_obj->project->witch_file);
 			$displayfile->setproject($project);
 			return $displayfile->prepareFileFormat();
+		}else {
+			//do nothins
+		}
+	}
+	//Send the file to the user.
+	function zip_file($details_obj){
+		$tmp_arr = get_project_progress($details_obj);
+		$ans = array();
+		if ($tmp_arr['status']==111){
+			$project = $tmp_arr['project']; 
+			$compress = new compress($details_obj->project->witch_folder,$details_obj->project->witch_files);
+			$compress->setproject($project);
+			$tmp_ans = $compress->compress_files($project);
+			$ans['status'] = 111;
+			$ans['files'] = $tmp_ans;
+			return $ans;
 		}else {
 			//do nothins
 		}
