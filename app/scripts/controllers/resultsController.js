@@ -83,14 +83,22 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         files_to_send = $scope.add_to_list(files_to_send,$scope.matric.most.methods);
         data_to_send.append('witch_files',files_to_send);
         data_to_send.append('witch_folder',folder);
-        data_to_send.append('task','zip_files');
-        var zip = new JSZip();
-        zip.file("Hello.txt", "Hello World\n");
-        zip.generateAsync({type:"blob"})
-        .then(function(content) {
-            // see FileSaver.js
-            saveAs(content, "example.zip");
-        });
+        service.ajaxfunc('zip_files','results',data_to_send)
+        .then(function(data){
+            var zip = new JSZip();
+            if (data.status==111 && data.files ){
+                var keys = Object.keys(data.files);
+                for (var i = 0; i < keys.length; i++) {
+                    zip.file(keys[i], data.files[keys[i]]);
+                }
+                zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    // see FileSaver.js
+                    saveAs(content, "example.zip");
+                });
+            }
+            $scope.show_loader = false;
+        },function(data){alert('bad'); $scope.show_loader = false;});  
     }
     //Get a from the server.
     $scope.get_file = function(item,folder){
