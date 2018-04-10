@@ -23,9 +23,9 @@
                                 <p class="help-block" ng-class="{open_help:userName}">This is your user name that you picked.</p>
                             </div>
                             <div class="form-group" ng-mouseover="folderName=true" ng-mouseleave="folderName=false">
-                                <label>Uniq folder name</label>
+                                <label>Unique folder name</label>
                                 <input class="form-control" type="text" placeholder="Enter text" name="id"  ng-model="new_id" />
-                               <p class="help-block" ng-class="{open_help:folderName}">Insert here a uniq name for your project. Every project <b>must</b> have a uniq name</p>
+                               <p class="help-block" ng-class="{open_help:folderName}">Insert here a unique name for your project. Every project <b>must</b> have a unique name</p>
                             </div>
                             <div class="form-group" ng-mouseover="disciption=true" ng-mouseleave="disciption=false">
                                 <label>Project description</label>
@@ -34,12 +34,12 @@
                             </div>
                             <div class="form-group" ng-mouseover="gitUrl=true" ng-mouseleave="gitUrl=false">
                                 <label for="disabledSelect">Project url</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" name="gitUrl" ng-model="new_url">
+                                <input class="form-control" type="text" placeholder="Project url" name="gitUrl" ng-model="new_url">
                                 <p class="help-block" ng-class="{open_help:gitUrl}">Insert here a <b>full</b> url from git tou your project. The project <b>must</b> be a public project.</p>
                             </div>  
                             <div class="form-group" ng-mouseover="gitName=true" ng-mouseleave="gitName=false">
                                 <label for="disabledSelect">Git name</label>
-                                <input class="form-control" type="text" placeholder="Disabled input" name="gitName" ng-model="new_name">
+                                <input class="form-control" type="text" placeholder="Git name" name="gitName" ng-model="new_name">
                                 <p class="help-block" ng-class="{open_help:gitName}">Git projects have a name, please insert it.</p>
                             </div>                                                                                    
                             <div class="" ng-class="{'has-error':new_project_error, 'has-success':new_project_success}">
