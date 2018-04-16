@@ -71,7 +71,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.show_loader = true;
         if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email || !$scope.sginup_details.first_name ){
 			if (!$scope.sginup_details.last_name) {
-				!$scope.sginup_details.last_name = '';
+				$scope.sginup_details.last_name = '';
 			}
             $scope.show_error('One of the required fields not set','error_sign');        
             return;
