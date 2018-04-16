@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
-                                <input class="form-control" placeholder="Last name (required)" name="last_name" type="text" ng-model="sginup_details.last_name" autofocus />
+                                <input class="form-control" placeholder="Last name (optional)" name="last_name" type="text" ng-model="sginup_details.last_name" autofocus />
                             </div>  
                             <div class="form-group input-group">
                                 <span class="input-group-addon">@</span>
@@ -55,7 +55,7 @@
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
                                 <input type="password" class="form-control" placeholder="Password (required)" name="password" type="password" value="" ng-model="sginup_details.password">
                             </div>
-							<label class="control-label ng-binding" ng-show="error_sign">Please don't use your BGU username and password</label>
+							<label class="control-label ng-binding">Please don't use your BGU username and password</label>
                             <label class="control-label" ng-show="error_sign">{{display_sgin_text}}</label>
                             <!-- Change this to a button or input when using this as a form -->
                             <a class="btn btn-lg btn-success btn-block" ng-click="sgin_task('sgin_form')">sign up</a>
