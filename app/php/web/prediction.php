@@ -17,9 +17,6 @@
 			if(!strpos($details_obj->file_name_output, "barinelOptA")===FALSE){
 				$ans["status"] = 1;
 				$ans["info"] = file_get_contents("barinelOptA.csv");
-			}elseif (!strpos($details_obj->file_name_output, "plannerResall")===FALSE){
-				$ans["status"] = 1;
-				$ans["info"] = file_get_contents("plannerResall.csv");
 			}else{
 				$ans["status"] = 2;
 				$ans["info"] = "no information";	
@@ -112,7 +109,7 @@
 					$tmp_arr = scandir($tmp_path);
 					for ($j=0; $j < sizeof($tmp_arr); $j++) { 
 						$tmp_inner = $tmp_arr[$j];
-						if ($tmp_inner=="barinelOptA.csv" || $tmp_inner=="plannerResall.csv"){
+						if ($tmp_inner=="barinelOptA.csv"){
 							array_push($tmp_obj->dir_arr, $tmp_obj->dir_name."\\".$tmp_inner);
 						}
 					}

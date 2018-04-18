@@ -45,7 +45,7 @@
                                                             <td>{{$index +1}}</td>
                                                             <td><i class="fa fa-file-text"></i>{{item}}</td>
                                                             <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'weka')">Get file</button>
+                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'web_prediction_results')">Get file</button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -68,7 +68,7 @@
                                 <div class="panel-body swiper-panel">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h3 >Diagnosis resuls</h3>
+                                            <h3 >Diagnosis results</h3>
                                                 <div class="table-responsive">  
                                                     <table class="table table-bordered">
                                                         <tr>
@@ -84,8 +84,8 @@
                                                                         <i class="fa fa-file-text"></i>
                                                                         {{item.file}}
                                                                     </div>
-                                                                    <button type="button" class="btn files_btn btn-primary" ng-click="display_file(item.file,'experiments')">
-                                                                        show chart
+                                                                    <button type="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
+                                                                        Get file
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -95,8 +95,8 @@
                                                                         <i class="fa fa-file-text"></i>
                                                                         {{item.file}}
                                                                     </div>
-                                                                    <button type="button" class="btn files_btn btn-success" ng-click="display_file(item.file,'experiments')">
-                                                                        show chart
+                                                                    <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
+                                                                        Get file
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -109,8 +109,8 @@
                                                                         <i class="fa fa-file-text"></i>
                                                                         {{item.file}}
                                                                     </div>
-                                                                    <button type="button" class="btn files_btn btn-success" ng-click="display_file(item.file,'experiments')">
-                                                                        show chart
+                                                                    <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
+                                                                        Get file
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -120,8 +120,8 @@
                                                                         <i class="fa fa-file-text"></i>
                                                                         {{item.file}}
                                                                     </div>
-                                                                    <button ype="button" class="btn files_btn btn-primary" ng-click="display_file(item.file,'experiments')">
-                                                                        show chart
+                                                                    <button ype="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
+                                                                        Get file
                                                                     </button>
                                                                 </div>
                                                             </td>
