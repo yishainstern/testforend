@@ -84,7 +84,7 @@
 		$ans = array();
 		if ($tmp_arr['status']==111){
 			$project = $tmp_arr['project']; 
-			$arr =  scandir($project->outputPython."\\weka");
+			$arr =  scandir($project->outputPython."\\web_prediction_results");
 			$ans['status'] = 111;
 			$ans['message'] = "get files";
 			$ans['files'] = $arr;
