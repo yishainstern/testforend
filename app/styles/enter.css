@@ -1,0 +1,79 @@
+.open_sgin {
+	text-align: center;
+	width: 100%;
+	margin: 10px 0px;
+}
+
+.logo {
+
+text-align: center;
+
+margin: 8px;
+}
+
+.logo img {
+	
+width: 56px;
+	
+margin-right: 0;
+	
+margin: 0px 10px;
+	
+position: relative;
+	
+top: -6px;
+}
+
+.logo span {
+	
+font-size: 29px;
+	
+font-weight: bold;
+}
+.cover_start {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top:0px;
+	right: 0px;
+	opacity: 0.4;
+	z-index: 0;
+}
+
+h3.panel-title{
+	
+text-align: center;
+	
+margin-top: 26px;
+	
+font-size: 23px;
+}
+
+.bgu_wrapper{
+
+display: table;
+
+width: 100%;
+
+margin-bottom: 14px;
+}
+.bgu_cell{
+
+	}
+
+.first_cell{
+    direction: ltr;
+}
+.bgu_cell{
+    display: table-cell;
+}
+.second_cell {
+	
+direction: rtl;
+}
+.first_cell img{
+    height: 56px;
+}
+.second_cell img{
+    height: 60px;
+}

@@ -1,0 +1,10 @@
+.pomPath {
+	display: inline-block;
+	width: 10%;
+	text-align: center;
+	padding-right: 5px; 
+}
+.pomPath+input.form-control{
+	display: inline-block;
+	width: 90%;
+}

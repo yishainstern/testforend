@@ -1,0 +1,57 @@
+.help-block{
+	padding-left: 7px;
+	height: auto;
+	overflow: hidden;
+	opacity: 0;
+	transition-property: all;
+	transition-duration: 1s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.help-block.open_help {
+	opacity: 1;
+}
+.form-group {
+	
+}
+.go_wrapper {
+	position: relative;
+	padding-top: 30px;
+	padding-bottom: 40px;
+}
+
+.go_col_12 {
+
+position: relative;
+}
+.go_h1{
+	
+margin: 0px;
+}
+
+.go_btn {
+	
+}
+.side_img {
+
+text-align: center;
+
+padding: 13px 0px;
+}
+
+.side_img img{
+	
+width: 46px;
+}
+
+.sidebar-nav li{
+	cursor: pointer;
+}
+
+@media (min-width: 1200px) {
+	.projects_list .projects_list_item{
+		display: inline-block;
+    float: none;
+    vertical-align: top;
+}
+	}
+

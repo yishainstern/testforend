@@ -1,0 +1,86 @@
+<go-to-list title="prediction task"></go-to-list>
+<!-- /.row -->
+<!-- /.row -->
+<div class="row">
+    <div class="swiper_wrapper col-lg-12">
+        <div class="swiper-container" >
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    prepare your files to run prediction task
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':new_clone_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <p>click to finish all preperations for are task</p>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="last_preperations()">last preperations</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    run prediction task
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <p>click to start online task</p>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="run_pridction()">run</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    check if prediction task is done
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <p>click to check if the task is done</p>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="get_pridction()">get prediction</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                                               
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>

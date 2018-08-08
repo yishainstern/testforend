@@ -1,0 +1,100 @@
+<go-to-list title="pick test version task"></go-to-list>
+<!-- /.row -->
+<!-- /.row -->
+<div class="row">
+    <div class="swiper_wrapper col-lg-12">
+        <div class="swiper-container" >
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    pick version to test
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':error_obj.pick_error||error_obj.validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <div class="form-group">
+                                                    <label>text version ANT_183</label>
+                                                    <input class="form-control" placeholder="Enter text" ng-model="project.details.testVersion" name="testVersion" />
+                                                </div>
+                                                <div class="" ng-class="{'has-error':error_obj.pick_error, 'has-success':error_obj.pick_success}">
+                                                    <label class="control-label" ng-show="error_obj.pick_error || error_obj.pick_success || error_obj.validation_error">{{error_obj.display_text}}</label>
+                                                </div>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="change_version()">change version</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    check version
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':error_obj.validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <input type="hidden" name="testVersion" value="{{project.details.testVersion}}">
+                                                <div class="" ng-class="{'has-error':(error_obj.pick_error||error_obj.validation_error), 'has-success':error_obj.pick_success}">
+                                                    <label class="control-label" ng-show="(error_obj.pick_success || error_obj.validation_error || error_obj.pick_error)">{{error_obj.display_text}}</label>
+                                                </div>
+                                                <label class="control-label" ng-show="project.details.progress.mille_stones.pick_version.flag" style="text-align: center; display: block;">check if the version is {{project.details.testVersion}}</label>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="project.details.progress.mille_stones.pick_version.flag" ng-click="check_version()">check version</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    check version
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form" name="change-version" ng-class="{'has-error':error_obj.validation_error}">
+                                                <input type="hidden" name="userName" value="{{user.details.userName}}">
+                                                <input type="hidden" name="id" value="{{project.details.name}}">
+                                                <input type="hidden" name="gitName" value="{{project.details.gitName}}">
+                                                <input type="hidden" name="testVersion" value="{{project.details.testVersion}}">
+                                                <div class="" ng-class="{'has-error':(error_obj.pick_error||error_obj.validation_error), 'has-success':error_obj.pick_success}">
+                                                    <label class="control-label" ng-show="(error_obj.pick_success || error_obj.validation_error || error_obj.pick_error)">{{error_obj.display_text}}</label>
+                                                </div>
+                                                <label class="control-label" style="text-align: center; display: block; margin-bottom: 15px;">Now that the version was picked we need to prepare a jar file, please click the buttin below so we could start</label>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="prepare_jar()">create jar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>

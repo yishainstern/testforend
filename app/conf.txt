@@ -1,0 +1,6 @@
+workingDir=C:\DebuggerUsers\presentation_day\poi\out
+git=C:\DebuggerUsers\presentation_day\poi\rootGit\poi
+issue_tracker_product_name=POI
+issue_tracker_url=bz.apache.org/bugzilla
+issue_tracker=bugzilla
+vers=(v5.1.0,v6.3.0,v7.0.0-beta.6,v7.5.0-beta.0,v7.7.0,v7.8.0-beta.3,v7.9.0-beta.1)
