@@ -9,6 +9,7 @@
 angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout', '$rootScope','service','config', '$state', function ($scope, $timeout, $rootScope, service,config,$state) {
     $scope.login_details = {};
     $scope.sginup_details = {};
+    $scope.recover_details = {};
     $scope.rong_password = false;
     $scope.sign_up_error = '';
     $scope.succsess = '';
@@ -20,48 +21,12 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.show_loader = false;
     $scope.log_show = true;
     $scope.sign_show = false;
-    $scope.forgot_show = false;
+    $scope.recover_account_show = false;
 
     //Use regular expression to check if the email is a valid email address 
     $scope.valid_email = function(email){
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
-    }
-    
-    //Display forgot password form
-    $scope.display_forgot = function(){
-        $scope.log_show = false;
-        $scope.sign_show = false;
-        $scope.forgot_show = true;
-    }
-
-    //Display sign up form
-    $scope.display_sign_up = function(){
-        $scope.log_show = false;
-        $scope.sign_show = true;
-        $scope.forgot_show = false;
-    }
-
-    //Display log form
-    $scope.display_log = function(){
-        $scope.log_show = true;
-        $scope.sign_show = false;
-        $scope.forgot_show = false;
-    }
-
-    //Return true if forgot form is visible 
-    $scope.forgot_visible = function(){
-        return $scope.forgot_show;
-    }
-
-    //Return true if sign up form is visible 
-    $scope.sign_visible = function(){
-        return $scope.sign_show;
-    }
-
-    //Return true if log form is visible 
-    $scope.log_visible = function(){
-        return $scope.log_show;
     }
 
     //Show test of error or success.
@@ -104,6 +69,19 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.fail_log_in = function(data){
         $scope.show_error('Server failed, try again.','error_login'); 
     }
+    //When the password recovery process returns from the server with a success message. 
+    $scope.success_recovery = function(data){
+        if (data && data.status && data.status==111){
+            $scope.display_log();
+            $scope.show_loader = false;
+        }else if (data && data.status && data.status==2){
+            $scope.show_error('User does not exist','error_recovery');
+        }        
+    }
+    //When the log-in process fails. 
+    $scope.fail_recovery = function(data){
+        $scope.show_error('Server failed, try again.','error_recovey'); 
+    }
     //Run the "sign-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.sgin_task = function(form_naame){
         $scope.show_loader = true;
@@ -136,6 +114,56 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         service.ajaxfunc('log_in','login_form',false)
         .then(function(data){$scope.success_log_in(data);},
             function(data){$scope.fail_log_in(data);});
+    }
+
+    //Run the "recover_account" process. check if details are valid. If they valid send them to the server, else notice the user of the problem
+    $scope.recover_account_task = function(){
+        $scope.show_loader = true;
+       if (!$scope.recover_details.userName){
+           $scope.show_error('Username is required!','error_login');        
+           return;
+       }
+       $scope.display_sgin_text = '';        
+       $scope.error_login = false;
+       service.ajaxfunc('recover_account','recover_account_form',false)
+       .then(function(data){$scope.success_recovery(data);},
+           function(data){$scope.fail_recovery(data);});
+   }
+
+    //Display forgot password form
+    $scope.display_recover_account = function(){
+        $scope.log_show = false;
+        $scope.sign_show = false;
+        $scope.recover_account_show = true;
+    }
+
+    //Display sign up form
+    $scope.display_sign_up = function(){
+        $scope.log_show = false;
+        $scope.sign_show = true;
+        $scope.recover_account_show = false;
+    }
+
+    //Display log form
+    $scope.display_log = function(){
+        $scope.log_show = true;
+        $scope.sign_show = false;
+        $scope.recover_account_show = false;
+    }
+
+    //Return true if forgot form is visible 
+    $scope.recover_account_visible = function(){
+        return $scope.recover_account_show;
+    }
+
+    //Return true if sign up form is visible 
+    $scope.sign_visible = function(){
+        return $scope.sign_show;
+    }
+
+    //Return true if log form is visible 
+    $scope.log_visible = function(){
+        return $scope.log_show;
     }
 
 ;}]);

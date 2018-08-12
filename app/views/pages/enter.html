@@ -29,7 +29,7 @@
                             <label class="control-label" ng-show="error_login">{{display_sgin_text}}</label>
                             <a class="btn btn-lg btn-success btn-block" ng-click="login_task()">Login</a>
                             <label class="open_sgin">Do not have a user? sign up below</label>
-                            <a href="#" ng-click="display_forgot()">Forgot password?</a></p>
+                            <a href="#" ng-click="display_recover_account()">Forgot password?</a></p>
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_sign_up()">Sign up area</a>
                         </fieldset>
                     </form>
@@ -67,15 +67,15 @@
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="forgot_visible()">
+                    <form role="form" ng-class="{'has-error':error_sign}" name="recover_account_form" ng-show="recover_account_visible()">
                         <h2>Account recovery</h2>
                         <fieldset>
                             <div class="form-group input-group">
-                                <span class="input-group-addon">@</span>
-                                <input class="form-control" placeholder="Email (required)" name="user_email" type="text" ng-model="sginup_details.user_email" autofocus />
-                            </div> 
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="recover_details.userName" autofocus />
+                            </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a class="btn btn-lg btn-success btn-block" ng-click="recover('sgin_form')">recover</a>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="recover_account_task('recover_account_form')">recover</a>
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
                         </fieldset>
                     </form>                    
