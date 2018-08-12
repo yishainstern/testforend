@@ -8,8 +8,8 @@
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\app\\php";
 	//email account details
-	$details_obj->email_account->username = 'tomerb61@gmail.com';
-	$details_obj->email_account->password = 'Ps159753';
+	$details_obj->email_account->username = 'ddebguer@gmail.com';
+	$details_obj->email_account->password = '3D3BGU3r';
 	//
 	//yishai local computer
 	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";

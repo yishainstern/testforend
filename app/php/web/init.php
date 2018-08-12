@@ -142,11 +142,11 @@
 		//Set who the message is to be sent to
 		$mail->addAddress($arr['user']->user_email);
 		//Set the subject line
-		$mail->Subject = 'Hello';
+		$mail->Subject = 'DeBGUer Account recovery';
 		//Read an HTML message body from an external file, convert referenced images to embedded,
 		//convert HTML into a basic plain-text alternative body
 		//$mail->msgHTML(file_get_contents('hello.html'), __DIR__);
-		$mail->Body = "Your new password is: ".$generated_password;
+		$mail->Body = "Your new password is:<br><br>".$generated_password;
 		//Replace the plain text body with one created manually
 		$mail->AltBody = 'world';
 		//send the message, check for errors
