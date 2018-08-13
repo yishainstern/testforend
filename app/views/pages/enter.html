@@ -56,10 +56,10 @@
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
                                 <input type="password" class="form-control" placeholder="Password (required)" name="password" type="password" value="" ng-model="sginup_details.password">
                             </div>
-                            <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <div class="form-group input-group">
+                                    <input class="form-check-input" name="agree" type="checkbox" ng-model="sginup_details.agree" autofocus>
                                     <label style="display:inline; float:none" for="agree">
-                                        I agree with the <a href="/#/enter.html">terms and conditions</a>.
+                                        I agree with the <a target="_blank" rel="noopener noreferrer" href="terms_and_conditions.html">terms and conditions</a>.
                                     </label>
                                     <!-- <label class="form-check-label" for="exampleCheck1">I agree to use my data for research uses</label> -->
                             </div>
