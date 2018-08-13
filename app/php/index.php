@@ -1,11 +1,9 @@
 <?php
 	namespace Debugger;
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//ASK AVISHAY WHAT IS IT
 	require __DIR__.'/vendor/autoload.php';
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	require __DIR__.'/PHPMailer/src/Exception.php';
+	require __DIR__.'/PHPMailer/src/PHPMailer.php';
+	require __DIR__.'/PHPMailer/src/SMTP.php';
 	require_once __DIR__.'/web/myConf.php';
 	require_once __DIR__.'/web/init.php';
 	require_once __DIR__.'/web/online-learn.php';

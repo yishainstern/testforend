@@ -1,10 +1,6 @@
 <?php
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
-	require __DIR__.'/../vendor/autoload.php';
-	require __DIR__.'/../web/PHPMailer/src/Exception.php';
-	require __DIR__.'/../web/PHPMailer/src/PHPMailer.php';
-	require __DIR__.'/../web/PHPMailer/src/SMTP.php';
 	//Hash function for password
 	function get_hash($string){
 		return hash('md5', $string);
