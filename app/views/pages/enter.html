@@ -15,7 +15,7 @@
                 </div>
                 <div class="panel-body" style="padding-top: 0px; position: relative;">
                     <loader></loader>
-                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_show">
+                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_visible()">
                         <h2>Log In</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -29,10 +29,11 @@
                             <label class="control-label" ng-show="error_login">{{display_sgin_text}}</label>
                             <a class="btn btn-lg btn-success btn-block" ng-click="login_task()">Login</a>
                             <label class="open_sgin">Do not have a user? sign up below</label>
-                            <a class="btn btn-lg btn-success btn-block" ng-click="log_show = false">Sign up area</a>
+                            <a href="#" ng-click="display_recover_account()">Forgot password?</a></p>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="display_sign_up()">Sign up area</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="!log_show">
+                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="sign_visible()">
                         <h2>Sign Up</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -55,10 +56,30 @@
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
                                 <input type="password" class="form-control" placeholder="Password (required)" name="password" type="password" value="" ng-model="sginup_details.password">
                             </div>
+                            <div class="form-group input-group">
+                                    <input class="form-check-input" name="agree" type="checkbox" ng-model="sginup_details.agree" autofocus>
+                                    <label style="display:inline; float:none" for="agree">
+                                        I agree with the <a target="_blank" rel="noopener noreferrer" href="terms_and_conditions.html">terms and conditions</a>.
+                                    </label>
+                                    <!-- <label class="form-check-label" for="exampleCheck1">I agree to use my data for research uses</label> -->
+                            </div>
 							<label class="control-label ng-binding">Please don't use your BGU username and password</label>
                             <label class="control-label" ng-show="error_sign">{{display_sgin_text}}</label>
                             <!-- Change this to a button or input when using this as a form -->
                             <a class="btn btn-lg btn-success btn-block" ng-click="sgin_task('sgin_form')">sign up</a>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
+                        </fieldset>
+                    </form>
+                    <form role="form" ng-class="{'has-error':error_sign}" name="recover_account_form" ng-show="recover_account_visible()">
+                        <h2>Account recovery</h2>
+                        <fieldset>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="recover_details.userName" autofocus />
+                            </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <a class="btn btn-lg btn-success btn-block" ng-click="recover_account_task('recover_account_form')">recover</a>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
                         </fieldset>
                     </form>                    
                 </div>
