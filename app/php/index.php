@@ -1,11 +1,9 @@
 <?php
 	namespace Debugger;
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//ASK AVISHAY WHAT IS IT
 	require __DIR__.'/vendor/autoload.php';
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	require __DIR__.'/PHPMailer/src/Exception.php';
+	require __DIR__.'/PHPMailer/src/PHPMailer.php';
+	require __DIR__.'/PHPMailer/src/SMTP.php';
 	require_once __DIR__.'/web/myConf.php';
 	require_once __DIR__.'/web/init.php';
 	require_once __DIR__.'/web/online-learn.php';
@@ -92,6 +90,8 @@
 		$returnJson = zip_file($details_obj);
 	}elseif ($task== "recover_account"){
 		$returnJson = recover_account($details_obj);
+	}elseif ($task== "change_password"){
+		$returnJson = change_password($details_obj);
 	}
 	$obj = json_encode((object)$returnJson);
 	echo $obj;
