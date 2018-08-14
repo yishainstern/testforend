@@ -32,6 +32,7 @@
 			$hash->start_remove = false;
 			$obj->list = array();
 			$hash->password = get_hash($user->password);
+			$hash->agree = $user->agree;
 			update_user_details($obj);
 			update_user_hash($obj,$hash);
 			$ans['status'] = 111;
@@ -64,12 +65,17 @@
 			$arr["details"]->session_id = $r;
 			$arr["details"]->session_time = "".$time;
 			update_user_hash($arr["user"],$arr["details"]);
-			$ans['status'] = 111;
+			if(is_admin($arr["user"])){
+				$ans['status'] = 110;
+			}else{
+				$ans['status'] = 111;
+			}
 			$ans['message'] = "Welcome";
 			$ans['user'] = 	$arr["user"];		
 		}
 		return $ans;
 	}
+
 	//recover user account
 	function recover_account($details_obj){
 		$ans = array();
@@ -163,5 +169,51 @@
 			#    echo "Message saved!";
 			#}
 		}
+	}
+
+	//change user password
+	function change_password($details_obj){
+		$user = $details_obj->user;
+		$ans = array();
+		session_start();
+		$r = session_id();
+		$time = time();
+		$arr = get_all_details_of_user($details_obj);
+		if ($arr["problem"]==true){
+			$ans['status'] = 2;
+			$ans['message'] = "User does not exist.";			
+			return $ans;
+		}
+		if (!($arr["user"]->userName==$user->userName) || !($arr["details"]->password==get_hash($user->verification))){
+			$ans['status'] = 1;
+			$ans['message'] = "Do not try to break in, thief!!";
+			session_unset(); // remove all session variables
+			session_destroy(); // destroy the session 
+		}else{
+			//generate new password
+		$new_pass = $user->password_2;
+		$user = $arr['user'];
+		$user_details = $arr['details'];
+		/* $obj = new stdClass(); */
+		$hash = new stdClass();
+		/* $obj->userName = $user->userName;
+		$obj->first_name = $user->first_name;
+		$obj->last_name = $user->last_name;
+		$obj->user_email = $user->user_email;
+		$obj->userNameRoot = $details_obj->root.$obj->userName;
+		$obj->user_details = $obj->userNameRoot.'\\user_details.json';
+		$obj->user_server_details = $obj->userNameRoot.'\\user_server_details.json'; */
+		$hash = new stdClass();
+		$hash->session_id = $r;
+		$hash->session_time = "".$time;
+		$hash->start_remove = false;
+		$hash->password = get_hash($new_pass);
+		update_user_details($user);
+		update_user_hash($user,$hash);
+		$ans['status'] = 111;
+		$ans['message'] = "Password changed successfully";
+		$ans['user'] = 	$arr["user"];
+		}
+		return $ans;
 	}
 ?>

@@ -90,6 +90,8 @@
 		$returnJson = zip_file($details_obj);
 	}elseif ($task== "recover_account"){
 		$returnJson = recover_account($details_obj);
+	}elseif ($task== "change_password"){
+		$returnJson = change_password($details_obj);
 	}
 	$obj = json_encode((object)$returnJson);
 	echo $obj;
