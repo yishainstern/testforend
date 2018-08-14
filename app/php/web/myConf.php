@@ -2,10 +2,14 @@
 	$details_obj = new stdClass();
 	$details_obj->user = new stdClass();
 	$details_obj->project = new stdClass();
+	$details_obj->email_account = new stdClass();
 	//windows server in BG|U
 	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
 	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\app\\php";
+	//email account details
+	$details_obj->email_account->username = 'ddebguer@gmail.com';
+	$details_obj->email_account->password = '3D3BGU3r';
 	//
 	//yishai local computer
 	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
@@ -43,6 +47,13 @@
 		}else {
 			$arr["problem"] = true;
 		}
+		return $arr;
+	}
+	//get all details of email account
+	function get_all_details_of_email_account($details_obj){
+		$arr = array();
+		$arr["username"] = $details_obj->email_account->username;
+		$arr["password"] = $details_obj->email_account->password;
 		return $arr;
 	}
 	//check if this php scipt is exeuted in the server.
