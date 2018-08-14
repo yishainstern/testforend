@@ -132,7 +132,7 @@ angular
         }
       }
     })
-    /* .state('dashboard.listAdminUser',{
+    .state('dashboard.listAdminUser',{
       templateUrl:'views/pages/code/',
       url:'/code/',
       controller:'listUserController',
@@ -144,8 +144,8 @@ angular
           })
         }
       }
-    }) */
-    .state('dashboard.listAdminUser',{
+    })
+    /* .state('dashboard.listAdminUser',{
       templateUrl:'views/pages/listAdminUser.html',
       url:'/listAdminUser/:user',
       controller:'listUserController',
@@ -157,7 +157,7 @@ angular
           })
         }
       }
-    })
+    }) */
     .state('dashboard.newProject',{
       templateUrl:'views/pages/new-project.html',
       url:'/newProject/:user',
