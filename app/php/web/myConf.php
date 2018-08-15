@@ -4,23 +4,13 @@
 	$details_obj->project = new stdClass();
 	$details_obj->email_account = new stdClass();
 	//windows server in BG|U
-	$details_obj->root = "C:\\new_users\\";
+	$details_obj->root = "C:\\debguer_users\\";
+	$details_obj->mavenroot = "C:\\Users\\amirelm\\.m2\\repository";
+	$details_obj->phpRoot = "C:\xampp\htdocs\secure\in\testforend\app\php";
 	$details_obj->admin_users = $details_obj->root.'\\admin_users.json';
-	$details_obj->mavenroot = "C:\\Users\\sternyi\\.m2\\repository";
-	$details_obj->phpRoot = "C:\\xampp\\htdocs\\in\\testforend\\app\\php";
 	//email account details
 	$details_obj->email_account->username = 'ddebguer@gmail.com';
 	$details_obj->email_account->password = '3D3BGU3r';
-	//
-	//yishai local computer
-	//$details_obj->root = "C:\\Users\\pc-home\\Desktop\\Github\\users\\";
-	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	//$details_obj->phpRoot = "C:\\Users\\pc-home\\Desktop\\Github\\mytest\\testforend\\php";
-	//yishai wrock computer
-	//$details_obj->root = "C:\\Users\\home\\Desktop\\Github\\users\\";
-	//$details_obj->mavenroot = "C:\\Users\\pc-home\\.m2\\repository";
-	//$details_obj->phpRoot = "C:\\Users\\home\\Desktop\\Github\\testforend\\php";
-	//Get user details, session details and user details.
 	function get_all_details_of_user($details_obj){
 		$arr = array();
 		$user = $details_obj->user;
