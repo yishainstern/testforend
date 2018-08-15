@@ -4,7 +4,9 @@
 	$details_obj->project = new stdClass();
 	$details_obj->email_account = new stdClass();
 	//windows server in BG|U
-	$details_obj->root = "C:\\debguer_users\\";
+	//$details_obj->root = "C:\\debguer_users\\";
+	//Rotem's computer
+	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\amirelm\\.m2\\repository";
 	$details_obj->phpRoot = "C:\xampp\htdocs\secure\in\testforend\app\php";
 	$details_obj->admin_users = $details_obj->root.'\\admin_users.json';
