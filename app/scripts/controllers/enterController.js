@@ -9,6 +9,7 @@
 angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout', '$rootScope','service','config', '$state', function ($scope, $timeout, $rootScope, service,config,$state) {
     $scope.login_details = {};
     $scope.sginup_details = {};
+    $scope.recover_details = {};
     $scope.change_password_details = {};
     $scope.rong_password = false;
     $scope.sign_up_error = '';
@@ -20,6 +21,8 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.display_login_text = 'משתמש כבר קיים';
     $scope.show_loader = false;
     $scope.log_show = true;
+    $scope.sign_show = false;
+    $scope.recover_account_show = false;
     $scope.change_password_show = false;
     
     //Use regular expression to check if the email is a valid email address 
@@ -72,6 +75,9 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.fail_log_in = function(data){
         $scope.show_error('Server failed, try again.','error_login'); 
     }
+    //When the password recovery process returns from the server with a success message. 
+    $scope.success_recovery = function(data){
+        if (data && data.status && data.status==111){
             $scope.display_change_password();
             $scope.show_loader = false;
         }else if (data && data.status && data.status==2){
@@ -100,7 +106,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     //Run the "sign-in" process. check if details are valid. If  they valid send them to the server, else notice the user of the problem
     $scope.sgin_task = function(form_naame){
         $scope.show_loader = true;
-        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email || !$scope.sginup_details.first_name ){
+        if (!$scope.sginup_details.userName || !$scope.sginup_details.password ||!$scope.sginup_details.user_email || !$scope.sginup_details.first_name || !$scope.sginup_details.agree ){
 			if (!$scope.sginup_details.last_name) {
 				$scope.sginup_details.last_name = '';
 			}

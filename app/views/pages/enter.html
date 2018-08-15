@@ -15,7 +15,7 @@
                 </div>
                 <div class="panel-body" style="padding-top: 0px; position: relative;">
                     <loader></loader>
-                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_show">
+                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_visible()">
                         <h2>Log In</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -32,7 +32,7 @@
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_sign_up()">Sign up area</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="!log_show">
+                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="sign_visible()">
                         <h2>Sign Up</h2>
                         <fieldset>
                             <div class="form-group input-group">
