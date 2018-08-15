@@ -1,10 +1,13 @@
 <?php
-	
 	namespace Debugger;
 	require __DIR__.'/vendor/autoload.php';
+<<<<<<< HEAD
+
+=======
 	require __DIR__.'/PHPMailer/src/Exception.php';
 	require __DIR__.'/PHPMailer/src/PHPMailer.php';
 	require __DIR__.'/PHPMailer/src/SMTP.php';
+>>>>>>> Rotem
 	require_once __DIR__.'/web/myConf.php';
 	require_once __DIR__.'/web/init.php';
 	require_once __DIR__.'/web/online-learn.php';
@@ -12,10 +15,10 @@
 	require_once __DIR__.'/web/list.php';	
 	require_once __DIR__.'/web/prediction.php';
 	require_once __DIR__.'/web/new-project.php';
-	require_once __DIR__.'/web/new-project.php';
 	//header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
+	
 	$task = $details_obj->task;
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
@@ -88,11 +91,13 @@
 		$returnJson = display_file($details_obj);
 	}elseif ($task== "zip_files"){
 		$returnJson = zip_file($details_obj);
+<<<<<<< HEAD
+=======
 	}elseif ($task== "recover_account"){
 		$returnJson = recover_account($details_obj);
 	}elseif ($task== "change_password"){
 		$returnJson = change_password($details_obj);
+>>>>>>> Rotem
 	}
-	$obj = json_encode((object)$returnJson);
-	echo $obj;
+	echo json_encode((object)$returnJson);
 ?>

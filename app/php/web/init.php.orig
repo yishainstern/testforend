@@ -1,6 +1,9 @@
 <?php
+<<<<<<< HEAD
+=======
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
+>>>>>>> Rotem
 	//Hash function for password
 	function get_hash($string){
 		return hash('md5', $string);
@@ -75,6 +78,8 @@
 		}
 		return $ans;
 	}
+<<<<<<< HEAD
+=======
 
 	//recover user account
 	function recover_account($details_obj){
@@ -147,7 +152,7 @@
 		//Read an HTML message body from an external file, convert referenced images to embedded,
 		//convert HTML into a basic plain-text alternative body
 		//$mail->msgHTML(file_get_contents('hello.html'), __DIR__);
-		$mail->Body = "Your verification code is:<br><br>".$generated_password;
+		$mail->Body = "Your new password is:<br><br>".$generated_password;
 		//Replace the plain text body with one created manually
 		$mail->AltBody = 'world';
 		//send the message, check for errors
@@ -216,4 +221,5 @@
 		}
 		return $ans;
 	}
+>>>>>>> Rotem
 ?>

@@ -9,13 +9,15 @@
 angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', 'service', '$stateParams', function ($rootScope, $state, $timeout, service, $stateParams) {
 	   //server_domain is the domain of the server side
        //yishai computer
-	   $rootScope.server_domain = 'http://local.test/testforend/php/index.php';
+	   //$rootScope.server_domain = 'http://local.test/testforend/php/index.php';
+       //Rotem computer
+	   $rootScope.server_domain = 'php/index.php';
        //yishai wrock
        //$rootScope.server_domain = 'http://local.test/php/index.php';
 	   //windows server
         //$rootScope.server_domain = 'http://132.72.64.18/testforend/php/index.php';
         //windows server
-        $rootScope.server_domain = 'http://debguer.ise.bgu.ac.il/secure/in/testforend/app/php/index.php';
+        //$rootScope.server_domain = 'http://debguer.ise.bgu.ac.il/secure/in/testforend/app/php/index.php';
 	//user object, all of users details
 	$rootScope.user = {
 		list:[]
