@@ -1,4 +1,5 @@
 <?php
+	
 	namespace Debugger;
 	require __DIR__.'/vendor/autoload.php';
 
@@ -12,7 +13,6 @@
 	//header('Content-Type: false');
 	error_reporting(E_ALL);
 	$returnJson = array();
-	
 	$task = $details_obj->task;
 	//gets the input from http post request that was givven by the user and deside to witch task to run.
 	if ($task=='open_folder'){
