@@ -135,12 +135,25 @@ angular
     .state('dashboard.listAdminUser',{
       templateUrl:'views/pages/code/',
       url:'/code/',
-      controller:'listUserController',
+      controller:'listAdminUserController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           return $ocLazyLoad.load({
               name:'sbAdminApp',
-              files:['scripts/controllers/listUserController.js','styles/listUser.css']
+              files:['scripts/controllers/listAdminUserController.js','styles/listUser.css']
+          })
+        }
+      }
+    })
+    .state('dashboard.usersDataTables',{
+      templateUrl:'views/pages/code/usersDataTables.html',
+      url:'/code/usersDataTables.html',
+      controller:'listAdminUserController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/listAdminUserController.js','styles/listUser.css']
           })
         }
       }
