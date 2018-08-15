@@ -1,6 +1,9 @@
 <?php
+<<<<<<< HEAD
+=======
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
+>>>>>>> Rotem
 	//Hash function for password
 	function get_hash($string){
 		return hash('md5', $string);
@@ -75,6 +78,8 @@
 		}
 		return $ans;
 	}
+<<<<<<< HEAD
+=======
 
 	//recover user account
 	function recover_account($details_obj){
@@ -216,4 +221,5 @@
 		}
 		return $ans;
 	}
+>>>>>>> Rotem
 ?>
