@@ -64,7 +64,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         }else if (data && data.status && data.status==110){
             $rootScope.user = data.user; 
             localStorage.setItem('name',$rootScope.user.userName);
-            $state.transitionTo('dashboard.listUser',{user:$rootScope.user.userName});
+            $state.transitionTo('dashboard.listAdminUser',{user:$rootScope.user.userName});
         }else if (data && data.status && data.status==1){
             $scope.show_error('The User Name or Password is Incorrect','error_login');
         }else if (data && data.status && data.status==2){
