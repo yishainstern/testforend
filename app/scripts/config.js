@@ -9,7 +9,7 @@
 angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeout', 'service', '$stateParams', function ($rootScope, $state, $timeout, service, $stateParams) {
 	   //server_domain is the domain of the server side
        //yishai computer
-       //$rootScope.server_domain = 'http://local.test/testforend/php/index.php';
+	   //$rootScope.server_domain = 'http://local.test/testforend/php/index.php';
        //Rotem computer
 	   $rootScope.server_domain = 'php/index.php';
        //yishai wrock

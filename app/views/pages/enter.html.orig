@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="cover_start" style="background-image: url('./img/s2.png');"></div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <div class="bgu_wrapper">
+                        <div class="bgu_cell first_cell"><img src="./img/ise.png"></div>
+                        <div class="bgu_cell second_cell"><img src="./img/bgu.png"></div>
+                    </div>
+                    <div class="logo">
+                        <img src="./img/s2.png"><span style="font-size: 40pt">DeBGUer</span><img src="./img/s2.png"><span style="font-size: 15pt">Bug Prediction and Diagnosis @ BGU</span>
+                    </div>
+                    
+                </div>
+                <div class="panel-body" style="padding-top: 0px; position: relative;">
+                    <loader></loader>
+                    <form role="form" ng-class="{'has-error':error_login}" name="login_form" ng-show="log_show">
+                        <h2>Log In</h2>
+                        <fieldset>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="login_details.userName" autofocus />
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="login_details.password" />
+                            </div>
+                            <label class="control-label" ng-show="error_login">{{display_sgin_text}}</label>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="login_task()">Login</a>
+<<<<<<< HEAD
+                            <label class="open_sgin">Do not have a user? sign up below</label>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="log_show = false">Sign up area</a>
+=======
+                            <a href="#" ng-click="display_recover_account()">Forgot password?</a>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="display_sign_up()">Sign up area</a>
+>>>>>>> Rotem
+                        </fieldset>
+                    </form>
+                    <form role="form" ng-class="{'has-error':error_sign}" name="sgin_form" ng-show="!log_show">
+                        <h2>Sign Up</h2>
+                        <fieldset>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input type="text" class="form-control" placeholder="Pick a username (required)" name="userName" ng-model="sginup_details.userName" autofocus>
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="First name (required)" name="first_name" type="text" ng-model="sginup_details.first_name" autofocus />
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-user" style="display: table-cell;"></span>
+                                <input class="form-control" placeholder="Last name (optional)" name="last_name" type="text" ng-model="sginup_details.last_name" autofocus />
+                            </div>  
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input class="form-control" placeholder="Email (required)" name="user_email" type="text" ng-model="sginup_details.user_email" autofocus />
+                            </div>                            
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input type="password" class="form-control" placeholder="Password (required)" name="password" type="password" value="" ng-model="sginup_details.password">
+                            </div>
+							<label class="control-label ng-binding">Please don't use your BGU username and password</label>
+                            <label class="control-label" ng-show="error_sign">{{display_sgin_text}}</label>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <a class="btn btn-lg btn-success btn-block" ng-click="sgin_task('sgin_form')">sign up</a>
+                        </fieldset>
+                    </form>
+                    <form role="form" ng-class="{'has-error':error_sign}" name="change_password_form" ng-show="change_password_visible()">
+                        <h2>Change password</h2>
+                        <fieldset>
+                            <div class="form-group input-group">
+                                <input class="form-control" name="userName" type="text" style="display: none" ng-model="recover_details.userName"/>
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input type="password" class="form-control" placeholder="Verification Code(required)" name="verification" type="verification" value="" ng-model="change_password_details.verification">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input type="password" class="form-control" placeholder="New password (required)" name="password_1" type="password" value="" ng-model="change_password_details.password_1">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
+                                <input type="password" class="form-control" placeholder="Password confirmation (required)" name="password_2" type="password" value="" ng-model="change_password_details.password_2">
+                            </div>
+                            <a class="btn btn-lg btn-success btn-block" ng-click="change_password_task('recover_account_form')">change</a>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
