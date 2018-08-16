@@ -92,6 +92,8 @@
 		$returnJson = recover_account($details_obj);
 	}elseif ($task== "change_password"){
 		$returnJson = change_password($details_obj);
+	}elseif ($task== "get_users_data"){
+		$returnJson = get_users_data($details_obj);
 	}
 	$obj = json_encode((object)$returnJson);
 	echo $obj;

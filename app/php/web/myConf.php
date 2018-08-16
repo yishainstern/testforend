@@ -42,6 +42,23 @@
 		}
 		return $arr;
 	}
+	//Get the data of all the users
+	function get_users_data($details_obj){
+		$ans  = new stdClass();;
+		$arr  = array();
+		$dir = new DirectoryIterator($details_obj->root);
+		$curr_filename = '';
+		$curr_file_path = '';
+		foreach ($dir as $fileinfo) {
+			$curr_filename = $fileinfo->getFilename();
+			if( !(($curr_filename== '.')||($curr_filename== '..')||($curr_filename== 'admin_users.json')) ){
+				$curr_file_path = $fileinfo->getPathname().'\\user_details.json';
+				$arr[$curr_filename] = json_decode(file_get_contents($curr_file_path));
+			}
+		}
+		$ans->arr =array_values($arr);
+		return $ans;
+	}
 	//get all details of email account
 	function get_all_details_of_email_account($details_obj){
 		$arr = array();
@@ -56,6 +73,7 @@
 		$arr = json_decode(file_get_contents($file));
 		return in_array($username, $arr);
 	}
+	
 	//check if this php scipt is exeuted in the server.
 	if (isset($argv[1]) && $argv[1]=="trigger" && sizeof($argv)==5){
 		$details_obj->task = $argv[4];

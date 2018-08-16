@@ -4,13 +4,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Edmin</title>
-	<link type="text/css" href="views/pages/code/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link type="text/css" href="views/pages/code/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-	<link type="text/css" href="views/pages/code/css/theme.css" rel="stylesheet">
-	<link type="text/css" href="views/pages/code/images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href="views/pages/admin_page/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="views/pages/admin_page/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="views/pages/admin_page/css/theme.css" rel="stylesheet">
+	<link type="text/css" href="views/pages/admin_page/images/icons/css/font-awesome.css" rel="stylesheet">
 	<!-- <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'> -->
 </head>
 <body>
+	<!-- Load users data -->
+	<div data-ng-init="get_users_data_table()"></div>
 	<div class="wrapper">
 		<div class="container">
 			<div class="row">
@@ -93,208 +95,22 @@
 						</ul>
 					<!</div> --><!--/.sidebar-->
 				<!-- </div> --> <!--/.span3-->
-
-
 				<div class="span9">
 					<div class="content">
 
 						<div class="module">
 							<div class="module-head">
-								<h3>Tables</h3>
+								<h3>Users</h3>
 							</div>
-							<div class="module-body">
-								<!-- <p>
-									<strong>Default</strong>
-									-
-									<small>table class="table"</small>
-								</p> -->
-								<table class="table">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Striped</strong>
-									-
-									<small>table class="table table-striped"</small>
-								</p>
-								<table class="table table-striped">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Bordered</strong>
-									-
-									<small>table class="table table-bordered"</small>
-								</p>
-								<table class="table table-bordered">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Condensed</strong>
-									-
-									<small>table class="table table-condensed"</small>
-								</p>
-								<table class="table table-condensed">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br>
-
-								<p>
-									<strong>Combined</strong>
-									-
-									<small>table class="table table-striped table-bordered table-condensed"</small>
-								</p>
 								<table class="table table-striped table-bordered table-condensed">
-								  <thead>
 									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
+										<th ng-repeat="(key, val) in users_data[0]">{{ key }}</th>
 									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
+									<tr ng-repeat="row in users_data">
+										<td ng-repeat="column in row">
+										  {{ column }}
+										</td>
 									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
 								</table>
 							</div>
 						</div>
@@ -742,12 +558,9 @@
 
 	<div class="footer">
 		<div class="container">
-			 
-
 			<b class="copyright">&copy; 2014 Edmin - EGrappler.com </b> All rights reserved.
 		</div>
 	</div>
-
 	<!-- <script src="scripts/jquery-1.9.1.min.js"></script>
 	<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
