@@ -42,6 +42,7 @@ angular.module('sbAdminApp').factory('config', ['$rootScope', '$state', '$timeou
             var obj = JSON.parse(str);
             return obj;
         }catch(err){
+            console.log("%clog %c: %cjson from server is: "+str, "color: blue", "color: black", "color: green");
             alert('server crash try agin');
             return null;
         }
