@@ -69,7 +69,7 @@
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="recover_account_form" ng-show="recover_account_visible()">
+                    <form role="form" ng-class="{'has-error':error_recovery}" name="recover_account_form" ng-show="recover_account_visible()">
                         <h2>Account recovery</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -77,11 +77,12 @@
                                 <input class="form-control" placeholder="userName" name="userName" type="text" ng-model="recover_details.userName" autofocus />
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
+                            <label class="control-label" ng-show="error_recovery">{{display_recover_text}}</label>
                             <a class="btn btn-lg btn-success btn-block" ng-click="recover_account_task('recover_account_form')">recover</a>
                             <a class="btn btn-lg btn-success btn-block" ng-click="display_log()">back</a>
                         </fieldset>
                     </form>
-                    <form role="form" ng-class="{'has-error':error_sign}" name="change_password_form" ng-show="change_password_visible()">
+                    <form role="form" ng-class="{'has-error':error_change_password}" name="change_password_form" ng-show="change_password_visible()">
                         <h2>Change password</h2>
                         <fieldset>
                             <div class="form-group input-group">
@@ -100,6 +101,7 @@
                                 <span class="input-group-addon fa fa-key" style="display: table-cell;"></span>
                                 <input type="password" class="form-control" placeholder="Password confirmation (required)" name="password_2" type="password" value="" ng-model="change_password_details.password_2">
                             </div>
+                            <label class="control-label" ng-show="error_change_password">{{display_change_password_text}}</label>
                             <a class="btn btn-lg btn-success btn-block" ng-click="change_password_task('recover_account_form')">change</a>
                         </fieldset>
                     </form>

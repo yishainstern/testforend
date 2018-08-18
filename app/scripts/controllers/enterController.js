@@ -19,6 +19,8 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.error_login = false;
     $scope.display_sgin_text = 'משתמש כבר קיים';
     $scope.display_login_text = 'משתמש כבר קיים';
+    $scope.display_recover_text = 'משתמש כבר קיים';
+    $scope.display_change_password_text = 'משתמש כבר קיים';
     $scope.show_loader = false;
     $scope.log_show = true;
     $scope.sign_show = false;
@@ -35,6 +37,8 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.show_error = function(str,flag){
         $scope.display_sgin_text = str;
         $scope.display_login_text = str; 
+        $scope.display_recover_text =str;
+        $scope.display_change_password_text =str;
         $scope[flag] = true;
         $scope.show_loader = false;
     }
@@ -86,7 +90,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     }
     //When the log-in process fails. 
     $scope.fail_recovery = function(data){
-        $scope.show_error('Server failed, try again.','error_recovey'); 
+        $scope.show_error('Server failed, try again.','error_recovery'); 
     }
     //When the 'change password' process returns from the server with a success message. 
     $scope.success_change_password = function(data){
@@ -94,9 +98,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
             $scope.display_log();
             $scope.show_loader = false;
         }else if (data && data.status && data.status==1){
-            $scope.show_error('Wrong confirmation code. Check your email','error_change_password');
-        }else if (data && data.status && data.status==2){
-            $scope.show_error('User does not exist','error_change_password');
+            $scope.show_error('Wrong confirmation code','error_change_password');
         }
     }
     //When the change_password process fails. 
@@ -159,7 +161,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
        return;
    }
    if ( !($scope.change_password_details.password_1==$scope.change_password_details.password_2) ) {
-    $scope.show_error('Password confirmation failed. Check caps-lock','error_change_password');        
+    $scope.show_error('Password confirmation failed','error_change_password');        
     return;
 }
    $scope.display_sgin_text = '';        

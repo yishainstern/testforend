@@ -133,8 +133,8 @@ angular
       }
     })
     .state('dashboard.listAdminUser',{
-      templateUrl:'views/pages/code/',
-      url:'/code/',
+      templateUrl:'views/pages/admin_page/',
+      url:'/admin_page/',
       controller:'listAdminUserController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
@@ -146,8 +146,8 @@ angular
       }
     })
     .state('dashboard.usersDataTables',{
-      templateUrl:'views/pages/code/usersDataTables.html',
-      url:'/code/usersDataTables.html',
+      templateUrl:'views/pages/admin_page/usersDataTables.html',
+      url:'/admin_page/usersDataTables.html',
       controller:'listAdminUserController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
