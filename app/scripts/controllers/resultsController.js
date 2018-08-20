@@ -115,17 +115,23 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     }
     //Watch the file 
     $scope.watch_file = function(item,folder){
-        $scope.show_loader = true;
-       var form = document.forms.namedItem('results');
-       var data_to_send = new FormData(form);
-       data_to_send.append('witch_file',item);
-       data_to_send.append('witch_folder',folder);
-       service.filefunc('get_file','results',data_to_send)
-       .then(function(data){
-                $scope.show_loader = false;
-           },function(data){alert('bad'); $scope.show_loader = false;}
-           );  
-   }
+        $state.transitionTo('dashboard.results_watch',{user:$rootScope.user.userName});
+        }
+    $('.horizontal .progress-fill span').each(function(){
+        var percent = $(this).html();
+        $(this).parent().css('width', percent);
+    });
+
+    $('.vertical .progress-fill span').each(function(){
+        var percent = $(this).html();
+        var pTop = 100 - ( percent.slice(0, percent.length - 1) ) + "%";
+        $(this).parent().css({
+            'height' : percent,
+            'top' : pTop
+        });
+    });
+
+   
     //Event after project was loded from server. get all list of files we need.
     $scope.$on('project_object_exsites',function(){
         t_stop = $interval(function() {

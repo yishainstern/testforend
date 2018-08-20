@@ -292,7 +292,31 @@ angular
           })
         }
       }
-    })        
+    }) 
+    .state('dashboard.results_watch',{
+      templateUrl:'views/pages/results_watch.html',
+      url:'/results_watch/:user/:id/:task',
+      controller:'resultsController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/resultsController.js',
+                'styles/results_watch.css',
+                'styles/chart.css',
+                'bower_components/swiper/dist/js/swiper.min.js',
+                'scripts/directives/goToList/goToList.js',
+                'scripts/directives/chartModal/chartModal.js',
+                'bower_components/swiper/dist/css/swiper.min.css',
+                'bower_components/chartq.js/dist/Chart.js',
+                'bower_components/jszip/dist/jszip.js',
+                'bower_components/jszip/vendor/FileSaver.js'
+              ]
+          })
+        }
+      }
+    })       
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id/:task',
