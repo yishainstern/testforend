@@ -1,0 +1,3 @@
+[submodule "app\\bower_components\\angular-ui-tree"]
+	path = app\\bower_components\\angular-ui-tree
+	url = https://github.com/angular-ui-tree/angular-ui-tree.git

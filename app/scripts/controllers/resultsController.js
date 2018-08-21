@@ -115,21 +115,9 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     }
     //Watch the file 
     $scope.watch_file = function(item,folder){
-        $state.transitionTo('dashboard.results_watch',{user:$rootScope.user.userName});
-        }
-    $('.horizontal .progress-fill span').each(function(){
-        var percent = $(this).html();
-        $(this).parent().css('width', percent);
-    });
-
-    $('.vertical .progress-fill span').each(function(){
-        var percent = $(this).html();
-        var pTop = 100 - ( percent.slice(0, percent.length - 1) ) + "%";
-        $(this).parent().css({
-            'height' : percent,
-            'top' : pTop
-        });
-    });
+        //$state.transitionTo('dashboard.results_watch_1',{user:$rootScope.user.userName});
+        $state.transitionTo('dashboard.results_watch_2',{user:$rootScope.user.userName});
+    }
 
    
     //Event after project was loded from server. get all list of files we need.
