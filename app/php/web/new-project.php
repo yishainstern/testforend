@@ -107,19 +107,15 @@
 		$old_path = getcwd();
 		chdir($details_obj->project->runingRoot);
 		$output = file_get_contents('proj.log');
-		$output1 = file_get_contents('Debugger.log');
 		$flag1 = strpos($output, "done");
 		$flag11 = strpos($output, "git checkout -f HEAD");
 		$flag21 = strpos($output, "Checking out files: 100%");
 		$flag22 = strpos($output, "Resolving deltas: 100%");
-		$flag3 = strpos($output1, "done");
 		$flag41 = strpos($output, "Checking out files: 100%");
 		$flag42 = strpos($output, "Resolving deltas: 100%");
 		$flag5 = strpos($output, "Fatal");
-		$flag6 = strpos($output1, "Fatal");
 		$flag7 = strpos($output, "fatal");
-		$flag8 = strpos($output1, "fatal");
-		if ($flag11 && $flag3 && ($flag41 || $flag42)){
+		if ($flag11 && ($flag41 || $flag42)){
 			$filr_tmp_1 = "cd ".$p_obj->userProjectRoot."\\".$p_obj->gitName."\n";
 			$filr_tmp_1 .= "git checkout -f HEAD >".$p_obj->runingRoot."\\checkout.log\n";
 			$filr_tmp_1 .= "git tag>".$p_obj->runingRoot."\\tagList.txt\n";
@@ -130,14 +126,14 @@
 			chdir($p_obj->runingRoot);
 			$command = "start /B checkout.cmd";
 			pclose(popen($command, "w"));
-		}else if ($flag1 && ($flag21 || $flag22) && $flag3 && ($flag41 || $flag42)){
+		}else if ($flag1 && ($flag21 || $flag22) && ($flag41 || $flag42)){
 			echo "string";
 			$p_obj = update_project_list($p_obj,"end_clone",true);
 			update_project_details($p_obj);
 			$ans['status'] = 111;
 			$ans['message'] = "all cloned";
 			$ans['project'] = $p_obj; 
-		}else if (!($flag5===FALSE) || !($flag6===FALSE) || !($flag7===FALSE) || !($flag8===FALSE)){
+		}else if (!($flag5===FALSE) || !($flag7===FALSE)){
 			$obj->details->try_agin = TRUE;
 			$ans['status'] = 2;
 			$ans['message'] = 'some failer in server try agin....';
