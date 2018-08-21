@@ -222,8 +222,8 @@
 	
 	//$details_obj->project->full_pom_path = $details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\\".$details_obj->project->pomPath;
 	$details_obj->amirGit = "https://github.com/amir9979/Debugger.git";
-	$details_obj->startGit = "start /B git clone --progress";
-	$details_obj->startGit = "git clone --progress";
+	$details_obj->startGit = "start /B git clone --progress --recursive";
+	$details_obj->startGit = "git clone --progress --recursive";
 	
 
 	

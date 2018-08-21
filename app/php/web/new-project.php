@@ -26,11 +26,11 @@
 		$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
 		$project->project_details_file = $project->folderRoot."\\project_details.json";
 		$project->userProjectRoot = $project->folderRoot.'\\rootGit';
-		$project->DebuugerRoot = $project->folderRoot.'\\rootLearn';
+		$project->DebuugerRoot = "C:\\temp\\Debugger";
 		$project->outputPython = $project->folderRoot.'\\out';
 		$project->runingRoot = $project->folderRoot.'\\run';
-		$project->learnDir = $project->DebuugerRoot.'\\Debugger\\learner';
-		$project->jar_creater = $project->DebuugerRoot.'\\Debugger\\tracer';
+		$project->learnDir = $project->DebuugerRoot.'\\learner';
+		$project->jar_creater = $project->DebuugerRoot.'\\tracer';
 		$project->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
 		$project->jar_test = $project->jar_creater.'\\target\\'.$project->jarName;
 		$project->progress = get_progress_array();
@@ -73,12 +73,12 @@
 			}else{
 				mkdir($project->folderRoot, 0777, true);
 				mkdir($project->userProjectRoot, 0777, true);
-				mkdir($project->DebuugerRoot, 0777, true);
+				#mkdir($project->DebuugerRoot, 0777, true);
 				mkdir($project->outputPython, 0777, true);
 				mkdir($project->runingRoot, 0777, true);
 				$filr_tmp = '';
-				$filr_tmp .= "git clone --progress ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
-				$filr_tmp .= "git clone --progress ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
+				$filr_tmp .= "git clone --progress --recursive ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
+				#$filr_tmp .= "git clone --progress --recursive ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
 				$filr_tmp .= "cd ".$project->userProjectRoot."\\".$project->gitName."\n";
 				$filr_tmp .= "git tag>".$project->runingRoot."\\tagList.txt\n";
 				$filr_tmp .= "dir /s /b *pom.xml >".$project->runingRoot."\\pomList.txt\n";
