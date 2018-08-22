@@ -7,7 +7,7 @@
  * # adminPosHeader
  */
 angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$http', '$q', '$state', '$timeout','$stateParams', function ($interval, $rootScope, $http, $q, $state, $timeout, $stateParams) {
-	return {
+		return {
         //main function for http post request's. can get a form data or get a form id and send it to ther server_domain var
 		ajaxfunc: function(task,form_name,form_data){
 			var deferred = $q.defer();
@@ -107,5 +107,6 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
 		check: function(){
 			alert('sadsa');
 		}
+		
 	}
 }]);

@@ -90,6 +90,19 @@
 		}
 		return $ans;
 	}
+	//Get a list of all json files in the weka folder (out put of the first part).
+	function get_watch($details_obj){
+		$tmp_arr = get_project_progress($details_obj);
+		$ans = array();
+		$project = $tmp_arr['project']; 
+		$file_name = $project->outputPython."\\web_prediction_results\\".$details_obj->project->watch_file_name.".json";
+		if ($tmp_arr['status']==111 &&  file_exists($file_name)){
+			$ans["watch_obj"] = json_decode(file_get_contents($file_name));
+		}else {
+			$ans['status'] = 555;
+		}
+		return $ans;
+	}
 	//Get all files of diagnoses part.
 	function experiments($details_obj){
 		$tmp_arr = get_project_progress($details_obj);
@@ -149,6 +162,29 @@
 			}else {
 				//do nothins
 			}
+	}
+	//Returns json object thar represents the diagnosed project package hirarchy
+	function watch_file($details_obj){
+		$ans = array();
+		chdir("files");
+		if ($details_obj->which_output=="prediction"){
+			if (is_file($details_obj->file_name_output)){
+				$ans["status"] = 1;
+				$ans["info"] = file_get_contents($details_obj->file_name_output);
+			}else {
+				$ans["status"] = 2;
+				$ans["info"] = "no information";	
+			}
+		}else{
+			if(!strpos($details_obj->file_name_output, "barinelOptA")===FALSE){
+				$ans["status"] = 1;
+				$ans["info"] = file_get_contents("barinelOptA.csv");
+			}else{
+				$ans["status"] = 2;
+				$ans["info"] = "no information";	
+			}
+		}
+		return $ans;
 	}
 	//Send the file to the user.
 	function display_file($details_obj){

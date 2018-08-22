@@ -13,6 +13,8 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.load_count = 0;
     $scope.info_txt = {txt:""};
     $scope.a_counter = 0;
+    $scope.watch_visible = false;
+    $scope.data  = {};
     var t_stop;
     var swiper;
     $scope.matric = {
@@ -50,6 +52,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         }
     },300);
     $scope.files = [];
+    $scope.watch_objects = [];
     //Slide between sections of results, prediction and diagnoses.
     $scope.swipe_res = function(index){
         if (typeof Swiper == 'function'){
@@ -116,7 +119,19 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     //Watch the file 
     $scope.watch_file = function(item,folder){
         //$state.transitionTo('dashboard.results_watch_1',{user:$rootScope.user.userName});
-        $state.transitionTo('dashboard.results_watch_2',{user:$rootScope.user.userName});
+        $scope.show_loader = true;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('witch_file',item);
+        data_to_send.append('witch_folder',folder);
+        data_to_send.append('watch_file_name',item.replace(".csv",""));
+        service.ajaxfunc('get_watch','results',data_to_send)
+        .then(function(data){
+            $scope.data = data.watch_obj;
+            $scope.show_loader = false;
+            $scope.watch_visible = true;
+        },function(data){alert('bad')});
+        
     }
 
    
@@ -228,4 +243,39 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 $scope.show_loader = false;
             }); 
     }
+    $scope.filter_files_show = function(item){
+        if(item=='.'||item=='..'|| item.endsWith('.json')){
+            return true;
+        }
+        return false;
+    }
+    $scope.remove = function (scope) {
+        scope.remove();
+      };
+
+      $scope.toggle = function (scope) {
+        scope.toggle();
+      };
+
+      $scope.moveLastToTheBeginning = function () {
+        var a = $scope.data.pop();
+        $scope.data.splice(0, 0, a);
+      };
+
+      $scope.newSubItem = function (scope) {
+        var nodeData = scope.$modelValue;
+        nodeData.nodes.push({
+          id: nodeData.id * 10 + nodeData.nodes.length,
+          title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+          nodes: []
+        });
+      };
+
+      $scope.collapseAll = function () {
+        $scope.$broadcast('angular-ui-tree:collapse-all');
+      };
+
+      $scope.expandAll = function () {
+        $scope.$broadcast('angular-ui-tree:expand-all');
+      };
 }]);
