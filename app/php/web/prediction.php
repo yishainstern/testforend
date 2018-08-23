@@ -46,8 +46,9 @@
 	}
 	//Execute the diagnoses part.
 	function run_pridction($details_obj){
-		#$command = "cd ".$details_obj->project->learnDir."\n";
-		#$command .= "python wrapper.py antConf.txt experiments 2>pred.log\n";
+		$command = "";
+		//$command = "cd ".$details_obj->project->learnDir."\n";
+		//$command .= "python wrapper.py antConf.txt experiments 2>pred.log\n";
 		return $command;
 	}
 	//Get and download a file from the output of learning task.

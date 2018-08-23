@@ -49,10 +49,6 @@
 		if (is_dir($details_obj->project->full_pomPath)){
 			exec("dir /s /b " .$details_obj->project->full_pomPath."\\*pom.xml* > ".$details_obj->project->runingRoot."\\poms.txt");
 			$arr = explode("\n",file_get_contents($details_obj->project->runingRoot."\\poms.txt"));
-			if (is_file($details_obj->project->full_pomPath."/pom.xml")){
-				#$tmp_str .="cd ".$details_obj->project->full_pomPath."\n";
-				#$tmp_str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\mavenLog.txt\n";
-			}
 			if ((isset($arr)) && (sizeof($arr)>0)){
 				$files = array();
 				for ($i=0; $i < sizeof($arr) ; $i++) { 
@@ -89,11 +85,11 @@
 	//Create a jar file from the Debbuger system and copy it into our project files.
 	function chane_tracer_mvn_and_checkout_version($details_obj){
 		$str ="cd ".$details_obj->project->jar_creater."\r\n";
-		$str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\create_jar_log.txt\r\n";
-		$str .="cd target\r\n";
-		$str .="copy ".$details_obj->project->jarName." ".$details_obj->project->runingRoot."\\".$details_obj->project->jarName."\r\n";	
-		$str .="cd ".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\n";
-		$str .="git checkout ".$details_obj->project->testVersion." 2>../../run/newVersion.txt\r\n";
+		#$str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\create_jar_log.txt\r\n";
+		#$str .="cd target\r\n";
+		#$str .="copy ".$details_obj->project->jarName." ".$details_obj->project->runingRoot."\\".$details_obj->project->jarName."\r\n";	
+		#$str .="cd ".$details_obj->project->userProjectRoot."\\".$details_obj->project->gitName."\n";
+		#$str .="git checkout ".$details_obj->project->testVersion." 2>../../run/newVersion.txt\r\n";
 		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"pomrun","update_pom");
 	}
 	//Running maven for our learning requires a path.txt file here we create it.
@@ -104,7 +100,7 @@
 	}
 	//After finishing "offline" part we start to execute the online part.
 	function move_to_online_task($details_obj){
-		put_path_txt($details_obj);
+		#put_path_txt($details_obj);
 		chane_tracer_mvn_and_checkout_version($details_obj);
 	}
 ?>
