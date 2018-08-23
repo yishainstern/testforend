@@ -3,7 +3,7 @@
 	//
 	//Check if the preiction learning part is done.
 	function check_if_python_end($details_obj){
-		if (file_exists($details_obj->project->outputPython.'\\markers\\learner_phase_file')){
+		if (file_exists($details_obj->project->outputPython.'\\markers\\all_done')){
 			$details_obj->project = update_project_list($details_obj->project,"end_offline",true);
 			update_project_details($details_obj->project);
 			move_to_online_task($details_obj);
@@ -25,12 +25,13 @@
         $str = $str.'issue_tracker_url='.$project->issue_tracker_url."\r\n";
         $str = $str.'issue_tracker='.$project->issue_tracker."\r\n";
         $str = $str."vers=(". $project->all_versions.")";
-        file_put_contents($project->learnDir."\\antConf.txt",$str); 
+        file_put_contents($project->folderRoot."\\configuration.txt",$str); 
 	}
 	//Execute the python command to start the task.
 	function go_run_python($details_obj,$project,$user){
 		$str = "cd ".$project->learnDir."\n";
-		$str .= "python wrapper.py antConf.txt learn 2>offlineLogger.log\n";
+		$conf_path = $project->folderRoot."\\configuration.txt"
+		$str .= "python wrapper.py ".$conf_path." 2>offlineLogger.log\n";
 		run_cmd_file($details_obj,$project,$user,$str,"offline","check_python");
 	}
 	//Update in the project details all of the relevant information of the project that we got from the server.

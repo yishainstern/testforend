@@ -50,8 +50,8 @@
 			exec("dir /s /b " .$details_obj->project->full_pomPath."\\*pom.xml* > ".$details_obj->project->runingRoot."\\poms.txt");
 			$arr = explode("\n",file_get_contents($details_obj->project->runingRoot."\\poms.txt"));
 			if (is_file($details_obj->project->full_pomPath."/pom.xml")){
-				$tmp_str .="cd ".$details_obj->project->full_pomPath."\n";
-				$tmp_str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\mavenLog.txt\n";
+				#$tmp_str .="cd ".$details_obj->project->full_pomPath."\n";
+				#$tmp_str .="call mvn clean install -fn >".$details_obj->project->runingRoot."\\mavenLog.txt\n";
 			}
 			if ((isset($arr)) && (sizeof($arr)>0)){
 				$files = array();
