@@ -72,6 +72,8 @@
 		all_done($details_obj);
 	}elseif ($task== "get_output"){
 		$returnJson = results($details_obj);
+	}elseif ($task== "get_watch"){
+		$returnJson = get_watch($details_obj);
 	}elseif ($task== "get_experiments"){
 		$returnJson = experiments($details_obj);
 	}elseif ($task== "get_file"){

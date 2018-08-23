@@ -1,7 +1,5 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="nodes_renderer.html">
-  <!-- Load watch file data data -->
-	<div data-ng-init="get_users_data_table()"></div>
   <div ui-tree-handle class="tree-node tree-node-content">
     <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
         class="glyphicon"
@@ -24,7 +22,6 @@
 <div class="row">
   <div class="col-sm-12">
     <h3>Basic Example</h3>
-
     <button ng-click="expandAll()">Expand all</button>
     <button ng-click="collapseAll()">Collapse all</button>
   </div>
