@@ -71,9 +71,7 @@
 		$details_obj->project = update_project_list($details_obj->project,"end_testing",true);
 		$details_obj->project = update_project_list($details_obj->project,"run_prediction",true);
 		update_project_details($details_obj->project);
-		$str = prepare_pridction($details_obj);
-		$str .= run_pridction($details_obj);
-		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,$str,"runpred","all_done");
+		run_cmd_file($details_obj,$details_obj->project,$details_obj->user,'',"runpred","all_done");
 	}
 	//Get a list of all files in the weka folder (out put of the first part).
 	function results($details_obj){
