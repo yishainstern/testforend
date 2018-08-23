@@ -157,9 +157,7 @@
 		$project = $tmp_arr['project']; 
 		$file_name = $project->outputPython."\\web_prediction_results\\".$details_obj->project->watch_file_name.".json";
 		if ($tmp_arr['status']==111 &&  file_exists($file_name)){
-			$arr = array();
-			$arr[0] = json_decode(file_get_contents($file_name));
-			$ans["watch_obj"] = $arr;
+			$ans["watch_obj"] = json_decode(file_get_contents($file_name));
 		}else {
 			$ans['status'] = 555;
 		}
