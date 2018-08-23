@@ -288,7 +288,9 @@ angular
                 'bower_components/swiper/dist/css/swiper.min.css',
                 'bower_components/chartq.js/dist/Chart.js',
                 'bower_components/jszip/dist/jszip.js',
-                'bower_components/jszip/vendor/FileSaver.js'
+                'bower_components/jszip/vendor/FileSaver.js',
+                'styles/results_watch_2.css',
+                'styles/angular-ui-tree.css'
               ]
           })
         }

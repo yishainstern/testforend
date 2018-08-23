@@ -94,6 +94,8 @@
 		$returnJson = change_password($details_obj);
 	}elseif ($task== "get_users_data"){
 		$returnJson = get_users_data($details_obj);
+	}elseif ($task== "get_watch"){
+		$returnJson = get_watch($details_obj);
 	}
 	$obj = json_encode((object)$returnJson);
 	echo $obj;

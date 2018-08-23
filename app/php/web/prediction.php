@@ -150,6 +150,21 @@
 				//do nothins
 			}
 	}
+	//Get a list of all json files in the weka folder (out put of the first part).
+	function get_watch($details_obj){
+		$tmp_arr = get_project_progress($details_obj);
+		$ans = array();
+		$project = $tmp_arr['project']; 
+		$file_name = $project->outputPython."\\web_prediction_results\\".$details_obj->project->watch_file_name.".json";
+		if ($tmp_arr['status']==111 &&  file_exists($file_name)){
+			$arr = array();
+			$arr[0] = json_decode(file_get_contents($file_name));
+			$ans["watch_obj"] = $arr;
+		}else {
+			$ans['status'] = 555;
+		}
+		return $ans;
+	}
 	//Send the file to the user.
 	function display_file($details_obj){
 		$tmp_arr = get_project_progress($details_obj);

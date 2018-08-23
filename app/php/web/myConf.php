@@ -206,6 +206,11 @@
 		}else{
 			$details_obj->project->which_output = '';
 		}
+		if (isset($_POST["watch_file_name"])){
+			$details_obj->project->watch_file_name = $_POST["watch_file_name"];
+		}else{
+			$details_obj->project->watch_file_name = '';
+		}
 	}
 	if (!isset($details_obj->user->userName)){
 		$details_obj->user->userName = "";

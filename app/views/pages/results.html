@@ -1,209 +1,262 @@
-<go-to-list title="Prediction and diagnosis"></go-to-list>
-<!-- /.row -->
-<!-- /.row -->
-<chartmodel></chartmodel>
-<div class="row main-row" style="position: relative;">
-<loader></loader>
-    <div class="col-lg-12">
-    <div class="row bottns_raw">
-        <div class="col-xs-6 col-sm-6"><button type="button" ng-click="swipe_res(0)" class="btn btn-outline btn-warning">Prediction</button></div>
-        <div class="col-xs-6 col-sm-6"><button type="button" ng-click="swipe_res(1)" class="btn btn-outline btn-warning">Diagnosis</button></div>
-    </div>
-    </div>
-    <div class="swiper_wrapper col-lg-12">
-        <div class="swiper-container" >
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Here you can see fault prediciton results of your software code.
-                                </div>
-                                <div class="panel-body swiper-panel">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h3>Fault prediction results</h3>
-                                            <div class="form-group">
-                                                    <label>Search file</label>
-                                                    <input class="form-control" placeholder="file name" ng-model="searchText">
-                                                    <p class="help-block" style="max-height: initial;">Search for a file by name.</p>
+<div ng-show = "!watch_is_visible">
+        <go-to-list title="Prediction and diagnosis"></go-to-list>
+        <!-- /.row -->
+        <!-- /.row -->
+        <chartmodel></chartmodel>
+        <div class="row main-row" style="position: relative;">
+        <loader></loader>
+            <div class="col-lg-12">
+            <div class="row bottns_raw">
+                <div class="col-xs-6 col-sm-6"><button type="button" ng-click="swipe_res(0)" class="btn btn-outline btn-warning">Prediction</button></div>
+                <div class="col-xs-6 col-sm-6"><button type="button" ng-click="swipe_res(1)" class="btn btn-outline btn-warning">Diagnosis</button></div>
+            </div>
+            </div>
+            <div class="swiper_wrapper col-lg-12">
+                <div class="swiper-container" >
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Here you can see fault prediciton results of your software code.
+                                        </div>
+                                        <div class="panel-body swiper-panel">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <h3>Fault prediction results</h3>
+                                                    <div class="form-group">
+                                                            <label>Search file</label>
+                                                            <input class="form-control" placeholder="file name" ng-model="searchText">
+                                                            <p class="help-block" style="max-height: initial;">Search for a file by name.</p>
+                                                        </div>
+                                                    <div class="table-responsive">
+                                                        
+                                                        <table class="table" id="my_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>File name</th>
+                                                                     <!--<th>information</th>-->
+                                                                    <th>Get file</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-show="filter_files_show(item)" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                                    <td>{{$index +1}}</td>
+                                                                    <td><i class="fa fa-file-text"></i>{{item}}</td>
+                                                                    <td>
+                                                                        <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'web_prediction_results')">Get file</button>
+                                                                        <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="watch_file(item,'web_prediction_results')">Watch</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>    
                                                 </div>
-                                            <div class="table-responsive">
-                                                
-                                                <table class="table" id="my_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>File name</th>
-                                                             <!--<th>information</th>-->
-                                                            <th>Get file</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-hide="item=='.' || item=='..'" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
-                                                            <td>{{$index +1}}</td>
-                                                            <td><i class="fa fa-file-text"></i>{{item}}</td>
-                                                            <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'web_prediction_results')">Get file</button>
-																<button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="watch_file(item,'web_prediction_results')">Watch</button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>    
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="swiper-slide">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Herea you can see the diagnosis results of your software code.
+                                        </div>
+                                        <div class="panel-body swiper-panel">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <h3 >Diagnosis results</h3>
+                                                        <div class="table-responsive">  
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <td>#</td>
+                                                                    <td><b>FILES</b></td>
+                                                                    <td><b>METHODS</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="vertical-align: middle;"><b>ALL</b></td>
+                                                                    <td class="td_wrapper" style="background-color: #dff0d8;">
+                                                                        <div class="show_wrapper" ng-repeat="item in matric.all.files">
+                                                                           <div class="name_title">
+                                                                                <i class="fa fa-file-text"></i>
+                                                                                {{item.file}}
+                                                                            </div>
+                                                                            <button type="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
+                                                                                Get file
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="td_wrapper" style="background-color: #d9edf7;">
+                                                                        <div class="show_wrapper" ng-repeat="item in matric.all.methods">
+                                                                            <div class="name_title">
+                                                                                <i class="fa fa-file-text"></i>
+                                                                                {{item.file}}
+                                                                            </div>
+                                                                            <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
+                                                                                Get file
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="vertical-align: middle;"><b>MOST</b></td>
+                                                                    <td class="td_wrapper" style="background-color: #fcf8e3;">
+                                                                        <div class="show_wrapper" ng-repeat="item in matric.most.files">
+                                                                            <div class="name_title">
+                                                                                <i class="fa fa-file-text"></i>
+                                                                                {{item.file}}
+                                                                            </div>
+                                                                            <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
+                                                                                Get file
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="td_wrapper" style="background-color: #f2dede;">
+                                                                        <div class="show_wrapper" ng-repeat="item in matric.most.methods">
+                                                                            <div class="name_title">
+                                                                                <i class="fa fa-file-text"></i>
+                                                                                {{item.file}}
+                                                                            </div>
+                                                                            <button ype="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
+                                                                                Get afile
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <button type="button" class="btn files_btn btn-primary zip_btn" ng-click="zip_files('experiments')">
+                                                                zip output
+                                                            </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                                           
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        
+        <form role="form" name="results" ng-class="{'has-error':validation_error}">
+            <input type="hidden" name="userName" value="{{user.userName}}">
+            <input type="hidden" name="id" value="{{project.folderName}}">
+            <input type="hidden" name="gitName" value="{{project.gitName}}">
+        </form>
+        <span ng-init=get_res()></span>
+        
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">{{witch_file_name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{info_txt.txt}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="up()" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Herea you can see the diagnosis results of your software code.
-                                </div>
-                                <div class="panel-body swiper-panel">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h3 >Diagnosis results</h3>
-                                                <div class="table-responsive">  
-                                                    <table class="table table-bordered">
-                                                        <tr>
-                                                            <td>#</td>
-                                                            <td><b>FILES</b></td>
-                                                            <td><b>METHODS</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="vertical-align: middle;"><b>ALL</b></td>
-                                                            <td class="td_wrapper" style="background-color: #dff0d8;">
-                                                                <div class="show_wrapper" ng-repeat="item in matric.all.files">
-                                                                   <div class="name_title">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                        {{item.file}}
-                                                                    </div>
-                                                                    <button type="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
-                                                                        Get file
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                            <td class="td_wrapper" style="background-color: #d9edf7;">
-                                                                <div class="show_wrapper" ng-repeat="item in matric.all.methods">
-                                                                    <div class="name_title">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                        {{item.file}}
-                                                                    </div>
-                                                                    <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
-                                                                        Get file
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="vertical-align: middle;"><b>MOST</b></td>
-                                                            <td class="td_wrapper" style="background-color: #fcf8e3;">
-                                                                <div class="show_wrapper" ng-repeat="item in matric.most.files">
-                                                                    <div class="name_title">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                        {{item.file}}
-                                                                    </div>
-                                                                    <button type="button" class="btn files_btn btn-success" ng-click="get_file(item.file,'experiments')">
-                                                                        Get file
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                            <td class="td_wrapper" style="background-color: #f2dede;">
-                                                                <div class="show_wrapper" ng-repeat="item in matric.most.methods">
-                                                                    <div class="name_title">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                        {{item.file}}
-                                                                    </div>
-                                                                    <button ype="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
-                                                                        Get afile
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <button type="button" class="btn files_btn btn-primary zip_btn" ng-click="zip_files('experiments')">
-                                                        zip output
-                                                    </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                                                           
+                <!-- /.modal-content -->
             </div>
-            <div class="swiper-pagination"></div>
+            <!-- /.modal-dialog -->
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
+        <button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" id="openchartmodat" data-target="#cModal" data-toggle="modal"></button>
+        
+        
+        <!--
+        <div class="table-responsive">
+                                                        <div ng-repeat="obj in experiments" class="table_experiments">
+                                                            <h3 class="folder_name">Folder name: {{obj.dir_name}}</h3>
+                                                            <table class="table" id="my_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>File name</th>
+                                                                    <th>Get file</th>
+                                                                    <th>Display charts</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" class="inner_table" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                                    <td>{{$index +1}}</td>
+                                                                    <td>
+                                                                        <i class="fa fa-file-text"></i>{{inner_obj}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj,'experiments')">Get file</button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="display_file(inner_obj,'experiments')">show file</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div> 
+        
+            -->
 </div>
-
-<form role="form" name="results" ng-class="{'has-error':validation_error}">
-    <input type="hidden" name="userName" value="{{user.userName}}">
-    <input type="hidden" name="id" value="{{project.folderName}}">
-    <input type="hidden" name="gitName" value="{{project.gitName}}">
-</form>
-<span ng-init=get_res()></span>
-
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">{{witch_file_name}}</h4>
-            </div>
-            <div class="modal-body">
-                {{info_txt.txt}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" ng-click="up()" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
+<div ng-show = "watch_is_visible">
+    <!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+    <!-- Load watch file data data -->
+    <div ui-tree-handle class="tree-node tree-node-content">
+      <a class="btn btn-success btn-xs" ng-if="node._sub_packages && node._sub_packages.length > 0" data-nodrag ng-click="toggle(this)"><span
+          class="glyphicon"
+          ng-class="{
+            'glyphicon-chevron-right': collapsed,
+            'glyphicon-chevron-down': !collapsed
+          }"></span></a>
+      {{node._name}}
+      <a class="pull-right">{{node._probability}}</a>
+      <!-- <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+          class="glyphicon glyphicon-remove"></span></a>
+      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
+          class="glyphicon glyphicon-plus"></span></a> -->
     </div>
-    <!-- /.modal-dialog -->
+    <ol ui-tree-nodes="" ng-model="node._sub_packages" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node._sub_packages" ui-tree-node data-collapsed="true" data-expand-on-hover="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+  </script>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Basic Example</h3>
+  
+      <button ng-click="expandAll()">Expand all</button>
+      <button ng-click="collapseAll()">Collapse all</button>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-6">
+      <div ui-tree id="tree-root">
+        <ol ui-tree-nodes ng-model="data">
+          <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        </ol>
+      </div>
+    </div>
+  
+    <!-- <div class="col-sm-6">
+      <div class="info">
+        {{info}}
+      </div>
+      <pre class="code">{{ data | json }}</pre>
+    </div>
+  </div> -->
+  
 </div>
-<button type="button" style="width: 0px;height: 0px;opacity: 0; overflow: hidden;" id="openchartmodat" data-target="#cModal" data-toggle="modal"></button>
-
-
-<!--
-<div class="table-responsive">
-                                                <div ng-repeat="obj in experiments" class="table_experiments">
-                                                    <h3 class="folder_name">Folder name: {{obj.dir_name}}</h3>
-                                                    <table class="table" id="my_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>File name</th>
-                                                            <th>Get file</th>
-                                                            <th>Display charts</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="inner_obj in obj.dir_arr | filter:searchText_e" class="inner_table" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
-                                                            <td>{{$index +1}}</td>
-                                                            <td>
-                                                                <i class="fa fa-file-text"></i>{{inner_obj}}
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(inner_obj,'experiments')">Get file</button>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="display_file(inner_obj,'experiments')">show file</button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    </table>
-                                                </div>
-                                            </div> 
-
-    -->

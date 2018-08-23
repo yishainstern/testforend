@@ -13,6 +13,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.load_count = 0;
     $scope.info_txt = {txt:""};
     $scope.a_counter = 0;
+    $scope.watch_is_visible = false;
     var t_stop;
     var swiper;
     $scope.matric = {
@@ -113,10 +114,21 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             },function(data){alert('bad'); $scope.show_loader = false;}
             );  
     }
-    //Watch the file 
+    //Watch the item
     $scope.watch_file = function(item,folder){
-        //$state.transitionTo('dashboard.results_watch_1',{user:$rootScope.user.userName});
-        $state.transitionTo('dashboard.results_watch_2',{user:$rootScope.user.userName});
+        $scope.show_loader = true;
+        var form = document.forms.namedItem('results');
+        var data_to_send = new FormData(form);
+        data_to_send.append('witch_file',item);
+        data_to_send.append('witch_folder',folder);
+        data_to_send.append('watch_file_name',item.replace(".csv",""));
+        service.ajaxfunc('get_watch','results',data_to_send)
+        .then(function(data){
+            $scope.data = data.watch_obj;
+            $scope.show_loader = false;
+            $scope.watch_is_visible = true;
+        },function(data){alert('bad')});
+        
     }
 
    
@@ -228,4 +240,99 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 $scope.show_loader = false;
             }); 
     }
+    $scope.filter_files_show = function(item){
+        return item.endsWith(".csv");
+    }
+    $scope.remove = function (scope) {
+        scope.remove();
+      };
+
+      $scope.toggle = function (scope) {
+        scope.toggle();
+      };
+
+      $scope.moveLastToTheBeginning = function () {
+        var a = $scope.data.pop();
+        $scope.data.splice(0, 0, a);
+      };
+
+      $scope.newSubItem = function (scope) {
+        var nodeData = scope.$modelValue;
+        nodeData._sub_packages.push({
+          title: nodeData.title + '.' + (nodeData._sub_packages.length + 1),
+          _sub_packages: []
+        });
+      };
+
+      $scope.collapseAll = function () {
+        $scope.$broadcast('angular-ui-tree:collapse-all');
+      };
+
+      $scope.expandAll = function () {
+        $scope.$broadcast('angular-ui-tree:expand-all');
+      };
+      /* $scope.data = [{
+        '_name': 'node1',
+        'probability': 0.3,
+        '_sub_packages': [
+          {
+          '_name': 'node1.1',
+          'probability': 0.8,
+          '_sub_packages': [
+            {
+                '_name': 'node1.1.1',
+                'probability': 0.234,
+                '_sub_packages': []
+              }
+          ]
+        }]
+      }]; */
+      /* $scope.data = [{
+        'id': 1,
+        'title': 'node1',
+        'nodes': [
+          {
+            'id': 11,
+            'title': 'node1.1',
+            'nodes': [
+              {
+                'id': 111,
+                'title': 'node1.1.1',
+                'nodes': []
+              }
+            ]
+          },
+          {
+            'id': 12,
+            'title': 'node1.2',
+            'nodes': []
+          }
+        ]
+      }, {
+        'id': 2,
+        'title': 'node2',
+        'nodrop': true, // An arbitrary property to check in custom template for nodrop-enabled
+        'nodes': [
+          {
+            'id': 21,
+            'title': 'node2.1',
+            'nodes': []
+          },
+          {
+            'id': 22,
+            'title': 'node2.2',
+            'nodes': []
+          }
+        ]
+      }, {
+        'id': 3,
+        'title': 'node3',
+        'nodes': [
+          {
+            'id': 31,
+            'title': 'node3.1',
+            'nodes': []
+          }
+        ]
+      }]; */
 }]);
