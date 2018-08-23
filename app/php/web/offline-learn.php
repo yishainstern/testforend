@@ -30,7 +30,7 @@
 	//Execute the python command to start the task.
 	function go_run_python($details_obj,$project,$user){
 		$str = "cd ".$project->learnDir."\n";
-		$conf_path = $project->folderRoot."\\configuration.txt"
+		$conf_path = $project->folderRoot."\\configuration.txt";
 		$str .= "python wrapper.py ".$conf_path." 2>offlineLogger.log\n";
 		run_cmd_file($details_obj,$project,$user,$str,"offline","check_python");
 	}
