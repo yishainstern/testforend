@@ -89,6 +89,9 @@
                                                                             <button type="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
                                                                                 Get file
                                                                             </button>
+                                                                            <button type="button" class="btn files_btn btn-primary" ng-click="watch_file('diagnosis_files_all')">
+                                                                                    Watch
+                                                                                </button>
                                                                         </div>
                                                                     </td>
                                                                     <td class="td_wrapper" style="background-color: #d9edf7;">
@@ -210,46 +213,67 @@
             -->
 </div>
 <div ng-show = "watch_is_visible">
-    <!-- Nested node template -->
-<script type="text/ng-template" id="nodes_renderer.html">
-    <!-- Load watch file data data -->
-    <div ui-tree-handle class="tree-node tree-node-content">
-      <a class="btn btn-success btn-xs" ng-if="node._sub_packages && node._sub_packages.length > 0" data-nodrag ng-click="toggle(this)"><span
-          class="glyphicon"
-          ng-class="{
-            'glyphicon-chevron-right': collapsed,
-            'glyphicon-chevron-down': !collapsed
-          }"></span></a>
-      {{node._name}}
-      <a class="pull-right">{{node._probability}}</a>
-      <!-- <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
-          class="glyphicon glyphicon-remove"></span></a>
-      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
-          class="glyphicon glyphicon-plus"></span></a> -->
-    </div>
-    <ol ui-tree-nodes="" ng-model="node._sub_packages" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node._sub_packages" ui-tree-node data-collapsed="true" data-expand-on-hover="true" ng-include="'nodes_renderer.html'">
-        </li>
-    </ol>
-  </script>
-  
-  <div class="row">
-    <div class="col-sm-12">
-      <h3>Basic Example</h3>
-  
-      <button ng-click="expandAll()">Expand all</button>
-      <button ng-click="collapseAll()">Collapse all</button>
-    </div>
-  </div>
-  
-  <div class="row">
+    <div ng-show = "prediction_is_visible" >
+        <script type="text/ng-template" id="nodes_renderer.html">
+            <div ui-tree-handle class="tree-node tree-node-content">
+            <a class="btn btn-success btn-xs" ng-if="node._sub_packages && node._sub_packages.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+                    'glyphicon-chevron-right': collapsed,
+                    'glyphicon-chevron-down': !collapsed
+                }"></span></a>
+            {{node._name}}
+            <a class="pull-right" >{{node._probability}}</a>
+            </div>
+            <ol ui-tree-nodes="" ng-model="node._sub_packages" ng-class="{hidden: collapsed}">
+                <li ng-repeat="node in node._sub_packages" ui-tree-node data-collapsed="true" data-expand-on-hover="true" ng-include="'nodes_renderer.html'">
+                </li>
+            </ol>
+        </script>
+        <div class="col-sm-6">
+                <div ui-tree id="tree-root">
+                  <ol ui-tree-nodes ng-model="data">
+                    <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                  </ol>
+                </div>
+              </div>
+    </div> 
+    <div ng-show = "!prediction_is_visible" >
+        <script type="text/ng-template" id="nodes_renderer_1.html">
+                <div ui-tree-handle class="tree-node tree-node-content">
+                <a class="btn btn-success btn-xs" ng-if="node._diagnosis && node._diagnosis.length > 0" data-nodrag ng-click="toggle(this)"><span
+                    class="glyphicon"
+                    ng-class="{
+                        'glyphicon-chevron-right': collapsed,
+                        'glyphicon-chevron-down': !collapsed
+                    }"></span></a>
+                {{node._name}}
+                <a class="pull-right" >{{node._probability}}</a>
+                </div>
+                <ol ui-tree-nodes="" ng-model="node._diagnosis" ng-class="{hidden: collapsed}">
+                    <li ng-repeat="node in node._diagnosis" ui-tree-node data-collapsed="true" data-expand-on-hover="true" ng-include="'nodes_renderer_1.html'">
+                    </li>
+                </ol>
+        </script>
+        <div class="row">
+                <div class="col-sm-12">
+                  <h3>Basic Example</h3>
+              
+                  <button ng-click="expandAll()">Expand all</button>
+                  <button ng-click="collapseAll()">Collapse all</button>
+                </div>
+              </div>
+              <div class="row">
     <div class="col-sm-6">
       <div ui-tree id="tree-root">
         <ol ui-tree-nodes ng-model="data">
-          <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+          <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer_1.html'"></li>
         </ol>
       </div>
     </div>
+</div> 
+  
+  
   
     <!-- <div class="col-sm-6">
       <div class="info">

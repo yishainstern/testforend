@@ -14,6 +14,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.info_txt = {txt:""};
     $scope.a_counter = 0;
     $scope.watch_is_visible = false;
+    $scope.prediction_is_visible = true;
     var t_stop;
     var swiper;
     $scope.matric = {
@@ -53,6 +54,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.files = [];
     //Slide between sections of results, prediction and diagnoses.
     $scope.swipe_res = function(index){
+        $scope.prediction_is_visible = (index ==0);
         if (typeof Swiper == 'function'){
             swiper.slideTo(index);
         }
@@ -129,6 +131,12 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             $scope.watch_is_visible = true;
         },function(data){alert('bad')});
         
+    }
+    //Watch the item
+    $scope.watch_file_tmp = function(item,folder){
+        $scope.show_loader = true;
+        $scope.show_loader = false;
+        $scope.watch_is_visible = true;
     }
 
    
@@ -271,21 +279,135 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
       $scope.expandAll = function () {
         $scope.$broadcast('angular-ui-tree:expand-all');
       };
-      /* $scope.data = [{
-        '_name': 'node1',
-        'probability': 0.3,
-        '_sub_packages': [
+      /* $scope.data =[
+        {
+            "_diagnosis": [
+              {
+                "_name": "org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+              },
+              {
+                "_name": "javax.faces.application.facesmessagetest"
+              },
+              {
+                "_name": "org.apache.myfaces.application.statemanagerimpltest"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.el.tagvalueexpression"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.tag.composite.serializableattributestestcase"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.tag.jsf.html.htmltestcase"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.faceletmultiplerequeststestcase"
+              }
+            ],
+            "_probability": 1,
+            "_name": 0
+          },
           {
-          '_name': 'node1.1',
-          'probability': 0.8,
+            "_diagnosis": [
+              {
+                "_name": "org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+              },
+              {
+                "_name": "org.apache.myfaces.application.statemanagerimpltest"
+              },
+              {
+                "_name": "javax.faces.application.facesmessage"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.el.tagvalueexpression"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.tag.composite.serializableattributestestcase"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.tag.jsf.html.htmltestcase"
+              },
+              {
+                "_name": "org.apache.myfaces.view.facelets.faceletmultiplerequeststestcase"
+              }
+            ],
+            "_probability": 1.0000000000000016e-24,
+            "_name": 1
+          }
+    ]; */
+      /* $scope.data = [
+         {
+          '_name': 0,
+          '_sub_packages': [
+          {
+              '_name':"org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+          },
+          {
+              '_name': "javax.faces.application.facesmessagetest"
+          },
+          {
+              '_name':"org.apache.myfaces.application.statemanagerimpltest"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.el.tagvalueexpression"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.tag.composite.serializableattributestestcase"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.tag.jsf.html.htmltestcase"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.faceletmultiplerequeststestcase"
+          }
+          ],
+          '_probability': 1
+        },
+        {
+          '_name': 1,
           '_sub_packages': [
             {
-                '_name': 'node1.1.1',
-                'probability': 0.234,
-                '_sub_packages': []
-              }
-          ]
-        }]
+              '_name':"org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+          },
+          {
+              '_name': "javax.faces.application.facesmessagetest"
+          },
+          {
+              '_name':"org.apache.myfaces.application.statemanagerimpltest"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.el.tagvalueexpression"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.tag.composite.serializableattributestestcase"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.statemanagerwithfaceletsclientsidetest"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.tag.jsf.html.htmltestcase"
+          },
+          {
+              '_name':"org.apache.myfaces.view.facelets.faceletmultiplerequeststestcase"
+          }
+          ],
+          '_probability': 1.0000000000000016e-24
+        }
+      ] */
+      /* $scope.data = [{
+        '_name': 'node1',
+        '_probability': 0.3,
+        '_sub_packages': [
+        {
+            '_name': 'node1.1'
+        },
+        {
+            '_name': 'node1.2'
+        }
+        ]
       }]; */
       /* $scope.data = [{
         'id': 1,
