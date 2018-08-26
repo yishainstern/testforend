@@ -1,5 +1,5 @@
-[submodule "app\\bower_components\\angular-ui-tree"]
-	path = app\\bower_components\\angular-ui-tree
+[submodule "app/bower_components/angular-ui-tree"]
+	path = app/bower_components/angular-ui-tree
 	url = https://github.com/angular-ui-tree/angular-ui-tree.git
 [submodule "app/php/PHPMailer"]
 	path = app/php/PHPMailer

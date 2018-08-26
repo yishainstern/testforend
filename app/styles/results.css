@@ -50,6 +50,12 @@
 	font-size: 21px;
 	font-weight: bold;
 }
+
+.buttons_raw_secondary div{text-align: inherit;}
+.buttons_raw_secondary div button{
+	width: 80%;
+	font-size: 21px;
+}
 .folder_name {
 	text-indent: 8px;
 }

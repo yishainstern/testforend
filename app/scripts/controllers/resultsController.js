@@ -14,7 +14,12 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.info_txt = {txt:""};
     $scope.a_counter = 0;
     $scope.watch_is_visible = false;
-    $scope.prediction_is_visible = true;
+    $scope.prediction_is_visible =true;
+    $scope.diagnosis_is_visible = false;
+    $scope.failed_tests_is_visible = false;
+    $scope.failed_tests_file_name = "outcomes";
+    $scope.show_all_tests = true;
+    $scope.show_only_faulty_tests = false;
     var t_stop;
     var swiper;
     $scope.matric = {
@@ -27,6 +32,26 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
             methods:[]
         }
     };
+    /* $scope.fault_colors =[
+        '#8cff66',
+        '#b3ff66',
+        '#d9ff66',
+        '#ffff66',
+        '#ffd966',
+        '#ffb366',
+        '#ff8c66',
+        '#ff6666'
+    ] */
+    $scope.fault_colors =[
+        '#99ff99',
+        '#b3ff99',
+        '#e6ff99',
+        '#ffff99',
+        '#ffe699',
+        '#ffcc99',
+        '#ffb399',
+        '#ff9999'
+    ]
     $scope.add_to_list = function(arr,loop){
         for (var i=0;i<loop.length;i++){
             if (loop[i].file){
@@ -54,7 +79,11 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
     $scope.files = [];
     //Slide between sections of results, prediction and diagnoses.
     $scope.swipe_res = function(index){
-        $scope.prediction_is_visible = (index ==0);
+        if(index == 0){
+            $scope.show_prediction();
+        }else{
+            $scope.show_diagnosis();
+        }
         if (typeof Swiper == 'function'){
             swiper.slideTo(index);
         }
@@ -123,7 +152,9 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         var data_to_send = new FormData(form);
         data_to_send.append('witch_file',item);
         data_to_send.append('witch_folder',folder);
-        data_to_send.append('watch_file_name',item.replace(".csv",""));
+        item = item.replace(".csv","");
+        item = item.replace(".json","");
+        data_to_send.append('watch_file_name',item);
         service.ajaxfunc('get_watch','results',data_to_send)
         .then(function(data){
             $scope.data = data.watch_obj;
@@ -132,13 +163,11 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
         },function(data){alert('bad')});
         
     }
+    
     //Watch the item
-    $scope.watch_file_tmp = function(item,folder){
-        $scope.show_loader = true;
-        $scope.show_loader = false;
-        $scope.watch_is_visible = true;
+    $scope.back_to_results = function(){
+        $scope.watch_is_visible = false;
     }
-
    
     //Event after project was loded from server. get all list of files we need.
     $scope.$on('project_object_exsites',function(){
@@ -248,8 +277,59 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 $scope.show_loader = false;
             }); 
     }
-    $scope.filter_files_show = function(item){
-        return item.endsWith(".csv");
+    $scope.prediction_show = function(item){
+        return item.endsWith(".csv") && !item.includes("diagnosis");
+    }
+    $scope.diagnosis_show = function(item){
+        return (
+        item == "diagnosis_files_all.json"
+        ||item == "diagnosis_files_most.json"
+        ||item == "diagnosis_methods_all.json"
+        ||item == "diagnosis_methods_most.json"
+        );
+    }
+    //Returns true if the prediction watch is visible
+    $scope.check_prediction_is_visible = function(){
+        return (
+        $scope.prediction_is_visible
+        &&!$scope.diagnosis_is_visible
+        &&!$scope.failed_tests_is_visible
+        );
+    }
+    //Returns true if the diagnosis watch is visible
+    $scope.check_diagnosis_is_visible = function(){
+        return (
+        !$scope.prediction_is_visible
+        &&$scope.diagnosis_is_visible
+        &&!$scope.failed_tests_is_visible
+        );
+    }
+    //Returns true if the failed_tests watch is visible
+    $scope.check_failed_tests_is_visible = function(){
+        return (
+        !$scope.prediction_is_visible
+        &&!$scope.diagnosis_is_visible
+        &&$scope.failed_tests_is_visible
+        );
+    }
+    //Set the prediction watch visible
+    $scope.show_prediction = function(){
+        $scope.prediction_is_visible =true;
+        $scope.diagnosis_is_visible =false;
+        $scope.failed_tests_is_visible =false;
+    }
+    //Set the diagnosis watch visible
+    $scope.show_diagnosis = function(){
+        $scope.prediction_is_visible =false;
+        $scope.diagnosis_is_visible =true;
+        $scope.failed_tests_is_visible =false;
+    }
+    //Set the failed tests watch visible
+    $scope.show_failed_tests = function(){
+        $scope.prediction_is_visible =false;
+        $scope.diagnosis_is_visible =false;
+        $scope.failed_tests_is_visible =true;
+        $scope.watch_file($scope.failed_tests_file_name);
     }
     $scope.remove = function (scope) {
         scope.remove();
@@ -278,6 +358,49 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
 
       $scope.expandAll = function () {
         $scope.$broadcast('angular-ui-tree:expand-all');
+      };
+      
+      $scope.style_node = function(node){
+        if(node.hasOwnProperty('_probability')){
+            var i = Math.floor(node._probability*($scope.fault_colors.length-1));
+            return {
+                "background-color" : $scope.fault_colors[i]
+            };
+        }else if(node.hasOwnProperty('_outcome')){
+            if(node._outcome == 'pass'){
+                return {
+                    "background-color" : $scope.fault_colors[0]
+                };
+            }else if(node._outcome == 'error'){
+                return {
+                    "background-color" : $scope.fault_colors[$scope.fault_colors.length/2]
+                };
+            }else if(node._outcome == 'failure'){
+                return {
+                    "background-color" : $scope.fault_colors[$scope.fault_colors.length-1]
+                };
+            }
+        }
+          
+      };
+      //Filters the list of the tests with respect to the user will
+      $scope.failed_tests_filter = function(node){
+        if($scope.show_all_tests){
+            return true;
+        }
+        if($scope.show_only_faulty_tests){
+            return node._outcome == 'failure' || node._outcome == 'error';
+        }
+      };
+      //Sets all the tests in the tests watch will to be visible
+      $scope.all_tests = function(node){
+        $scope.show_all_tests = true;
+        $scope.show_only_faulty_tests = false;
+      };
+      //Sets only the faulty tests in the tests watch will to be visible
+      $scope.faulty_tests = function(node){
+        $scope.show_all_tests = false;
+        $scope.show_only_faulty_tests = true;
       };
       /* $scope.data =[
         {

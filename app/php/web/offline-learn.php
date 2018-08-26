@@ -31,7 +31,7 @@
 	function go_run_python($details_obj,$project,$user){
 		$str = "cd ".$project->learnDir."\n";
 		$conf_path = $project->folderRoot."\\configuration.txt";
-		$str .= "python wrapper.py ".$conf_path." 2>offlineLogger.log\n";
+		$str .= "python wrapper.py ".$conf_path." 2>".$project->runingRoot."\\offlineLogger.log\n";
 		run_cmd_file($details_obj,$project,$user,$str,"offline","check_python");
 	}
 	//Update in the project details all of the relevant information of the project that we got from the server.

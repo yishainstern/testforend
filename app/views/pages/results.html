@@ -37,12 +37,11 @@
                                                                 <tr>
                                                                     <th>#</th>
                                                                     <th>File name</th>
-                                                                     <!--<th>information</th>-->
-                                                                    <th>Get file</th>
+                                                                    <th>Access</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr ng-show="filter_files_show(item)" ng-repeat="item in files | filter:searchText"" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                                <tr ng-show="prediction_show(item)" ng-repeat="item in files | filter:searchText" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
                                                                     <td>{{$index +1}}</td>
                                                                     <td><i class="fa fa-file-text"></i>{{item}}</td>
                                                                     <td>
@@ -65,13 +64,36 @@
                                 <div class="col-lg-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            Herea you can see the diagnosis results of your software code.
+                                            Here you can see the diagnosis results of your software code.
                                         </div>
                                         <div class="panel-body swiper-panel">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <h3 >Diagnosis results</h3>
-                                                        <div class="table-responsive">  
+                                                    <div class="table-responsive">
+                                                        
+                                                        <table class="table" id="my_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>File name</th>
+                                                                     <!--<th>information</th>-->
+                                                                    <th>Access</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-show="diagnosis_show(item)" ng-repeat="item in files | filter:searchText" ng-class="{'primary':$index%5==0,'success':$index%5==1,'info':$index%5==2,'warning':$index%5==3,'danger':$index%5==4}">
+                                                                    <td>{{$index +1}}</td>
+                                                                    <td><i class="fa fa-file-text"></i>{{item}}</td>
+                                                                    <td>
+                                                                        <!-- <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="get_file(item,'web_prediction_results')">Get file</button> -->
+                                                                        <button type="button" class="btn files_btn" ng-class="{'btn-primary':$index%5==0,'btn-success':$index%5==1,'btn-info':$index%5==2,'btn-warning':$index%5==3,'btn-danger':$index%5==4}" ng-click="watch_file(item,'web_prediction_results')">Watch</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> 
+                                                        <!-- <div class="table-responsive">  
                                                             <table class="table table-bordered">
                                                                 <tr>
                                                                     <td>#</td>
@@ -126,16 +148,16 @@
                                                                                 {{item.file}}
                                                                             </div>
                                                                             <button ype="button" class="btn files_btn btn-primary" ng-click="get_file(item.file,'experiments')">
-                                                                                Get afile
+                                                                                Get file
                                                                             </button>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                        </div>
-                                                        <button type="button" class="btn files_btn btn-primary zip_btn" ng-click="zip_files('experiments')">
+                                                        </div> -->
+                                                        <!-- <button type="button" class="btn files_btn btn-primary zip_btn" ng-click="zip_files('experiments')">
                                                                 zip output
-                                                            </button>
+                                                            </button> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -148,6 +170,9 @@
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
+                <div class= "buttons_raw_secondary">
+                        <div class="col-xs-6 col-sm-6"><button type="button" ng-click="show_failed_tests()" class="btn btn-warning">Watch tests</button></div>
+                </div>
             </div>
         </div>
         
@@ -213,9 +238,9 @@
             -->
 </div>
 <div ng-show = "watch_is_visible">
-    <div ng-show = "prediction_is_visible" >
+    <div ng-show = "check_prediction_is_visible()" >
         <script type="text/ng-template" id="nodes_renderer.html">
-            <div ui-tree-handle class="tree-node tree-node-content">
+            <div ui-tree-handle class="tree-node tree-node-content" ng-style="style_node(node)" >
             <a class="btn btn-success btn-xs" ng-if="node._sub_packages && node._sub_packages.length > 0" data-nodrag ng-click="toggle(this)"><span
                 class="glyphicon"
                 ng-class="{
@@ -230,6 +255,14 @@
                 </li>
             </ol>
         </script>
+        <div class="row">
+            <div class="col-sm-12">
+              <h3>Fault Liklihood</h3>
+              <button ng-click="expandAll()">Expand all</button>
+              <button ng-click="collapseAll()">Collapse all</button>
+              <button style="float: right;" ng-click="back_to_results()">Back</button>
+            </div>
+          </div>
         <div class="col-sm-6">
                 <div ui-tree id="tree-root">
                   <ol ui-tree-nodes ng-model="data">
@@ -237,10 +270,11 @@
                   </ol>
                 </div>
               </div>
+              
     </div> 
-    <div ng-show = "!prediction_is_visible" >
+    <div ng-show = "check_diagnosis_is_visible()" >
         <script type="text/ng-template" id="nodes_renderer_1.html">
-                <div ui-tree-handle class="tree-node tree-node-content">
+                <div ui-tree-handle class="tree-node tree-node-content" ng-style="style_node(node)">
                 <a class="btn btn-success btn-xs" ng-if="node._diagnosis && node._diagnosis.length > 0" data-nodrag ng-click="toggle(this)"><span
                     class="glyphicon"
                     ng-class="{
@@ -257,17 +291,55 @@
         </script>
         <div class="row">
                 <div class="col-sm-12">
-                  <h3>Basic Example</h3>
-              
+                  <h3>Diagnosis</h3>
                   <button ng-click="expandAll()">Expand all</button>
                   <button ng-click="collapseAll()">Collapse all</button>
+                  <button style="float: right;" ng-click="back_to_results()">Back</button>
                 </div>
               </div>
               <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       <div ui-tree id="tree-root">
         <ol ui-tree-nodes ng-model="data">
           <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer_1.html'"></li>
+        </ol>
+      </div>
+    </div>
+</div> 
+  
+  
+  
+    <!-- <div class="col-sm-6">
+      <div class="info">
+        {{info}}
+      </div>
+      <pre class="code">{{ data | json }}</pre>
+    </div>
+  </div> -->
+  
+</div>
+<div ng-show = "check_failed_tests_is_visible()" >
+        <script type="text/ng-template" id="nodes_renderer_2.html">
+                <!-- <div ui-tree-handle class="tree-node tree-node-content" ng-style="style_node(node)"ng-if="node._outcome =='error' || node._outcome =='failure'"> -->
+                        <div ui-tree-handle class="tree-node tree-node-content" ng-style="style_node(node)" ng-show ="failed_tests_filter(node)">
+                {{node._tast_name}}
+                <a class="pull-right" >{{node._outcome}}</a>
+                </div>
+        </script>
+        <div class="row">
+                <div class="col-sm-12">
+                  <h3>Tests</h3>
+                  <button ng-click="all_tests()">All tests</button>
+                  <button ng-click="faulty_tests()">Faulty tests</button>
+                  <button style="float: right;" ng-click="back_to_results()">Back</button>
+                </div>
+              </div>
+              <div class="row">
+    <div class="col-sm-12">
+      <div ui-tree id="tree-root">
+        <ol ui-tree-nodes ng-model="data">
+          <!-- <li ng-repeat="node in data" ng-if="node._outcome =='error' || node._outcome =='failure'" ui-tree-node ng-include="'nodes_renderer_2.html'"></li> -->
+          <li ng-repeat="node in data" ng-if="failed_tests_filter(node)"  ui-tree-node ng-include="'nodes_renderer_2.html'"></li>
         </ol>
       </div>
     </div>

@@ -289,54 +289,14 @@ angular
                 'bower_components/chartq.js/dist/Chart.js',
                 'bower_components/jszip/dist/jszip.js',
                 'bower_components/jszip/vendor/FileSaver.js',
-                'styles/results_watch_2.css',
-                'styles/angular-ui-tree.css'
+                'styles/angular-ui-tree.css',
+                'styles/angular-ui-tree.min.css'
               ]
           })
         }
       }
     }) 
-    .state('dashboard.results_watch_1',{
-      templateUrl:'views/pages/results_watch_1.html',
-      url:'/results_watch_1/:user/:id/:task',
-      controller:'resultsWatchController_1',
-      resolve: {
-        loadMyFile:function($ocLazyLoad) {
-          return $ocLazyLoad.load({
-              name:'sbAdminApp',
-              files:[
-                'scripts/controllers/resultsWatchController_1.js',
-                'styles/results_watch_1.css',
-                'styles/chart.css',
-                'bower_components/swiper/dist/js/swiper.min.js',
-                'scripts/directives/goToList/goToList.js',
-                'scripts/directives/chartModal/chartModal.js',
-                'bower_components/swiper/dist/css/swiper.min.css',
-                'bower_components/chartq.js/dist/Chart.js',
-                'bower_components/jszip/dist/jszip.js',
-                'bower_components/jszip/vendor/FileSaver.js'
-              ]
-          })
-        }
-      }
-    })
-    .state('dashboard.results_watch_2',{
-      templateUrl:'views/pages/results_watch_2.html',
-      url:'/results_watch_2/:user/:id/:task',
-      controller:'resultsWatchController_2',
-      resolve: {
-        loadMyFile:function($ocLazyLoad) {
-          return $ocLazyLoad.load({
-              name:'sbAdminApp',
-              files:[
-                'scripts/controllers/resultsWatchController_2.js',
-                'styles/results_watch_2.css',
-                'styles/angular-ui-tree.css'
-              ]
-          })
-        }
-      }
-    })    
+    
     .state('dashboard.pomUpdate',{
       templateUrl:'views/pages/update-pom.html',
       url:'/pomUpdate/:id/:task',
