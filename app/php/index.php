@@ -1,5 +1,4 @@
 <?php
-	
 	namespace Debugger;
 	require __DIR__.'/vendor/autoload.php';
 	require __DIR__.'/PHPMailer/src/Exception.php';

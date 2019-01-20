@@ -8,11 +8,11 @@
 	//Rotem's computer
 	$details_obj->root = "C:\\new_users\\";
 	$details_obj->mavenroot = "C:\\Users\\amirelm\\.m2\\repository";
-	$details_obj->phpRoot = "C:\xampp\htdocs\secure\in\testforend\app\php";
+	$details_obj->phpRoot = "C:\\xampp\\htdocs\\secure\\in\\testforend\\app\\php";
 	$details_obj->admin_users = $details_obj->root.'\\admin_users.json';
 	//email account details
 	$details_obj->email_account->username = 'ddebguer@gmail.com';
-	$details_obj->email_account->password = '3D3BGU3r';
+	$details_obj->email_account->password = 'pS159741';
 	function get_all_details_of_user($details_obj){
 		$arr = array();
 		$user = $details_obj->user;
