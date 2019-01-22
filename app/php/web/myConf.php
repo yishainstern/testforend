@@ -70,6 +70,10 @@
 	function is_admin($details_obj){
 		$file = $GLOBALS['details_obj']->admin_users;
 		$username = $details_obj->userName;
+		if(!file_exists ( $file)){
+			$myfile = fopen($file, "w");
+			fwrite($myfile, "{[]}");
+		}
 		$arr = json_decode(file_get_contents($file));
 		return in_array($username, $arr);
 	}

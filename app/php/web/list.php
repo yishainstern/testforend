@@ -105,9 +105,9 @@
 			if ($tmp_arr["details"]->start_remove == true){
 				$ans['status'] = 444;
 				$ans['message'] = "Still removing old project.";
-			}else if(not_finish($details_obj)){
-				$ans['status'] = 444;
-				$ans['message'] = "Not finish to clone or learning task";
+			//  }else if(not_finish($details_obj)){
+			//  	$ans['status'] = 444;
+			//  	$ans['message'] = "Not finish to clone or learning task";
 			}else {
 				$time = time();
 				$time_str = "" + $time;

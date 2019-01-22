@@ -26,6 +26,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     $scope.sign_show = false;
     $scope.recover_account_show = false;
     $scope.change_password_show = false;
+    $scope.terms_and_conditions_show = false;
     
     //Use regular expression to check if the email is a valid email address 
     $scope.valid_email = function(email){
@@ -177,6 +178,15 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.sign_show = false;
         $scope.recover_account_show = true;
         $scope.change_password_show = false;
+        $scope.terms_and_conditions_show = false;
+    }
+
+    $scope.display_terms_and_conditions = function(){
+        $scope.log_show = false;
+        $scope.sign_show = false;
+        $scope.recover_account_show = false;
+        $scope.change_password_show = false;
+        $scope.terms_and_conditions_show = true;
     }
 
     //Display sign up form
@@ -185,6 +195,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.sign_show = true;
         $scope.recover_account_show = false;
         $scope.change_password_show = false;
+        $scope.terms_and_conditions_show = false;
     }
 
     //Display log form
@@ -193,6 +204,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.sign_show = false;
         $scope.recover_account_show = false;
         $scope.change_password_show = false;
+        $scope.terms_and_conditions_show = false;
     }
     //Display log form
     $scope.display_change_password = function(){
@@ -200,6 +212,7 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
         $scope.sign_show = false;
         $scope.recover_account_show = false;
         $scope.change_password_show = true;
+        $scope.terms_and_conditions_show = false;
     }
 
     //Return true if forgot form is visible 
@@ -219,6 +232,10 @@ angular.module('sbAdminApp').controller('enterController', ['$scope', '$timeout'
     //Return true if log form is visible 
     $scope.change_password_visible = function(){
         return $scope.change_password_show;
+    }
+
+    $scope.terms_and_conditions_visible = function(){
+        return $scope.terms_and_conditions_show;
     }
 
 ;}]);

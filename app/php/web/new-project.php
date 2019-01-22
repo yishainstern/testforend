@@ -107,7 +107,7 @@
 		$old_path = getcwd();
 		chdir($details_obj->project->runingRoot);
 		$output = file_get_contents('proj.log');
-		$output1 = file_get_contents('Debugger.log');
+		$output1 = file_get_contents('proj.log');
 		$flag1 = strpos($output, "done");
 		$flag11 = strpos($output, "git checkout -f HEAD");
 		$flag21 = strpos($output, "Checking out files: 100%");
