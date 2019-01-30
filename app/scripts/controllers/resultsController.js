@@ -373,7 +373,7 @@ angular.module('sbAdminApp').controller('resultsController', ['$scope', '$timeou
                 };
             }else if(node._outcome == 'error'){
                 return {
-                    "background-color" : $scope.fault_colors[$scope.fault_colors.length/2]
+                    "background-color" : $scope.fault_colors[$scope.fault_colors.length-1]
                 };
             }else if(node._outcome == 'failure'){
                 return {
