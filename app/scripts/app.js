@@ -184,6 +184,19 @@ angular
         }
       }
     })
+    .state('dashboard.diagAndPred',{
+      templateUrl:'views/pages/diag-and-pred.html',
+      url:'/diag-and-pred/:user',
+      controller:'diagAndPredController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/diagAndPredController.js','styles/project.css']
+          })
+        }
+      }
+    })
     .state('dashboard.project',{
       templateUrl:'views/pages/project-page.html',
       url:'/project/:id/:user',

@@ -6,7 +6,7 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
+angular.module('sbAdminApp').controller('diagAndPredController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
  	service.intervalfunc(service);
  	$scope.show_loader = true;
  	$scope.how_much_done = 10;
@@ -88,7 +88,11 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	});
  	//Go to the page of the task that is described.
  	$scope.go_page = function(item){
-		$state.transitionTo('dashboard.diagAndPred',{id:$rootScope.project.folderName});
+ 		if (item.send){
+ 			item.send.id = $rootScope.project.folderName;
+ 			item.send.user = $rootScope.user.userName;
+ 		}
+ 		$state.transitionTo(item.state,item.send);
 	}
 	 //Go to the page of the task that is described.
  	$scope.bug_mine = function(){
