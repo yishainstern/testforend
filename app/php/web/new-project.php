@@ -27,16 +27,28 @@
 		$project->project_details_file = $project->folderRoot."\\project_details.json";
 		$project->userProjectRoot = $project->folderRoot.'\\rootGit';
 		$project->DebuugerRoot = "C:\\temp\\Debugger";
-		$project->outputPython = $project->folderRoot.'\\out';
-		$project->runingRoot = $project->folderRoot.'\\run';
-		$project->learnDir = $project->DebuugerRoot.'\\learner';
-		$project->jar_creater = $project->DebuugerRoot.'\\tracer';
-		$project->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-		$project->jar_test = $project->jar_creater.'\\target\\'.$project->jarName;
-		$project->progress = get_progress_array();
-		$project->problem = false;
+		$project->bug_mining = create_project_task_details('bug_mining');
+		$project->bug_mining = $project->folderRoot.'\\bug_mining';
+		$project->diag_and_pred = $project->folderRoot.'\\diag_and_pred';
+		$project->diag_and_pred->outputPython = $project->diag_and_pred.'\\out';
+		$project->diag_and_pred->runingRoot = $project->diag_and_pred.'\\run';
+		$project->diag_and_pred->learnDir = $project->diag_and_pred.'\\learner';
+		$project->diag_and_pred->jar_creater = $project->diag_and_pred.'\\tracer';
+		$project->diag_and_pred->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
+		$project->diag_and_pred->jar_test = $project->diag_and_pred->jar_creater.'\\target\\'.$project->jarName;
+		$project->diag_and_pred->progress = get_progress_array();
+		$project->diag_and_pred->problem = false;
+		$project->bug_mining->outputPython = $project->bug_mining.'\\out';
+		$project->bug_mining->runingRoot = $project->bug_mining.'\\run';
+		$project->bug_mining->learnDir = $project->bug_mining.'\\learner';
+		$project->bug_mining->jar_creater = $project->bug_mining.'\\tracer';
+		$project->bug_mining->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
+		$project->bug_mining->jar_test = $project->bug_mining->jar_creater.'\\target\\'.$project->jarName;
+		$project->bug_mining->progress = get_progress_array();
+		$project->bug_mining->problem = false;
 		return $project;
 	}
+	
 	//Check if the Git URL that was given by user exists in the Git repository.
 	function is_git_project($project,$user){
 		$flag = TRUE;
