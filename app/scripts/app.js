@@ -197,6 +197,19 @@ angular
         }
       }
     })
+    .state('dashboard.bugMine',{
+      templateUrl:'views/pages/bug-mine.html',
+      url:'/bug-mine/:user',
+      controller:'bugMiningController',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:['scripts/controllers/bugMiningController.js','styles/project.css']
+          })
+        }
+      }
+    })
     .state('dashboard.project',{
       templateUrl:'views/pages/project-page.html',
       url:'/project/:id/:user',

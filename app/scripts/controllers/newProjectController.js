@@ -63,6 +63,7 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
         }
         service.ajaxfunc('open_folder','new-project',false)
         .then(function(data){$scope.success_new_project(data);},
-            function(data){$scope.fail_new_project(data);});
+            function(data){$scope.fail_new_project(data);})
+        
     }
 ;}]);

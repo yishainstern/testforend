@@ -90,6 +90,10 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  	$scope.go_page = function(item){
 		$state.transitionTo('dashboard.diagAndPred',{id:$rootScope.project.folderName});
 	}
+	//Go to the page of the task that is described.
+	$scope.go_page_bug_mine = function(item){
+		$state.transitionTo('dashboard.bugMine',{id:$rootScope.project.folderName});
+	}
 	 //Go to the page of the task that is described.
  	$scope.bug_mine = function(){
 		$scope.bug_mining_visible  =true
