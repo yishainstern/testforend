@@ -25,28 +25,25 @@
 		$project->gitName = $details_obj->project->gitName;
 		$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
 		$project->project_details_file = $project->folderRoot."\\project_details.json";
-		$project->userProjectRoot = $project->folderRoot.'\\rootGit';
 		$project->DebuugerRoot = "C:\\temp\\Debugger";
-		$project->bug_mining = create_project_task_details('bug_mining');
-		$project->bug_mining = $project->folderRoot.'\\bug_mining';
-		$project->diag_and_pred = $project->folderRoot.'\\diag_and_pred';
-		$project->diag_and_pred->outputPython = $project->diag_and_pred.'\\out';
-		$project->diag_and_pred->runingRoot = $project->diag_and_pred.'\\run';
-		$project->diag_and_pred->learnDir = $project->diag_and_pred.'\\learner';
-		$project->diag_and_pred->jar_creater = $project->diag_and_pred.'\\tracer';
-		$project->diag_and_pred->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-		$project->diag_and_pred->jar_test = $project->diag_and_pred->jar_creater.'\\target\\'.$project->jarName;
-		$project->diag_and_pred->progress = get_progress_array();
-		$project->diag_and_pred->problem = false;
-		$project->bug_mining->outputPython = $project->bug_mining.'\\out';
-		$project->bug_mining->runingRoot = $project->bug_mining.'\\run';
-		$project->bug_mining->learnDir = $project->bug_mining.'\\learner';
-		$project->bug_mining->jar_creater = $project->bug_mining.'\\tracer';
-		$project->bug_mining->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
-		$project->bug_mining->jar_test = $project->bug_mining->jar_creater.'\\target\\'.$project->jarName;
-		$project->bug_mining->progress = get_progress_array();
-		$project->bug_mining->problem = false;
+		$project->diag_and_pred = create_task_repo('diag_and_pred', $project->folderRoot) ;
+		$project->bug_mining = create_task_repo('bug_mining', $project->folderRoot) ;
 		return $project;
+	}
+
+	function create_task_repo($task_name, $folderRoot){
+		$task = new stdClass();
+		$task->folderRoot = $folderRoot.'\\'.$task_name;
+		$task->userProjectRoot = $task->folderRoot.'\\rootGit';
+		$task->outputPython = $task->folderRoot.'\\out';
+		$task->runingRoot = $task->folderRoot.'\\run';
+		$task->learnDir = $task->folderRoot.'\\learner';
+		$task->jar_creater = $task->folderRoot.'\\tracer';
+		$task->jarName = "uber-tracer-1.0.1-SNAPSHOT.jar";
+		$task->jar_test = $task->jar_creater.'\\target\\'.$task->jarName;
+		$task->progress = get_progress_array();
+		$task->problem = false;
+		return $task;
 	}
 	
 	//Check if the Git URL that was given by user exists in the Git repository.
@@ -76,34 +73,21 @@
 			$ans['message'] = "Session expired or not exists.";
 		}else{ 
 			$project =  create_project_details($details_obj,$arr["user"]);
-			if ((is_dir($project->folderRoot)==TRUE)){
+			$bug_mining = $project->bug_mining;
+			$dp = $project->diag_and_pred;
+			if ((is_dir($bug_mining->folderRoot)==TRUE) ||(is_dir($dp->folderRoot)==TRUE)){
 				$ans['status'] = 1;
 				$ans['message'] = "You have already a project with this name, pick a new name.";
 			}else if(!is_git_project($details_obj,$arr["user"])){
 				$ans['status'] = 2;
 				$ans['message'] = "The Git url that was inserted does not exist in Git repositories. Try a different url.";
 			}else{
-				mkdir($project->folderRoot, 0777, true);
-				mkdir($project->userProjectRoot, 0777, true);
-				#mkdir($project->DebuugerRoot, 0777, true);
-				mkdir($project->outputPython, 0777, true);
-				mkdir($project->runingRoot, 0777, true);
-				$filr_tmp = '';
-				$filr_tmp .= "git clone --progress --recursive ".$project->gitUrl." ".$project->userProjectRoot."\\".$project->gitName." 2>".$project->runingRoot."\\proj.log\n";
-				#$filr_tmp .= "git clone --progress --recursive ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
-				$filr_tmp .= "cd ".$project->userProjectRoot."\\".$project->gitName."\n";
-				$filr_tmp .= "git tag>".$project->runingRoot."\\tagList.txt\n";
-				$filr_tmp .= "dir /s /b *pom.xml >".$project->runingRoot."\\pomList.txt\n";
-				$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
-				$filr_tmp .= "php -f index.php trigger ".$details_obj->user->userName." ".$project->folderName." check_clone >".$project->runingRoot."\\check_clone.log";
-				file_put_contents($project->runingRoot.'\\clone_task.cmd', $filr_tmp);
+				setup_task_dir($details_obj,$project,$dp);
+				setup_task_dir($details_obj,$project,$bug_mining);
 				$project_details = create_project_details($details_obj,$arr["user"]);
 				update_project_details($project_details);
 				$user_details = update_user_new_project($project_details,$arr["user"]);
 				update_user_details($arr["user"]);
-				chdir($project_details->runingRoot);
-				$command = "start /B clone_task.cmd";
-				pclose(popen($command, "w"));
 				$ans['status'] = 111;
 				$ans['message'] = "Created project, and started to clone.";		
 				$ans['user'] = $user_details;
@@ -112,6 +96,27 @@
 		}
 		return $ans;
 	}
+
+	function setup_task_dir($details_obj,$project,$task){
+		mkdir($task->folderRoot, 0777, true);
+		mkdir($task->userProjectRoot, 0777, true);
+		#mkdir($project->DebuugerRoot, 0777, true);
+		mkdir($task->outputPython, 0777, true);
+		mkdir($task->runingRoot, 0777, true);
+		$filr_tmp = '';
+		$filr_tmp .= "git clone --progress --recursive ".$project->gitUrl." ".$task->userProjectRoot."\\".$project->gitName." 2>".$task->runingRoot."\\proj.log\n";
+		#$filr_tmp .= "git clone --progress --recursive ".$details_obj->amirGit." ".$project->DebuugerRoot."\\Debugger 2>".$project->runingRoot."\\Debugger.log\n";
+		$filr_tmp .= "cd ".$task->folderRoot."\\".$project->gitName."\n";
+		$filr_tmp .= "git tag>".$task->runingRoot."\\tagList.txt\n";
+		$filr_tmp .= "dir /s /b *pom.xml >".$task->runingRoot."\\pomList.txt\n";
+		$filr_tmp .= "cd ".$details_obj->phpRoot."\n";
+		$filr_tmp .= "php -f index.php trigger ".$details_obj->user->userName." ".$project->folderName." check_clone >".$task->runingRoot."\\check_clone.log";
+		file_put_contents($task->runingRoot.'\\clone_task.cmd', $filr_tmp);
+		chdir($task->runingRoot);
+		$command = "start /B clone_task.cmd";
+		pclose(popen($command, "w"));
+	}
+
 	//Did the server finish to clone the project from Git?
 	function check_if_clone_is_done($details_obj){
 		$p_obj = $details_obj->project;
