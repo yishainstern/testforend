@@ -39,6 +39,28 @@ angular.module('sbAdminApp').controller('newProjectController', ['$scope', '$tim
             $scope.new_project_success = false;  
             $scope.did_start = false;          
         }
+        data.project.folderName=  data.project.folderName+'_bug_mining'
+        service.ajaxfunc('open_folder','new-project',false)
+        .then(function(data){$scope.success_new_project_bug_miner(data);},
+            function(data){$scope.fail_new_project(data);})
+    }
+    $scope.success_new_project_bug_miner = function(data){
+        $scope.show_loader = false;
+        if (data && data.status==111){
+            $rootScope.user = data.user;
+            $rootScope.project = data.project;
+            $state.transitionTo('dashboard.project',{id:$rootScope.project.folderName});
+        }else if (data && data.status==1){
+            $scope.display_new_project_text = 'This "project-name" already exists...try a different name.';    
+            $scope.new_project_error = true;
+            $scope.new_project_success = false; 
+            $scope.did_start = false;         
+        }else if (data && data.status==2){
+            $scope.display_new_project_text = data.message;    
+            $scope.new_project_error = true;
+            $scope.new_project_success = false;  
+            $scope.did_start = false;          
+        }
     }
     //Callback when the new project was not created in servers memory.
     $scope.fail_new_project = function(data){
