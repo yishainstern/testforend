@@ -72,7 +72,7 @@
 		$username = $details_obj->userName;
 		if(!file_exists ( $file)){
 			$myfile = fopen($file, "w");
-			fwrite($myfile, "{[]}");
+			fwrite($myfile, "[]");
 		}
 		$arr = json_decode(file_get_contents($file));
 		return in_array($username, $arr);

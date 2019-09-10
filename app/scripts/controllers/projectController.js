@@ -8,7 +8,7 @@
  */
 angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeout', '$rootScope', '$interval', 'service','config','flow','$state', '$stateParams', function ($scope, $timeout, $rootScope, $interval, service, config, flow,$state, $stateParams) {
  	service.intervalfunc(service);
- 	$scope.show_loader = true;
+ 	$scope.show_loader = false;
  	$scope.how_much_done = 10;
 	$scope.open_details = true;
 	$scope.options_visible = true;
@@ -46,46 +46,6 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			has_page:false
  		} 		
  	];
- 	//Event after project was loded from server.
- 	$scope.$on('project_object_exsites',function(){
- 		$scope.show_loader = false;
- 		$scope.tmp = $rootScope.project.progress.mille_stones;
- 		if (!$scope.tmp.end_clone.flag){
- 			$scope.userArray[0].status= 'Still cloning';
- 			$scope.userArray[0].flag= false;
- 		}
- 		if ($scope.tmp.end_clone.flag) {
- 			$scope.userArray[0].status= 'Finished cloning, go to next task.';
- 			$scope.userArray[0].flag= true;
- 			$scope.userArray[1].status= 'Enter this page.';
- 			$scope.userArray[1].has_page= true;
- 			$scope.how_much_done = 30;
- 		}
- 		if ($scope.tmp.end_clone.flag && !$scope.tmp.start_offline.flag){
- 			$scope.userArray[1].status= 'Enter this page. Did not start learning.';
- 			$scope.userArray[1].flag= false;
- 		}
- 		if ($scope.tmp.end_clone.flag && $scope.tmp.start_offline.flag) {
- 			$scope.userArray[1].status= 'Started learning';
- 			$scope.userArray[1].flag= true;
- 			$scope.userArray[1].has_page= false;
- 		}
- 		if ($scope.tmp.end_clone.flag && $scope.tmp.start_offline.flag && $scope.tmp.start_testing.flag){
- 			$scope.how_much_done = 70;
- 			$scope.userArray[1].status= 'Started maven testing.';
- 			$scope.userArray[2].status= 'Has some details.';
- 			$scope.userArray[2].has_page= true;
- 		}
- 		if ($scope.tmp.end_clone.flag && $scope.tmp.start_offline.flag && $scope.tmp.start_testing.flag && $scope.tmp.get_prediction.flag){
- 			$scope.how_much_done = 100;
- 			$scope.userArray[2].status= 'Has all details';
- 			$scope.userArray[2].flag= true;
- 		}
- 		if ($rootScope.project.problem){
- 			alert("Aborted testing because of some failure, please remove project!");
- 		}
- 		$timeout(function() {service.intervalfunc(service);}, 30000);
- 	});
  	//Go to the page of the task that is described.
  	$scope.go_page = function(item){
 		$state.transitionTo('dashboard.diagAndPred',{id:$rootScope.project.folderName});
