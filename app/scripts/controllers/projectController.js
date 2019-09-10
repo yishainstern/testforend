@@ -45,14 +45,19 @@ angular.module('sbAdminApp').controller('projectController', ['$scope', '$timeou
  			status:"No results yet",
  			has_page:false
  		} 		
- 	];
+	 ];
+	 $scope.$on('project_object_exsites',function(){
+		$scope.show_loader = false;
+	});
  	//Go to the page of the task that is described.
  	$scope.go_page = function(item){
-		$state.transitionTo('dashboard.diagAndPred',{id:$rootScope.project.folderName});
+		$rootScope.task = 'diag_and_pred'
+		$state.transitionTo('dashboard.diagAndPred',{id:$stateParams.id});
 	}
 	//Go to the page of the task that is described.
 	$scope.go_page_bug_mine = function(item){
-		$state.transitionTo('dashboard.bugMine',{id:$rootScope.project.folderName});
+		$rootScope.task = 'bug_mining'
+		$state.transitionTo('dashboard.bugMine',{id:$stateParams.id});
 	}
 	 //Go to the page of the task that is described.
  	$scope.bug_mine = function(){

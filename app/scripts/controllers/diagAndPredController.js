@@ -14,6 +14,7 @@ angular.module('sbAdminApp').controller('diagAndPredController', ['$scope', '$ti
 	$scope.options_visible = true;
 	$scope.diagnosis_and_prediction_visible = false; 
 	$scope.bug_mining_visible = false; 
+	$scope.task = 'diag_and_pred'; 
  	var p_interval;
  	//Array of project progress.
  	$scope.userArray = [
@@ -49,7 +50,7 @@ angular.module('sbAdminApp').controller('diagAndPredController', ['$scope', '$ti
  	//Event after project was loded from server.
  	$scope.$on('project_object_exsites',function(){
  		$scope.show_loader = false;
- 		$scope.tmp = $rootScope.project.progress.mille_stones;
+ 		$scope.tmp = $rootScope.project[$scope.task].progress.mille_stones;
  		if (!$scope.tmp.end_clone.flag){
  			$scope.userArray[0].status= 'Still cloning';
  			$scope.userArray[0].flag= false;
@@ -81,7 +82,7 @@ angular.module('sbAdminApp').controller('diagAndPredController', ['$scope', '$ti
  			$scope.userArray[2].status= 'Has all details';
  			$scope.userArray[2].flag= true;
  		}
- 		if ($rootScope.project.problem){
+ 		if ($rootScope.project[$scope.task].problem){
  			alert("Aborted testing because of some failure, please remove project!");
  		}
  		$timeout(function() {service.intervalfunc(service);}, 30000);

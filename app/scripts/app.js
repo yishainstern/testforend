@@ -186,7 +186,7 @@ angular
     })
     .state('dashboard.diagAndPred',{
       templateUrl:'views/pages/diag-and-pred.html',
-      url:'/diag-and-pred/:user',
+      url:'/diag-and-pred/:id/:user',
       controller:'diagAndPredController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
