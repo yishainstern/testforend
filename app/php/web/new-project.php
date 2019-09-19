@@ -24,7 +24,6 @@
 		$project->gitUrl = $details_obj->project->gitUrl;
 		$project->gitName = $details_obj->project->gitName;
 		$project->folderRoot = $user->userNameRoot.'\\'.$project->folderName;
-		$project->project_details_file = $project->folderRoot."\\project_details.json";
 		$project->DebuugerRoot = "C:\\temp\\Debugger";
 		$project->diag_and_pred = create_task_repo('diag_and_pred', $project->folderRoot) ;
 		$project->bug_mining = create_task_repo('bug_mining', $project->folderRoot) ;
@@ -34,6 +33,7 @@
 	function create_task_repo($task_name, $folderRoot){
 		$task = new stdClass();
 		$task->folderRoot = $folderRoot.'\\'.$task_name;
+		$task->project_details_file = $task->folderRoot."\\project_details.json";
 		$task->userProjectRoot = $task->folderRoot.'\\rootGit';
 		$task->outputPython = $task->folderRoot.'\\out';
 		$task->runingRoot = $task->folderRoot.'\\run';
@@ -85,7 +85,6 @@
 				setup_task_dir($details_obj,$project,$dp);
 				setup_task_dir($details_obj,$project,$bug_mining);
 				$project_details = create_project_details($details_obj,$arr["user"]);
-				update_project_details($project_details);
 				$user_details = update_user_new_project($project_details,$arr["user"]);
 				update_user_details($arr["user"]);
 				$ans['status'] = 111;
@@ -115,6 +114,7 @@
 		chdir($task->runingRoot);
 		$command = "start /B clone_task.cmd";
 		pclose(popen($command, "w"));
+		update_project_details($task);
 	}
 
 	//Did the server finish to clone the project from Git?

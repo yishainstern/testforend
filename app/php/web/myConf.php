@@ -32,7 +32,7 @@
 	//get all details of project
 	function get_all_details_of_project($details_obj){
 		$arr = array();
-		$file = $details_obj->root.$details_obj->user->userName.'\\'.$details_obj->project->folderName."\\project_details.json";
+		$file = $details_obj->root.$details_obj->user->userName.'\\'.$details_obj->project->folderName."\\".$_POST["project_task"]."\\project_details.json";
 		$arr["project"] = new stdClass();
 		if (file_exists($file)){
 			$arr["project"] = json_decode(file_get_contents($file));

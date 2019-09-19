@@ -84,22 +84,23 @@ angular.module('sbAdminApp').factory('service', ['$interval', '$rootScope', '$ht
 					var form_data = new FormData();
     				form_data.append('userName',$rootScope.user.userName);
 					form_data.append('id',$stateParams.id);
+					form_data.append('project_task',$rootScope.task);
     				delegate.ajaxfunc('get_project_progress','',form_data)
     				.then(function(data){
                         if (data && data.status && data.status==555){
                             $state.transitionTo('enter');
                         }
-        				if (data && data.project[$rootScope.task] && data.project[$rootScope.task].progress){
+        				if (data &&  data.project.progress){
 							$rootScope.project = data.project; 
 							var task_arr = $rootScope.task+'_arr'
         					$rootScope[task_arr] = [];
-        					var flag = $rootScope.project[$rootScope.task].progress.start;
+        					var flag = $rootScope.project.progress.start;
         					while(flag){
-        						$rootScope[task_arr].push($rootScope.project[$rootScope.task].progress.mille_stones[flag]);
-        						flag = $rootScope.project[$rootScope.task].progress.mille_stones[flag].next;
+        						$rootScope[task_arr].push($rootScope.project.progress.mille_stones[flag]);
+        						flag = $rootScope.project.progress.mille_stones[flag].next;
         					}
         					$rootScope.$broadcast('project_object_exsites');
-        					console.log($rootScope.project[$rootScope.task]);
+        					console.log($rootScope.project);
         				}
     				},function(data){console.log(data);});    	
 					}else{/*keep going*/}

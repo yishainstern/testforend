@@ -199,7 +199,7 @@ angular
     })
     .state('dashboard.bugMine',{
       templateUrl:'views/pages/bug-mine.html',
-      url:'/bug-mine/:user',
+      url:'/bug-mine/:id/:user',
       controller:'bugMiningController',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
